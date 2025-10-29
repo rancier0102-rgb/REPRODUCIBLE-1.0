@@ -83,7 +83,7 @@
         .loading-spinner { border: 4px solid #333; border-top: 4px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 16px; }
         @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
         
-        /* BARRA DE BÚSQUEDA PROFESIONAL SIN ICONOS */
+        /* BARRA DE BÚSQUEDA MULTILINGÜE */
         .search-container { 
             position: relative; 
             margin-left: auto;
@@ -162,6 +162,19 @@
         .clear-btn:hover {
             background-color: rgba(255, 255, 255, 0.1);
             color: white;
+        }
+        
+        .language-indicator {
+            position: absolute;
+            top: -8px;
+            right: 10px;
+            background: var(--accent);
+            color: white;
+            font-size: 0.7rem;
+            padding: 2px 6px;
+            border-radius: 10px;
+            font-weight: 600;
+            z-index: 5;
         }
         
         .autocomplete-list {
@@ -269,16 +282,32 @@
             color: var(--text-secondary);
         }
         
-        .no-results-icon {
-            font-size: 3rem;
-            margin-bottom: 16px;
-            opacity: 0.5;
-        }
-        
         .search-section-title {
             font-size: 1.5rem;
             font-weight: 700;
             margin: 24px var(--gutter) 16px;
+            color: white;
+        }
+        
+        .search-suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 20px var(--gutter);
+        }
+        
+        .suggestion-tag {
+            background: rgba(255, 255, 255, 0.1);
+            color: #ddd;
+            padding: 6px 12px;
+            border-radius: 16px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+        
+        .suggestion-tag:hover {
+            background: rgba(229, 9, 20, 0.3);
             color: white;
         }
         
@@ -320,6 +349,11 @@
             .autocomplete-item .poster {
                 width: 36px;
                 height: 54px;
+            }
+            
+            .language-indicator {
+                font-size: 0.65rem;
+                padding: 1px 5px;
             }
         }
         
@@ -363,11 +397,12 @@
         <a id="link-inicio" class="active" onclick="App.showSection('inicio')">Inicio</a>
         <a id="link-historial" onclick="App.showSection('historial')">Seguir viendo</a>
         
-        <!-- BARRA DE BÚSQUEDA PROFESIONAL SIN ICONOS -->
+        <!-- BARRA DE BÚSQUEDA MULTILINGÜE -->
         <div class="search-container">
             <div class="search-box" id="search-box">
                 <input type="text" id="search-input" placeholder="Buscar en el catálogo..." autocomplete="off">
                 <button class="clear-btn" id="clear-btn" title="Limpiar búsqueda">X</button>
+                <div class="language-indicator" id="language-indicator">ES</div>
             </div>
             <div class="autocomplete-list" id="autocomplete-list"></div>
         </div>
@@ -397,6 +432,193 @@
                 CACHE: "tv_cache_v11"
             }
         };
+        
+        // Sistema de idiomas y traducciones
+        const LanguageSystem = {
+            currentLanguage: 'es',
+            languages: {
+                'es': {
+                    code: 'ES',
+                    placeholder: 'Buscar películas, series...',
+                    noResults: 'No se encontraron resultados para',
+                    suggestions: 'Sugerencias de búsqueda',
+                    tryThese: 'Prueba con estos términos',
+                    results: 'resultados',
+                    result: 'resultado'
+                },
+                'en': {
+                    code: 'EN',
+                    placeholder: 'Search movies, series...',
+                    noResults: 'No results found for',
+                    suggestions: 'Search suggestions',
+                    tryThese: 'Try these terms',
+                    results: 'results',
+                    result: 'result'
+                },
+                'fr': {
+                    code: 'FR',
+                    placeholder: 'Rechercher films, séries...',
+                    noResults: 'Aucun résultat trouvé pour',
+                    suggestions: 'Suggestions de recherche',
+                    tryThese: 'Essayez ces termes',
+                    results: 'résultats',
+                    result: 'résultat'
+                },
+                'de': {
+                    code: 'DE',
+                    placeholder: 'Filme, Serien suchen...',
+                    noResults: 'Keine Ergebnisse gefunden für',
+                    suggestions: 'Suchvorschläge',
+                    tryThese: 'Probieren Sie diese Begriffe',
+                    results: 'Ergebnisse',
+                    result: 'Ergebnis'
+                },
+                'it': {
+                    code: 'IT',
+                    placeholder: 'Cerca film, serie...',
+                    noResults: 'Nessun risultato trovato per',
+                    suggestions: 'Suggerimenti di ricerca',
+                    tryThese: 'Prova questi termini',
+                    results: 'risultati',
+                    result: 'risultato'
+                },
+                'pt': {
+                    code: 'PT',
+                    placeholder: 'Pesquisar filmes, séries...',
+                    noResults: 'Nenhum resultado encontrado para',
+                    suggestions: 'Sugestões de pesquisa',
+                    tryThese: 'Tente estes termos',
+                    results: 'resultados',
+                    result: 'resultado'
+                }
+            },
+            
+            // Detectar idioma del navegador
+            detectLanguage() {
+                const browserLang = navigator.language || navigator.userLanguage;
+                const langCode = browserLang.split('-')[0];
+                
+                // Si el idioma detectado está soportado, usarlo
+                if (this.languages[langCode]) {
+                    this.currentLanguage = langCode;
+                } else {
+                    // Por defecto español
+                    this.currentLanguage = 'es';
+                }
+                
+                this.updateUI();
+            },
+            
+            // Actualizar interfaz según el idioma
+            updateUI() {
+                const langData = this.languages[this.currentLanguage];
+                document.getElementById('search-input').placeholder = langData.placeholder;
+                document.getElementById('language-indicator').textContent = langData.code;
+            },
+            
+            // Traducciones de términos de búsqueda comunes
+            searchSynonyms: {
+                // Español
+                'es': {
+                    'acción': ['acción', 'aventura', 'aventuras', 'thriller'],
+                    'comedia': ['comedia', 'risa', 'divertida', 'humor'],
+                    'drama': ['drama', 'emocionante', 'sentimental'],
+                    'terror': ['terror', 'miedo', 'suspenso', 'horror'],
+                    'ciencia ficción': ['ciencia ficción', 'sci-fi', 'futurista', 'espacio'],
+                    'romance': ['romance', 'amor', 'romántica'],
+                    'animación': ['animación', 'dibujos', 'animada', 'infantil'],
+                    'documental': ['documental', 'realidad', 'documentales']
+                },
+                // Inglés
+                'en': {
+                    'action': ['action', 'adventure', 'thriller'],
+                    'comedy': ['comedy', 'funny', 'humor'],
+                    'drama': ['drama', 'emotional'],
+                    'horror': ['horror', 'scary', 'thriller'],
+                    'sci-fi': ['sci-fi', 'science fiction', 'futuristic', 'space'],
+                    'romance': ['romance', 'love'],
+                    'animation': ['animation', 'cartoon', 'animated'],
+                    'documentary': ['documentary', 'reality']
+                },
+                // Francés
+                'fr': {
+                    'action': ['action', 'aventure'],
+                    'comédie': ['comédie', 'drôle'],
+                    'drame': ['drame', 'émouvant'],
+                    'horreur': ['horreur', 'effrayant'],
+                    'science-fiction': ['science-fiction', 'futuriste'],
+                    'romance': ['romance', 'amour'],
+                    'animation': ['animation', 'dessin animé'],
+                    'documentaire': ['documentaire', 'réalité']
+                },
+                // Alemán
+                'de': {
+                    'aktion': ['aktion', 'abenteuer'],
+                    'komödie': ['komödie', 'lustig'],
+                    'drama': ['drama', 'emotional'],
+                    'horror': ['horror', 'gruselig'],
+                    'science-fiction': ['science-fiction', 'zukunft'],
+                    'romanze': ['romanze', 'liebe'],
+                    'animation': ['animation', 'zeichentrick'],
+                    'dokumentarfilm': ['dokumentarfilm', 'realität']
+                },
+                // Italiano
+                'it': {
+                    'azione': ['azione', 'avventura'],
+                    'commedia': ['commedia', 'divertente'],
+                    'dramma': ['dramma', 'emozionante'],
+                    'orrore': ['orrore', 'spaventoso'],
+                    'fantascienza': ['fantascienza', 'futuristica'],
+                    'romantico': ['romantico', 'amore'],
+                    'animazione': ['animazione', 'cartone animato'],
+                    'documentario': ['documentario', 'realtà']
+                },
+                // Portugués
+                'pt': {
+                    'ação': ['ação', 'aventura'],
+                    'comédia': ['comédia', 'engraçado'],
+                    'drama': ['drama', 'emocionante'],
+                    'terror': ['terror', 'assustador'],
+                    'ficção científica': ['ficção científica', 'futurista'],
+                    'romance': ['romance', 'amor'],
+                    'animação': ['animação', 'desenho animado'],
+                    'documentário': ['documentário', 'realidade']
+                }
+            },
+            
+            // Obtener sinónimos para una consulta
+            getSynonyms(query) {
+                const lang = this.currentLanguage;
+                const synonyms = [];
+                
+                // Buscar en los sinónimos del idioma actual
+                if (this.searchSynonyms[lang]) {
+                    for (const [category, terms] of Object.entries(this.searchSynonyms[lang])) {
+                        if (terms.some(term => query.toLowerCase().includes(term))) {
+                            synonyms.push(category);
+                        }
+                    }
+                }
+                
+                return synonyms;
+            },
+            
+            // Generar sugerencias de búsqueda basadas en el idioma
+            getSearchSuggestions() {
+                const lang = this.currentLanguage;
+                const suggestions = {
+                    'es': ['acción', 'comedia', 'drama', 'terror', 'romance', 'ciencia ficción', 'animación'],
+                    'en': ['action', 'comedy', 'drama', 'horror', 'romance', 'sci-fi', 'animation'],
+                    'fr': ['action', 'comédie', 'drame', 'horreur', 'romance', 'science-fiction', 'animation'],
+                    'de': ['aktion', 'komödie', 'drama', 'horror', 'romanze', 'science-fiction', 'animation'],
+                    'it': ['azione', 'commedia', 'dramma', 'orrore', 'romantico', 'fantascienza', 'animazione'],
+                    'pt': ['ação', 'comédia', 'drama', 'terror', 'romance', 'ficção científica', 'animação']
+                };
+                
+                return suggestions[lang] || suggestions['es'];
+            }
+        };
+        
         const State = { 
             movies: [], 
             heroMovies: [], 
@@ -466,11 +688,14 @@
                 const container = document.getElementById('section-inicio');
                 container.innerHTML = '';
                 
+                const langData = LanguageSystem.languages[LanguageSystem.currentLanguage];
+                const resultText = results.length === 1 ? langData.result : langData.results;
+                
                 const header = document.createElement('div');
                 header.className = 'search-results-header';
                 header.innerHTML = `
-                    <h2 class="search-section-title">Resultados de búsqueda</h2>
-                    <div class="results-count">${results.length} ${results.length === 1 ? 'resultado' : 'resultados'} para "${searchTerm}"</div>
+                    <h2 class="search-section-title">${langData.suggestions}</h2>
+                    <div class="results-count">${results.length} ${resultText} para "${searchTerm}"</div>
                 `;
                 container.appendChild(header);
                 
@@ -478,9 +703,26 @@
                     const noResults = document.createElement('div');
                     noResults.className = 'no-results';
                     noResults.innerHTML = `
-                        <p>No se encontraron resultados para "${searchTerm}"</p>
-                        <p style="margin-top: 12px; font-size: 0.9rem;">Intenta con otros términos de búsqueda</p>
+                        <p>${langData.noResults} "${searchTerm}"</p>
+                        <p style="margin-top: 12px; font-size: 0.9rem;">${langData.tryThese}</p>
                     `;
+                    
+                    // Añadir sugerencias de búsqueda
+                    const suggestions = document.createElement('div');
+                    suggestions.className = 'search-suggestions';
+                    
+                    LanguageSystem.getSearchSuggestions().forEach(suggestion => {
+                        const tag = document.createElement('div');
+                        tag.className = 'suggestion-tag';
+                        tag.textContent = suggestion;
+                        tag.addEventListener('click', () => {
+                            document.getElementById('search-input').value = suggestion;
+                            Search.performSearch();
+                        });
+                        suggestions.appendChild(tag);
+                    });
+                    
+                    noResults.appendChild(suggestions);
                     container.appendChild(noResults);
                     return;
                 }
@@ -625,9 +867,28 @@
                 }
 
                 State.isSearching = true;
-                const results = State.movies.filter(item => 
+                
+                // Búsqueda inteligente con sinónimos
+                const synonyms = LanguageSystem.getSynonyms(query);
+                let results = State.movies.filter(item => 
                     item.title.toLowerCase().includes(query.toLowerCase())
                 );
+                
+                // Si no hay resultados directos, buscar por sinónimos
+                if (results.length === 0 && synonyms.length > 0) {
+                    for (const synonym of synonyms) {
+                        const synonymResults = State.movies.filter(item => 
+                            item.title.toLowerCase().includes(synonym.toLowerCase()) ||
+                            item.group.toLowerCase().includes(synonym.toLowerCase())
+                        );
+                        results = [...results, ...synonymResults];
+                    }
+                    
+                    // Eliminar duplicados
+                    results = results.filter((item, index, self) => 
+                        index === self.findIndex(i => i.url === item.url)
+                    );
+                }
 
                 State.searchResults = results;
                 Renderer.renderSearchResults(results, query);
@@ -671,7 +932,8 @@
                     ...document.querySelectorAll('.navbar a'),
                     document.getElementById('search-input'),
                     ...(active.id === 'section-inicio' ? [document.getElementById('heroPlayBtn')] : []),
-                    ...active.querySelectorAll('a.movie-card')
+                    ...active.querySelectorAll('a.movie-card'),
+                    ...active.querySelectorAll('.suggestion-tag')
                 ];
             },
             setFocus(index) {
@@ -682,7 +944,13 @@
             activateFocused() { 
                 const focused = State.focusable[State.focusIndex];
                 if (focused && focused.id !== 'search-input') {
-                    focused.click(); 
+                    if (focused.classList.contains('suggestion-tag')) {
+                        // Es una sugerencia de búsqueda
+                        document.getElementById('search-input').value = focused.textContent;
+                        Search.performSearch();
+                    } else {
+                        focused.click(); 
+                    }
                 }
             },
             moveFocus(direction) {
@@ -695,7 +963,7 @@
                     if (direction === 'Down') {
                         // Mover al primer elemento después de la búsqueda
                         State.focusIndex = State.focusable.findIndex(el => 
-                            el.id === 'heroPlayBtn' || el.classList.contains('movie-card')
+                            el.id === 'heroPlayBtn' || el.classList.contains('movie-card') || el.classList.contains('suggestion-tag')
                         );
                         if (State.focusIndex !== -1) {
                             State.focusable[State.focusIndex].focus();
@@ -733,6 +1001,9 @@
 
         const App = {
             init() {
+                // Inicializar sistema de idiomas
+                LanguageSystem.detectLanguage();
+                
                 document.addEventListener('keydown', e => {
                     if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) { 
                         e.preventDefault(); 
