@@ -1,1096 +1,444 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover"/>
-    <title>Stream Player • TV</title>
-    <script>
-        (function() { 
-            const v = document.createElement('video'); 
-            if (!v.canPlayType('application/vnd.apple.mpegurl')) { 
-                const s = document.createElement('script'); 
-                s.src = 'https://cdn.jsdelivr.net/npm/hls.js@1'; 
-                s.async = true; 
-                document.head.appendChild(s); 
-            } 
-        })();
-    </script>
-    <style>
-        :root { 
-            --bg: #0B0B0B; 
-            --text: #FFFFFF; 
-            --accent: #E50914; 
-            --focus: #FFFFFF; 
-            --radius: 8px; 
-            --gutter: clamp(20px, 4vw, 40px); 
-            --surface: #1a1a1a;
-            --surface-hover: #2a2a2a;
-            --surface-active: #333;
-            --text-secondary: #aaa;
-        }
-        * { box-sizing: border-box; margin: 0; padding: 0; }
-        html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; }
-        .navbar { 
-            display: flex; 
-            align-items: center; 
-            gap: 14px; 
-            padding: 14px var(--gutter); 
-            position: sticky; 
-            top: 0; 
-            z-index: 50; 
-            background: rgba(11, 11, 11, 0.95); 
-            backdrop-filter: blur(15px); 
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
-        }
-        .navbar a { 
-            color: #cfcfcf; 
-            text-decoration: none; 
-            font-weight: 600; 
-            padding: 8px 16px; 
-            border-radius: 6px; 
-            cursor: pointer; 
-            transition: all 0.2s ease;
-            font-size: 0.95rem;
-        }
-        .navbar a.active { 
-            color: #fff; 
-            background: rgba(229, 9, 20, 0.25); 
-            box-shadow: 0 0 0 1px rgba(229, 9, 20, 0.3);
-        }
-        .navbar a:focus, a.movie-card:focus, .play-btn:focus { 
-            outline: 2px solid var(--focus); 
-            outline-offset: 2px; 
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2); 
-        }
-        #heroBanner { position: relative; height: min(40vh, 400px); display: flex; align-items: center; padding: 0 var(--gutter); background-size: cover; background-position: center; }
-        #heroBanner::before { content: ''; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(11, 11, 11, 0.9) 0%, rgba(11, 11, 11, 0.4) 45%, transparent 70%); }
-        .hero-content { position: relative; z-index: 2; max-width: min(600px, 60vw); }
-        .hero-title { font-size: clamp(2rem, 4vw, 3rem); line-height: 1.1; margin-bottom: 8px; font-weight: 800; }
-        .hero-description { color: #d0d0d0; font-size: clamp(0.9rem, 1.5vw, 1.1rem); line-height: 1.4; margin-bottom: 16px; }
-        .hero-buttons a { padding: 12px 20px; font-size: 16px; font-weight: 700; border: none; border-radius: 6px; cursor: pointer; text-decoration: none; }
-        .play-btn { background: #fff; color: #000; }
-        #main-content-wrapper { height: calc(100% - min(40vh, 400px) - 62px); overflow: hidden; position: relative; }
-        .content-section { height: 100%; overflow-y: auto; overflow-x: hidden; position: absolute; width: 100%; top: 0; left: 0; opacity: 1; transition: opacity 0.2s; }
-        .content-section.hidden { opacity: 0; pointer-events: none; }
-        .section-title { font-size: 22px; font-weight: 800; margin: 12px var(--gutter) 8px; }
-        .container-carrusel { display: flex; gap: 12px; overflow-x: auto; padding: 0 var(--gutter) 20px; scroll-behavior: smooth; }
-        .container-carrusel::-webkit-scrollbar { display: none; }
-        a.movie-card { display: block; width: 180px; flex: 0 0 180px; border-radius: var(--radius); overflow: hidden; cursor: pointer; transition: transform 0.2s ease; background: #181818; text-decoration: none; }
-        .movie-card img { width: 100%; height: 270px; object-fit: cover; display: block; background: #222; }
-        .movie-card .title { font-size: 14px; font-weight: 600; padding: 8px; color: #f0f0f0; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-        .progress-indicator { position: absolute; left: 0; bottom: 0; height: 4px; background: linear-gradient(90deg, var(--accent), #ff6b6b); width: 0%; }
-        .loading-state, .error-state { padding: 40px var(--gutter); text-align: center; color: #ccc; }
-        .loading-spinner { border: 4px solid #333; border-top: 4px solid var(--accent); border-radius: 50%; width: 40px; height: 40px; animation: spin 1s linear infinite; margin: 0 auto 16px; }
-        @keyframes spin { from { transform: rotate(0); } to { transform: rotate(360deg); } }
-        
-        /* BARRA DE BÚSQUEDA MULTILINGÜE */
-        .search-container { 
-            position: relative; 
-            margin-left: auto;
-            margin-right: 20px;
-            width: 360px;
-            max-width: 100%;
-            z-index: 60;
-        }
-        
-        .search-box {
-            display: flex;
-            align-items: center;
-            background: rgba(30, 30, 30, 0.9);
-            border-radius: 6px;
-            padding: 8px 16px;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
-            height: 44px;
-        }
-        
-        .search-box:focus-within {
-            background: rgba(40, 40, 40, 0.95);
-            border-color: var(--accent);
-            box-shadow: 0 6px 20px rgba(229, 9, 20, 0.25);
-            transform: translateY(-1px);
-        }
-        
-        .search-box.active {
-            border-bottom-left-radius: 0;
-            border-bottom-right-radius: 0;
-            border-color: var(--accent);
-        }
-        
-        #search-input {
-            flex: 1;
-            border: none;
-            outline: none;
-            background: transparent;
-            color: white;
-            font-size: 0.95rem;
-            padding: 5px 0;
-            font-weight: 500;
-            letter-spacing: 0.2px;
-        }
-        
-        #search-input::placeholder {
-            color: var(--text-secondary);
-            font-weight: 400;
-        }
-        
-        .clear-btn {
-            background: none;
-            border: none;
-            color: var(--text-secondary);
-            cursor: pointer;
-            padding: 6px;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.2s ease;
-            opacity: 0;
-            visibility: hidden;
-            width: 28px;
-            height: 28px;
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .clear-btn.visible {
-            opacity: 1;
-            visibility: visible;
-        }
-        
-        .clear-btn:hover {
-            background-color: rgba(255, 255, 255, 0.1);
-            color: white;
-        }
-        
-        .language-indicator {
-            position: absolute;
-            top: -8px;
-            right: 10px;
-            background: var(--accent);
-            color: white;
-            font-size: 0.7rem;
-            padding: 2px 6px;
-            border-radius: 10px;
-            font-weight: 600;
-            z-index: 5;
-        }
-        
-        .autocomplete-list {
-            position: absolute;
-            top: 100%;
-            left: 0;
-            right: 0;
-            background: rgba(30, 30, 30, 0.98);
-            border-bottom-left-radius: 6px;
-            border-bottom-right-radius: 6px;
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4);
-            margin-top: -1px;
-            max-height: 400px;
-            overflow-y: auto;
-            z-index: 100;
-            display: none;
-            backdrop-filter: blur(20px);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            border-top: 1px solid rgba(229, 9, 20, 0.3);
-        }
-        
-        .autocomplete-list.active {
-            display: block;
-            animation: fadeIn 0.2s ease;
-        }
-        
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(-5px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
-        
-        .autocomplete-item {
-            padding: 14px 16px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            transition: background-color 0.15s ease;
-            color: #f0f0f0;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        }
-        
-        .autocomplete-item:last-child {
-            border-bottom: none;
-        }
-        
-        .autocomplete-item:hover, .autocomplete-item:focus {
-            background-color: rgba(255, 255, 255, 0.08);
-            outline: none;
-        }
-        
-        .autocomplete-item .poster {
-            width: 40px;
-            height: 60px;
-            object-fit: cover;
-            border-radius: 4px;
-            margin-right: 12px;
-            background: #222;
-            flex-shrink: 0;
-        }
-        
-        .autocomplete-info {
-            flex: 1;
-            overflow: hidden;
-        }
-        
-        .autocomplete-title {
-            font-weight: 600;
-            font-size: 0.95rem;
-            margin-bottom: 4px;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-        
-        .autocomplete-category {
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-        }
-        
-        .highlight {
-            background-color: rgba(229, 9, 20, 0.3);
-            padding: 0 2px;
-            border-radius: 2px;
-            font-weight: 700;
-        }
-        
-        .search-results-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding: 0 var(--gutter) 10px;
-            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-        }
-        
-        .results-count {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-            font-weight: 500;
-        }
-        
-        .no-results {
-            text-align: center;
-            padding: 60px var(--gutter);
-            color: var(--text-secondary);
-        }
-        
-        .search-section-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 24px var(--gutter) 16px;
-            color: white;
-        }
-        
-        .search-suggestions {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 10px;
-            margin: 20px var(--gutter);
-        }
-        
-        .suggestion-tag {
-            background: rgba(255, 255, 255, 0.1);
-            color: #ddd;
-            padding: 6px 12px;
-            border-radius: 16px;
-            font-size: 0.85rem;
-            cursor: pointer;
-            transition: all 0.2s ease;
-        }
-        
-        .suggestion-tag:hover {
-            background: rgba(229, 9, 20, 0.3);
-            color: white;
-        }
-        
-        /* Mejoras de scroll para autocompletado */
-        .autocomplete-list::-webkit-scrollbar {
-            width: 6px;
-        }
-        
-        .autocomplete-list::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.05);
-            border-radius: 3px;
-        }
-        
-        .autocomplete-list::-webkit-scrollbar-thumb {
-            background: rgba(255, 255, 255, 0.2);
-            border-radius: 3px;
-        }
-        
-        .autocomplete-list::-webkit-scrollbar-thumb:hover {
-            background: rgba(255, 255, 255, 0.3);
-        }
-        
-        /* Responsive */
-        @media (max-width: 768px) {
-            .search-container {
-                width: 280px;
-                margin-right: 10px;
-            }
-            
-            .search-box {
-                padding: 6px 12px;
-                height: 40px;
-            }
-            
-            .autocomplete-item {
-                padding: 12px 14px;
-            }
-            
-            .autocomplete-item .poster {
-                width: 36px;
-                height: 54px;
-            }
-            
-            .language-indicator {
-                font-size: 0.65rem;
-                padding: 1px 5px;
-            }
-        }
-        
-        @media (max-width: 600px) {
-            .search-container {
-                width: 220px;
-            }
-            
-            #search-input {
-                font-size: 0.9rem;
-            }
-            
-            .autocomplete-item {
-                padding: 10px 12px;
-            }
-            
-            .autocomplete-item .poster {
-                width: 32px;
-                height: 48px;
-                margin-right: 10px;
-            }
-            
-            .autocomplete-title {
-                font-size: 0.9rem;
-            }
-        }
-        
-        @media (max-width: 480px) {
-            .search-container {
-                width: 180px;
-            }
-            
-            #search-input::placeholder {
-                font-size: 0.85rem;
-            }
-        }
-    </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>IPTV Player TV</title>
+<style>
+body {
+  margin: 0;
+  font-family: 'Segoe UI', Arial, Helvetica, sans-serif;
+  background: #141414;
+  color: #fff;
+  overflow-x: hidden;
+}
+a { color: inherit; text-decoration: none; }
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding: 10px 30px 5px 30px;
+  background: #181818;
+  box-shadow: 0 2px 12px #0005;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  min-height: 48px;
+}
+.search-bar {
+  background: #232323;
+  border-radius: 30px;
+  padding: 7px 18px;
+  display: flex;
+  align-items: center;
+  box-shadow: 0 2px 8px #0002;
+  transition: box-shadow 0.2s, border 0.2s;
+}
+.search-bar.focused {
+  box-shadow: 0 0 0 3px #1e90ff, 0 2px 8px #1e90ff55;
+  border: 2px solid #1e90ff;
+}
+.search-bar input {
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #fff;
+  font-size: 1.2em;
+  width: 320px;
+  margin-left: 8px;
+}
+.search-bar input::placeholder { color: #bbb; }
+
+.main { padding: 18px 30px; box-sizing: border-box; }
+.section { margin-bottom: 36px; transition: transform 0.4s ease, opacity 0.4s ease; }
+.section.active { transform: scale(1.03); opacity: 1; }
+.section h2 { font-size: 1.3em; margin-bottom: 16px; color: #fff; letter-spacing: 1px; }
+.row {
+  display: flex;
+  overflow-x: auto;
+  gap: 16px; /* Menor separación entre posters */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 8px;
+  align-items: flex-end;
+  min-height: 470px;
+}
+.row::-webkit-scrollbar { display: none; }
+.channel {
+  flex: 0 0 300px; /* 2:3 ratio width */
+  cursor: pointer;
+  border-radius: 0;
+  font-size: 1.2em;
+  background: #232323;
+  box-shadow: 0 12px 40px rgba(0,0,0,0.8);
+  transition: transform 0.3s, box-shadow 0.3s;
+  position: relative;
+  overflow: hidden;
+  min-height: 450px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  border: 4px solid transparent;
+  padding-bottom: 0;
+}
+.channel img {
+  width: 100%;
+  aspect-ratio: 2/3;
+  height: 450px; /* 2:3 ratio for 300px width */
+  object-fit: cover;
+  background: #181818;
+  border-radius: 0;
+  box-shadow: 0 2px 16px #000a;
+  display: block;
+}
+.channel p { display: none; }
+.channel.focused {
+  border: 4px solid #1e90ff;
+  box-shadow: 0 0 60px #1e90ffcc, 0 12px 40px rgba(0,0,0,0.8);
+  transform: scale(1.15);
+  z-index: 2;
+}
+@media (max-width: 1200px) {
+  .main { padding: 10px 5px; }
+  .header { padding: 10px 10px 5px 10px; }
+  .section h2 { font-size: 1.1em; }
+  .channel { flex: 0 0 160px; min-height: 240px; }
+  .channel img { height: 240px; }
+  .row { min-height: 240px; gap: 8px; }
+}
+@media (max-width: 700px) {
+  .channel { flex: 0 0 90px; min-height: 120px; }
+  .channel img { height: 135px; }
+  .row { min-height: 120px; gap: 4px; }
+}
+
+/* Tooltip */
+#tooltip {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  background: #232323e0;
+  color: #fff;
+  padding: 12px 22px;
+  border-radius: 10px;
+  box-shadow: 0 4px 24px #000a;
+  font-size: 1.1em;
+  pointer-events: none;
+  max-width: 340px;
+  min-width: 120px;
+  transition: opacity 0.2s;
+  opacity: 0;
+  white-space: pre-line;
+}
+#tooltip.visible {
+  display: block;
+  opacity: 1;
+}
+</style>
 </head>
+
 <body>
-    <div class="navbar" role="navigation">
-        <a id="link-inicio" class="active" onclick="App.showSection('inicio')">Inicio</a>
-        <a id="link-historial" onclick="App.showSection('historial')">Seguir viendo</a>
-        
-        <!-- BARRA DE BÚSQUEDA MULTILINGÜE -->
-        <div class="search-container">
-            <div class="search-box" id="search-box">
-                <input type="text" id="search-input" placeholder="Buscar en el catálogo..." autocomplete="off">
-                <button class="clear-btn" id="clear-btn" title="Limpiar búsqueda">X</button>
-                <div class="language-indicator" id="language-indicator">ES</div>
-            </div>
-            <div class="autocomplete-list" id="autocomplete-list"></div>
-        </div>
-    </div>
-    
-    <section id="heroBanner">
-        <div class="hero-content">
-            <h1 class="hero-title" id="heroTitle">Cargando…</h1>
-            <p class="hero-description" id="heroDescription">Buscando contenido…</p>
-            <div class="hero-buttons">
-                <a class="play-btn" id="heroPlayBtn" tabindex="0" href="#">Reproducir</a>
-            </div>
-        </div>
-    </section>
-    <div id="main-content-wrapper">
-        <section id="section-inicio" class="content-section"></section>
-        <section id="section-historial" class="content-section hidden"></section>
-    </div>
+<div class="header">
+  <div class="search-bar" id="searchBar">
+    <svg width="20" height="20" fill="#bbb" viewBox="0 0 20 20"><circle cx="9" cy="9" r="7" stroke="#bbb" stroke-width="2" fill="none"/><line x1="15" y1="15" x2="19" y2="19" stroke="#bbb" stroke-width="2" stroke-linecap="round"/></svg>
+    <input id="searchInput" type="text" placeholder="Buscar canal o película..." autocomplete="off" />
+  </div>
+</div>
 
-    <script>
-        const CONFIG = {
-            PLAYER_PAGE_URL: "player.html",
-            PLAYLIST_URL: "https://raw.githubusercontent.com/Miguel179-spe/tvlion/refs/heads/peliculas/peliculas.html",
-            STORAGE_KEYS: {
-                HISTORY: "tv_history_v11",
-                PROGRESS: "tv_progress_v11",
-                CACHE: "tv_cache_v11"
-            }
-        };
-        
-        // Sistema de idiomas y traducciones
-        const LanguageSystem = {
-            currentLanguage: 'es',
-            languages: {
-                'es': {
-                    code: 'ES',
-                    placeholder: 'Buscar películas, series...',
-                    noResults: 'No se encontraron resultados para',
-                    suggestions: 'Sugerencias de búsqueda',
-                    tryThese: 'Prueba con estos términos',
-                    results: 'resultados',
-                    result: 'resultado'
-                },
-                'en': {
-                    code: 'EN',
-                    placeholder: 'Search movies, series...',
-                    noResults: 'No results found for',
-                    suggestions: 'Search suggestions',
-                    tryThese: 'Try these terms',
-                    results: 'results',
-                    result: 'result'
-                },
-                'fr': {
-                    code: 'FR',
-                    placeholder: 'Rechercher films, séries...',
-                    noResults: 'Aucun résultat trouvé pour',
-                    suggestions: 'Suggestions de recherche',
-                    tryThese: 'Essayez ces termes',
-                    results: 'résultats',
-                    result: 'résultat'
-                },
-                'de': {
-                    code: 'DE',
-                    placeholder: 'Filme, Serien suchen...',
-                    noResults: 'Keine Ergebnisse gefunden für',
-                    suggestions: 'Suchvorschläge',
-                    tryThese: 'Probieren Sie diese Begriffe',
-                    results: 'Ergebnisse',
-                    result: 'Ergebnis'
-                },
-                'it': {
-                    code: 'IT',
-                    placeholder: 'Cerca film, serie...',
-                    noResults: 'Nessun risultato trovato per',
-                    suggestions: 'Suggerimenti di ricerca',
-                    tryThese: 'Prova questi termini',
-                    results: 'risultati',
-                    result: 'risultato'
-                },
-                'pt': {
-                    code: 'PT',
-                    placeholder: 'Pesquisar filmes, séries...',
-                    noResults: 'Nenhum resultado encontrado para',
-                    suggestions: 'Sugestões de pesquisa',
-                    tryThese: 'Tente estes termos',
-                    results: 'resultados',
-                    result: 'resultado'
-                }
-            },
-            
-            // Detectar idioma del navegador
-            detectLanguage() {
-                const browserLang = navigator.language || navigator.userLanguage;
-                const langCode = browserLang.split('-')[0];
-                
-                // Si el idioma detectado está soportado, usarlo
-                if (this.languages[langCode]) {
-                    this.currentLanguage = langCode;
-                } else {
-                    // Por defecto español
-                    this.currentLanguage = 'es';
-                }
-                
-                this.updateUI();
-            },
-            
-            // Actualizar interfaz según el idioma
-            updateUI() {
-                const langData = this.languages[this.currentLanguage];
-                document.getElementById('search-input').placeholder = langData.placeholder;
-                document.getElementById('language-indicator').textContent = langData.code;
-            },
-            
-            // Traducciones de términos de búsqueda comunes
-            searchSynonyms: {
-                // Español
-                'es': {
-                    'acción': ['acción', 'aventura', 'aventuras', 'thriller'],
-                    'comedia': ['comedia', 'risa', 'divertida', 'humor'],
-                    'drama': ['drama', 'emocionante', 'sentimental'],
-                    'terror': ['terror', 'miedo', 'suspenso', 'horror'],
-                    'ciencia ficción': ['ciencia ficción', 'sci-fi', 'futurista', 'espacio'],
-                    'romance': ['romance', 'amor', 'romántica'],
-                    'animación': ['animación', 'dibujos', 'animada', 'infantil'],
-                    'documental': ['documental', 'realidad', 'documentales']
-                },
-                // Inglés
-                'en': {
-                    'action': ['action', 'adventure', 'thriller'],
-                    'comedy': ['comedy', 'funny', 'humor'],
-                    'drama': ['drama', 'emotional'],
-                    'horror': ['horror', 'scary', 'thriller'],
-                    'sci-fi': ['sci-fi', 'science fiction', 'futuristic', 'space'],
-                    'romance': ['romance', 'love'],
-                    'animation': ['animation', 'cartoon', 'animated'],
-                    'documentary': ['documentary', 'reality']
-                },
-                // Francés
-                'fr': {
-                    'action': ['action', 'aventure'],
-                    'comédie': ['comédie', 'drôle'],
-                    'drame': ['drame', 'émouvant'],
-                    'horreur': ['horreur', 'effrayant'],
-                    'science-fiction': ['science-fiction', 'futuriste'],
-                    'romance': ['romance', 'amour'],
-                    'animation': ['animation', 'dessin animé'],
-                    'documentaire': ['documentaire', 'réalité']
-                },
-                // Alemán
-                'de': {
-                    'aktion': ['aktion', 'abenteuer'],
-                    'komödie': ['komödie', 'lustig'],
-                    'drama': ['drama', 'emotional'],
-                    'horror': ['horror', 'gruselig'],
-                    'science-fiction': ['science-fiction', 'zukunft'],
-                    'romanze': ['romanze', 'liebe'],
-                    'animation': ['animation', 'zeichentrick'],
-                    'dokumentarfilm': ['dokumentarfilm', 'realität']
-                },
-                // Italiano
-                'it': {
-                    'azione': ['azione', 'avventura'],
-                    'commedia': ['commedia', 'divertente'],
-                    'dramma': ['dramma', 'emozionante'],
-                    'orrore': ['orrore', 'spaventoso'],
-                    'fantascienza': ['fantascienza', 'futuristica'],
-                    'romantico': ['romantico', 'amore'],
-                    'animazione': ['animazione', 'cartone animato'],
-                    'documentario': ['documentario', 'realtà']
-                },
-                // Portugués
-                'pt': {
-                    'ação': ['ação', 'aventura'],
-                    'comédia': ['comédia', 'engraçado'],
-                    'drama': ['drama', 'emocionante'],
-                    'terror': ['terror', 'assustador'],
-                    'ficção científica': ['ficção científica', 'futurista'],
-                    'romance': ['romance', 'amor'],
-                    'animação': ['animação', 'desenho animado'],
-                    'documentário': ['documentário', 'realidade']
-                }
-            },
-            
-            // Obtener sinónimos para una consulta
-            getSynonyms(query) {
-                const lang = this.currentLanguage;
-                const synonyms = [];
-                
-                // Buscar en los sinónimos del idioma actual
-                if (this.searchSynonyms[lang]) {
-                    for (const [category, terms] of Object.entries(this.searchSynonyms[lang])) {
-                        if (terms.some(term => query.toLowerCase().includes(term))) {
-                            synonyms.push(category);
-                        }
-                    }
-                }
-                
-                return synonyms;
-            },
-            
-            // Generar sugerencias de búsqueda basadas en el idioma
-            getSearchSuggestions() {
-                const lang = this.currentLanguage;
-                const suggestions = {
-                    'es': ['acción', 'comedia', 'drama', 'terror', 'romance', 'ciencia ficción', 'animación'],
-                    'en': ['action', 'comedy', 'drama', 'horror', 'romance', 'sci-fi', 'animation'],
-                    'fr': ['action', 'comédie', 'drame', 'horreur', 'romance', 'science-fiction', 'animation'],
-                    'de': ['aktion', 'komödie', 'drama', 'horror', 'romanze', 'science-fiction', 'animation'],
-                    'it': ['azione', 'commedia', 'dramma', 'orrore', 'romantico', 'fantascienza', 'animazione'],
-                    'pt': ['ação', 'comédia', 'drama', 'terror', 'romance', 'ficção científica', 'animação']
-                };
-                
-                return suggestions[lang] || suggestions['es'];
-            }
-        };
-        
-        const State = { 
-            movies: [], 
-            heroMovies: [], 
-            currentHero: 0, 
-            focusable: [], 
-            focusIndex: 0,
-            searchTerm: '',
-            searchResults: [],
-            isSearching: false
-        };
-        const Storage = {
-            get: k => { try { return JSON.parse(localStorage.getItem(k)); } catch { return null; } },
-            set: (k, v) => { try { localStorage.setItem(k, JSON.stringify(v)); } catch (e) {} },
-            getHistory: () => Storage.get(CONFIG.STORAGE_KEYS.HISTORY) || []
-        };
-        const Parser = {
-            parseM3U(t) {
-                return t.split('#EXTINF').slice(1).map(e => {
-                    const p = e.split('\n');
-                    const m = p[0];
-                    const u = p.slice(1).find(l => l.trim() && !l.startsWith('#'))?.trim();
-                    if (!u) return null;
-                    return {
-                        title: (m.split(',').pop() || '').trim(),
-                        logo: (m.match(/tvg-logo="([^"]*)"/)?.[1] || '').trim(),
-                        group: (m.match(/group-title="([^"]*)"/)?.[1] || 'Otros').trim(),
-                        url: u
-                    };
-                }).filter(Boolean);
-            }
-        };
+<div class="main" id="mainContent"></div>
+<div id="tooltip"></div>
 
-        const Renderer = {
-            createMovieCard(movie) {
-                const card = document.createElement('a');
-                card.className = 'movie-card';
-                card.tabIndex = 0;
-                // Enlace al reproductor
-                const playerUrl = `${CONFIG.PLAYER_PAGE_URL}?stream=${encodeURIComponent(movie.url)}`;
-                card.href = playerUrl;
-                // Guardar en historial
-                card.addEventListener('click', (e) => {
-                    const history = Storage.getHistory().filter(x => x.url !== movie.url);
-                    Storage.set(CONFIG.STORAGE_KEYS.HISTORY, [movie, ...history].slice(0, 50));
-                });
-                const progress = Storage.get(CONFIG.STORAGE_KEYS.PROGRESS)?.[movie.url];
-                const pHTML = progress?.progress > 5 && progress.progress < 95 ? `<div class="progress-indicator" style="width:${progress.progress}%"></div>` : '';
-                card.innerHTML = `<img src="${movie.logo || ''}" alt="${movie.title}"><div class="title">${movie.title}</div>${pHTML}`;
-                return card;
-            },
-            renderCategories(byCategory) {
-                const f = document.createDocumentFragment();
-                for (const [cat, movs] of Object.entries(byCategory)) {
-                    const s = document.createElement('div');
-                    s.innerHTML = `<h2 class="section-title">${cat}</h2>`;
-                    const c = document.createElement('div');
-                    c.className = 'container-carrusel';
-                    c.setAttribute('data-category', cat);
-                    for (const mov of movs) c.appendChild(this.createMovieCard(mov));
-                    s.appendChild(c);
-                    f.appendChild(s);
-                }
-                document.getElementById('section-inicio').innerHTML = '';
-                document.getElementById('section-inicio').appendChild(f);
-            },
-            renderSearchResults(results, searchTerm) {
-                const container = document.getElementById('section-inicio');
-                container.innerHTML = '';
-                
-                const langData = LanguageSystem.languages[LanguageSystem.currentLanguage];
-                const resultText = results.length === 1 ? langData.result : langData.results;
-                
-                const header = document.createElement('div');
-                header.className = 'search-results-header';
-                header.innerHTML = `
-                    <h2 class="search-section-title">${langData.suggestions}</h2>
-                    <div class="results-count">${results.length} ${resultText} para "${searchTerm}"</div>
-                `;
-                container.appendChild(header);
-                
-                if (results.length === 0) {
-                    const noResults = document.createElement('div');
-                    noResults.className = 'no-results';
-                    noResults.innerHTML = `
-                        <p>${langData.noResults} "${searchTerm}"</p>
-                        <p style="margin-top: 12px; font-size: 0.9rem;">${langData.tryThese}</p>
-                    `;
-                    
-                    // Añadir sugerencias de búsqueda
-                    const suggestions = document.createElement('div');
-                    suggestions.className = 'search-suggestions';
-                    
-                    LanguageSystem.getSearchSuggestions().forEach(suggestion => {
-                        const tag = document.createElement('div');
-                        tag.className = 'suggestion-tag';
-                        tag.textContent = suggestion;
-                        tag.addEventListener('click', () => {
-                            document.getElementById('search-input').value = suggestion;
-                            Search.performSearch();
-                        });
-                        suggestions.appendChild(tag);
-                    });
-                    
-                    noResults.appendChild(suggestions);
-                    container.appendChild(noResults);
-                    return;
-                }
-                
-                // Agrupar resultados por categoría para mejor organización
-                const byCategory = results.reduce((acc, movie) => {
-                    (acc[movie.group] = acc[movie.group] || []).push(movie);
-                    return acc;
-                }, {});
-                
-                for (const [cat, movs] of Object.entries(byCategory)) {
-                    const categorySection = document.createElement('div');
-                    categorySection.innerHTML = `<h2 class="section-title">${cat}</h2>`;
-                    const categoryCarousel = document.createElement('div');
-                    categoryCarousel.className = 'container-carrusel';
-                    
-                    for (const mov of movs) {
-                        categoryCarousel.appendChild(this.createMovieCard(mov));
-                    }
-                    
-                    categorySection.appendChild(categoryCarousel);
-                    container.appendChild(categorySection);
-                }
-            },
-            renderHistory() {
-                const h = Storage.getHistory();
-                const c = document.getElementById('section-historial');
-                if (!h || h.length === 0) {
-                    c.innerHTML = '<h2 class="section-title">Seguir viendo</h2><p style="padding:0 var(--gutter); color: var(--text-secondary);">No hay contenido en tu historial de visualización.</p>';
-                    return;
-                }
-                const car = document.createElement('div');
-                car.className = 'container-carrusel';
-                for (const mov of h) car.appendChild(this.createMovieCard(mov));
-                c.innerHTML = '<h2 class="section-title">Seguir viendo</h2>';
-                c.appendChild(car);
-            }
-        };
+<script>
+const PLAYLIST_URL_MOVIES = "https://raw.githubusercontent.com/Miguel179-spe/tvlion/refs/heads/peliculas/peliculas.html";
+let moviesByCategory = {};
+let allChannels = [];
+let lastPlayed = []; // Para "Seguir Viendo"
 
-        const Hero = {
-            timer: null,
-            update() {
-                const movs = State.heroMovies;
-                if (!movs.length) return;
-                const mov = movs[State.currentHero % movs.length];
-                document.getElementById('heroBanner').style.backgroundImage = `url('${mov.logo}')`;
-                document.getElementById('heroTitle').textContent = mov.title;
-                document.getElementById('heroDescription').textContent = mov.description;
-                // Botón de play es un enlace
-                const playBtn = document.getElementById('heroPlayBtn');
-                playBtn.href = `${CONFIG.PLAYER_PAGE_URL}?stream=${encodeURIComponent(mov.url)}`;
-                playBtn.onclick = () => {
-                    const history = Storage.getHistory().filter(x => x.url !== mov.url);
-                    Storage.set(CONFIG.STORAGE_KEYS.HISTORY, [mov, ...history].slice(0, 50));
-                };
-                State.currentHero = (State.currentHero + 1) % movs.length;
-            },
-            start() { this.stop(); this.update(); this.timer = setInterval(this.update, 8000); },
-            stop() { clearInterval(this.timer); }
-        };
+// --- PARSEADOR M3U ---
+function parseM3U(text) {
+  const lines = text.split("\n");
+  const channels = [];
+  let current = {};
+  for (let line of lines) {
+    line = line.trim();
+    if (line.startsWith("#EXTINF:")) {
+      const logo = line.match(/tvg-logo="([^"]*)"/);
+      const name = line.split(",").pop();
+      const cat = line.match(/group-title="([^"]*)"/);
+      current.logo = logo ? logo[1] : "https://upload.wikimedia.org/wikipedia/commons/6/65/No-Image-Placeholder.svg";
+      current.name = name;
+      current.category = cat ? cat[1] : "Sin categoría";
+    } else if (line && !line.startsWith("#")) {
+      current.url = line;
+      channels.push({...current});
+      current = {};
+    }
+  }
+  return channels;
+}
 
-        const Search = {
-            timer: null,
-            handleInput() {
-                const query = document.getElementById('search-input').value.trim();
-                State.searchTerm = query;
-                
-                // Mostrar/ocultar botón de limpiar
-                if (query.length > 0) {
-                    document.getElementById('clear-btn').classList.add('visible');
-                    document.getElementById('search-box').classList.add('active');
-                } else {
-                    document.getElementById('clear-btn').classList.remove('visible');
-                    document.getElementById('autocomplete-list').classList.remove('active');
-                    document.getElementById('search-box').classList.remove('active');
-                    this.clearSearch();
-                    return;
-                }
+// --- CARGA DE LISTA ---
+async function loadPlaylist() {
+  try {
+    const res = await fetch(PLAYLIST_URL_MOVIES);
+    const text = await res.text();
+    const channels = parseM3U(text);
+    allChannels = channels;
+    organizeByCategory(channels);
+    loadLastPlayed();
+    renderAllCategories();
+    initTVNavigation();
+  } catch (e) { console.error(e); }
+}
 
-                // Debounce para evitar muchas solicitudes
-                clearTimeout(this.timer);
-                this.timer = setTimeout(() => {
-                    this.showAutocomplete(query);
-                }, 250);
-            },
-            showAutocomplete(query) {
-                if (query.length < 2) {
-                    document.getElementById('autocomplete-list').classList.remove('active');
-                    return;
-                }
+function organizeByCategory(channels) {
+  moviesByCategory = {};
+  channels.forEach(ch => {
+    if (!moviesByCategory[ch.category]) moviesByCategory[ch.category] = [];
+    moviesByCategory[ch.category].push(ch);
+  });
+}
 
-                const suggestions = State.movies
-                    .filter(item => 
-                        item.title.toLowerCase().includes(query.toLowerCase())
-                    )
-                    .slice(0, 8);
+function renderAllCategories(filtered = null) {
+  const main = document.getElementById("mainContent");
+  main.innerHTML = "";
 
-                if (suggestions.length === 0) {
-                    document.getElementById('autocomplete-list').classList.remove('active');
-                    return;
-                }
+  // --- SEGUIR VIENDO ---
+  if (lastPlayed.length > 0) {
+    const section = document.createElement("div");
+    section.className = "section";
+    section.innerHTML = `<h2>Seguir Viendo</h2><div class="row" id="row_SeguirViendo"></div>`;
+    main.appendChild(section);
+    renderChannels(lastPlayed, "row_SeguirViendo", true);
+  }
 
-                const autocompleteList = document.getElementById('autocomplete-list');
-                autocompleteList.innerHTML = '';
-                
-                suggestions.forEach(item => {
-                    const div = document.createElement('div');
-                    div.className = 'autocomplete-item';
-                    div.tabIndex = 0;
-                    div.innerHTML = `
-                        <img class="poster" src="${item.logo || ''}" alt="${item.title}">
-                        <div class="autocomplete-info">
-                            <div class="autocomplete-title">${this.highlightMatch(item.title, query)}</div>
-                            <div class="autocomplete-category">${item.group}</div>
-                        </div>
-                    `;
-                    div.addEventListener('click', () => {
-                        document.getElementById('search-input').value = item.title;
-                        autocompleteList.classList.remove('active');
-                        document.getElementById('search-box').classList.remove('active');
-                        this.performSearch();
-                    });
-                    div.addEventListener('keydown', (e) => {
-                        if (e.key === 'Enter') {
-                            document.getElementById('search-input').value = item.title;
-                            autocompleteList.classList.remove('active');
-                            document.getElementById('search-box').classList.remove('active');
-                            this.performSearch();
-                        }
-                    });
-                    autocompleteList.appendChild(div);
-                });
+  // --- CATEGORÍAS ---
+  const cats = filtered ? Object.keys(filtered) : Object.keys(moviesByCategory);
+  cats.forEach(cat => {
+    const section = document.createElement("div");
+    section.className = "section";
+    section.innerHTML = `<h2>${cat}</h2><div class="row" id="row_${cat.replace(/\s+/g,'_')}"></div>`;
+    main.appendChild(section);
+    renderChannels(filtered ? filtered[cat] : moviesByCategory[cat], `row_${cat.replace(/\s+/g,'_')}`);
+  });
+}
 
-                autocompleteList.classList.add('active');
-            },
-            performSearch() {
-                const query = State.searchTerm;
-                
-                if (query.length === 0) {
-                    this.clearSearch();
-                    return;
-                }
+function renderChannels(channels, rowId, isLastPlayed = false) {
+  const row = document.getElementById(rowId);
+  row.innerHTML = "";
+  channels.forEach((ch, idx) => {
+    const div = document.createElement("div");
+    div.className = "channel";
+    div.innerHTML = `<img src="${ch.logo}" alt="${ch.name}">`;
+    div.onclick = () => playChannel(ch, isLastPlayed);
 
-                State.isSearching = true;
-                
-                // Búsqueda inteligente con sinónimos
-                const synonyms = LanguageSystem.getSynonyms(query);
-                let results = State.movies.filter(item => 
-                    item.title.toLowerCase().includes(query.toLowerCase())
-                );
-                
-                // Si no hay resultados directos, buscar por sinónimos
-                if (results.length === 0 && synonyms.length > 0) {
-                    for (const synonym of synonyms) {
-                        const synonymResults = State.movies.filter(item => 
-                            item.title.toLowerCase().includes(synonym.toLowerCase()) ||
-                            item.group.toLowerCase().includes(synonym.toLowerCase())
-                        );
-                        results = [...results, ...synonymResults];
-                    }
-                    
-                    // Eliminar duplicados
-                    results = results.filter((item, index, self) => 
-                        index === self.findIndex(i => i.url === item.url)
-                    );
-                }
+    // Tooltip al mouse
+    div.onmouseenter = (e) => showTooltip(ch, e);
+    div.onmousemove = (e) => moveTooltip(e);
+    div.onmouseleave = hideTooltip;
 
-                State.searchResults = results;
-                Renderer.renderSearchResults(results, query);
-                document.getElementById('autocomplete-list').classList.remove('active');
-                document.getElementById('search-box').classList.remove('active');
-                
-                // Actualizar navegación
-                Navigation.updateFocusable();
-            },
-            clearSearch() {
-                State.isSearching = false;
-                State.searchTerm = '';
-                document.getElementById('search-input').value = '';
-                document.getElementById('clear-btn').classList.remove('visible');
-                document.getElementById('autocomplete-list').classList.remove('active');
-                document.getElementById('search-box').classList.remove('active');
-                
-                // Volver a mostrar todas las películas
-                const byCategory = State.movies.reduce((acc, movie) => {
-                    (acc[movie.group] = acc[movie.group] || []).push(movie);
-                    return acc;
-                }, {});
-                Renderer.renderCategories(byCategory);
-                
-                // Actualizar navegación
-                Navigation.updateFocusable();
-            },
-            highlightMatch(text, query) {
-                if (!query) return text;
-                
-                const regex = new RegExp(`(${query})`, 'gi');
-                return text.replace(regex, '<span class="highlight">$1</span>');
-            }
-        };
+    // Guardar datos para tooltip en navegación por control
+    div.dataset.name = ch.name;
+    div.dataset.category = ch.category;
+    row.appendChild(div);
+  });
+}
 
-        const Navigation = {
-            updateFocusable() {
-                const active = document.querySelector('.content-section:not(.hidden)');
-                if (!active) { State.focusable = []; return; }
-                State.focusable = [
-                    ...document.querySelectorAll('.navbar a'),
-                    document.getElementById('search-input'),
-                    ...(active.id === 'section-inicio' ? [document.getElementById('heroPlayBtn')] : []),
-                    ...active.querySelectorAll('a.movie-card'),
-                    ...active.querySelectorAll('.suggestion-tag')
-                ];
-            },
-            setFocus(index) {
-                State.focusIndex = index;
-                const el = State.focusable[State.focusIndex];
-                if (el) el.focus();
-            },
-            activateFocused() { 
-                const focused = State.focusable[State.focusIndex];
-                if (focused && focused.id !== 'search-input') {
-                    if (focused.classList.contains('suggestion-tag')) {
-                        // Es una sugerencia de búsqueda
-                        document.getElementById('search-input').value = focused.textContent;
-                        Search.performSearch();
-                    } else {
-                        focused.click(); 
-                    }
-                }
-            },
-            moveFocus(direction) {
-                if (!State.focusable.length) return;
-                const current = State.focusable[State.focusIndex];
-                if (!current) return;
-                
-                // Si el elemento actual es el campo de búsqueda, manejar de forma especial
-                if (current.id === 'search-input') {
-                    if (direction === 'Down') {
-                        // Mover al primer elemento después de la búsqueda
-                        State.focusIndex = State.focusable.findIndex(el => 
-                            el.id === 'heroPlayBtn' || el.classList.contains('movie-card') || el.classList.contains('suggestion-tag')
-                        );
-                        if (State.focusIndex !== -1) {
-                            State.focusable[State.focusIndex].focus();
-                        }
-                    }
-                    return;
-                }
-                
-                const rect = current.getBoundingClientRect();
-                let bestCandidate = -1, minDistance = Infinity;
-                State.focusable.forEach((target, i) => {
-                    if (i === State.focusIndex) return;
-                    const targetRect = target.getBoundingClientRect();
-                    const dx = targetRect.left + targetRect.width / 2 - (rect.left + rect.width / 2);
-                    const dy = targetRect.top + targetRect.height / 2 - (rect.top + rect.height / 2);
-                    let isValid = false, distance = Infinity;
-                    if (direction === 'Right' && dx > 5 && Math.abs(dy) < rect.height * 1.5) { isValid = true; distance = Math.sqrt(dx*dx + dy*dy*0.5); }
-                    else if (direction === 'Left' && dx < -5 && Math.abs(dy) < rect.height * 1.5) { isValid = true; distance = Math.sqrt(dx*dx + dy*dy*0.5); }
-                    else if (direction === 'Down' && dy > 5) { isValid = true; distance = Math.sqrt(dx*dx*0.1 + dy*dy); }
-                    else if (direction === 'Up' && dy < -5) { isValid = true; distance = Math.sqrt(dx*dx*0.1 + dy*dy); }
-                    if (isValid && distance < minDistance) { minDistance = distance; bestCandidate = i; }
-                });
-                if (bestCandidate !== -1) {
-                    State.focusIndex = bestCandidate;
-                    const el = State.focusable[State.focusIndex];
-                    if (el) { 
-                        el.focus(); 
-                        if (el.classList.contains('movie-card')) {
-                            el.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'center' });
-                        }
-                    }
-                }
-            }
-        };
+// --- TOOLTIP ---
+function showTooltip(ch, e) {
+  const tooltip = document.getElementById("tooltip");
+  tooltip.innerHTML = `<b>${ch.name}</b><br><small>${ch.category}</small>`;
+  tooltip.classList.add("visible");
+  if (e && e.clientX && e.clientY) {
+    tooltip.style.top = (e.clientY + 20) + "px";
+    tooltip.style.left = (e.clientX + 20) + "px";
+  }
+}
+function moveTooltip(e) {
+  const tooltip = document.getElementById("tooltip");
+  if (e && e.clientX && e.clientY) {
+    tooltip.style.top = (e.clientY + 20) + "px";
+    tooltip.style.left = (e.clientX + 20) + "px";
+  }
+}
+function hideTooltip() {
+  const tooltip = document.getElementById("tooltip");
+  tooltip.classList.remove("visible");
+}
 
-        const App = {
-            init() {
-                // Inicializar sistema de idiomas
-                LanguageSystem.detectLanguage();
-                
-                document.addEventListener('keydown', e => {
-                    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight'].includes(e.key)) { 
-                        e.preventDefault(); 
-                        Navigation.moveFocus(e.key.replace('Arrow', '')); 
-                    }
-                    else if (e.key === 'Enter') { 
-                        e.preventDefault(); 
-                        Navigation.activateFocused(); 
-                    }
-                    else if (e.key === 'Backspace') { 
-                        e.preventDefault(); 
-                        if (document.getElementById('section-historial').classList.contains('hidden')) return; 
-                        this.showSection('inicio'); 
-                    }
-                });
-                
-                window.addEventListener('pageshow', (event) => { 
-                    if (event.persisted) { 
-                        this.showSection(document.getElementById('section-historial').classList.contains('hidden') ? 'inicio' : 'historial'); 
-                    } 
-                });
-                
-                // Event listeners para la búsqueda
-                document.getElementById('search-input').addEventListener('input', () => Search.handleInput());
-                document.getElementById('clear-btn').addEventListener('click', () => Search.clearSearch());
-                
-                // Cerrar autocompletado al hacer clic fuera
-                document.addEventListener('click', (e) => {
-                    if (!document.getElementById('search-input').contains(e.target) && 
-                        !document.getElementById('autocomplete-list').contains(e.target) &&
-                        !document.getElementById('clear-btn').contains(e.target)) {
-                        document.getElementById('autocomplete-list').classList.remove('active');
-                        document.getElementById('search-box').classList.remove('active');
-                    }
-                });
-                
-                this.loadMovies();
-            },
-            showSection(id) {
-                const isInicio = id === 'inicio';
-                document.getElementById('section-inicio').classList.toggle('hidden', !isInicio);
-                document.getElementById('section-historial').classList.toggle('hidden', isInicio);
-                document.getElementById('link-inicio').classList.toggle('active', isInicio);
-                document.getElementById('link-historial').classList.toggle('active', !isInicio);
-                
-                if (isInicio) {
-                    Hero.start();
-                    // Si estábamos buscando, mantener los resultados
-                    if (State.isSearching) {
-                        Renderer.renderSearchResults(State.searchResults, State.searchTerm);
-                    }
-                } else { 
-                    Renderer.renderHistory(); 
-                    Hero.stop(); 
-                }
-                
-                Navigation.updateFocusable();
-                Navigation.setFocus(0);
-            },
-            async loadMovies() {
-                document.getElementById('section-inicio').innerHTML = `<div class="loading-state"><div class="loading-spinner"></div></div>`;
-                const cached = Storage.get(CONFIG.STORAGE_KEYS.CACHE);
-                if (cached?.data && (Date.now() - cached.timestamp < 3600000)) return this.processMovies(cached.data);
-                try {
-                    const response = await fetch(CONFIG.PLAYLIST_URL);
-                    if (!response.ok) throw new Error(`Red ${response.status}`);
-                    const text = await response.text();
-                    const movies = Parser.parseM3U(text);
-                    if (!movies.length) throw new Error('Lista vacía');
-                    Storage.set(CONFIG.STORAGE_KEYS.CACHE, { data: movies, timestamp: Date.now() });
-                    this.processMovies(movies);
-                } catch (error) {
-                    document.getElementById('section-inicio').innerHTML = `<div class="error-state">Error al cargar contenido</div>`;
-                }
-            },
-            processMovies(movies) {
-                State.movies = movies;
-                State.heroMovies = movies.slice(0, 5);
-                const byCategory = movies.reduce((acc, movie) => {
-                    (acc[movie.group] = acc[movie.group] || []).push(movie);
-                    return acc;
-                }, {});
-                Renderer.renderCategories(byCategory);
-                this.showSection('inicio');
-            }
-        };
-        document.addEventListener('DOMContentLoaded', () => App.init());
-    </script>
+// --- SEGUIR VIENDO ---
+function playChannel(ch, isLastPlayed = false) {
+  // Guardar en "Seguir Viendo"
+  if (!isLastPlayed) {
+    lastPlayed = lastPlayed.filter(item => item.url !== ch.url);
+    lastPlayed.unshift(ch);
+    if (lastPlayed.length > 12) lastPlayed = lastPlayed.slice(0, 12);
+    localStorage.setItem("iptv_lastPlayed", JSON.stringify(lastPlayed));
+    renderAllCategories();
+    initTVNavigation();
+  }
+  window.open(ch.url, "_blank");
+}
+function loadLastPlayed() {
+  try {
+    const data = JSON.parse(localStorage.getItem("iptv_lastPlayed") || "[]");
+    lastPlayed = data.filter(lp => allChannels.find(ch => ch.url === lp.url));
+  } catch { lastPlayed = []; }
+}
+
+// --- BARRA DE BÚSQUEDA ---
+document.getElementById("searchInput").addEventListener("input", function() {
+  const q = this.value.trim().toLowerCase();
+  if (!q) {
+    renderAllCategories();
+    initTVNavigation();
+    return;
+  }
+  // Filtrar canales
+  const filtered = {};
+  allChannels.forEach(ch => {
+    if (
+      ch.name.toLowerCase().includes(q) ||
+      ch.category.toLowerCase().includes(q)
+    ) {
+      if (!filtered[ch.category]) filtered[ch.category] = [];
+      filtered[ch.category].push(ch);
+    }
+  });
+  renderAllCategories(filtered);
+  initTVNavigation();
+});
+
+// --- NAVEGACIÓN CON CONTROL REMOTO / TECLADO Y BARRA DE BÚSQUEDA ---
+let focusedRow = 0;
+let focusedCol = 0;
+let sectionElements = [];
+let searchFocused = false;
+let lastTooltipIndex = {row: 0, col: 0};
+
+function initTVNavigation() {
+  sectionElements = Array.from(document.querySelectorAll(".section .row"));
+  if (!searchFocused) {
+    focusedRow = 0;
+    focusedCol = 0;
+  }
+  updateFocus();
+}
+
+function updateFocus() {
+  document.querySelectorAll(".focused").forEach(el => el.classList.remove("focused"));
+  document.getElementById("searchBar").classList.remove("focused");
+  hideTooltip();
+
+  if (searchFocused) {
+    document.getElementById("searchInput").focus();
+    document.getElementById("searchBar").classList.add("focused");
+    return;
+  }
+
+  if (focusedRow < 0) focusedRow = 0;
+  if (focusedRow >= sectionElements.length) focusedRow = sectionElements.length - 1;
+
+  const row = sectionElements[focusedRow];
+  if (!row) return;
+  const channels = row.querySelectorAll(".channel");
+  if (channels.length === 0) return;
+  if (focusedCol < 0) focusedCol = 0;
+  if (focusedCol >= channels.length) focusedCol = channels.length - 1;
+  const channel = channels[focusedCol];
+  if (!channel) return;
+  channel.classList.add("focused");
+  channel.scrollIntoView({ behavior: "smooth", inline: "center", block: "nearest" });
+  row.parentElement.classList.add("active");
+
+  // Tooltip al enfocar con control/teclado
+  showTooltipFromChannel(channel);
+}
+
+function showTooltipFromChannel(channel) {
+  if (!channel) return;
+  const name = channel.dataset.name || "";
+  const category = channel.dataset.category || "";
+  const tooltip = document.getElementById("tooltip");
+  tooltip.innerHTML = `<b>${name}</b><br><small>${category}</small>`;
+  tooltip.classList.add("visible");
+
+  // Posiciona el tooltip cerca del póster enfocado
+  const rect = channel.getBoundingClientRect();
+  let top = rect.top + window.scrollY + 30;
+  let left = rect.left + window.scrollX + rect.width + 20;
+  // Si se sale de la pantalla, ajusta
+  if (left + 340 > window.innerWidth) left = window.innerWidth - 360;
+  if (top + 80 > window.innerHeight) top = window.innerHeight - 100;
+  tooltip.style.top = top + "px";
+  tooltip.style.left = left + "px";
+}
+
+document.addEventListener("keydown", e => {
+  let handled = true;
+
+  if (searchFocused) {
+    if (e.key === "ArrowDown") {
+      searchFocused = false;
+      focusedRow = 0;
+      focusedCol = 0;
+      updateFocus();
+      e.preventDefault();
+      return;
+    }
+    // Permite escribir normalmente en la barra de búsqueda
+    return;
+  }
+
+  switch (e.key) {
+    case "ArrowRight": focusedCol++; break;
+    case "ArrowLeft": focusedCol--; break;
+    case "ArrowDown": focusedRow++; break;
+    case "ArrowUp":
+      if (focusedRow === 0) {
+        searchFocused = true;
+        updateFocus();
+        e.preventDefault();
+        return;
+      } else {
+        focusedRow--;
+      }
+      break;
+    case "Enter":
+    case "OK":
+      const row = sectionElements[focusedRow];
+      const item = row?.querySelectorAll(".channel")[focusedCol];
+      if (item) item.click();
+      break;
+    default: handled = false;
+  }
+
+  if (!handled) return;
+
+  if (focusedRow < 0) focusedRow = 0;
+  if (focusedRow >= sectionElements.length) focusedRow = sectionElements.length - 1;
+
+  const currentRow = sectionElements[focusedRow];
+  if (focusedRow >= 0 && currentRow) {
+    const totalCols = currentRow.querySelectorAll(".channel").length;
+    if (focusedCol < 0) focusedCol = 0;
+    if (focusedCol >= totalCols) focusedCol = totalCols - 1;
+  }
+  updateFocus();
+  e.preventDefault();
+});
+
+// Permite salir de la barra de búsqueda con ESC
+document.getElementById("searchInput").addEventListener("keydown", function(e) {
+  if (e.key === "Escape") {
+    searchFocused = false;
+    updateFocus();
+    e.preventDefault();
+  }
+});
+
+document.addEventListener("DOMContentLoaded", loadPlaylist);
+</script>
 </body>
 </html>
