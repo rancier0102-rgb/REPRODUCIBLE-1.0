@@ -669,7 +669,7 @@ header {
     </div>
     
     <div class="status-indicator connected" id="statusIndicator">
-        <span id="seriesCount">0 series</span>
+        <span>En línea</span>
     </div>
 </header>
 
@@ -744,7 +744,6 @@ class StreamingPlatform {
         this.seasonBar = document.getElementById('seasonBar');
         this.episodesTrack = document.getElementById('episodesTrack');
         this.statusIndicator = document.getElementById('statusIndicator');
-        this.seriesCount = document.getElementById('seriesCount');
         this.errorMessage = document.getElementById('errorMessage');
         this.searchBox = document.getElementById('searchBox');
         this.searchResults = document.getElementById('searchResults');
@@ -789,7 +788,6 @@ class StreamingPlatform {
             const data = await response.json();
             this.processSeriesData(data);
             this.renderGrid();
-            this.updateStatus();
             
         } catch (error) {
             console.error('Error loading series data:', error);
@@ -839,7 +837,6 @@ class StreamingPlatform {
             }
         };
         this.renderGrid();
-        this.updateStatus();
     }
     
     renderGrid() {
@@ -1223,9 +1220,10 @@ class StreamingPlatform {
             // Guardar progreso antes de navegar
             this.saveProgress();
             
-            // Abrir el reproductor con la URL del episodio
-            const playerUrl = `player.html?url=${encodeURIComponent(url)}`;
-            window.open(playerUrl, '_blank');
+            // Simplemente abrir la URL directamente
+            window.location.href = url;
+        } else {
+            this.showError('URL del episodio no disponible');
         }
     }
     
@@ -1547,11 +1545,6 @@ class StreamingPlatform {
         setTimeout(() => {
             this.errorMessage.classList.remove('show');
         }, 3000);
-    }
-    
-    updateStatus() {
-        const count = Object.keys(this.seriesData).length;
-        this.seriesCount.textContent = `${count} series`;
     }
     
     async refreshData() {
