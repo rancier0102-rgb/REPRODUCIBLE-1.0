@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Series+ </title>
+<title>Series+ - Plataforma de Streaming</title>
 <style>
 :root {
     --primary-color: #e50914;
@@ -14,7 +14,7 @@
     --muted: #b3b3b3;
     --radius: 8px;
     --transition: 0.25s ease;
-    --focus-shadow: 0 0 15px rgba(229, 9, 20, 0.9);
+    --focus-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -24,6 +24,21 @@ body {
     background: var(--background-dark);
     color: var(--text-light);
     overflow-x: hidden;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* TV Optimization - Larger UI elements */
+@media screen and (min-width: 1920px) {
+    body {
+        zoom: 1.2;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    body {
+        zoom: 1.5;
+    }
 }
 
 /* Loader */
@@ -33,7 +48,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--primary-color);
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     z-index: 1000;
 }
 
@@ -53,11 +68,12 @@ header {
     z-index: 10;
     backdrop-filter: blur(20px);
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    min-height: 80px;
 }
 
 .logo { 
     font-weight: bold; 
-    font-size: 1.8rem; 
+    font-size: 2rem;
     color: var(--primary-color);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
     margin-right: 20px;
@@ -80,9 +96,9 @@ header {
     background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
     border: 1px solid rgba(255,255,255,0.08);
     border-radius: 30px;
-    padding: 14px 55px 14px 24px;
+    padding: 16px 55px 16px 24px;
     color: white;
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 400;
     transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
     backdrop-filter: blur(10px);
@@ -222,6 +238,7 @@ header {
     align-items: center;
     gap: 16px;
     border-bottom: 1px solid rgba(255,255,255,0.03);
+    min-height: 80px;
 }
 
 .search-result-item:last-child {
@@ -240,8 +257,8 @@ header {
 }
 
 .search-result-poster {
-    width: 45px;
-    height: 65px;
+    width: 50px;
+    height: 70px;
     object-fit: cover;
     border-radius: 6px;
     box-shadow: 0 4px 10px rgba(0,0,0,0.4);
@@ -260,13 +277,13 @@ header {
 }
 
 .search-result-title {
-    font-size: 15px;
+    font-size: 16px;
     font-weight: 500;
     color: rgba(255,255,255,0.95);
 }
 
 .search-result-year {
-    font-size: 13px;
+    font-size: 14px;
     color: rgba(255,255,255,0.5);
 }
 
@@ -274,50 +291,7 @@ header {
     padding: 30px 20px;
     text-align: center;
     color: rgba(255,255,255,0.4);
-    font-size: 14px;
-}
-
-/* Search Loading Animation */
-.search-loading {
-    display: none;
-    padding: 20px;
-    text-align: center;
-}
-
-.search-loading.active {
-    display: block;
-}
-
-.search-loading-dots {
-    display: inline-flex;
-    gap: 4px;
-}
-
-.search-loading-dots span {
-    width: 8px;
-    height: 8px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    animation: loadingDot 1.4s infinite ease-in-out;
-}
-
-.search-loading-dots span:nth-child(1) {
-    animation-delay: -0.32s;
-}
-
-.search-loading-dots span:nth-child(2) {
-    animation-delay: -0.16s;
-}
-
-@keyframes loadingDot {
-    0%, 80%, 100% {
-        transform: scale(0.8);
-        opacity: 0.5;
-    }
-    40% {
-        transform: scale(1);
-        opacity: 1;
-    }
+    font-size: 16px;
 }
 
 /* CONTINUE WATCHING SECTION */
@@ -331,9 +305,9 @@ header {
 }
 
 .section-header {
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 600;
-    margin-bottom: 15px;
+    margin-bottom: 20px;
     color: var(--text-light);
     display: flex;
     align-items: center;
@@ -341,10 +315,10 @@ header {
 }
 
 .clear-continue {
-    font-size: 0.85rem;
+    font-size: 1rem;
     color: var(--muted);
     cursor: pointer;
-    padding: 5px 12px;
+    padding: 8px 16px;
     border-radius: 20px;
     background: rgba(255,255,255,0.05);
     transition: all 0.2s ease;
@@ -368,14 +342,14 @@ header {
 }
 
 .continue-card {
-    flex: 0 0 320px;
+    flex: 0 0 360px;
     background: var(--background-card);
     border-radius: var(--radius);
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
 }
 
 .continue-card:hover {
@@ -391,7 +365,7 @@ header {
 
 .continue-thumbnail {
     position: relative;
-    height: 180px;
+    height: 200px;
     background: linear-gradient(135deg, #333, #1a1a1a);
     overflow: hidden;
 }
@@ -421,14 +395,14 @@ header {
 }
 
 .continue-play-btn {
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background: rgba(229, 9, 20, 0.95);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: white;
     box-shadow: 0 4px 12px rgba(0,0,0,0.5);
 }
@@ -438,7 +412,7 @@ header {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 4px;
+    height: 5px;
     background: rgba(255,255,255,0.2);
 }
 
@@ -449,17 +423,17 @@ header {
 }
 
 .continue-info {
-    padding: 15px;
+    padding: 18px;
 }
 
 .continue-series-title {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--muted);
     margin-bottom: 4px;
 }
 
 .continue-episode-title {
-    font-size: 1.05rem;
+    font-size: 1.2rem;
     font-weight: 600;
     color: var(--text-light);
     margin-bottom: 8px;
@@ -469,7 +443,7 @@ header {
     display: flex;
     align-items: center;
     gap: 10px;
-    font-size: 0.85rem;
+    font-size: 0.95rem;
     color: var(--muted);
 }
 
@@ -477,8 +451,8 @@ header {
     position: absolute;
     top: 10px;
     right: 10px;
-    width: 30px;
-    height: 30px;
+    width: 35px;
+    height: 35px;
     background: rgba(0,0,0,0.7);
     border-radius: 50%;
     display: flex;
@@ -488,6 +462,7 @@ header {
     opacity: 0;
     transition: all 0.2s ease;
     cursor: pointer;
+    font-size: 1.2rem;
 }
 
 .continue-card:hover .continue-remove {
@@ -506,14 +481,14 @@ header {
 
 .all-series-header {
     padding: 20px 40px 15px;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     font-weight: 600;
 }
 
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 20px;
     padding: 0 40px 40px;
     animation: fadeIn 0.5s ease-out;
 }
@@ -525,7 +500,7 @@ header {
 
 .card {
     background: transparent;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
@@ -536,14 +511,14 @@ header {
 
 .card img { 
     width: 100%; 
-    height: 240px; 
+    height: 300px; 
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
 .card-title { 
-    padding: 12px; 
-    font-size: 0.9rem; 
+    padding: 14px; 
+    font-size: 1rem; 
     font-weight: 500;
     background: linear-gradient(180deg, transparent, rgba(0,0,0,0.8));
     position: absolute;
@@ -567,12 +542,12 @@ header {
 /* BADGES */
 .badge {
     position: absolute;
-    top: 8px;
-    left: 8px;
+    top: 10px;
+    left: 10px;
     background: var(--primary-color);
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    border-radius: 5px;
+    padding: 6px 14px;
+    font-size: 0.85rem;
+    border-radius: 6px;
     font-weight: bold;
     z-index: 2;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
@@ -611,21 +586,41 @@ header {
     to { transform: translateX(0); }
 }
 
-/* SERIES BANNER */
+/* SERIES BANNER - OPTIMIZED SIZE */
 .series-banner {
     position: relative;
     width: 100%;
-    height: 400px;
+    height: 280px; /* Reduced height for better TV viewing */
     overflow: hidden;
     background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
+}
+
+/* TV Responsive Banner Sizes */
+@media screen and (min-width: 1920px) {
+    .series-banner {
+        height: 320px;
+    }
+}
+
+@media screen and (min-width: 2560px) {
+    .series-banner {
+        height: 380px;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    .series-banner {
+        height: 450px;
+    }
 }
 
 .series-banner-image {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 20%;
-    filter: brightness(0.7);
+    object-position: center 25%;
+    filter: brightness(0.6);
+    transform: scale(1.1);
 }
 
 .series-banner-gradient {
@@ -633,25 +628,39 @@ header {
     bottom: 0;
     left: 0;
     right: 0;
-    height: 70%;
-    background: linear-gradient(to top, var(--background-dark), transparent);
+    height: 80%;
+    background: linear-gradient(to top, var(--background-dark) 0%, rgba(20,20,20,0.8) 30%, transparent 100%);
     pointer-events: none;
 }
 
 .series-banner-info {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     left: 40px;
     right: 40px;
     z-index: 2;
 }
 
 .series-banner-title {
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    margin-bottom: 15px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
+    margin-bottom: 12px;
     animation: fadeInUp 0.6s ease-out;
+    letter-spacing: 0.5px;
+}
+
+/* TV Font Sizes */
+@media screen and (min-width: 1920px) {
+    .series-banner-title {
+        font-size: 3rem;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    .series-banner-title {
+        font-size: 3.5rem;
+    }
 }
 
 @keyframes fadeInUp {
@@ -669,37 +678,54 @@ header {
     display: flex;
     align-items: center;
     gap: 20px;
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: rgba(255,255,255,0.8);
     animation: fadeInUp 0.8s ease-out;
 }
 
 .series-banner-badge {
     display: inline-block;
-    padding: 4px 12px;
+    padding: 6px 14px;
     background: var(--primary-color);
-    border-radius: 4px;
-    font-size: 0.85rem;
+    border-radius: 6px;
+    font-size: 0.95rem;
     font-weight: bold;
 }
 
 .series-banner-play {
     position: absolute;
-    bottom: 40px;
+    bottom: 30px;
     right: 40px;
-    width: 80px;
-    height: 80px;
+    width: 70px;
+    height: 70px;
     background: rgba(229, 9, 20, 0.95);
     border-radius: 50%;
     display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 2rem;
+    font-size: 1.8rem;
     color: white;
     cursor: pointer;
     transition: all 0.3s ease;
     box-shadow: 0 6px 20px rgba(0,0,0,0.5);
     animation: pulse 2s infinite;
+}
+
+/* TV Play Button Size */
+@media screen and (min-width: 1920px) {
+    .series-banner-play {
+        width: 80px;
+        height: 80px;
+        font-size: 2rem;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    .series-banner-play {
+        width: 90px;
+        height: 90px;
+        font-size: 2.2rem;
+    }
 }
 
 @keyframes pulse {
@@ -720,12 +746,12 @@ header {
 /* Season Bar with Banner */
 .season-bar {
     display: flex;
-    gap: 16px;
-    padding: 24px 40px;
+    gap: 20px;
+    padding: 20px 40px 24px;
     overflow-x: auto;
     scrollbar-width: none;
-    background: linear-gradient(to bottom, rgba(20,20,20,0.5), transparent);
-    margin-top: -20px;
+    background: linear-gradient(to bottom, rgba(20,20,20,0.3), transparent);
+    margin-top: -10px;
     position: relative;
     z-index: 3;
 }
@@ -737,12 +763,13 @@ header {
 .season {
     background: rgba(24, 24, 24, 0.85);
     border-radius: var(--radius);
-    padding: 12px 24px;
+    padding: 14px 28px;
     color: var(--muted);
     border: 2px solid transparent;
     transition: all var(--transition);
     cursor: pointer;
     font-weight: 500;
+    font-size: 1.05rem;
     white-space: nowrap;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     outline: none;
@@ -784,7 +811,7 @@ header {
 .episodes-container {
     background: var(--background-dark);
     padding-top: 20px;
-    min-height: 320px;
+    min-height: 400px;
 }
 
 .episodes-row {
@@ -794,16 +821,16 @@ header {
 
 .episodes-track {
     display: flex;
-    gap: 20px;
+    gap: 24px;
     padding: 0 40px 40px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .episode {
-    flex: 0 0 320px;
+    flex: 0 0 360px;
     background: var(--background-card);
     border-radius: var(--radius);
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     transition: all var(--transition);
     display: flex;
     flex-direction: column;
@@ -814,13 +841,26 @@ header {
     position: relative;
 }
 
+/* TV Episode Card Size */
+@media screen and (min-width: 1920px) {
+    .episode {
+        flex: 0 0 400px;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    .episode {
+        flex: 0 0 480px;
+    }
+}
+
 .episode::before {
     content: '';
     position: absolute;
     top: 0;
     left: 0;
     right: 0;
-    height: 3px;
+    height: 4px;
     background: linear-gradient(90deg, var(--primary-color), transparent);
     opacity: 0;
     transition: opacity 0.3s ease;
@@ -832,12 +872,12 @@ header {
 
 .thumb {
     background: linear-gradient(135deg, #333, #1a1a1a);
-    height: 180px;
+    height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--muted);
-    font-size: 1rem;
+    font-size: 1.1rem;
     position: relative;
     overflow: hidden;
 }
@@ -852,17 +892,17 @@ header {
     position: absolute;
     top: 12px;
     left: 12px;
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     color: white;
-    padding: 6px 10px;
-    border-radius: 4px;
-    font-size: 0.85rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    font-size: 0.95rem;
     font-weight: bold;
 }
 
 .episode.focused {
     border-color: var(--primary-color);
-    transform: scale(1.1) translateY(-5px);
+    transform: scale(1.08) translateY(-8px);
     box-shadow: var(--focus-shadow);
     z-index: 5;
 }
@@ -879,18 +919,19 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    font-size: 2rem;
+    font-size: 2.5rem;
     z-index: 10;
 }
 
 .ep-info {
-    padding: 16px;
+    padding: 18px;
     background: linear-gradient(180deg, var(--background-card), rgba(0,0,0,0.5));
 }
 
 .ep-title {
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 600;
+    line-height: 1.4;
 }
 
 .play-icon {
@@ -898,8 +939,8 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 60px;
-    height: 60px;
+    width: 70px;
+    height: 70px;
     background: rgba(229, 9, 20, 0.95);
     border-radius: 50%;
     display: flex;
@@ -922,21 +963,21 @@ header {
 .play-icon::after {
     content: "▶";
     color: white;
-    font-size: 1.4rem;
+    font-size: 1.6rem;
     margin-left: 4px;
 }
 
 /* Navigation Help */
 .nav-help {
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0,0,0,0.8);
+    background: rgba(0,0,0,0.85);
     color: white;
-    padding: 8px 16px;
-    border-radius: 20px;
-    font-size: 0.85rem;
+    padding: 12px 24px;
+    border-radius: 25px;
+    font-size: 1rem;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
@@ -950,15 +991,15 @@ header {
 /* BACK BUTTON */
 .back-button {
     position: fixed;
-    top: 20px;
-    left: 20px;
+    top: 30px;
+    left: 30px;
     background: rgba(34, 34, 34, 0.95);
     color: var(--text-light);
-    border: 2px solid transparent;
-    padding: 10px 20px;
-    border-radius: 8px;
+    border: 3px solid transparent;
+    padding: 12px 24px;
+    border-radius: 10px;
     cursor: pointer;
-    font-size: 1rem;
+    font-size: 1.1rem;
     display: none;
     z-index: 201;
     transition: all 0.3s ease;
@@ -975,7 +1016,7 @@ header {
 .back-button.visible {
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     animation: slideInLeft 0.3s ease-out;
 }
 
@@ -986,18 +1027,18 @@ header {
 
 .close {
     position: fixed;
-    top: 20px;
-    right: 20px;
-    font-size: 2.5rem;
+    top: 30px;
+    right: 30px;
+    font-size: 3rem;
     cursor: pointer;
     color: white;
     z-index: 201;
-    width: 40px;
-    height: 40px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.6);
     border-radius: 50%;
     transition: all 0.3s ease;
 }
@@ -1015,11 +1056,12 @@ header {
     transform: translate(-50%, -50%);
     background: rgba(229, 9, 20, 0.95);
     color: white;
-    padding: 20px 30px;
-    border-radius: 10px;
+    padding: 24px 36px;
+    border-radius: 12px;
     z-index: 1000;
     display: none;
     animation: shake 0.5s ease-in-out;
+    font-size: 1.1rem;
 }
 
 @keyframes shake {
@@ -1032,7 +1074,88 @@ header {
     display: block;
 }
 
-/* Responsive */
+/* TV Responsive Adjustments */
+@media screen and (min-width: 1280px) and (max-width: 1919px) {
+    /* HD Ready TV */
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    }
+    
+    .card img {
+        height: 280px;
+    }
+    
+    .episode {
+        flex: 0 0 340px;
+    }
+    
+    .series-banner {
+        height: 260px;
+    }
+}
+
+@media screen and (min-width: 1920px) and (max-width: 2559px) {
+    /* Full HD TV */
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+        gap: 24px;
+    }
+    
+    .card img {
+        height: 330px;
+    }
+    
+    .card-title {
+        font-size: 1.1rem;
+        padding: 16px;
+    }
+}
+
+@media screen and (min-width: 2560px) and (max-width: 3839px) {
+    /* 2K/QHD TV */
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+        gap: 28px;
+    }
+    
+    .card img {
+        height: 380px;
+    }
+    
+    .card-title {
+        font-size: 1.2rem;
+        padding: 18px;
+    }
+}
+
+@media screen and (min-width: 3840px) {
+    /* 4K TV */
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+        gap: 32px;
+        padding: 0 60px 60px;
+    }
+    
+    .card img {
+        height: 450px;
+    }
+    
+    .card-title {
+        font-size: 1.3rem;
+        padding: 20px;
+    }
+    
+    header {
+        padding: 30px 60px;
+        min-height: 100px;
+    }
+    
+    .logo {
+        font-size: 2.5rem;
+    }
+}
+
+/* Mobile/Tablet Responsive */
 @media (max-width: 768px) {
     header, .grid, .season-bar, .episodes-track, .continue-watching-section {
         padding-left: 20px;
@@ -1040,11 +1163,11 @@ header {
     }
     
     .series-banner {
-        height: 300px;
+        height: 220px;
     }
     
     .series-banner-title {
-        font-size: 2rem;
+        font-size: 1.8rem;
     }
     
     .series-banner-info {
@@ -1075,12 +1198,16 @@ header {
     }
     
     .continue-card {
-        flex: 0 0 280px;
+        flex: 0 0 300px;
     }
     
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
-        gap: 10px;
+        grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+        gap: 12px;
+    }
+    
+    .card img {
+        height: 220px;
     }
     
     .card.focused {
@@ -1096,6 +1223,19 @@ header {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* TV Focus States Enhancement */
+@media screen and (min-width: 1280px) {
+    .card.focused,
+    .continue-card.focused,
+    .episode.focused {
+        box-shadow: 0 0 0 4px var(--primary-color), var(--focus-shadow);
+    }
+    
+    .season.focused {
+        box-shadow: 0 0 0 3px var(--primary-color);
+    }
+}
 </style>
 </head>
 <body>
@@ -1108,7 +1248,7 @@ header {
     <!-- Professional Search Bar -->
     <div class="search-container">
         <div class="search-wrapper">
-            <input type="text" class="search-box" id="searchBox" placeholder="Buscar series, películas o documentales...">
+            <input type="text" class="search-box" id="searchBox" placeholder="Buscar...">
             <div class="search-clear" id="searchClear">×</div>
             <div class="search-icon">
                 <svg viewBox="0 0 24 24">
@@ -1138,7 +1278,7 @@ header {
 
 <!-- Main Content -->
 <div class="main-content">
-    <div class="all-series-header">Todas las series</div>
+    <div class="all-series-header"> </div>
     <section class="grid" id="mainGrid">
         <!-- Las tarjetas se cargarán dinámicamente -->
     </section>
@@ -1993,7 +2133,7 @@ class StreamingPlatform {
     
     updateSeriesScroll() {
         if (this.focusMode === 'episode') {
-            const episodeWidth = 340;
+            const episodeWidth = 384; // Adjusted for TV
             const containerWidth = window.innerWidth;
             const episodes = this.episodesTrack.querySelectorAll('.episode');
             
@@ -2147,6 +2287,7 @@ class StreamingPlatform {
         
         if (e.key === 'ArrowDown' && this.focusMode === 'search' && !this.searchResults.classList.contains('active')) {
             // Desde la búsqueda sin resultados, volver al grid o continue watching
+            
             e.preventDefault();
             this.hideSearchResults();
             this.searchBox.blur();
@@ -2260,212 +2401,216 @@ class StreamingPlatform {
                         this.searchResultIndex = Math.max(this.searchResultIndex - 5, 0);
                         this.updateSearchResultFocus();
                     }
-                    break
-
-            case 'Tab':
-                // Permitir Tab para salir de los resultados
-                if (e.shiftKey) {
-                    // Tab hacia atrás: volver al input
-                    e.preventDefault();
-                    this.searchBox.focus();
-                }
-                break;
-        }
-        return;
-    }
-    
-    // Prevent default solo para teclas de navegación
-    if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', 'Backspace'].includes(e.key)) {
-        if (this.focusMode !== 'search' || e.key === 'Escape') {
-            e.preventDefault();
-        }
-    }
-    
-    // Delegación según el modo
-    if (this.seriesOverlay.style.display === 'block') {
-        this.handleSeriesNavigation(e);
-    } else if (this.focusMode === 'grid') {
-        this.handleGridNavigation(e);
-    }
-}
-
-getGridWidth() {
-    return Math.floor(this.mainGrid.offsetWidth / (this.cards[0]?.offsetWidth || 180));
-}
-
-handleGridNavigation(e) {
-    const gridWidth = this.getGridWidth();
-    
-    switch(e.key) {
-        case 'ArrowRight':
-            this.index = (this.index + 1) % this.cards.length;
-            break;
-        case 'ArrowLeft':
-            this.index = (this.index - 1 + this.cards.length) % this.cards.length;
-            break;
-        case 'ArrowDown':
-            this.index = Math.min(this.index + gridWidth, this.cards.length - 1);
-            break;
-        case 'Enter':
-        case ' ':
-            if (this.cards[this.index]) {
-                this.cards[this.index].click();
+                    break;
+                    
+                case 'Tab':
+                    // Permitir Tab para salir de los resultados
+                    if (e.shiftKey) {
+                        // Tab hacia atrás: volver al input
+                        e.preventDefault();
+                        this.searchBox.focus();
+                    }
+                    break;
             }
-            break;
-        case '/':
-            // Atajo rápido para búsqueda
-            e.preventDefault();
-            this.focusMode = 'search';
-            this.searchBox.focus();
-            this.searchBox.classList.add('focused');
-            break;
+            return;
+        }
+        
+        // Prevent default solo para teclas de navegación
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', 'Backspace'].includes(e.key)) {
+            if (this.focusMode !== 'search' || e.key === 'Escape') {
+                e.preventDefault();
+            }
+        }
+        
+        // Delegación según el modo
+        if (this.seriesOverlay.style.display === 'block') {
+            this.handleSeriesNavigation(e);
+        } else if (this.focusMode === 'grid') {
+            this.handleGridNavigation(e);
+        }
     }
     
-    if (this.focusMode === 'grid') {
-        this.focusCard();
+    getGridWidth() {
+        return Math.floor(this.mainGrid.offsetWidth / (this.cards[0]?.offsetWidth || 200));
     }
-}
-
-handleSeriesNavigation(e) {
-    if (!this.currentSeries || !this.currentSeries.seasons) return;
     
-    const seasonKeys = Object.keys(this.currentSeries.seasons);
-    
-    if (this.focusMode === 'season') {
-        const totalSeasons = seasonKeys.length;
+    handleGridNavigation(e) {
+        const gridWidth = this.getGridWidth();
         
         switch(e.key) {
             case 'ArrowRight':
-                this.seasonFocus = Math.min(this.seasonFocus + 1, totalSeasons - 1);
+                this.index = (this.index + 1) % this.cards.length;
                 break;
             case 'ArrowLeft':
-                this.seasonFocus = Math.max(this.seasonFocus - 1, 0);
+                this.index = (this.index - 1 + this.cards.length) % this.cards.length;
                 break;
             case 'ArrowDown':
+                this.index = Math.min(this.index + gridWidth, this.cards.length - 1);
+                break;
             case 'Enter':
             case ' ':
-                this.currentSeason = this.seasonFocus;
-                this.focusMode = 'episode';
-                this.episodeFocus = 0;
-                this.renderSeasons();
-                this.renderEpisodes();
-                return;
+                if (this.cards[this.index]) {
+                    this.cards[this.index].click();
+                }
+                break;
+            case '/':
+                // Atajo rápido para búsqueda
+                e.preventDefault();
+                this.focusMode = 'search';
+                this.searchBox.focus();
+                this.searchBox.classList.add('focused');
+                break;
         }
-    } else if (this.focusMode === 'episode') {
-        const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
-        if (!episodes) return;
         
-        const total = episodes.length;
+        if (this.focusMode === 'grid') {
+            this.focusCard();
+        }
+    }
+    
+    handleSeriesNavigation(e) {
+        if (!this.currentSeries || !this.currentSeries.seasons) return;
         
-        switch(e.key) {
-            case 'ArrowRight':
-                this.episodeFocus = Math.min(this.episodeFocus + 1, total - 1);
-                break;
-            case 'ArrowLeft':
-                this.episodeFocus = Math.max(this.episodeFocus - 1, 0);
-                break;
-            case 'ArrowUp':
+        const seasonKeys = Object.keys(this.currentSeries.seasons);
+        
+        if (this.focusMode === 'season') {
+            const totalSeasons = seasonKeys.length;
+            
+            switch(e.key) {
+                case 'ArrowRight':
+                    this.seasonFocus = Math.min(this.seasonFocus + 1, totalSeasons - 1);
+                    break;
+                case 'ArrowLeft':
+                    this.seasonFocus = Math.max(this.seasonFocus - 1, 0);
+                    break;
+                case 'ArrowDown':
+                case 'Enter':
+                case ' ':
+                    this.currentSeason = this.seasonFocus;
+                    this.focusMode = 'episode';
+                    this.episodeFocus = 0;
+                    this.renderSeasons();
+                    this.renderEpisodes();
+                    return;
+            }
+        } else if (this.focusMode === 'episode') {
+            const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
+            if (!episodes) return;
+            
+            const total = episodes.length;
+            
+            switch(e.key) {
+                case 'ArrowRight':
+                    this.episodeFocus = Math.min(this.episodeFocus + 1, total - 1);
+                    break;
+                case 'ArrowLeft':
+                    this.episodeFocus = Math.max(this.episodeFocus - 1, 0);
+                    break;
+                case 'ArrowUp':
+                    this.focusMode = 'season';
+                    this.seasonFocus = this.currentSeason;
+                    break;
+                case 'Enter':
+                case ' ':
+                    const ep = episodes[this.episodeFocus];
+                    if (!ep.locked && ep.url) {
+                        // Guardar en seguir viendo
+                        this.saveContinueWatching(
+                            this.currentSeriesId,
+                            this.currentSeries.displayTitle || this.currentSeries.title,
+                            this.currentSeason,
+                            this.episodeFocus,
+                            ep.title,
+                            0,
+                            ep.thumbnail
+                        );
+                        
+                        this.playEpisode(ep.url);
+                    } else if (ep.locked) {
+                        this.showError('Este episodio está bloqueado');
+                    }
+                    return;
+            }
+        }
+        
+        if (e.key === 'Escape' || e.key === 'Backspace') {
+            if (this.focusMode === 'episode') {
                 this.focusMode = 'season';
                 this.seasonFocus = this.currentSeason;
-                break;
-            case 'Enter':
-            case ' ':
-                const ep = episodes[this.episodeFocus];
-                if (!ep.locked && ep.url) {
-                    // Guardar en seguir viendo
-                    this.saveContinueWatching(
-                        this.currentSeriesId,
-                        this.currentSeries.displayTitle || this.currentSeries.title,
-                        this.currentSeason,
-                        this.episodeFocus,
-                        ep.title,
-                        0,
-                        ep.thumbnail
-                    );
-                    
-                    this.playEpisode(ep.url);
-                } else if (ep.locked) {
-                    this.showError('Este episodio está bloqueado');
-                }
-                return;
+            } else {
+                this.closeModal();
+            }
+        }
+        
+        this.updateSeriesFocus();
+    }
+    
+    showLoader(show) {
+        if (this.loader) {
+            this.loader.classList.toggle('hidden', !show);
         }
     }
     
-    if (e.key === 'Escape' || e.key === 'Backspace') {
-        if (this.focusMode === 'episode') {
-            this.focusMode = 'season';
-            this.seasonFocus = this.currentSeason;
-        } else {
-            this.closeModal();
-        }
+    showError(message) {
+        this.errorMessage.textContent = message;
+        this.errorMessage.classList.add('show');
+        setTimeout(() => {
+            this.errorMessage.classList.remove('show');
+        }, 3000);
     }
     
-    this.updateSeriesFocus();
-}
-
-showLoader(show) {
-    if (this.loader) {
-        this.loader.classList.toggle('hidden', !show);
+    async refreshData() {
+        // Recargar datos desde el servidor
+        console.log('Actualizando datos de series...');
+        await this.loadData();
     }
-}
-
-showError(message) {
-    this.errorMessage.textContent = message;
-    this.errorMessage.classList.add('show');
-    setTimeout(() => {
-        this.errorMessage.classList.remove('show');
-    }, 3000);
-}
-
-async refreshData() {
-    // Recargar datos desde el servidor
-    console.log('Actualizando datos de series...');
-    await this.loadData();
-}
-
-destroy() {
-    // Limpieza
-    if (this.refreshInterval) {
-        clearInterval(this.refreshInterval);
+    
+    destroy() {
+        // Limpieza
+        if (this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+        }
+        document.removeEventListener('keydown', this.handleKeyboard);
     }
-    document.removeEventListener('keydown', this.handleKeyboard);
-}
-
 }
 
 // Initialize platform when DOM is ready
 let platform = null;
 
 document.addEventListener('DOMContentLoaded', () => {
-platform = new StreamingPlatform();
-
-
-// Handle browser back button
-window.addEventListener('popstate', (event) => {
-    if (platform.seriesOverlay.style.display === 'block') {
-        platform.closeModal();
+    platform = new StreamingPlatform();
+    
+    // Handle browser back button
+    window.addEventListener('popstate', (event) => {
+        if (platform.seriesOverlay.style.display === 'block') {
+            platform.closeModal();
+        }
+    });
+    
+    // TV Remote Support
+    if (window.navigator && window.navigator.userAgent) {
+        const isTV = /TV|television|smarttv|webOS|Tizen/i.test(window.navigator.userAgent);
+        if (isTV) {
+            document.body.classList.add('tv-mode');
+            console.log('TV Mode detected');
+        }
     }
-});
-
-// Expose platform instance for debugging
-window.streamingPlatform = platform;
-
+    
+    // Expose platform instance for debugging
+    window.streamingPlatform = platform;
 });
 
 // Handle page visibility for auto-pause
 document.addEventListener('visibilitychange', () => {
-if (document.hidden && platform) {
-console.log('Página oculta, pausando actividades');
-} else if (platform) {
-console.log('Página visible, reanudando actividades');
-}
+    if (document.hidden && platform) {
+        console.log('Página oculta, pausando actividades');
+    } else if (platform) {
+        console.log('Página visible, reanudando actividades');
+    }
 });
 </script>
 
-</body> 
-
+</body>
 </html>
-
 
 
 
