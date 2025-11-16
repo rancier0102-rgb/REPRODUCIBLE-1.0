@@ -942,6 +942,7 @@ class StreamingPlatform {
                 const item = document.createElement('div');
                 item.className = 'search-result-item';
                 item.dataset.resultIndex = index;
+                item.dataset.seriesId = result.id;
                 item.innerHTML = `
                     <img src="${result.poster || 'https://via.placeholder.com/40x60'}" 
                          alt="${result.displayTitle || result.title}" 
@@ -967,6 +968,12 @@ class StreamingPlatform {
         const results = this.searchResults.querySelectorAll('.search-result-item');
         results.forEach((item, index) => {
             item.classList.toggle('focused', index === this.searchResultIndex);
+            if (index === this.searchResultIndex) {
+                item.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest'
+                });
+            }
         });
     }
     
@@ -1284,8 +1291,8 @@ class StreamingPlatform {
             return;
         }
         
-        if (e.key === 'ArrowDown' && this.focusMode === 'search') {
-            // Desde la búsqueda, volver al grid
+        if (e.key === 'ArrowDown' && this.focusMode === 'search' && !this.searchResults.classList.contains('active')) {
+            // Desde la búsqueda sin resultados, volver al grid
             e.preventDefault();
             this.hideSearchResults();
             this.searchBox.blur();
@@ -1296,7 +1303,7 @@ class StreamingPlatform {
             return;
         }
         
-        // Navegación dentro de resultados de búsqueda
+        // NAVEGACIÓN MEJORADA EN BÚSQUEDA
         if (this.focusMode === 'search' && this.searchResults.classList.contains('active')) {
             const results = this.searchResults.querySelectorAll('.search-result-item');
             
@@ -1304,15 +1311,35 @@ class StreamingPlatform {
                 case 'ArrowDown':
                     e.preventDefault();
                     if (results.length > 0) {
-                        this.searchResultIndex = Math.min(this.searchResultIndex + 1, results.length - 1);
+                        // Navegación circular hacia abajo
+                        this.searchResultIndex = (this.searchResultIndex + 1) % results.length;
                         this.updateSearchResultFocus();
                     }
                     break;
                     
                 case 'ArrowUp':
                     e.preventDefault();
-                    if (this.searchResultIndex > 0) {
-                        this.searchResultIndex--;
+                    if (results.length > 0) {
+                        // Navegación circular hacia arriba
+                        this.searchResultIndex = (this.searchResultIndex - 1 + results.length) % results.length;
+                        this.updateSearchResultFocus();
+                    }
+                    break;
+                    
+                case 'ArrowRight':
+                    e.preventDefault();
+                    if (results.length > 0) {
+                        // Salto rápido de 3 elementos hacia adelante
+                        this.searchResultIndex = Math.min(this.searchResultIndex + 3, results.length - 1);
+                        this.updateSearchResultFocus();
+                    }
+                    break;
+                    
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    if (results.length > 0) {
+                        // Salto rápido de 3 elementos hacia atrás
+                        this.searchResultIndex = Math.max(this.searchResultIndex - 3, 0);
                         this.updateSearchResultFocus();
                     }
                     break;
@@ -1320,7 +1347,11 @@ class StreamingPlatform {
                 case 'Enter':
                     e.preventDefault();
                     if (results[this.searchResultIndex]) {
-                        results[this.searchResultIndex].click();
+                        const seriesId = results[this.searchResultIndex].dataset.seriesId;
+                        this.openSeriesDetail(seriesId);
+                        this.hideSearchResults();
+                        this.searchBox.value = '';
+                        this.searchBox.classList.remove('focused');
                     }
                     break;
                     
@@ -1331,6 +1362,49 @@ class StreamingPlatform {
                     this.searchBox.classList.remove('focused');
                     this.focusMode = 'grid';
                     this.focusCard();
+                    break;
+                    
+                case 'Home':
+                    e.preventDefault();
+                    if (results.length > 0) {
+                        this.searchResultIndex = 0;
+                        this.updateSearchResultFocus();
+                    }
+                    break;
+                    
+                case 'End':
+                    e.preventDefault();
+                    if (results.length > 0) {
+                        this.searchResultIndex = results.length - 1;
+                        this.updateSearchResultFocus();
+                    }
+                    break;
+                    
+                case 'PageDown':
+                    e.preventDefault();
+                    if (results.length > 0) {
+                        // Salto de página (5 elementos)
+                        this.searchResultIndex = Math.min(this.searchResultIndex + 5, results.length - 1);
+                        this.updateSearchResultFocus();
+                    }
+                    break;
+                    
+                case 'PageUp':
+                    e.preventDefault();
+                    if (results.length > 0) {
+                        // Salto de página (5 elementos)
+                        this.searchResultIndex = Math.max(this.searchResultIndex - 5, 0);
+                        this.updateSearchResultFocus();
+                    }
+                    break;
+                    
+                case 'Tab':
+                    // Permitir Tab para salir de los resultados
+                    if (e.shiftKey) {
+                        // Tab hacia atrás: volver al input
+                        e.preventDefault();
+                        this.searchBox.focus();
+                    }
                     break;
             }
             return;
