@@ -320,12 +320,201 @@ header {
     }
 }
 
+/* CONTINUE WATCHING SECTION */
+.continue-watching-section {
+    padding: 30px 40px 20px;
+    display: none;
+}
+
+.continue-watching-section.active {
+    display: block;
+}
+
+.section-header {
+    font-size: 1.4rem;
+    font-weight: 600;
+    margin-bottom: 15px;
+    color: var(--text-light);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.clear-continue {
+    font-size: 0.85rem;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 5px 12px;
+    border-radius: 20px;
+    background: rgba(255,255,255,0.05);
+    transition: all 0.2s ease;
+}
+
+.clear-continue:hover {
+    background: rgba(255,255,255,0.1);
+    color: var(--text-light);
+}
+
+.continue-watching-row {
+    display: flex;
+    gap: 20px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: none;
+}
+
+.continue-watching-row::-webkit-scrollbar {
+    display: none;
+}
+
+.continue-card {
+    flex: 0 0 320px;
+    background: var(--background-card);
+    border-radius: var(--radius);
+    overflow: hidden;
+    cursor: pointer;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    border: 2px solid transparent;
+}
+
+.continue-card:hover {
+    transform: scale(1.05);
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.continue-card.focused {
+    border-color: var(--primary-color);
+    transform: scale(1.08);
+    box-shadow: var(--focus-shadow);
+}
+
+.continue-thumbnail {
+    position: relative;
+    height: 180px;
+    background: linear-gradient(135deg, #333, #1a1a1a);
+    overflow: hidden;
+}
+
+.continue-thumbnail img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.continue-play-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to top, rgba(0,0,0,0.9), transparent);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.continue-card:hover .continue-play-overlay {
+    opacity: 1;
+}
+
+.continue-play-btn {
+    width: 60px;
+    height: 60px;
+    background: rgba(229, 9, 20, 0.95);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.5rem;
+    color: white;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+}
+
+.continue-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 4px;
+    background: rgba(255,255,255,0.2);
+}
+
+.continue-progress-bar {
+    height: 100%;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.continue-info {
+    padding: 15px;
+}
+
+.continue-series-title {
+    font-size: 0.9rem;
+    color: var(--muted);
+    margin-bottom: 4px;
+}
+
+.continue-episode-title {
+    font-size: 1.05rem;
+    font-weight: 600;
+    color: var(--text-light);
+    margin-bottom: 8px;
+}
+
+.continue-meta {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.continue-remove {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    width: 30px;
+    height: 30px;
+    background: rgba(0,0,0,0.7);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    opacity: 0;
+    transition: all 0.2s ease;
+    cursor: pointer;
+}
+
+.continue-card:hover .continue-remove {
+    opacity: 1;
+}
+
+.continue-remove:hover {
+    background: var(--primary-color);
+    transform: scale(1.1);
+}
+
 /* MAIN GRID */
+.main-content {
+    padding-top: 10px;
+}
+
+.all-series-header {
+    padding: 20px 40px 15px;
+    font-size: 1.4rem;
+    font-weight: 600;
+}
+
 .grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
     gap: 15px;
-    padding: 20px 40px;
+    padding: 0 40px 40px;
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -753,7 +942,7 @@ header {
 
 /* Responsive */
 @media (max-width: 768px) {
-    header, .grid, .series-header, .season-bar, .episodes-track {
+    header, .grid, .series-header, .season-bar, .episodes-track, .continue-watching-section {
         padding-left: 20px;
         padding-right: 20px;
     }
@@ -772,6 +961,10 @@ header {
     }
     
     .episode {
+        flex: 0 0 280px;
+    }
+    
+    .continue-card {
         flex: 0 0 280px;
     }
     
@@ -797,7 +990,7 @@ header {
 </head>
 <body>
 
-<div class="loader" id="loader"></div>
+<div class="loader" id="loader">Cargando series...</div>
 
 <header>
     <div class="logo">SERIES+</div>
@@ -805,7 +998,7 @@ header {
     <!-- Professional Search Bar -->
     <div class="search-container">
         <div class="search-wrapper">
-            <input type="text" class="search-box" id="searchBox" placeholder="Buscar serie...">
+            <input type="text" class="search-box" id="searchBox" placeholder="Buscar series, películas o documentales...">
             <div class="search-clear" id="searchClear">×</div>
             <div class="search-icon">
                 <svg viewBox="0 0 24 24">
@@ -822,9 +1015,24 @@ header {
     <span>Volver</span>
 </button>
 
-<section class="grid" id="mainGrid">
-    <!-- Las tarjetas se cargarán dinámicamente -->
+<!-- Continue Watching Section -->
+<section class="continue-watching-section" id="continueWatchingSection">
+    <div class="section-header">
+        <span>Seguir viendo</span>
+        <span class="clear-continue" id="clearContinue">Limpiar todo</span>
+    </div>
+    <div class="continue-watching-row" id="continueWatchingRow">
+        <!-- Continue watching cards will be added dynamically -->
+    </div>
 </section>
+
+<!-- Main Content -->
+<div class="main-content">
+    <div class="all-series-header">Todas las series</div>
+    <section class="grid" id="mainGrid">
+        <!-- Las tarjetas se cargarán dinámicamente -->
+    </section>
+</div>
 
 <!-- SERIES OVERLAY -->
 <div id="seriesOverlay" class="series-overlay">
@@ -860,12 +1068,14 @@ class StreamingPlatform {
     constructor() {
         this.seriesData = {};
         this.cards = [];
+        this.continueWatchingData = [];
         this.index = 0;
         this.currentSeries = null;
         this.currentSeason = 0;
-        this.focusMode = "grid"; // Puede ser: "search", "grid", "season", "episode"
+        this.focusMode = "grid"; // Puede ser: "search", "grid", "season", "episode", "continue"
         this.seasonFocus = 0;
         this.episodeFocus = 0;
+        this.continueFocus = 0;
         this.scrollX = 0;
         this.searchTimeout = null;
         this.searchResultIndex = 0;
@@ -874,6 +1084,7 @@ class StreamingPlatform {
         this.navHelpTimeout = null;
         
         this.initializeElements();
+        this.loadContinueWatching();
         this.loadData();
     }
     
@@ -892,11 +1103,19 @@ class StreamingPlatform {
         this.searchResults = document.getElementById('searchResults');
         this.searchClear = document.getElementById('searchClear');
         this.navHelp = document.getElementById('navHelp');
+        this.continueWatchingSection = document.getElementById('continueWatchingSection');
+        this.continueWatchingRow = document.getElementById('continueWatchingRow');
+        this.clearContinue = document.getElementById('clearContinue');
         
         // Event listeners
         this.backButton.addEventListener('click', () => this.closeModal());
         this.closeButton.addEventListener('click', () => this.closeModal());
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+        
+        // Clear continue watching
+        this.clearContinue.addEventListener('click', () => {
+            this.clearContinueWatching();
+        });
         
         // Search events
         this.searchBox.addEventListener('input', (e) => this.handleSearch(e));
@@ -911,8 +1130,13 @@ class StreamingPlatform {
                 if (this.focusMode === 'search' && !this.searchResults.contains(document.activeElement)) {
                     this.hideSearchResults();
                     this.searchBox.classList.remove('focused');
-                    this.focusMode = 'grid';
-                    this.focusCard();
+                    this.focusMode = this.continueWatchingData.length > 0 ? 'continue' : 'grid';
+                    if (this.focusMode === 'continue') {
+                        this.continueFocus = 0;
+                        this.updateContinueFocus();
+                    } else {
+                        this.focusCard();
+                    }
                 }
             }, 200);
         });
@@ -927,6 +1151,186 @@ class StreamingPlatform {
         
         // Auto-refresh cada 5 minutos
         this.refreshInterval = setInterval(() => this.refreshData(), 300000);
+    }
+    
+    loadContinueWatching() {
+        // Cargar datos de localStorage
+        const savedData = localStorage.getItem('continueWatching');
+        if (savedData) {
+            try {
+                this.continueWatchingData = JSON.parse(savedData);
+                this.renderContinueWatching();
+            } catch (e) {
+                this.continueWatchingData = [];
+            }
+        }
+    }
+    
+    saveContinueWatching(seriesId, seriesTitle, seasonIndex, episodeIndex, episodeTitle, progress = 0, thumbnail = null) {
+        // Buscar si ya existe
+        const existingIndex = this.continueWatchingData.findIndex(item => 
+            item.seriesId === seriesId && 
+            item.seasonIndex === seasonIndex && 
+            item.episodeIndex === episodeIndex
+        );
+        
+        const continueItem = {
+            seriesId,
+            seriesTitle,
+            seasonIndex,
+            episodeIndex,
+            episodeTitle,
+            progress: progress || Math.random() * 100, // Simular progreso aleatorio
+            thumbnail,
+            timestamp: new Date().toISOString()
+        };
+        
+        if (existingIndex !== -1) {
+            // Actualizar existente
+            this.continueWatchingData[existingIndex] = continueItem;
+        } else {
+            // Agregar nuevo al principio
+            this.continueWatchingData.unshift(continueItem);
+            // Limitar a 10 items máximo
+            if (this.continueWatchingData.length > 10) {
+                this.continueWatchingData = this.continueWatchingData.slice(0, 10);
+            }
+        }
+        
+        localStorage.setItem('continueWatching', JSON.stringify(this.continueWatchingData));
+        this.renderContinueWatching();
+    }
+    
+    renderContinueWatching() {
+        if (this.continueWatchingData.length === 0) {
+            this.continueWatchingSection.classList.remove('active');
+            return;
+        }
+        
+        this.continueWatchingSection.classList.add('active');
+        this.continueWatchingRow.innerHTML = '';
+        
+        this.continueWatchingData.forEach((item, index) => {
+            const card = document.createElement('div');
+            card.className = 'continue-card';
+            card.dataset.index = index;
+            
+            const thumbnail = document.createElement('div');
+            thumbnail.className = 'continue-thumbnail';
+            
+            if (item.thumbnail) {
+                const img = document.createElement('img');
+                img.src = item.thumbnail;
+                img.alt = item.episodeTitle;
+                img.onerror = () => { img.style.display = 'none'; };
+                thumbnail.appendChild(img);
+            }
+            
+            const playOverlay = document.createElement('div');
+            playOverlay.className = 'continue-play-overlay';
+            playOverlay.innerHTML = '<div class="continue-play-btn">▶</div>';
+            thumbnail.appendChild(playOverlay);
+            
+            const progress = document.createElement('div');
+            progress.className = 'continue-progress';
+            const progressBar = document.createElement('div');
+            progressBar.className = 'continue-progress-bar';
+            progressBar.style.width = `${item.progress}%`;
+            progress.appendChild(progressBar);
+            thumbnail.appendChild(progress);
+            
+            card.appendChild(thumbnail);
+            
+            const info = document.createElement('div');
+            info.className = 'continue-info';
+            
+            const seriesTitle = document.createElement('div');
+            seriesTitle.className = 'continue-series-title';
+            seriesTitle.textContent = item.seriesTitle;
+            info.appendChild(seriesTitle);
+            
+            const episodeTitle = document.createElement('div');
+            episodeTitle.className = 'continue-episode-title';
+            episodeTitle.textContent = item.episodeTitle;
+            info.appendChild(episodeTitle);
+            
+            const meta = document.createElement('div');
+            meta.className = 'continue-meta';
+            meta.innerHTML = `
+                <span>T${item.seasonIndex + 1}:E${item.episodeIndex + 1}</span>
+                <span>•</span>
+                <span>${Math.round(item.progress)}% visto</span>
+            `;
+            info.appendChild(meta);
+            
+            card.appendChild(info);
+            
+            const removeBtn = document.createElement('div');
+            removeBtn.className = 'continue-remove';
+            removeBtn.innerHTML = '×';
+            removeBtn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                this.removeContinueItem(index);
+            });
+            card.appendChild(removeBtn);
+            
+            card.addEventListener('click', () => {
+                this.resumeWatching(item);
+            });
+            
+            this.continueWatchingRow.appendChild(card);
+        });
+    }
+    
+    removeContinueItem(index) {
+        this.continueWatchingData.splice(index, 1);
+        localStorage.setItem('continueWatching', JSON.stringify(this.continueWatchingData));
+        this.renderContinueWatching();
+    }
+    
+    clearContinueWatching() {
+        if (confirm('¿Eliminar todo el historial de "Seguir viendo"?')) {
+            this.continueWatchingData = [];
+            localStorage.removeItem('continueWatching');
+            this.renderContinueWatching();
+            this.focusMode = 'grid';
+            this.index = 0;
+            this.focusCard();
+        }
+    }
+    
+    resumeWatching(item) {
+        // Abrir la serie en el episodio correspondiente
+        this.openSeriesDetail(item.seriesId);
+        setTimeout(() => {
+            this.currentSeason = item.seasonIndex;
+            this.episodeFocus = item.episodeIndex;
+            this.renderSeasons();
+            this.renderEpisodes();
+            
+            // Simular clic en el episodio
+            const episodes = this.currentSeries.seasons[Object.keys(this.currentSeries.seasons)[item.seasonIndex]];
+            if (episodes && episodes[item.episodeIndex]) {
+                const ep = episodes[item.episodeIndex];
+                if (ep.url) {
+                    this.playEpisode(ep.url);
+                }
+            }
+        }, 100);
+    }
+    
+    updateContinueFocus() {
+        const cards = this.continueWatchingRow.querySelectorAll('.continue-card');
+        cards.forEach((card, index) => {
+            card.classList.toggle('focused', index === this.continueFocus);
+            if (index === this.continueFocus) {
+                card.scrollIntoView({ 
+                    behavior: 'smooth', 
+                    block: 'nearest',
+                    inline: 'center'
+                });
+            }
+        });
     }
     
     async loadData() {
@@ -1006,7 +1410,9 @@ class StreamingPlatform {
         
         if (this.cards.length > 0) {
             this.index = 0;
-            this.focusCard();
+            if (this.focusMode === 'grid') {
+                this.focusCard();
+            }
         }
     }
     
@@ -1181,7 +1587,8 @@ class StreamingPlatform {
         this.currentSeries = this.seriesData[seriesId];
         if (!this.currentSeries) return;
         
-        this.mainGrid.style.display = 'none';
+        this.mainGrid.parentElement.style.display = 'none';
+        this.continueWatchingSection.style.display = 'none';
         this.seriesOverlay.style.display = 'block';
         this.backButton.classList.add('visible');
         
@@ -1320,6 +1727,20 @@ class StreamingPlatform {
             if (!ep.locked) {
                 episodeDiv.addEventListener('click', () => {
                     if (ep.url) {
+                        // Guardar en seguir viendo
+                        const seriesId = Object.keys(this.seriesData).find(
+                            key => this.seriesData[key] === this.currentSeries
+                        );
+                        this.saveContinueWatching(
+                            seriesId,
+                            this.currentSeries.displayTitle || this.currentSeries.title,
+                            this.currentSeason,
+                            i,
+                            ep.title,
+                            0,
+                            ep.thumbnail
+                        );
+                        
                         this.playEpisode(ep.url);
                     }
                 });
@@ -1417,7 +1838,12 @@ class StreamingPlatform {
     closeModal() {
         this.seriesOverlay.style.display = 'none';
         this.backButton.classList.remove('visible');
-        this.mainGrid.style.display = 'grid';
+        this.mainGrid.parentElement.style.display = 'block';
+        
+        // Mostrar continue watching si hay datos
+        if (this.continueWatchingData.length > 0) {
+            this.continueWatchingSection.style.display = 'block';
+        }
         
         // Find and focus the current series card
         const seriesId = Object.keys(this.seriesData).find(
@@ -1451,26 +1877,87 @@ class StreamingPlatform {
     }
     
     handleKeyboard(e) {
+        // Continue watching navigation
+        if (this.focusMode === 'continue') {
+            const cards = this.continueWatchingRow.querySelectorAll('.continue-card');
+            
+            switch(e.key) {
+                case 'ArrowRight':
+                    e.preventDefault();
+                    this.continueFocus = Math.min(this.continueFocus + 1, cards.length - 1);
+                    this.updateContinueFocus();
+                    break;
+                    
+                case 'ArrowLeft':
+                    e.preventDefault();
+                    this.continueFocus = Math.max(this.continueFocus - 1, 0);
+                    this.updateContinueFocus();
+                    break;
+                    
+                case 'ArrowDown':
+                    e.preventDefault();
+                    this.focusMode = 'grid';
+                    this.index = 0;
+                    this.focusCard();
+                    break;
+                    
+                case 'ArrowUp':
+                    e.preventDefault();
+                    this.focusMode = 'search';
+                    this.searchBox.focus();
+                    this.searchBox.classList.add('focused');
+                    break;
+                    
+                case 'Enter':
+                    e.preventDefault();
+                    if (cards[this.continueFocus]) {
+                        cards[this.continueFocus].click();
+                    }
+                    break;
+            }
+            return;
+        }
+        
         // Casos especiales para la navegación global
-        if (e.key === 'ArrowUp' && this.focusMode === 'grid' && this.index < this.getGridWidth()) {
-            // Si estamos en la primera fila del grid, ir a la búsqueda
+        if (e.key === 'ArrowUp' && this.focusMode === 'grid') {
             e.preventDefault();
-            this.focusMode = 'search';
-            this.searchBox.focus();
-            this.searchBox.classList.add('focused');
-            this.showNavHelp('Búsqueda activa');
+            
+            // Si hay continue watching, ir ahí primero
+            if (this.continueWatchingData.length > 0 && this.index < this.getGridWidth()) {
+                this.focusMode = 'continue';
+                this.continueFocus = 0;
+                this.updateContinueFocus();
+            } else if (this.index < this.getGridWidth()) {
+                // Si no, ir a búsqueda
+                this.focusMode = 'search';
+                this.searchBox.focus();
+                this.searchBox.classList.add('focused');
+                this.showNavHelp('Búsqueda activa');
+            } else {
+                // Navegar hacia arriba en el grid
+                const gridWidth = this.getGridWidth();
+                this.index = Math.max(this.index - gridWidth, 0);
+                this.focusCard();
+            }
             return;
         }
         
         if (e.key === 'ArrowDown' && this.focusMode === 'search' && !this.searchResults.classList.contains('active')) {
-            // Desde la búsqueda sin resultados, volver al grid
+            // Desde la búsqueda sin resultados, volver al grid o continue watching
             e.preventDefault();
             this.hideSearchResults();
             this.searchBox.blur();
             this.searchBox.classList.remove('focused');
-            this.focusMode = 'grid';
-            this.index = 0;
-            this.focusCard();
+            
+            if (this.continueWatchingData.length > 0) {
+                this.focusMode = 'continue';
+                this.continueFocus = 0;
+                this.updateContinueFocus();
+            } else {
+                this.focusMode = 'grid';
+                this.index = 0;
+                this.focusCard();
+            }
             return;
         }
         
@@ -1616,13 +2103,6 @@ class StreamingPlatform {
             case 'ArrowDown':
                 this.index = Math.min(this.index + gridWidth, this.cards.length - 1);
                 break;
-            case 'ArrowUp':
-                if (this.index >= gridWidth) {
-                    this.index = Math.max(this.index - gridWidth, 0);
-                } else {
-                    // Ya manejado arriba para ir a búsqueda
-                }
-                break;
             case 'Enter':
             case ' ':
                 if (this.cards[this.index]) {
@@ -1689,6 +2169,20 @@ class StreamingPlatform {
                 case ' ':
                     const ep = episodes[this.episodeFocus];
                     if (!ep.locked && ep.url) {
+                        // Guardar en seguir viendo
+                        const seriesId = Object.keys(this.seriesData).find(
+                            key => this.seriesData[key] === this.currentSeries
+                        );
+                        this.saveContinueWatching(
+                            seriesId,
+                            this.currentSeries.displayTitle || this.currentSeries.title,
+                            this.currentSeason,
+                            this.episodeFocus,
+                            ep.title,
+                            0,
+                            ep.thumbnail
+                        );
+                        
                         this.playEpisode(ep.url);
                     } else if (ep.locked) {
                         this.showError('Este episodio está bloqueado');
