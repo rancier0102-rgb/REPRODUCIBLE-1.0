@@ -20,7 +20,8 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: 'Segoe UI', Arial, sans-serif;
+    /* MODIFICADO: Se actualizó la pila de fuentes a un estándar moderno y multiplataforma. */
+    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     background: var(--background-dark);
     color: var(--text-light);
     overflow-x: hidden;
@@ -1318,13 +1319,15 @@ header {
 
 <button class="back-button" id="backButton">
     <span>←</span>
-    <span>Back</span>
+    <!-- MODIFICADO: Traducido de "Back" a "Volver" para consistencia. -->
+    <span>Volver</span>
 </button>
 
 <!-- Continue Watching Section -->
 <section class="continue-watching-section" id="continueWatchingSection">
     <div class="section-header">
-        <span>Continue Watching...</span>
+        <!-- MODIFICADO: Traducido de "Continue Watching..." a "Seguir viendo..." -->
+        <span>Seguir viendo...</span>
         <span class="clear-continue" id="clearContinue">Limpiar todo</span>
     </div>
     <div class="continue-watching-row" id="continueWatchingRow">
@@ -1334,7 +1337,8 @@ header {
 
 <!-- Main Content -->
 <div class="main-content">
-    <div class="all-series-header"> All Series</div>
+    <!-- MODIFICADO: Traducido de "All Series" a "Todas las series" y se eliminó el espacio inicial. -->
+    <div class="all-series-header">Todas las series</div>
     <section class="grid" id="mainGrid">
         <!-- Las tarjetas se cargarán dinámicamente -->
     </section>
@@ -1744,14 +1748,14 @@ class StreamingPlatform {
             
             // Cargar desde el archivo JSON
             const response = await fetch(this.dataUrl);
-            if (!response.ok) throw new Error('Error loading data');
+            if (!response.ok) throw new Error('Error al cargar los datos'); /* MODIFICADO: Mensaje de error traducido */
             
             const data = await response.json();
             this.processSeriesData(data);
             this.renderGrid();
             
         } catch (error) {
-            console.error('Error loading series data:', error);
+            console.error('Error cargando los datos de las series:', error);
             this.showError('Error cargando las series. Usando datos de respaldo.');
             this.loadFallbackData();
         } finally {
@@ -2189,12 +2193,17 @@ class StreamingPlatform {
     
     updateSeriesScroll() {
         if (this.focusMode === 'episode') {
-            const episodeWidth = 295; // Adjusted for smaller episodes
             const containerWidth = window.innerWidth;
             const episodes = this.episodesTrack.querySelectorAll('.episode');
             
             if (episodes[this.episodeFocus]) {
                 const focusedEpisode = episodes[this.episodeFocus];
+                
+                /* MODIFICADO: Se calcula dinámicamente el ancho del episodio y su margen para un desplazamiento preciso,
+                   eliminando el "número mágico" 295. Esto hace que el código sea más robusto ante cambios de CSS. */
+                const episodeStyle = window.getComputedStyle(focusedEpisode);
+                const episodeWidth = focusedEpisode.offsetWidth + parseFloat(episodeStyle.marginRight);
+
                 const rect = focusedEpisode.getBoundingClientRect();
                 const containerRect = this.episodesTrack.parentElement.getBoundingClientRect();
                 
@@ -2204,7 +2213,7 @@ class StreamingPlatform {
                     );
                     
                     const totalWidth = episodes.length * episodeWidth;
-                    const maxScroll = Math.max(0, totalWidth - containerWidth + 60);
+                    const maxScroll = Math.max(0, totalWidth - containerWidth + 60); // 60 es el padding del contenedor
                     this.scrollX = Math.min(this.scrollX, maxScroll);
                     
                     this.episodesTrack.style.transform = `translateX(${-this.scrollX}px)`;
@@ -2641,12 +2650,12 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
     
-    // TV Remote Support
+    // Soporte para Control Remoto de TV
     if (window.navigator && window.navigator.userAgent) {
         const isTV = /TV|television|smarttv|webOS|Tizen/i.test(window.navigator.userAgent);
         if (isTV) {
             document.body.classList.add('tv-mode');
-            console.log('TV Mode detected');
+            console.log('Modo TV detectado');
         }
     }
     
@@ -2657,16 +2666,15 @@ document.addEventListener('DOMContentLoaded', () => {
 // Handle page visibility for auto-pause
 document.addEventListener('visibilitychange', () => {
     if (document.hidden && platform) {
-        console.log('Página oculta, pausando actividades');
+        console.log('Página oculta, pausando actividades.');
     } else if (platform) {
-        console.log('Página visible, reanudando actividades');
+        console.log('Página visible, reanudando actividades.');
     }
 });
 </script>
 
 </body>
 </html>
-
 
 
 
