@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="en">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Series+ - Plataforma de Streaming</title>
+<title>Series+ - Streaming Platform</title>
 <style>
 :root {
     --primary-color: #e50914;
@@ -321,12 +321,6 @@ header {
     color: white;
 }
 
-.card-title .highlight {
-    background: rgba(229, 9, 20, 0.3);
-    padding: 1px 3px;
-    border-radius: 2px;
-}
-
 .card.focused {
     border-color: var(--primary-color);
     transform: scale(1.1);
@@ -373,11 +367,11 @@ header {
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.badge.doblado { 
+.badge.dubbed { 
     background: #46d369; 
 }
 
-.badge.estreno { 
+.badge.premiere { 
     background: #ff6b35;
     animation: glow 2s ease-in-out infinite;
 }
@@ -727,13 +721,13 @@ header {
     z-index: 5;
 }
 
-.episode.bloqueado {
+.episode.locked {
     opacity: 0.4;
     cursor: not-allowed;
     filter: grayscale(1);
 }
 
-.episode.bloqueado::after {
+.episode.locked::after {
     content: "🔒";
     position: absolute;
     top: 50%;
@@ -1111,7 +1105,7 @@ header {
     <!-- Professional Search Bar -->
     <div class="search-container">
         <div class="search-wrapper">
-            <input type="text" class="search-box" id="searchBox" placeholder="Buscar series...">
+            <input type="text" class="search-box" id="searchBox" placeholder="Search series...">
             <div class="search-clear" id="searchClear">×</div>
             <div class="search-icon">
                 <svg viewBox="0 0 24 24">
@@ -1124,24 +1118,24 @@ header {
 
 <button class="back-button" id="backButton">
     <span>←</span>
-    <span>Volver</span>
+    <span>Back</span>
 </button>
 
 <!-- Main Content -->
 <div class="main-content">
     <div class="search-info" id="searchInfo">
         <div class="search-info-text">
-            Resultados para: <strong id="searchQuery"></strong>
+            Results for: <strong id="searchQuery"></strong>
         </div>
         <div class="search-info-count" id="searchCount"></div>
-        <button class="clear-search" id="clearSearchBtn">Limpiar búsqueda</button>
+        <button class="clear-search" id="clearSearchBtn">Clear search</button>
     </div>
     
-    <div class="all-series-header" id="gridHeader">Todas las series</div>
+    <div class="all-series-header" id="gridHeader">All Series</div>
     <section class="grid" id="mainGrid">
         <div class="no-results-message" id="noResults">
-            No se encontraron resultados
-            <strong>Intenta con otros términos de búsqueda</strong>
+            No results found
+            <strong>Try different search terms</strong>
         </div>
     </section>
 </div>
@@ -1172,1089 +1166,538 @@ header {
 
 <!-- Navigation Help -->
 <div class="nav-help" id="navHelp">
-    Presiona ↑ para ir a la búsqueda
+    Press ↑ to search
 </div>
 
 <!-- Error message -->
 <div class="error-message" id="errorMessage">
-    Error cargando el contenido
+    Error loading content
 </div>
 
 <script>
 /* ========================================
-   STREAMING PLATFORM WITH ENHANCED SEARCH IN GRID
+   "A SIMPLE SPELL, BUT QUITE UNBREAKABLE"
+   - Dr. Strange Style: Simple & Robust Code
    ======================================== */
 
 class StreamingPlatform {
     constructor() {
-        this.seriesData = {};
-        this.allSeriesData = {}; // Copia de todos los datos originales
+        // Core data - simple and clear
+        this.data = {};
+        this.filteredData = {};
         this.cards = [];
-        this.visibleCards = [];
-        this.index = 0;
-        this.currentSeries = null;
-        this.currentSeriesId = null;
-        this.currentSeason = 0;
-        this.focusMode = "grid";
-        this.seasonFocus = 0;
-        this.episodeFocus = 0;
-        this.scrollX = 0;
-        this.searchTimeout = null;
-        this.isSearching = false;
-        this.currentSearchQuery = '';
-        this.dataUrl = 'series-data.json';
-        this.refreshInterval = null;
-        this.navHelpTimeout = null;
-        this.searchScore = new Map(); // Para almacenar puntuaciones de relevancia
+        this.currentIndex = 0;
+        this.mode = 'grid'; // grid, search, series, season, episode
+        this.searchQuery = '';
         
-        this.initializeElements();
+        // Series viewer state
+        this.selectedSeries = null;
+        this.selectedSeriesId = null;
+        this.seasonIndex = 0;
+        this.episodeIndex = 0;
+        
+        this.init();
+    }
+    
+    // Simple initialization spell
+    init() {
+        this.cacheElements();
+        this.bindEvents();
         this.loadData();
     }
     
-    initializeElements() {
-        // Cache DOM elements
-        this.loader = document.getElementById('loader');
-        this.mainGrid = document.getElementById('mainGrid');
-        this.seriesOverlay = document.getElementById('seriesOverlay');
-        this.backButton = document.getElementById('backButton');
-        this.closeButton = document.getElementById('closeButton');
-        this.seasonBar = document.getElementById('seasonBar');
-        this.episodesTrack = document.getElementById('episodesTrack');
-        this.errorMessage = document.getElementById('errorMessage');
-        this.searchBox = document.getElementById('searchBox');
-        this.searchClear = document.getElementById('searchClear');
-        this.navHelp = document.getElementById('navHelp');
-        this.searchInfo = document.getElementById('searchInfo');
-        this.searchQuery = document.getElementById('searchQuery');
-        this.searchCount = document.getElementById('searchCount');
-        this.clearSearchBtn = document.getElementById('clearSearchBtn');
-        this.gridHeader = document.getElementById('gridHeader');
-        this.noResults = document.getElementById('noResults');
-        this.seriesBanner = document.getElementById('seriesBanner');
-        this.seriesBannerImage = document.getElementById('seriesBannerImage');
-        this.seriesBannerTitle = document.getElementById('seriesBannerTitle');
-        this.seriesBannerMeta = document.getElementById('seriesBannerMeta');
-        this.seriesBannerPlay = document.getElementById('seriesBannerPlay');
-        
-        // Event listeners
-        this.backButton.addEventListener('click', () => this.closeModal());
-        this.closeButton.addEventListener('click', () => this.closeModal());
-        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
-        
-        // Banner play button
-        this.seriesBannerPlay.addEventListener('click', () => {
-            this.playFirstAvailableEpisode();
-        });
-        
-        // Search events with improved handling
-        this.searchBox.addEventListener('input', (e) => this.handleSearch(e));
-        this.searchBox.addEventListener('focus', () => {
-            this.focusMode = 'search';
-            this.searchBox.classList.add('focused');
-        });
-        
-        this.searchBox.addEventListener('blur', () => {
-            setTimeout(() => {
-                if (this.focusMode === 'search') {
-                    this.searchBox.classList.remove('focused');
-                    this.focusMode = 'grid';
-                    this.focusVisibleCard();
-                }
-            }, 200);
-        });
-        
-        // Clear search button
-        this.searchClear.addEventListener('click', () => {
-            this.clearSearch();
-        });
-        
-        // Clear search info button
-        this.clearSearchBtn.addEventListener('click', () => {
-            this.clearSearch();
-        });
-        
-        // Auto-refresh cada 5 minutos
-        this.refreshInterval = setInterval(() => this.refreshData(), 300000);
-    }
-    
-    clearSearch() {
-        this.searchBox.value = '';
-        this.searchClear.classList.remove('visible');
-        this.searchInfo.classList.remove('visible');
-        this.searchBox.classList.remove('active-search');
-        this.currentSearchQuery = '';
-        this.isSearching = false;
-        this.searchScore.clear();
-        
-        // Restaurar todas las series
-        this.seriesData = { ...this.allSeriesData };
-        this.renderGrid();
-        this.gridHeader.textContent = 'Todas las series';
-    }
-    
-    handleSearch(e) {
-        const query = e.target.value.trim();
-        
-        // Show/hide clear button
-        if (query) {
-            this.searchClear.classList.add('visible');
-        } else {
-            this.searchClear.classList.remove('visible');
-            this.searchBox.classList.remove('active-search');
-        }
-        
-        clearTimeout(this.searchTimeout);
-        
-        if (!query) {
-            this.clearSearch();
-            return;
-        }
-        
-        this.searchTimeout = setTimeout(() => {
-            this.performEnhancedSearch(query);
-        }, 300);
-    }
-    
-    calculateSearchScore(text, query) {
-        if (!text || !query) return 0;
-        
-        text = text.toLowerCase();
-        query = query.toLowerCase();
-        
-        let score = 0;
-        
-        // Coincidencia exacta (máxima puntuación)
-        if (text === query) {
-            score += 100;
-        }
-        
-        // Comienza con la consulta
-        if (text.startsWith(query)) {
-            score += 50;
-        }
-        
-        // Contiene la consulta completa
-        if (text.includes(query)) {
-            score += 30;
-        }
-        
-        // Coincidencia de todas las palabras de la consulta
-        const queryWords = query.split(/\s+/);
-        const textWords = text.split(/\s+/);
-        let matchedWords = 0;
-        
-        queryWords.forEach(qWord => {
-            if (textWords.some(tWord => tWord.includes(qWord))) {
-                matchedWords++;
+    // Cache DOM elements once - unbreakable reference
+    cacheElements() {
+        this.elements = {
+            loader: document.getElementById('loader'),
+            grid: document.getElementById('mainGrid'),
+            overlay: document.getElementById('seriesOverlay'),
+            searchBox: document.getElementById('searchBox'),
+            searchClear: document.getElementById('searchClear'),
+            searchInfo: document.getElementById('searchInfo'),
+            searchQuery: document.getElementById('searchQuery'),
+            searchCount: document.getElementById('searchCount'),
+            clearBtn: document.getElementById('clearSearchBtn'),
+            header: document.getElementById('gridHeader'),
+            noResults: document.getElementById('noResults'),
+            backBtn: document.getElementById('backButton'),
+            closeBtn: document.getElementById('closeButton'),
+            seasonBar: document.getElementById('seasonBar'),
+            episodesTrack: document.getElementById('episodesTrack'),
+            errorMsg: document.getElementById('errorMessage'),
+            navHelp: document.getElementById('navHelp'),
+            banner: {
+                image: document.getElementById('seriesBannerImage'),
+                title: document.getElementById('seriesBannerTitle'),
+                meta: document.getElementById('seriesBannerMeta'),
+                play: document.getElementById('seriesBannerPlay')
             }
-        });
-        
-        score += (matchedWords / queryWords.length) * 20;
-        
-        // Coincidencia fonética básica (para errores de tipeo)
-        const levenshteinDistance = this.getLevenshteinDistance(text.substring(0, query.length), query);
-        if (levenshteinDistance <= 2) {
-            score += (10 - levenshteinDistance * 3);
-        }
-        
-        return score;
-    }
-    
-    getLevenshteinDistance(str1, str2) {
-        const matrix = [];
-        
-        for (let i = 0; i <= str2.length; i++) {
-            matrix[i] = [i];
-        }
-        
-        for (let j = 0; j <= str1.length; j++) {
-            matrix[0][j] = j;
-        }
-        
-        for (let i = 1; i <= str2.length; i++) {
-            for (let j = 1; j <= str1.length; j++) {
-                if (str2.charAt(i - 1) === str1.charAt(j - 1)) {
-                    matrix[i][j] = matrix[i - 1][j - 1];
-                } else {
-                    matrix[i][j] = Math.min(
-                        matrix[i - 1][j - 1] + 1,
-                        matrix[i][j - 1] + 1,
-                        matrix[i - 1][j] + 1
-                    );
-                }
-            }
-        }
-        
-        return matrix[str2.length][str1.length];
-    }
-    
-    performEnhancedSearch(query) {
-        this.currentSearchQuery = query;
-        this.isSearching = true;
-        this.searchScore.clear();
-        
-        const results = {};
-        const searchTerms = query.toLowerCase().split(/\s+/);
-        
-        // Buscar en todos los datos originales
-        Object.entries(this.allSeriesData).forEach(([id, serie]) => {
-            let totalScore = 0;
-            
-            // Buscar en título principal
-            const mainTitle = (serie.title || '').toLowerCase();
-            totalScore += this.calculateSearchScore(mainTitle, query) * 2; // Peso doble para título principal
-            
-            // Buscar en título display
-            const displayTitle = (serie.displayTitle || '').toLowerCase();
-            totalScore += this.calculateSearchScore(displayTitle, query) * 1.5;
-            
-            // Buscar en badge
-            if (serie.badge) {
-                const badge = serie.badge.toLowerCase();
-                if (searchTerms.some(term => badge.includes(term))) {
-                    totalScore += 10;
-                }
-            }
-            
-            // Búsqueda en temporadas y episodios
-            if (serie.seasons) {
-                Object.entries(serie.seasons).forEach(([seasonName, episodes]) => {
-                    // Buscar en nombre de temporada
-                    if (seasonName.toLowerCase().includes(query)) {
-                        totalScore += 5;
-                    }
-                    
-                    // Buscar en episodios
-                    if (Array.isArray(episodes)) {
-                        episodes.forEach(ep => {
-                            if (ep.title && ep.title.toLowerCase().includes(query)) {
-                                totalScore += 3;
-                            }
-                        });
-                    }
-                });
-            }
-            
-            // Solo incluir si tiene alguna puntuación
-            if (totalScore > 0) {
-                results[id] = serie;
-                this.searchScore.set(id, totalScore);
-            }
-        });
-        
-        // Ordenar por relevancia
-        const sortedIds = Object.keys(results).sort((a, b) => {
-            return (this.searchScore.get(b) || 0) - (this.searchScore.get(a) || 0);
-        });
-        
-        // Crear objeto ordenado
-        const sortedResults = {};
-        sortedIds.forEach(id => {
-            sortedResults[id] = results[id];
-        });
-        
-        // Actualizar datos visibles
-        this.seriesData = sortedResults;
-        
-        // Actualizar UI
-        this.displaySearchResults(query, Object.keys(sortedResults).length);
-    }
-    
-    displaySearchResults(query, count) {
-        // Mostrar información de búsqueda
-        this.searchInfo.classList.add('visible');
-        this.searchQuery.textContent = query;
-        this.searchCount.textContent = `${count} resultado${count !== 1 ? 's' : ''}`;
-        this.searchBox.classList.add('active-search');
-        
-        // Actualizar header
-        if (count > 0) {
-            this.gridHeader.textContent = 'Resultados de búsqueda';
-        } else {
-            this.gridHeader.textContent = 'Sin resultados';
-        }
-        
-        // Renderizar grid con resultados
-        this.renderSearchGrid();
-    }
-    
-    renderSearchGrid() {
-        this.mainGrid.innerHTML = '';
-        this.cards = [];
-        this.visibleCards = [];
-        
-        const hasResults = Object.keys(this.seriesData).length > 0;
-        
-        if (!hasResults) {
-            this.noResults.classList.add('visible');
-            this.mainGrid.appendChild(this.noResults);
-            return;
-        }
-        
-        this.noResults.classList.remove('visible');
-        
-        Object.entries(this.seriesData).forEach(([id, serie], index) => {
-            const card = this.createCard(id, serie);
-            card.classList.add('search-match');
-            
-            // Añadir indicador de relevancia
-            const score = this.searchScore.get(id) || 0;
-            if (score > 80) {
-                card.style.order = -1; // Más relevantes primero
-            }
-            
-            this.mainGrid.appendChild(card);
-            this.cards.push(card);
-            this.visibleCards.push(card);
-            
-            // Animation delay escalonado
-            card.style.animationDelay = `${Math.min(index * 0.03, 0.5)}s`;
-        });
-        
-        if (this.visibleCards.length > 0) {
-            this.index = 0;
-            if (this.focusMode === 'grid') {
-                this.focusVisibleCard();
-            }
-        }
-    }
-    
-    focusVisibleCard() {
-        if (this.visibleCards.length === 0) return;
-        
-        this.visibleCards.forEach((c, i) => {
-            c.classList.remove('focused');
-            c.tabIndex = -1;
-        });
-        
-        const currentCard = this.visibleCards[this.index];
-        if (currentCard) {
-            currentCard.classList.add('focused');
-            currentCard.tabIndex = 0;
-            currentCard.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center', 
-                inline: 'center' 
-            });
-        }
-    }
-    
-    createBannerFromPoster(posterUrl) {
-        return posterUrl;
-    }
-    
-    updateSeriesBanner(serie) {
-        const bannerImage = this.createBannerFromPoster(serie.poster || 'https://via.placeholder.com/1920x400');
-        this.seriesBannerImage.src = bannerImage;
-        this.seriesBannerImage.alt = serie.displayTitle || serie.title;
-        this.seriesBannerImage.onerror = () => {
-            this.seriesBannerImage.src = 'https://via.placeholder.com/1920x400?text=' + encodeURIComponent(serie.displayTitle || serie.title);
         };
-        
-        this.seriesBannerTitle.textContent = serie.displayTitle || serie.title;
-        
-        this.seriesBannerMeta.innerHTML = '';
-        
-        if (serie.badge) {
-            const badge = document.createElement('span');
-            badge.className = 'series-banner-badge';
-            badge.textContent = serie.badge;
-            if (serie.badgeType === 'doblado') {
-                badge.style.background = '#46d369';
-            } else if (serie.badgeType === 'estreno') {
-                badge.style.background = '#ff6b35';
-            }
-            this.seriesBannerMeta.appendChild(badge);
-        }
-        
-        const seasonCount = serie.seasons ? Object.keys(serie.seasons).length : 0;
-        let episodeCount = 0;
-        if (serie.seasons) {
-            Object.values(serie.seasons).forEach(episodes => {
-                episodeCount += episodes ? episodes.length : 0;
-            });
-        }
-        
-        if (seasonCount > 0) {
-            const info = document.createElement('span');
-            info.textContent = `${seasonCount} Temporada${seasonCount > 1 ? 's' : ''} • ${episodeCount} Episodio${episodeCount > 1 ? 's' : ''}`;
-            this.seriesBannerMeta.appendChild(info);
-        }
     }
     
-    playFirstAvailableEpisode() {
-        if (!this.currentSeries || !this.currentSeries.seasons) return;
+    // Simple event binding - one place, easy to track
+    bindEvents() {
+        // Search events
+        this.elements.searchBox.addEventListener('input', (e) => this.search(e.target.value));
+        this.elements.searchBox.addEventListener('focus', () => this.setMode('search'));
+        this.elements.searchBox.addEventListener('blur', () => setTimeout(() => this.setMode('grid'), 200));
         
-        const seasonKeys = Object.keys(this.currentSeries.seasons);
-        for (let seasonIndex = 0; seasonIndex < seasonKeys.length; seasonIndex++) {
-            const episodes = this.currentSeries.seasons[seasonKeys[seasonIndex]];
-            if (episodes && episodes.length > 0) {
-                for (let epIndex = 0; epIndex < episodes.length; epIndex++) {
-                    const ep = episodes[epIndex];
-                    if (!ep.locked && ep.url) {
-                        this.playEpisode(ep.url);
-                        return;
-                    }
-                }
+        // Clear buttons
+        this.elements.searchClear.addEventListener('click', () => this.clearSearch());
+        this.elements.clearBtn.addEventListener('click', () => this.clearSearch());
+        
+        // Navigation
+        this.elements.backBtn.addEventListener('click', () => this.closeSeries());
+        this.elements.closeBtn.addEventListener('click', () => this.closeSeries());
+        this.elements.banner.play.addEventListener('click', () => this.playFirstEpisode());
+        
+        // Keyboard - the most powerful spell
+        document.addEventListener('keydown', (e) => this.handleKey(e));
+        
+        // Browser back button
+        window.addEventListener('popstate', () => {
+            if (this.elements.overlay.style.display === 'block') {
+                this.closeSeries();
             }
-        }
-        
-        this.showError('No hay episodios disponibles para reproducir');
+        });
     }
     
+    // Simple data loading
     async loadData() {
         try {
             this.showLoader(true);
+            const response = await fetch('series-data.json');
+            const json = await response.json();
             
-            const response = await fetch(this.dataUrl);
-            if (!response.ok) throw new Error('Error al cargar los datos');
+            // Simple data structure
+            this.data = {};
+            if (json.series) {
+                json.series.forEach(s => {
+                    this.data[s.id] = {
+                        id: s.id,
+                        title: s.title || '',
+                        displayTitle: s.displayTitle || s.title || '',
+                        poster: s.poster || '',
+                        badge: s.badge || '',
+                        badgeType: s.badgeType || '',
+                        seasons: s.seasons || {}
+                    };
+                });
+            }
             
-            const data = await response.json();
-            this.processSeriesData(data);
-            this.renderGrid();
-            
+            this.filteredData = {...this.data};
+            this.render();
         } catch (error) {
-            console.error('Error cargando los datos de las series:', error);
-            this.showError('Error cargando las series. Usando datos de respaldo.');
-            this.loadFallbackData();
+            this.showError('Loading error');
+            // Simple fallback
+            this.data = {
+                'demo': {
+                    id: 'demo',
+                    title: 'Demo Series',
+                    displayTitle: 'Demo Series',
+                    poster: 'https://via.placeholder.com/300x450',
+                    badge: 'DEMO',
+                    badgeType: '',
+                    seasons: { 'Season 1': [{ title: 'Episode 1', url: '#' }] }
+                }
+            };
+            this.filteredData = {...this.data};
+            this.render();
         } finally {
             this.showLoader(false);
         }
     }
     
-    processSeriesData(data) {
-        this.seriesData = {};
-        this.allSeriesData = {};
+    // Simple search - no complex algorithms
+    search(query) {
+        this.searchQuery = query.trim().toLowerCase();
         
-        if (data.series && Array.isArray(data.series)) {
-            data.series.forEach(serie => {
-                const processedSerie = {
-                    title: serie.title,
-                    displayTitle: serie.displayTitle || serie.title,
-                    poster: serie.poster,
-                    badge: serie.badge,
-                    badgeType: serie.badgeType,
-                    seasons: serie.seasons || {}
-                };
-                this.seriesData[serie.id] = processedSerie;
-                this.allSeriesData[serie.id] = processedSerie;
-            });
+        // Toggle clear button
+        this.elements.searchClear.classList.toggle('visible', !!this.searchQuery);
+        
+        if (!this.searchQuery) {
+            this.clearSearch();
+            return;
         }
-    }
-    
-    loadFallbackData() {
-        const fallbackData = {
-            "fallback-series": {
-                title: "SERIE DE EJEMPLO",
-                displayTitle: "Serie de Ejemplo",
-                poster: "https://via.placeholder.com/300x450?text=Sin+Imagen",
-                badge: "DEMO",
-                badgeType: "",
-                seasons: {
-                    "Temporada 1": [
-                        { 
-                            title: "Episodio 1", 
-                            url: "#",
-                            thumbnail: "https://via.placeholder.com/320x180?text=Episodio+1"
-                        }
-                    ]
-                }
+        
+        // Simple filter - title includes query
+        this.filteredData = {};
+        Object.entries(this.data).forEach(([id, series]) => {
+            const title = (series.displayTitle || series.title).toLowerCase();
+            if (title.includes(this.searchQuery)) {
+                this.filteredData[id] = series;
             }
-        };
-        
-        this.seriesData = fallbackData;
-        this.allSeriesData = fallbackData;
-        this.renderGrid();
-    }
-    
-    renderGrid() {
-        this.mainGrid.innerHTML = '';
-        this.cards = [];
-        this.visibleCards = [];
-        
-        this.noResults.classList.remove('visible');
-        
-        Object.entries(this.seriesData).forEach(([id, serie], index) => {
-            const card = this.createCard(id, serie);
-            this.mainGrid.appendChild(card);
-            this.cards.push(card);
-            this.visibleCards.push(card);
-            
-            card.style.animationDelay = `${index * 0.03}s`;
         });
         
-        if (this.cards.length > 0) {
-            this.index = 0;
-            if (this.focusMode === 'grid') {
-                this.focusCard();
-            }
-        }
+        // Update UI
+        this.elements.searchInfo.classList.add('visible');
+        this.elements.searchQuery.textContent = query;
+        this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} result(s)`;
+        this.elements.header.textContent = Object.keys(this.filteredData).length ? 'Search Results' : 'No Results';
+        this.elements.searchBox.classList.add('active-search');
+        
+        this.render();
     }
     
-    createCard(id, serie) {
-        const article = document.createElement('article');
-        article.className = 'card';
-        article.dataset.series = id;
-        article.tabIndex = -1;
+    // Clear search - simple reset
+    clearSearch() {
+        this.searchQuery = '';
+        this.elements.searchBox.value = '';
+        this.elements.searchClear.classList.remove('visible');
+        this.elements.searchInfo.classList.remove('visible');
+        this.elements.searchBox.classList.remove('active-search');
+        this.elements.header.textContent = 'All Series';
+        this.filteredData = {...this.data};
+        this.render();
+    }
+    
+    // Simple render - one function, clear purpose
+    render() {
+        this.elements.grid.innerHTML = '';
+        this.cards = [];
         
-        if (serie.badge) {
+        const entries = Object.entries(this.filteredData);
+        
+        if (entries.length === 0) {
+            this.elements.noResults.classList.add('visible');
+            this.elements.grid.appendChild(this.elements.noResults);
+            return;
+        }
+        
+        this.elements.noResults.classList.remove('visible');
+        
+        entries.forEach(([id, series], index) => {
+            const card = this.createCard(series);
+            if (this.searchQuery) card.classList.add('search-match');
+            card.style.animationDelay = `${index * 0.03}s`;
+            this.elements.grid.appendChild(card);
+            this.cards.push(card);
+        });
+        
+        this.currentIndex = 0;
+        if (this.mode === 'grid') this.focusCard();
+    }
+    
+    // Simple card creation
+    createCard(series) {
+        const card = document.createElement('article');
+        card.className = 'card';
+        card.dataset.id = series.id;
+        
+        if (series.badge) {
             const badge = document.createElement('span');
-            badge.className = `badge ${serie.badgeType || ''}`;
-            badge.textContent = serie.badge;
-            article.appendChild(badge);
+            badge.className = `badge ${series.badgeType === 'doblado' ? 'dubbed' : series.badgeType === 'estreno' ? 'premiere' : ''}`;
+            badge.textContent = series.badge;
+            card.appendChild(badge);
         }
         
         const img = document.createElement('img');
-        img.src = serie.poster || 'https://via.placeholder.com/300x450?text=No+Image';
-        img.alt = serie.displayTitle || serie.title;
+        img.src = series.poster || 'https://via.placeholder.com/300x450';
+        img.alt = series.displayTitle;
         img.loading = 'lazy';
-        img.onerror = () => { 
-            img.src = 'https://via.placeholder.com/300x450?text=' + encodeURIComponent(serie.displayTitle || serie.title); 
-        };
-        article.appendChild(img);
+        card.appendChild(img);
         
-        const titleDiv = document.createElement('div');
-        titleDiv.className = 'card-title';
+        const title = document.createElement('div');
+        title.className = 'card-title';
+        title.textContent = series.displayTitle;
+        card.appendChild(title);
         
-        // Si estamos buscando, resaltar coincidencias
-        if (this.isSearching && this.currentSearchQuery) {
-            titleDiv.innerHTML = this.highlightMatch(serie.displayTitle || serie.title, this.currentSearchQuery);
-        } else {
-            titleDiv.textContent = serie.displayTitle || serie.title;
+        card.addEventListener('click', () => this.openSeries(series.id));
+        
+        return card;
+    }
+    
+    // Simple series opening
+    openSeries(id) {
+        this.selectedSeries = this.data[id] || this.filteredData[id];
+        if (!this.selectedSeries) return;
+        
+        this.selectedSeriesId = id;
+        this.seasonIndex = 0;
+        this.episodeIndex = 0;
+        
+        // Update banner
+        this.elements.banner.image.src = this.selectedSeries.poster;
+        this.elements.banner.title.textContent = this.selectedSeries.displayTitle;
+        
+        // Meta info
+        this.elements.banner.meta.innerHTML = '';
+        if (this.selectedSeries.badge) {
+            const badge = document.createElement('span');
+            badge.className = 'series-banner-badge';
+            badge.textContent = this.selectedSeries.badge;
+            this.elements.banner.meta.appendChild(badge);
         }
         
-        article.appendChild(titleDiv);
-        
-        article.addEventListener('click', () => this.openSeriesDetail(id));
-        
-        return article;
-    }
-    
-    highlightMatch(text, query) {
-        const regex = new RegExp(`(${query})`, 'gi');
-        return text.replace(regex, '<span class="highlight">$1</span>');
-    }
-    
-    focusCard() {
-        if (this.cards.length === 0) return;
-        
-        const cardsToFocus = this.isSearching ? this.visibleCards : this.cards;
-        
-        cardsToFocus.forEach((c, i) => {
-            c.classList.remove('focused');
-            c.tabIndex = -1;
-        });
-        
-        const currentCard = cardsToFocus[this.index];
-        if (currentCard) {
-            currentCard.classList.add('focused');
-            currentCard.tabIndex = 0;
-            currentCard.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center', 
-                inline: 'center' 
-            });
+        const seasonCount = Object.keys(this.selectedSeries.seasons || {}).length;
+        if (seasonCount) {
+            const info = document.createElement('span');
+            info.textContent = `${seasonCount} Season${seasonCount > 1 ? 's' : ''}`;
+            this.elements.banner.meta.appendChild(info);
         }
-    }
-    
-    openSeriesDetail(seriesId) {
-        // Buscar en todos los datos, no solo los filtrados
-        this.currentSeries = this.allSeriesData[seriesId] || this.seriesData[seriesId];
-        this.currentSeriesId = seriesId;
-        if (!this.currentSeries) return;
         
-        this.mainGrid.parentElement.style.display = 'none';
-        this.seriesOverlay.style.display = 'block';
-        this.backButton.classList.add('visible');
-        
-        this.updateSeriesBanner(this.currentSeries);
-        
-        this.currentSeason = 0;
-        this.focusMode = 'season';
-        this.seasonFocus = 0;
-        this.episodeFocus = 0;
+        // Show overlay
+        this.elements.grid.parentElement.style.display = 'none';
+        this.elements.overlay.style.display = 'block';
+        this.elements.backBtn.classList.add('visible');
         
         this.renderSeasons();
         this.renderEpisodes();
+        this.setMode('season');
         
-        history.pushState({ modal: true }, '', '#' + seriesId);
+        history.pushState({ modal: true }, '', '#' + id);
     }
     
+    // Simple seasons render
     renderSeasons() {
-        this.seasonBar.innerHTML = '';
+        this.elements.seasonBar.innerHTML = '';
+        const seasons = Object.keys(this.selectedSeries.seasons || {});
         
-        if (!this.currentSeries.seasons || Object.keys(this.currentSeries.seasons).length === 0) {
-            const noSeasons = document.createElement('div');
-            noSeasons.className = 'season active';
-            noSeasons.textContent = 'Sin temporadas disponibles';
-            this.seasonBar.appendChild(noSeasons);
+        if (!seasons.length) {
+            this.elements.seasonBar.innerHTML = '<div class="season active">No seasons available</div>';
             return;
         }
         
-        const seasonKeys = Object.keys(this.currentSeries.seasons);
-        
-        seasonKeys.forEach((seasonName, i) => {
-            const seasonDiv = document.createElement('div');
-            seasonDiv.className = 'season';
-            seasonDiv.tabIndex = -1;
-            
-            if (i === this.currentSeason) {
-                seasonDiv.classList.add('active');
-            }
-            
-            seasonDiv.textContent = seasonName;
-            seasonDiv.dataset.index = i;
-            
-            seasonDiv.addEventListener('click', () => {
-                this.currentSeason = i;
-                this.episodeFocus = 0;
+        seasons.forEach((name, i) => {
+            const btn = document.createElement('div');
+            btn.className = 'season';
+            btn.textContent = name;
+            if (i === this.seasonIndex) btn.classList.add('active');
+            btn.addEventListener('click', () => {
+                this.seasonIndex = i;
+                this.episodeIndex = 0;
                 this.renderSeasons();
                 this.renderEpisodes();
             });
-            
-            this.seasonBar.appendChild(seasonDiv);
+            this.elements.seasonBar.appendChild(btn);
         });
         
-        this.updateSeriesFocus();
+        this.updateFocus();
     }
     
+    // Simple episodes render
     renderEpisodes() {
-        this.episodesTrack.innerHTML = '';
+        this.elements.episodesTrack.innerHTML = '';
         
-        if (!this.currentSeries.seasons || Object.keys(this.currentSeries.seasons).length === 0) {
-            const noEpisodes = document.createElement('div');
-            noEpisodes.style.padding = '30px';
-            noEpisodes.style.color = 'var(--muted)';
-            noEpisodes.textContent = 'No hay episodios disponibles';
-            this.episodesTrack.appendChild(noEpisodes);
-            return;
-        }
+        const seasons = Object.values(this.selectedSeries.seasons || {});
+        const episodes = seasons[this.seasonIndex] || [];
         
-        const seasonKeys = Object.keys(this.currentSeries.seasons);
-        const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
-        
-        if (!episodes || episodes.length === 0) {
-            const noEpisodes = document.createElement('div');
-            noEpisodes.style.padding = '30px';
-            noEpisodes.style.color = 'var(--muted)';
-            noEpisodes.textContent = 'No hay episodios en esta temporada';
-            this.episodesTrack.appendChild(noEpisodes);
+        if (!episodes.length) {
+            this.elements.episodesTrack.innerHTML = '<div style="padding:30px;color:#999">No episodes available</div>';
             return;
         }
         
         episodes.forEach((ep, i) => {
-            const episodeDiv = document.createElement('div');
-            episodeDiv.className = 'episode';
-            episodeDiv.tabIndex = -1;
-            
-            if (ep.locked) {
-                episodeDiv.classList.add('bloqueado');
-            }
+            const card = document.createElement('div');
+            card.className = 'episode';
+            if (ep.locked) card.classList.add('locked');
             
             const thumb = document.createElement('div');
             thumb.className = 'thumb';
+            thumb.innerHTML = `
+                <div class="ep-number">${i + 1}</div>
+                ${ep.thumbnail ? `<img src="${ep.thumbnail}" alt="${ep.title}">` : `<span>${ep.title}</span>`}
+                <div class="play-icon"></div>
+            `;
             
-            const epNumber = document.createElement('div');
-            epNumber.className = 'ep-number';
-            epNumber.textContent = `${i + 1}`;
-            thumb.appendChild(epNumber);
+            const info = document.createElement('div');
+            info.className = 'ep-info';
+            info.innerHTML = `<div class="ep-title">${ep.title}</div>`;
             
-            if (ep.thumbnail) {
-                const img = document.createElement('img');
-                img.src = ep.thumbnail;
-                img.alt = ep.title;
-                img.onerror = () => {
-                    img.style.display = 'none';
-                    const placeholder = document.createElement('span');
-                    placeholder.textContent = ep.title;
-                    thumb.appendChild(placeholder);
-                };
-                thumb.appendChild(img);
-            } else {
-                const placeholder = document.createElement('span');
-                placeholder.textContent = ep.title;
-                thumb.appendChild(placeholder);
+            card.appendChild(thumb);
+            card.appendChild(info);
+            
+            if (!ep.locked && ep.url) {
+                card.addEventListener('click', () => this.play(ep.url));
             }
             
-            const playIcon = document.createElement('div');
-            playIcon.className = 'play-icon';
-            thumb.appendChild(playIcon);
-            
-            episodeDiv.appendChild(thumb);
-            
-            const epInfo = document.createElement('div');
-            epInfo.className = 'ep-info';
-            
-            const epTitle = document.createElement('div');
-            epTitle.className = 'ep-title';
-            epTitle.textContent = ep.title;
-            epInfo.appendChild(epTitle);
-            
-            episodeDiv.appendChild(epInfo);
-            
-            episodeDiv.dataset.index = i;
-            
-            if (!ep.locked) {
-                episodeDiv.addEventListener('click', () => {
-                    if (ep.url) {
-                        this.playEpisode(ep.url);
-                    }
-                });
-            }
-            
-            this.episodesTrack.appendChild(episodeDiv);
+            this.elements.episodesTrack.appendChild(card);
         });
         
-        this.scrollX = 0;
-        this.episodesTrack.style.transform = 'translateX(0)';
-        
-        this.updateSeriesFocus();
+        this.updateFocus();
     }
     
-    updateSeriesFocus() {
-        const seasons = this.seasonBar.querySelectorAll('.season');
-        seasons.forEach((el, i) => {
-            el.classList.toggle('focused', this.focusMode === 'season' && i === this.seasonFocus);
-            el.tabIndex = (this.focusMode === 'season' && i === this.seasonFocus) ? 0 : -1;
-        });
-        
-        const episodes = this.episodesTrack.querySelectorAll('.episode');
-        episodes.forEach((el, i) => {
-            el.classList.toggle('focused', this.focusMode === 'episode' && i === this.episodeFocus);
-            el.tabIndex = (this.focusMode === 'episode' && i === this.episodeFocus) ? 0 : -1;
-        });
-        
-        if (this.focusMode === 'season' && seasons[this.seasonFocus]) {
-            seasons[this.seasonFocus].scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'nearest', 
-                inline: 'center' 
-            });
-        }
-        
-        this.updateSeriesScroll();
-    }
-    
-    updateSeriesScroll() {
-        if (this.focusMode === 'episode') {
-            const containerWidth = window.innerWidth;
-            const episodes = this.episodesTrack.querySelectorAll('.episode');
-            
-            if (episodes[this.episodeFocus]) {
-                const focusedEpisode = episodes[this.episodeFocus];
-                
-                const episodeStyle = window.getComputedStyle(focusedEpisode);
-                const episodeWidth = focusedEpisode.offsetWidth + parseFloat(episodeStyle.marginRight);
-
-                const rect = focusedEpisode.getBoundingClientRect();
-                const containerRect = this.episodesTrack.parentElement.getBoundingClientRect();
-                
-                if (rect.left < containerRect.left || rect.right > containerRect.right) {
-                    this.scrollX = Math.max(0, 
-                        (this.episodeFocus * episodeWidth) - (containerWidth / 2) + (episodeWidth / 2)
-                    );
-                    
-                    const totalWidth = episodes.length * episodeWidth;
-                    const maxScroll = Math.max(0, totalWidth - containerWidth + 60);
-                    this.scrollX = Math.min(this.scrollX, maxScroll);
-                    
-                    this.episodesTrack.style.transform = `translateX(${-this.scrollX}px)`;
-                }
-            }
-        }
-    }
-    
-    playEpisode(url) {
-        if (url && url !== '#') {
-            this.saveProgress();
-            window.location.href = url;
-        } else {
-            this.showError('URL del episodio no disponible');
-        }
-    }
-    
-    saveProgress() {
-        if (this.currentSeries) {
-            const progress = {
-                seriesId: this.currentSeriesId,
-                season: this.currentSeason,
-                episode: this.episodeFocus,
-                timestamp: new Date().toISOString()
-            };
-            localStorage.setItem('lastWatched', JSON.stringify(progress));
-        }
-    }
-    
-    closeModal() {
-        this.seriesOverlay.style.display = 'none';
-        this.backButton.classList.remove('visible');
-        this.mainGrid.parentElement.style.display = 'block';
-        
-        if (this.currentSeriesId) {
-            const cardIndex = this.visibleCards.findIndex(
-                card => card.dataset.series === this.currentSeriesId
-            );
-            if (cardIndex !== -1) {
-                this.index = cardIndex;
-                this.focusCard();
-            }
-        }
-        
-        this.focusMode = 'grid';
-        this.currentSeriesId = null;
-        
+    // Simple close series
+    closeSeries() {
+        this.elements.overlay.style.display = 'none';
+        this.elements.backBtn.classList.remove('visible');
+        this.elements.grid.parentElement.style.display = 'block';
+        this.setMode('grid');
         history.replaceState(null, '', ' ');
     }
     
-    showNavHelp(text) {
-        clearTimeout(this.navHelpTimeout);
-        this.navHelp.textContent = text;
-        this.navHelp.classList.add('show');
-        
-        this.navHelpTimeout = setTimeout(() => {
-            this.navHelp.classList.remove('show');
-        }, 2000);
+    // Simple play
+    play(url) {
+        if (url && url !== '#') {
+            window.location.href = url;
+        } else {
+            this.showError('Episode not available');
+        }
     }
     
-    handleKeyboard(e) {
-        // Navegación especial cuando se está buscando
-        if (this.focusMode === 'search' && e.key === 'Escape') {
+    // Simple play first available
+    playFirstEpisode() {
+        const seasons = Object.values(this.selectedSeries.seasons || {});
+        for (let episodes of seasons) {
+            for (let ep of episodes || []) {
+                if (!ep.locked && ep.url) {
+                    this.play(ep.url);
+                    return;
+                }
+            }
+        }
+        this.showError('No episodes available');
+    }
+    
+    // Simple keyboard handler - the magic spell
+    handleKey(e) {
+        const isOverlay = this.elements.overlay.style.display === 'block';
+        
+        // Escape - universal back
+        if (e.key === 'Escape') {
             e.preventDefault();
-            this.clearSearch();
-            this.searchBox.blur();
-            this.focusMode = 'grid';
-            this.focusCard();
+            if (this.searchQuery) {
+                this.clearSearch();
+            } else if (isOverlay) {
+                this.closeSeries();
+            }
             return;
         }
         
-        // Navegación global
-        if (e.key === 'ArrowUp' && this.focusMode === 'grid') {
+        // Enter - universal select
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            if (!isOverlay && this.cards[this.currentIndex]) {
+                this.cards[this.currentIndex].click();
+            }
+            return;
+        }
+        
+        // Arrow navigation
+        if (e.key.startsWith('Arrow')) {
             e.preventDefault();
             
-            const cardsToCheck = this.isSearching ? this.visibleCards : this.cards;
-            const gridWidth = this.getGridWidth();
-            
-            if (this.index < gridWidth) {
-                this.focusMode = 'search';
-                this.searchBox.focus();
-                this.searchBox.classList.add('focused');
-                this.showNavHelp('Búsqueda activa');
-            } else {
-                this.index = Math.max(this.index - gridWidth, 0);
+            if (!isOverlay) {
+                // Grid navigation
+                const width = this.getGridWidth();
+                switch(e.key) {
+                    case 'ArrowRight':
+                        this.currentIndex = (this.currentIndex + 1) % this.cards.length;
+                        break;
+                    case 'ArrowLeft':
+                        this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
+                        break;
+                    case 'ArrowDown':
+                        this.currentIndex = Math.min(this.currentIndex + width, this.cards.length - 1);
+                        break;
+                    case 'ArrowUp':
+                        if (this.currentIndex < width) {
+                            this.elements.searchBox.focus();
+                            return;
+                        }
+                        this.currentIndex = Math.max(this.currentIndex - width, 0);
+                        break;
+                }
                 this.focusCard();
-            }
-            return;
-        }
-        
-        if (e.key === 'ArrowDown' && this.focusMode === 'search') {
-            e.preventDefault();
-            this.searchBox.blur();
-            this.searchBox.classList.remove('focused');
-            this.focusMode = 'grid';
-            this.index = 0;
-            this.focusCard();
-            return;
-        }
-        
-        // Prevent default para teclas de navegación
-        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', 'Backspace'].includes(e.key)) {
-            if (this.focusMode !== 'search' || e.key === 'Escape') {
-                e.preventDefault();
+            } else {
+                // Series navigation - simple mode switching
+                this.navigateSeries(e.key);
             }
         }
-        
-        // Delegación según el modo
-        if (this.seriesOverlay.style.display === 'block') {
-            this.handleSeriesNavigation(e);
-        } else if (this.focusMode === 'grid') {
-            this.handleGridNavigation(e);
-        }
     }
     
-    getGridWidth() {
-        const cardsToCheck = this.isSearching ? this.visibleCards : this.cards;
-        if (cardsToCheck.length === 0) return 1;
-        return Math.floor(this.mainGrid.offsetWidth / (cardsToCheck[0]?.offsetWidth || 160));
-    }
-    
-    handleGridNavigation(e) {
-        const cardsToNavigate = this.isSearching ? this.visibleCards : this.cards;
-        if (cardsToNavigate.length === 0) return;
+    // Simple series navigation
+    navigateSeries(key) {
+        const seasons = this.elements.seasonBar.querySelectorAll('.season');
+        const episodes = this.elements.episodesTrack.querySelectorAll('.episode');
         
-        const gridWidth = this.getGridWidth();
-        
-        switch(e.key) {
-            case 'ArrowRight':
-                this.index = (this.index + 1) % cardsToNavigate.length;
-                break;
-            case 'ArrowLeft':
-                this.index = (this.index - 1 + cardsToNavigate.length) % cardsToNavigate.length;
-                break;
-            case 'ArrowDown':
-                this.index = Math.min(this.index + gridWidth, cardsToNavigate.length - 1);
-                break;
-            case 'Enter':
-            case ' ':
-                if (cardsToNavigate[this.index]) {
-                    cardsToNavigate[this.index].click();
-                }
-                break;
-            case '/':
-                e.preventDefault();
-                this.focusMode = 'search';
-                this.searchBox.focus();
-                this.searchBox.classList.add('focused');
-                break;
-            case 'Escape':
-                if (this.isSearching) {
-                    this.clearSearch();
-                }
-                break;
-        }
-        
-        if (this.focusMode === 'grid') {
-            this.focusCard();
-        }
-    }
-    
-    handleSeriesNavigation(e) {
-        if (!this.currentSeries || !this.currentSeries.seasons) return;
-        
-        const seasonKeys = Object.keys(this.currentSeries.seasons);
-        
-        if (this.focusMode === 'season') {
-            const totalSeasons = seasonKeys.length;
-            
-            switch(e.key) {
+        if (this.mode === 'season') {
+            switch(key) {
                 case 'ArrowRight':
-                    this.seasonFocus = Math.min(this.seasonFocus + 1, totalSeasons - 1);
+                    this.seasonIndex = Math.min(this.seasonIndex + 1, seasons.length - 1);
                     break;
                 case 'ArrowLeft':
-                    this.seasonFocus = Math.max(this.seasonFocus - 1, 0);
+                    this.seasonIndex = Math.max(this.seasonIndex - 1, 0);
                     break;
                 case 'ArrowDown':
-                case 'Enter':
-                case ' ':
-                    this.currentSeason = this.seasonFocus;
-                    this.focusMode = 'episode';
-                    this.episodeFocus = 0;
-                    this.renderSeasons();
-                    this.renderEpisodes();
-                    return;
+                    this.setMode('episode');
+                    break;
             }
-        } else if (this.focusMode === 'episode') {
-            const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
-            if (!episodes) return;
-            
-            const total = episodes.length;
-            
-            switch(e.key) {
+        } else if (this.mode === 'episode') {
+            switch(key) {
                 case 'ArrowRight':
-                    this.episodeFocus = Math.min(this.episodeFocus + 1, total - 1);
+                    this.episodeIndex = Math.min(this.episodeIndex + 1, episodes.length - 1);
                     break;
                 case 'ArrowLeft':
-                    this.episodeFocus = Math.max(this.episodeFocus - 1, 0);
+                    this.episodeIndex = Math.max(this.episodeIndex - 1, 0);
                     break;
                 case 'ArrowUp':
-                    this.focusMode = 'season';
-                    this.seasonFocus = this.currentSeason;
+                    this.setMode('season');
                     break;
-                case 'Enter':
-                case ' ':
-                    const ep = episodes[this.episodeFocus];
-                    if (!ep.locked && ep.url) {
-                        this.playEpisode(ep.url);
-                    } else if (ep.locked) {
-                        this.showError('Este episodio está bloqueado');
-                    }
-                    return;
             }
         }
         
-        if (e.key === 'Escape' || e.key === 'Backspace') {
-            if (this.focusMode === 'episode') {
-                this.focusMode = 'season';
-                this.seasonFocus = this.currentSeason;
-            } else {
-                this.closeModal();
-            }
-        }
-        
-        this.updateSeriesFocus();
+        this.updateFocus();
     }
     
+    // Simple focus update
+    updateFocus() {
+        if (this.mode === 'season') {
+            this.elements.seasonBar.querySelectorAll('.season').forEach((s, i) => {
+                s.classList.toggle('focused', i === this.seasonIndex);
+            });
+        } else if (this.mode === 'episode') {
+            this.elements.episodesTrack.querySelectorAll('.episode').forEach((e, i) => {
+                e.classList.toggle('focused', i === this.episodeIndex);
+            });
+        }
+    }
+    
+    // Simple card focus
+    focusCard() {
+        this.cards.forEach((c, i) => {
+            c.classList.toggle('focused', i === this.currentIndex);
+        });
+        if (this.cards[this.currentIndex]) {
+            this.cards[this.currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
+        }
+    }
+    
+    // Simple mode setter
+    setMode(mode) {
+        this.mode = mode;
+        if (mode === 'search') {
+            this.elements.searchBox.classList.add('focused');
+        } else {
+            this.elements.searchBox.classList.remove('focused');
+        }
+    }
+    
+    // Simple grid width calculator
+    getGridWidth() {
+        if (!this.cards.length) return 1;
+        return Math.floor(this.elements.grid.offsetWidth / (this.cards[0]?.offsetWidth || 160));
+    }
+    
+    // Simple loader
     showLoader(show) {
-        if (this.loader) {
-            this.loader.classList.toggle('hidden', !show);
-        }
+        this.elements.loader.classList.toggle('hidden', !show);
     }
     
-    showError(message) {
-        this.errorMessage.textContent = message;
-        this.errorMessage.classList.add('show');
-        setTimeout(() => {
-            this.errorMessage.classList.remove('show');
-        }, 3000);
-    }
-    
-    async refreshData() {
-        console.log('Actualizando datos de series...');
-        await this.loadData();
-    }
-    
-    destroy() {
-        if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-        }
-        document.removeEventListener('keydown', this.handleKeyboard);
+    // Simple error
+    showError(msg) {
+        this.elements.errorMsg.textContent = msg;
+        this.elements.errorMsg.classList.add('show');
+        setTimeout(() => this.elements.errorMsg.classList.remove('show'), 3000);
     }
 }
 
-// Initialize platform when DOM is ready
-let platform = null;
-
+// "With great power comes great responsibility" - Keep it simple
 document.addEventListener('DOMContentLoaded', () => {
-    platform = new StreamingPlatform();
-    
-    window.addEventListener('popstate', (event) => {
-        if (platform.seriesOverlay.style.display === 'block') {
-            platform.closeModal();
-        }
-    });
-    
-    if (window.navigator && window.navigator.userAgent) {
-        const isTV = /TV|television|smarttv|webOS|Tizen/i.test(window.navigator.userAgent);
-        if (isTV) {
-            document.body.classList.add('tv-mode');
-            console.log('Modo TV detectado');
-        }
-    }
-    
-    window.streamingPlatform = platform;
-});
-
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden && platform) {
-        console.log('Página oculta, pausando actividades.');
-    } else if (platform) {
-        console.log('Página visible, reanudando actividades.');
-    }
+    window.platform = new StreamingPlatform();
+    console.log('✨ A simple spell, but quite unbreakable - Platform initialized');
 });
 </script>
 
 </body>
 </html>
-
-// Handle page visibility for auto-pause
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden && platform) {
-        console.log('Página oculta, pausando actividades.');
-    } else if (platform) {
-        console.log('Página visible, reanudando actividades.');
-    }
-});
-</script>
-
-</body>
-</html>
-
