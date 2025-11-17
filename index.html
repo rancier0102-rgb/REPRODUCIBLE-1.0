@@ -5,7 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Series+ - Streaming Platform</title>
 <style>
+/* ================================
+   TEMAS DE IDIOMA / LANGUAGE THEMES
+   ================================ */
 :root {
+    /* Default English Theme (Red) */
     --primary-color: #e50914;
     --background-dark: #141414;
     --background-card: #181818;
@@ -15,6 +19,17 @@
     --radius: 8px;
     --transition: 0.25s ease;
     --focus-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
+}
+
+/* Spanish Latino Theme (Sapphire Blue) */
+:root[data-language="es-LA"] {
+    --primary-color: #0052CC;
+    --background-dark: #0a1929;
+    --background-card: #0f2744;
+    --background-secondary: #1a3a52;
+    --text-light: #e3f2fd;
+    --muted: #90caf9;
+    --focus-shadow: 0 0 25px rgba(0, 82, 204, 0.9);
 }
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
@@ -28,10 +43,164 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
+/* Language Toggle Button */
+.language-toggle {
+    position: relative;
+    margin-left: auto;
+    margin-right: 20px;
+}
+
+.language-btn {
+    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
+    border: 2px solid rgba(255,255,255,0.2);
+    color: var(--text-light);
+    padding: 10px 20px;
+    border-radius: 25px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.3s ease;
+    backdrop-filter: blur(10px);
+    min-width: 140px;
+    justify-content: center;
+}
+
+.language-btn:hover {
+    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
+    border-color: var(--primary-color);
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.language-btn:active {
+    transform: scale(0.98);
+}
+
+.language-flag {
+    width: 20px;
+    height: 20px;
+    display: inline-block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 3px;
+    box-shadow: 0 0 3px rgba(0,0,0,0.3);
+}
+
+/* USA Flag for English */
+.flag-usa {
+    background: linear-gradient(
+        to bottom,
+        #B22234 8.33%,
+        white 8.33% 16.66%,
+        #B22234 16.66% 25%,
+        white 25% 33.33%,
+        #B22234 33.33% 41.66%,
+        white 41.66% 50%,
+        #B22234 50% 58.33%,
+        white 58.33% 66.66%,
+        #B22234 66.66% 75%,
+        white 75% 83.33%,
+        #B22234 83.33% 91.66%,
+        white 91.66%
+    );
+}
+
+.flag-usa::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40%;
+    height: 53.85%;
+    background: #3C3B6E;
+}
+
+/* Latin America Flag (Generic) */
+.flag-latam {
+    background: linear-gradient(
+        to bottom,
+        #0052CC 0% 33.33%,
+        white 33.33% 66.66%,
+        #0052CC 66.66% 100%
+    );
+}
+
+.flag-latam::before {
+    content: '☀';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFD700;
+    font-size: 14px;
+}
+
+/* Language Menu */
+.language-menu {
+    position: absolute;
+    top: calc(100% + 10px);
+    right: 0;
+    background: var(--background-card);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px;
+    overflow: hidden;
+    opacity: 0;
+    visibility: hidden;
+    transform: translateY(-10px);
+    transition: all 0.3s ease;
+    z-index: 100;
+    min-width: 200px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.language-menu.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateY(0);
+}
+
+.language-option {
+    padding: 12px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    color: var(--text-light);
+    font-size: 0.9rem;
+}
+
+.language-option:hover {
+    background: rgba(255,255,255,0.1);
+    padding-left: 20px;
+}
+
+.language-option.active {
+    background: var(--primary-color);
+    color: white;
+}
+
+.language-option .checkmark {
+    margin-left: auto;
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.language-option.active .checkmark {
+    opacity: 1;
+}
+
 /* TV Optimization - Larger UI elements */
 @media screen and (min-width: 1920px) {
     body {
         zoom: 1.1;
+    }
+    .language-btn {
+        padding: 12px 24px;
+        font-size: 1rem;
     }
 }
 
@@ -69,6 +238,10 @@ header {
     backdrop-filter: blur(20px);
     box-shadow: 0 4px 20px rgba(0,0,0,0.5);
     min-height: 70px;
+}
+
+:root[data-language="es-LA"] header {
+    background: linear-gradient(to bottom, rgba(10,25,41,0.98), rgba(10,25,41,0.95));
 }
 
 .logo { 
@@ -120,8 +293,8 @@ header {
 .search-box:focus {
     outline: none;
     background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
-    border-color: rgba(229, 9, 20, 0.5);
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), 0 0 30px rgba(229, 9, 20, 0.2);
+    border-color: var(--primary-color);
+    box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), 0 0 30px rgba(0, 82, 204, 0.2);
     padding-left: 24px;
 }
 
@@ -131,7 +304,7 @@ header {
 
 .search-box.active-search {
     border-color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(229, 9, 20, 0.05));
+    background: linear-gradient(135deg, rgba(0, 82, 204, 0.1), rgba(0, 82, 204, 0.05));
 }
 
 /* Search Icon */
@@ -196,6 +369,10 @@ header {
     animation: slideDown 0.3s ease;
 }
 
+:root[data-language="es-LA"] .search-info {
+    background: linear-gradient(90deg, rgba(0, 82, 204, 0.1), transparent);
+}
+
 .search-info.visible {
     display: flex;
 }
@@ -210,10 +387,14 @@ header {
 }
 
 .search-info-count {
-    background: rgba(229, 9, 20, 0.2);
+    background: rgba(0, 82, 204, 0.2);
     padding: 4px 12px;
     border-radius: 20px;
     font-size: 0.9rem;
+}
+
+:root[data-language="en"] .search-info-count {
+    background: rgba(229, 9, 20, 0.2);
 }
 
 .clear-search {
@@ -284,7 +465,11 @@ header {
 
 .card.search-match {
     animation: highlight 0.5s ease;
-    border-color: rgba(229, 9, 20, 0.3);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 15px rgba(0, 82, 204, 0.2);
+}
+
+:root[data-language="en"] .card.search-match {
     box-shadow: 0 0 15px rgba(229, 9, 20, 0.2);
 }
 
@@ -409,6 +594,10 @@ header {
     background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
 }
 
+:root[data-language="es-LA"] .series-banner {
+    background: linear-gradient(135deg, #1a3a52, #0a1929);
+}
+
 /* TV Responsive Banner Sizes */
 @media screen and (min-width: 1920px) {
     .series-banner {
@@ -445,6 +634,10 @@ header {
     height: 80%;
     background: linear-gradient(to top, var(--background-dark) 0%, rgba(20,20,20,0.8) 30%, transparent 100%);
     pointer-events: none;
+}
+
+:root[data-language="es-LA"] .series-banner-gradient {
+    background: linear-gradient(to top, var(--background-dark) 0%, rgba(10,25,41,0.8) 30%, transparent 100%);
 }
 
 .series-banner-info {
@@ -512,7 +705,7 @@ header {
     right: 30px;
     width: 60px;
     height: 60px;
-    background: rgba(229, 9, 20, 0.95);
+    background: var(--primary-color);
     border-radius: 50%;
     display: none; 
     align-items: center;
@@ -552,9 +745,8 @@ header {
 }
 
 .series-banner-play:hover {
-    background: var(--primary-color);
     transform: scale(1.1);
-    box-shadow: 0 8px 30px rgba(229, 9, 20, 0.5);
+    filter: brightness(1.2);
 }
 
 /* Season Bar with Banner */
@@ -568,6 +760,10 @@ header {
     margin-top: -10px;
     position: relative;
     z-index: 3;
+}
+
+:root[data-language="es-LA"] .season-bar {
+    background: linear-gradient(to bottom, rgba(10,25,41,0.3), transparent);
 }
 
 .season-bar::-webkit-scrollbar {
@@ -591,6 +787,10 @@ header {
     backdrop-filter: blur(10px);
 }
 
+:root[data-language="es-LA"] .season {
+    background: rgba(15, 39, 68, 0.85);
+}
+
 .season::after {
     content: '';
     position: absolute;
@@ -611,9 +811,17 @@ header {
     box-shadow: 0 8px 16px rgba(0,0,0,0.5);
 }
 
+:root[data-language="es-LA"] .season.focused {
+    background: rgba(15, 39, 68, 0.95);
+}
+
 .season.active {
     background: var(--primary-color);
     color: #fff;
+    box-shadow: 0 6px 12px rgba(0, 82, 204, 0.4);
+}
+
+:root[data-language="en"] .season.active {
     box-shadow: 0 6px 12px rgba(229, 9, 20, 0.4);
 }
 
@@ -696,6 +904,10 @@ header {
     overflow: hidden;
 }
 
+:root[data-language="es-LA"] .thumb {
+    background: linear-gradient(135deg, #1a3a52, #0a1929);
+}
+
 .thumb img {
     width: 100%;
     height: 100%;
@@ -755,7 +967,7 @@ header {
     transform: translate(-50%, -50%);
     width: 50px;
     height: 50px;
-    background: rgba(229, 9, 20, 0.95);
+    background: var(--primary-color);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -820,6 +1032,10 @@ header {
     backdrop-filter: blur(10px);
 }
 
+:root[data-language="es-LA"] .back-button {
+    background: rgba(15, 39, 68, 0.95);
+}
+
 .back-button:hover,
 .back-button:focus {
     background: var(--primary-color);
@@ -868,7 +1084,7 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: rgba(229, 9, 20, 0.95);
+    background: var(--primary-color);
     color: white;
     padding: 20px 30px;
     border-radius: 10px;
@@ -1055,6 +1271,17 @@ header {
     .card.focused {
         transform: scale(1.06);
     }
+    
+    .language-btn {
+        padding: 8px 12px;
+        font-size: 0.8rem;
+        min-width: 110px;
+    }
+    
+    .language-flag {
+        width: 16px;
+        height: 16px;
+    }
 }
 
 @media (max-width: 480px) {
@@ -1114,18 +1341,38 @@ header {
             </div>
         </div>
     </div>
+    
+    <!-- Language Toggle -->
+    <div class="language-toggle">
+        <button class="language-btn" id="languageBtn">
+            <span class="language-flag flag-usa" id="currentFlag"></span>
+            <span id="currentLang">English</span>
+        </button>
+        <div class="language-menu" id="languageMenu">
+            <div class="language-option active" data-lang="en">
+                <span class="language-flag flag-usa"></span>
+                <span>English</span>
+                <span class="checkmark">✓</span>
+            </div>
+            <div class="language-option" data-lang="es-LA">
+                <span class="language-flag flag-latam"></span>
+                <span>Español</span>
+                <span class="checkmark">✓</span>
+            </div>
+        </div>
+    </div>
 </header>
 
 <button class="back-button" id="backButton">
     <span>←</span>
-    <span>Back</span>
+    <span id="backBtnText">Back</span>
 </button>
 
 <!-- Main Content -->
 <div class="main-content">
     <div class="search-info" id="searchInfo">
         <div class="search-info-text">
-            Results for: <strong id="searchQuery"></strong>
+            <span id="resultsForText">Results for:</span> <strong id="searchQuery"></strong>
         </div>
         <div class="search-info-count" id="searchCount"></div>
         <button class="clear-search" id="clearSearchBtn">Clear search</button>
@@ -1134,8 +1381,8 @@ header {
     <div class="all-series-header" id="gridHeader">All Series</div>
     <section class="grid" id="mainGrid">
         <div class="no-results-message" id="noResults">
-            No results found
-            <strong>Try different search terms</strong>
+            <span id="noResultsText">No results found</span>
+            <strong id="tryDifferentText">Try different search terms</strong>
         </div>
     </section>
 </div>
@@ -1166,7 +1413,7 @@ header {
 
 <!-- Navigation Help -->
 <div class="nav-help" id="navHelp">
-    Press ↑ to search
+    <span id="navHelpText">Press ↑ to search</span>
 </div>
 
 <!-- Error message -->
@@ -1176,9 +1423,52 @@ header {
 
 <script>
 /* ========================================
-   "A SIMPLE SPELL, BUT QUITE UNBREAKABLE"
-   - Dr. Strange Style: Simple & Robust Code
+   MULTILANGUAGE STREAMING PLATFORM
    ======================================== */
+
+// Language Translations
+const translations = {
+    'en': {
+        searchPlaceholder: 'Search series...',
+        allSeries: 'All Series',
+        searchResults: 'Search Results',
+        noResults: 'No Results',
+        resultsFor: 'Results for:',
+        clearSearch: 'Clear search',
+        noResultsFound: 'No results found',
+        tryDifferent: 'Try different search terms',
+        back: 'Back',
+        navHelp: 'Press ↑ to search',
+        errorLoading: 'Error loading content',
+        episodeNotAvailable: 'Episode not available',
+        noEpisodesAvailable: 'No episodes available',
+        season: 'Season',
+        seasons: 'Seasons',
+        noSeasonsAvailable: 'No seasons available',
+        loading: 'Loading...',
+        results: 'result(s)'
+    },
+    'es-LA': {
+        searchPlaceholder: 'Buscar series...',
+        allSeries: 'Todas las Series',
+        searchResults: 'Resultados de Búsqueda',
+        noResults: 'Sin Resultados',
+        resultsFor: 'Resultados para:',
+        clearSearch: 'Limpiar búsqueda',
+        noResultsFound: 'No se encontraron resultados',
+        tryDifferent: 'Intenta con términos diferentes',
+        back: 'Atrás',
+        navHelp: 'Presiona ↑ para buscar',
+        errorLoading: 'Error al cargar contenido',
+        episodeNotAvailable: 'Episodio no disponible',
+        noEpisodesAvailable: 'No hay episodios disponibles',
+        season: 'Temporada',
+        seasons: 'Temporadas',
+        noSeasonsAvailable: 'No hay temporadas disponibles',
+        loading: 'Cargando...',
+        results: 'resultado(s)'
+    }
+};
 
 class StreamingPlatform {
     constructor() {
@@ -1189,6 +1479,9 @@ class StreamingPlatform {
         this.currentIndex = 0;
         this.mode = 'grid'; // grid, search, series, season, episode
         this.searchQuery = '';
+        
+        // Language state
+        this.currentLanguage = this.getSavedLanguage() || 'en';
         
         // Series viewer state
         this.selectedSeries = null;
@@ -1203,7 +1496,98 @@ class StreamingPlatform {
     init() {
         this.cacheElements();
         this.bindEvents();
+        this.applyLanguage(this.currentLanguage);
         this.loadData();
+    }
+    
+    // Get saved language from localStorage
+    getSavedLanguage() {
+        return localStorage.getItem('preferredLanguage');
+    }
+    
+    // Save language preference
+    saveLanguagePreference(lang) {
+        localStorage.setItem('preferredLanguage', lang);
+    }
+    
+    // Apply language and theme
+    applyLanguage(lang) {
+        this.currentLanguage = lang;
+        
+        // Update root data attribute for CSS
+        document.documentElement.setAttribute('data-language', lang);
+        
+        // Update all text content
+        this.updateTexts(lang);
+        
+        // Update language button
+        this.updateLanguageButton(lang);
+        
+        // Save preference
+        this.saveLanguagePreference(lang);
+    }
+    
+    // Update all text content
+    updateTexts(lang) {
+        const t = translations[lang];
+        
+        // Update placeholders and texts
+        if (this.elements.searchBox) {
+            this.elements.searchBox.placeholder = t.searchPlaceholder;
+        }
+        
+        if (this.elements.header) {
+            this.elements.header.textContent = this.searchQuery ? t.searchResults : t.allSeries;
+        }
+        
+        if (this.elements.clearBtn) {
+            this.elements.clearBtn.textContent = t.clearSearch;
+        }
+        
+        if (this.elements.backBtn) {
+            document.getElementById('backBtnText').textContent = t.back;
+        }
+        
+        if (document.getElementById('resultsForText')) {
+            document.getElementById('resultsForText').textContent = t.resultsFor;
+        }
+        
+        if (document.getElementById('noResultsText')) {
+            document.getElementById('noResultsText').textContent = t.noResultsFound;
+        }
+        
+        if (document.getElementById('tryDifferentText')) {
+            document.getElementById('tryDifferentText').textContent = t.tryDifferent;
+        }
+        
+        if (document.getElementById('navHelpText')) {
+            document.getElementById('navHelpText').textContent = t.navHelp;
+        }
+        
+        // Update search count if visible
+        if (this.elements.searchCount && this.searchQuery) {
+            this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} ${t.results}`;
+        }
+    }
+    
+    // Update language button appearance
+    updateLanguageButton(lang) {
+        const btn = document.getElementById('languageBtn');
+        const currentFlag = document.getElementById('currentFlag');
+        const currentLangText = document.getElementById('currentLang');
+        
+        if (lang === 'es-LA') {
+            currentFlag.className = 'language-flag flag-latam';
+            currentLangText.textContent = 'Español';
+        } else {
+            currentFlag.className = 'language-flag flag-usa';
+            currentLangText.textContent = 'English';
+        }
+        
+        // Update active state in menu
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.classList.toggle('active', option.dataset.lang === lang);
+        });
     }
     
     // Cache DOM elements once - unbreakable reference
@@ -1226,6 +1610,8 @@ class StreamingPlatform {
             episodesTrack: document.getElementById('episodesTrack'),
             errorMsg: document.getElementById('errorMessage'),
             navHelp: document.getElementById('navHelp'),
+            languageBtn: document.getElementById('languageBtn'),
+            languageMenu: document.getElementById('languageMenu'),
             banner: {
                 image: document.getElementById('seriesBannerImage'),
                 title: document.getElementById('seriesBannerTitle'),
@@ -1250,6 +1636,27 @@ class StreamingPlatform {
         this.elements.backBtn.addEventListener('click', () => this.closeSeries());
         this.elements.closeBtn.addEventListener('click', () => this.closeSeries());
         this.elements.banner.play.addEventListener('click', () => this.playFirstEpisode());
+        
+        // Language toggle
+        this.elements.languageBtn.addEventListener('click', (e) => {
+            e.stopPropagation();
+            this.elements.languageMenu.classList.toggle('show');
+        });
+        
+        // Language options
+        document.querySelectorAll('.language-option').forEach(option => {
+            option.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const lang = option.dataset.lang;
+                this.applyLanguage(lang);
+                this.elements.languageMenu.classList.remove('show');
+            });
+        });
+        
+        // Close language menu when clicking outside
+        document.addEventListener('click', () => {
+            this.elements.languageMenu.classList.remove('show');
+        });
         
         // Keyboard - the most powerful spell
         document.addEventListener('keydown', (e) => this.handleKey(e));
@@ -1288,7 +1695,7 @@ class StreamingPlatform {
             this.filteredData = {...this.data};
             this.render();
         } catch (error) {
-            this.showError('Loading error');
+            this.showError(translations[this.currentLanguage].errorLoading);
             // Simple fallback
             this.data = {
                 'demo': {
@@ -1311,6 +1718,7 @@ class StreamingPlatform {
     // Simple search - no complex algorithms
     search(query) {
         this.searchQuery = query.trim().toLowerCase();
+        const t = translations[this.currentLanguage];
         
         // Toggle clear button
         this.elements.searchClear.classList.toggle('visible', !!this.searchQuery);
@@ -1332,8 +1740,8 @@ class StreamingPlatform {
         // Update UI
         this.elements.searchInfo.classList.add('visible');
         this.elements.searchQuery.textContent = query;
-        this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} result(s)`;
-        this.elements.header.textContent = Object.keys(this.filteredData).length ? 'Search Results' : 'No Results';
+        this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} ${t.results}`;
+        this.elements.header.textContent = Object.keys(this.filteredData).length ? t.searchResults : t.noResults;
         this.elements.searchBox.classList.add('active-search');
         
         this.render();
@@ -1341,12 +1749,13 @@ class StreamingPlatform {
     
     // Clear search - simple reset
     clearSearch() {
+        const t = translations[this.currentLanguage];
         this.searchQuery = '';
         this.elements.searchBox.value = '';
         this.elements.searchClear.classList.remove('visible');
         this.elements.searchInfo.classList.remove('visible');
         this.elements.searchBox.classList.remove('active-search');
-        this.elements.header.textContent = 'All Series';
+        this.elements.header.textContent = t.allSeries;
         this.filteredData = {...this.data};
         this.render();
     }
@@ -1421,6 +1830,7 @@ class StreamingPlatform {
         this.elements.banner.title.textContent = this.selectedSeries.displayTitle;
         
         // Meta info
+        const t = translations[this.currentLanguage];
         this.elements.banner.meta.innerHTML = '';
         if (this.selectedSeries.badge) {
             const badge = document.createElement('span');
@@ -1432,7 +1842,7 @@ class StreamingPlatform {
         const seasonCount = Object.keys(this.selectedSeries.seasons || {}).length;
         if (seasonCount) {
             const info = document.createElement('span');
-            info.textContent = `${seasonCount} Season${seasonCount > 1 ? 's' : ''}`;
+            info.textContent = `${seasonCount} ${seasonCount > 1 ? t.seasons : t.season}`;
             this.elements.banner.meta.appendChild(info);
         }
         
@@ -1450,11 +1860,12 @@ class StreamingPlatform {
     
     // Simple seasons render
     renderSeasons() {
+        const t = translations[this.currentLanguage];
         this.elements.seasonBar.innerHTML = '';
         const seasons = Object.keys(this.selectedSeries.seasons || {});
         
         if (!seasons.length) {
-            this.elements.seasonBar.innerHTML = '<div class="season active">No seasons available</div>';
+            this.elements.seasonBar.innerHTML = `<div class="season active">${t.noSeasonsAvailable}</div>`;
             return;
         }
         
@@ -1477,13 +1888,14 @@ class StreamingPlatform {
     
     // Simple episodes render
     renderEpisodes() {
+        const t = translations[this.currentLanguage];
         this.elements.episodesTrack.innerHTML = '';
         
         const seasons = Object.values(this.selectedSeries.seasons || {});
         const episodes = seasons[this.seasonIndex] || [];
         
         if (!episodes.length) {
-            this.elements.episodesTrack.innerHTML = '<div style="padding:30px;color:#999">No episodes available</div>';
+            this.elements.episodesTrack.innerHTML = `<div style="padding:30px;color:#999">${t.noEpisodesAvailable}</div>`;
             return;
         }
         
@@ -1528,15 +1940,17 @@ class StreamingPlatform {
     
     // Simple play
     play(url) {
+        const t = translations[this.currentLanguage];
         if (url && url !== '#') {
             window.location.href = url;
         } else {
-            this.showError('Episode not available');
+            this.showError(t.episodeNotAvailable);
         }
     }
     
     // Simple play first available
     playFirstEpisode() {
+        const t = translations[this.currentLanguage];
         const seasons = Object.values(this.selectedSeries.seasons || {});
         for (let episodes of seasons) {
             for (let ep of episodes || []) {
@@ -1546,12 +1960,19 @@ class StreamingPlatform {
                 }
             }
         }
-        this.showError('No episodes available');
+        this.showError(t.noEpisodesAvailable);
     }
     
     // Simple keyboard handler - the magic spell
     handleKey(e) {
         const isOverlay = this.elements.overlay.style.display === 'block';
+        
+        // Language shortcut: Alt + L
+        if (e.altKey && e.key === 'l') {
+            e.preventDefault();
+            this.toggleLanguage();
+            return;
+        }
         
         // Escape - universal back
         if (e.key === 'Escape') {
@@ -1604,6 +2025,12 @@ class StreamingPlatform {
                 this.navigateSeries(e.key);
             }
         }
+    }
+    
+    // Toggle language
+    toggleLanguage() {
+        const newLang = this.currentLanguage === 'en' ? 'es-LA' : 'en';
+        this.applyLanguage(newLang);
     }
     
     // Simple series navigation
@@ -1681,6 +2108,7 @@ class StreamingPlatform {
     
     // Simple loader
     showLoader(show) {
+        this.elements.loader.textContent = translations[this.currentLanguage].loading;
         this.elements.loader.classList.toggle('hidden', !show);
     }
     
@@ -1695,7 +2123,7 @@ class StreamingPlatform {
 // "With great power comes great responsibility" - Keep it simple
 document.addEventListener('DOMContentLoaded', () => {
     window.platform = new StreamingPlatform();
-    console.log('✨ A simple spell, but quite unbreakable - Platform initialized');
+    console.log('✨ Multilanguage Platform Initialized - Series+');
 });
 </script>
 
