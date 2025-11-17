@@ -20,7 +20,6 @@
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    /* MODIFICADO: Se actualizó la pila de fuentes a un estándar moderno y multiplataforma. */
     font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
     background: var(--background-dark);
     color: var(--text-light);
@@ -693,6 +692,7 @@ header {
     font-weight: bold;
 }
 
+/* MODIFICADO: Elemento oculto según la solicitud. */
 .series-banner-play {
     position: absolute;
     bottom: 25px;
@@ -701,7 +701,7 @@ header {
     height: 60px;
     background: rgba(229, 9, 20, 0.95);
     border-radius: 50%;
-    display: flex;
+    display: none; /* MODIFICADO */
     align-items: center;
     justify-content: center;
     font-size: 1.5rem;
@@ -990,6 +990,7 @@ header {
 }
 
 /* BACK BUTTON */
+/* MODIFICADO: Elemento oculto según la solicitud. */
 .back-button {
     position: fixed;
     top: 25px;
@@ -1001,7 +1002,7 @@ header {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    display: none;
+    display: none !important; /* MODIFICADO para asegurar que siempre esté oculto */
     z-index: 201;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
@@ -1026,6 +1027,7 @@ header {
     to { transform: translateX(0); }
 }
 
+/* MODIFICADO: Elemento oculto según la solicitud. */
 .close {
     position: fixed;
     top: 25px;
@@ -1036,7 +1038,7 @@ header {
     z-index: 201;
     width: 40px;
     height: 40px;
-    display: flex;
+    display: none; /* MODIFICADO */
     align-items: center;
     justify-content: center;
     background: rgba(0,0,0,0.6);
@@ -1319,14 +1321,12 @@ header {
 
 <button class="back-button" id="backButton">
     <span>←</span>
-    <!-- MODIFICADO: Traducido de "Back" a "Volver" para consistencia. -->
     <span>Volver</span>
 </button>
 
 <!-- Continue Watching Section -->
 <section class="continue-watching-section" id="continueWatchingSection">
     <div class="section-header">
-        <!-- MODIFICADO: Traducido de "Continue Watching..." a "Seguir viendo..." -->
         <span>Seguir viendo...</span>
         <span class="clear-continue" id="clearContinue">Limpiar todo</span>
     </div>
@@ -1337,7 +1337,6 @@ header {
 
 <!-- Main Content -->
 <div class="main-content">
-    <!-- MODIFICADO: Traducido de "All Series" a "Todas las series" y se eliminó el espacio inicial. -->
     <div class="all-series-header">Todas las series</div>
     <section class="grid" id="mainGrid">
         <!-- Las tarjetas se cargarán dinámicamente -->
@@ -1748,7 +1747,7 @@ class StreamingPlatform {
             
             // Cargar desde el archivo JSON
             const response = await fetch(this.dataUrl);
-            if (!response.ok) throw new Error('Error al cargar los datos'); /* MODIFICADO: Mensaje de error traducido */
+            if (!response.ok) throw new Error('Error al cargar los datos'); 
             
             const data = await response.json();
             this.processSeriesData(data);
@@ -2199,8 +2198,6 @@ class StreamingPlatform {
             if (episodes[this.episodeFocus]) {
                 const focusedEpisode = episodes[this.episodeFocus];
                 
-                /* MODIFICADO: Se calcula dinámicamente el ancho del episodio y su margen para un desplazamiento preciso,
-                   eliminando el "número mágico" 295. Esto hace que el código sea más robusto ante cambios de CSS. */
                 const episodeStyle = window.getComputedStyle(focusedEpisode);
                 const episodeWidth = focusedEpisode.offsetWidth + parseFloat(episodeStyle.marginRight);
 
@@ -2213,7 +2210,7 @@ class StreamingPlatform {
                     );
                     
                     const totalWidth = episodes.length * episodeWidth;
-                    const maxScroll = Math.max(0, totalWidth - containerWidth + 60); // 60 es el padding del contenedor
+                    const maxScroll = Math.max(0, totalWidth - containerWidth + 60);
                     this.scrollX = Math.min(this.scrollX, maxScroll);
                     
                     this.episodesTrack.style.transform = `translateX(${-this.scrollX}px)`;
@@ -2675,6 +2672,5 @@ document.addEventListener('visibilitychange', () => {
 
 </body>
 </html>
-
 
 
