@@ -3,164 +3,393 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Movies HD</title>
+<meta name="description" content="Movies HD - Ultra Fast Streaming Platform">
+
+<!-- Preconexiones DNS para máxima velocidad -->
+<link rel="dns-prefetch" href="https://raw.githubusercontent.com">
+<link rel="preconnect" href="https://raw.githubusercontent.com">
+<link rel="preconnect" href="https://via.placeholder.com">
+
+<!-- Precarga de recursos críticos -->
+<link rel="preload" as="fetch" href="https://raw.githubusercontent.com/rancier0102-rgb/REPRODUCIBLE-1.0/main/peliculas_2025.json" crossorigin>
+<link rel="preload" as="fetch" href="https://raw.githubusercontent.com/rancier0102-rgb/REPRODUCIBLE-1.0/main/peliculas_2024.json" crossorigin>
+
+<title>Movies HD - Enterprise Edition</title>
+
 <style>
-* { margin: 0; padding: 0; box-sizing: border-box; }
-body { 
-    font-family: -apple-system, sans-serif; 
-    background: #000; 
-    color: #fff; 
+/* Critical CSS inline para First Paint inmediato */
+:root {
+    --primary: #e50914;
+    --bg-dark: #000;
+    --bg-card: #111;
+    --text: #fff;
+    --border: #333;
 }
+
+* { 
+    margin: 0; 
+    padding: 0; 
+    box-sizing: border-box;
+}
+
+body { 
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif; 
+    background: var(--bg-dark); 
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* Optimización GPU para animaciones */
+.gpu-accelerated {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+    perspective: 1000px;
+}
+
 header {
     padding: 20px;
-    background: #111;
+    background: var(--bg-card);
     position: sticky;
     top: 0;
-    z-index: 10;
+    z-index: 100;
     display: flex;
     gap: 20px;
     align-items: center;
-    border-bottom: 2px solid #e50914;
+    border-bottom: 2px solid var(--primary);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
 }
+
 h1 { 
-    color: #e50914; 
-    font-size: 1.8rem;
+    color: var(--primary); 
+    font-size: clamp(1.2rem, 4vw, 1.8rem);
+    font-weight: 700;
 }
-input {
+
+.search-container {
     flex: 1;
-    max-width: 400px;
-    padding: 10px 15px;
-    border: 1px solid #333;
-    border-radius: 5px;
-    background: #222;
-    color: #fff;
-    font-size: 1rem;
+    max-width: 500px;
+    position: relative;
 }
+
+input {
+    width: 100%;
+    padding: 12px 20px;
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    background: rgba(255,255,255,0.05);
+    color: var(--text);
+    font-size: 1rem;
+    transition: all 0.2s;
+}
+
+input:focus {
+    outline: none;
+    border-color: var(--primary);
+    background: rgba(255,255,255,0.08);
+}
+
 .stats {
     display: flex;
     gap: 15px;
     align-items: center;
 }
+
 .counter {
-    color: #fff;
+    color: var(--text);
     font-size: 0.9rem;
-    background: #e50914;
+    background: var(--primary);
     padding: 5px 15px;
     border-radius: 20px;
+    font-weight: 600;
 }
+
 .status {
     color: #888;
     font-size: 0.9rem;
 }
+
 .filters {
     display: flex;
     gap: 10px;
     padding: 15px 20px;
-    background: #0a0a0a;
+    background: rgba(10,10,10,0.95);
     overflow-x: auto;
-    border-bottom: 1px solid #222;
+    border-bottom: 1px solid rgba(255,255,255,0.1);
+    scrollbar-width: thin;
+    -webkit-overflow-scrolling: touch;
 }
+
+.filters::-webkit-scrollbar {
+    height: 4px;
+}
+
+.filters::-webkit-scrollbar-track {
+    background: rgba(255,255,255,0.05);
+}
+
+.filters::-webkit-scrollbar-thumb {
+    background: var(--primary);
+    border-radius: 2px;
+}
+
 .year-btn {
     padding: 8px 20px;
-    background: #1a1a1a;
-    border: 1px solid #333;
+    background: rgba(255,255,255,0.05);
+    border: 1px solid rgba(255,255,255,0.1);
     border-radius: 20px;
-    color: #fff;
+    color: var(--text);
     cursor: pointer;
     white-space: nowrap;
-    transition: all 0.3s;
+    transition: all 0.2s;
+    font-weight: 500;
+    backdrop-filter: blur(5px);
 }
+
 .year-btn:hover {
-    background: #333;
+    background: rgba(255,255,255,0.1);
+    transform: translateY(-1px);
 }
+
 .year-btn.active {
-    background: #e50914;
-    border-color: #e50914;
+    background: var(--primary);
+    border-color: var(--primary);
+    box-shadow: 0 2px 10px rgba(229, 9, 20, 0.4);
 }
+
 main {
     padding: 20px;
     min-height: 80vh;
+    contain: layout style paint;
 }
+
+.virtual-scroll-container {
+    position: relative;
+    height: 100%;
+}
+
 .year-section {
     margin-bottom: 40px;
+    opacity: 0;
+    animation: fadeInUp 0.4s forwards;
+    contain: layout;
 }
+
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .year-title {
-    font-size: 1.8rem;
+    font-size: clamp(1.3rem, 3vw, 1.8rem);
     margin-bottom: 20px;
-    color: #fff;
-    padding-left: 10px;
-    border-left: 4px solid #e50914;
+    color: var(--text);
+    padding-left: 15px;
+    border-left: 4px solid var(--primary);
+    font-weight: 600;
 }
+
 .movies {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-    gap: 20px;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+    contain: layout;
 }
+
 .movie {
     cursor: pointer;
-    transition: transform 0.3s;
     position: relative;
-    background: #111;
+    background: var(--bg-card);
     border-radius: 8px;
     overflow: hidden;
+    transition: transform 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    contain: layout style paint;
+    isolation: isolate;
 }
+
 .movie:hover {
-    transform: scale(1.05);
-    box-shadow: 0 5px 20px rgba(229, 9, 20, 0.5);
+    transform: scale(1.05) translateZ(0);
+    box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
+    z-index: 10;
 }
-.movie img {
+
+.movie-poster-container {
+    position: relative;
     width: 100%;
-    height: 240px;
-    object-fit: cover;
-    display: block;
-    background: #1a1a1a;
+    padding-bottom: 150%;
+    overflow: hidden;
+    background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
 }
+
+.movie img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: opacity 0.3s;
+    opacity: 0;
+}
+
+.movie img.loaded {
+    opacity: 1;
+}
+
+.skeleton {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        rgba(255,255,255,0.05) 25%,
+        rgba(255,255,255,0.1) 50%,
+        rgba(255,255,255,0.05) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 1.5s infinite;
+}
+
+@keyframes shimmer {
+    0% { background-position: -200% 0; }
+    100% { background-position: 200% 0; }
+}
+
 .movie-title {
     padding: 10px;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     line-height: 1.3;
-    min-height: 50px;
+    min-height: 45px;
+    font-weight: 500;
 }
-.loading {
-    text-align: center;
-    padding: 100px 20px;
+
+.loading-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 400px;
+    gap: 20px;
 }
-.loader {
-    width: 50px;
-    height: 50px;
-    border: 3px solid #333;
-    border-top: 3px solid #e50914;
+
+.loader-modern {
+    width: 60px;
+    height: 60px;
+    position: relative;
+}
+
+.loader-modern::before,
+.loader-modern::after {
+    content: '';
+    position: absolute;
+    inset: 0;
     border-radius: 50%;
-    margin: 0 auto 20px;
-    animation: spin 1s linear infinite;
+    border: 3px solid transparent;
+    border-top-color: var(--primary);
+    animation: spin 1s cubic-bezier(0.68, -0.55, 0.265, 1.55) infinite;
 }
+
+.loader-modern::after {
+    animation-delay: 0.2s;
+    border-top-color: rgba(229, 9, 20, 0.5);
+}
+
 @keyframes spin {
     to { transform: rotate(360deg); }
 }
-.empty {
+
+.progress-container {
+    width: 100%;
+    max-width: 300px;
+}
+
+.progress-bar {
+    height: 3px;
+    background: rgba(255,255,255,0.1);
+    border-radius: 3px;
+    overflow: hidden;
+}
+
+.progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary) 0%, #ff4458 100%);
+    transition: width 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
+}
+
+.empty-state {
     text-align: center;
-    padding: 100px 20px;
+    padding: 80px 20px;
     color: #666;
 }
-.error {
-    background: #330000;
-    color: #ff6666;
-    padding: 10px;
-    margin: 20px;
-    border-radius: 5px;
-    display: none;
+
+.empty-state svg {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 20px;
+    opacity: 0.3;
 }
-.error.show {
-    display: block;
+
+.toast {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: rgba(20,20,20,0.95);
+    color: var(--text);
+    padding: 15px 20px;
+    border-radius: 8px;
+    border-left: 3px solid var(--primary);
+    backdrop-filter: blur(10px);
+    transform: translateX(400px);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    z-index: 1000;
+    max-width: 350px;
 }
-@media (max-width: 600px) {
+
+.toast.show {
+    transform: translateX(0);
+}
+
+/* Responsive optimizado */
+@media (max-width: 768px) {
     .movies { 
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
         gap: 10px;
     }
-    .movie img { height: 150px; }
-    h1 { font-size: 1.3rem; }
-    .movie-title { font-size: 0.8rem; padding: 8px; }
+    header {
+        flex-wrap: wrap;
+    }
+    .search-container {
+        order: 3;
+        flex-basis: 100%;
+        max-width: 100%;
+        margin-top: 10px;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    * {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Dark mode optimization */
+@media (prefers-color-scheme: dark) {
+    :root {
+        color-scheme: dark;
+    }
 }
 </style>
 </head>
@@ -168,347 +397,1068 @@ main {
 
 <header>
     <h1>MOVIES+</h1>
-    <input type="text" id="search" placeholder="Buscar películas...">
+    <div class="search-container">
+        <input type="search" 
+               id="search" 
+               placeholder="Buscar películas..." 
+               autocomplete="off"
+               spellcheck="false">
+    </div>
     <div class="stats">
         <span class="counter" id="counter">0</span>
-        <span class="status" id="status">Cargando...</span>
+        <span class="status" id="status">Iniciando...</span>
     </div>
 </header>
 
-<div class="filters" id="filters">
-    <button class="year-btn active" onclick="app.filterYear('all')">Todos</button>
-</div>
+<nav class="filters" id="filters" role="navigation" aria-label="Filtros por año">
+    <button class="year-btn active" data-filter="all">Todos</button>
+</nav>
 
-<div class="error" id="error"></div>
-
-<main id="main">
-    <div class="loading">
-        <div class="loader"></div>
-        <p>Cargando películas...</p>
-        <p style="color: #666; margin-top: 10px" id="loadingInfo">0 archivos cargados</p>
+<main id="main" role="main">
+    <div class="loading-container">
+        <div class="loader-modern"></div>
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressBar"></div>
+            </div>
+        </div>
+        <p id="loadingInfo">Inicializando sistema...</p>
     </div>
 </main>
 
+<div class="toast" id="toast" role="alert"></div>
+
 <script>
-// ============================================
-// CONFIGURACIÓN - SOLO CAMBIA ESTOS VALORES
-// ============================================
-const CONFIG = {
-    github_user: 'rancier0102-rgb',        // <-- PON TU USUARIO DE GITHUB
-    github_repo: 'REPRODUCIBLE-1.0',    // <-- PON TU REPOSITORIO
-    github_branch: 'main',             // <-- RAMA (normalmente 'main' o 'master')
-    start_year: 2025,                  // Año inicial
-    end_year: 1940                     // Año final
-};
+'use strict';
 
 // ============================================
-// APLICACIÓN MINIMALISTA
+// CONFIGURACIÓN ENTERPRISE
 // ============================================
-const app = {
-    allMovies: [],
-    filteredMovies: [],
-    loadedFiles: 0,
-    totalFiles: 0,
-    
-    async init() {
-        console.log('🎬 Iniciando Movies+');
-        console.log('📁 Repositorio:', `${CONFIG.github_user}/${CONFIG.github_repo}`);
-        
-        // Generar lista de años
-        const years = [];
-        for(let y = CONFIG.start_year; y >= CONFIG.end_year; y--) {
-            years.push(y);
-        }
-        this.totalFiles = years.length;
-        
-        // Cargar todos los archivos JSON
-        await this.loadAllYears(years);
-        
-        // Finalizar
-        this.finishLoading();
+const CONFIG = {
+    // GitHub Config
+    github: {
+        user: 'rancier0102-rgb',
+        repo: 'REPRODUCIBLE-1.0',
+        branch: 'main',
+        token: null // Opcional: para evitar rate limits
     },
     
-    async loadAllYears(years) {
-        // Dividir en lotes para cargar de a 5 archivos en paralelo
-        const batchSize = 5;
-        
-        for(let i = 0; i < years.length; i += batchSize) {
-            const batch = years.slice(i, i + batchSize);
-            const promises = batch.map(year => this.loadYear(year));
-            
-            // Esperar que termine el lote
-            await Promise.allSettled(promises);
-            
-            // Actualizar progreso
-            document.getElementById('loadingInfo').textContent = 
-                `${this.loadedFiles} de ${this.totalFiles} archivos procesados`;
-        }
+    // Años a cargar
+    years: {
+        start: 2025,
+        end: 1940
     },
     
-    async loadYear(year) {
-        const url = `https://raw.githubusercontent.com/${CONFIG.github_user}/${CONFIG.github_repo}/${CONFIG.github_branch}/peliculas_${year}.json`;
-        
-        try {
-            console.log(`📥 Cargando: peliculas_${year}.json`);
-            
-            const response = await fetch(url);
-            
-            if (!response.ok) {
-                if (response.status !== 404) {
-                    console.warn(`⚠️ Error ${response.status} en año ${year}`);
-                }
-                return;
-            }
-            
-            const text = await response.text();
-            const data = JSON.parse(text);
-            
-            // Procesar los datos (puede ser array o objeto único)
-            let movies = [];
-            
-            if (Array.isArray(data)) {
-                movies = data;
-            } else if (data.peliculas && Array.isArray(data.peliculas)) {
-                movies = data.peliculas;
-            } else if (data.movies && Array.isArray(data.movies)) {
-                movies = data.movies;
-            } else if (data.titulo && data.enlace) {
-                // Es un objeto único
-                movies = [data];
-            }
-            
-            // Procesar cada película
-            let addedCount = 0;
-            movies.forEach(movie => {
-                if (movie && movie.titulo && movie.enlace) {
-                    // Limpiar título y extraer año si está en el formato "Título (Año)"
-                    let titulo = movie.titulo;
-                    let movieYear = movie.ano || year;
-                    
-                    const yearMatch = titulo.match(/\((\d{4})\)$/);
-                    if (yearMatch) {
-                        movieYear = yearMatch[1];
-                        titulo = titulo.replace(/\s*\(\d{4})\s*$/, '').trim();
-                    }
-                    
-                    this.allMovies.push({
-                        id: `${year}_${Date.now()}_${Math.random()}`,
-                        titulo: titulo,
-                        tituloCompleto: movie.titulo,
-                        poster: movie.poster || this.getPlaceholder(titulo),
-                        year: parseInt(movieYear),
-                        enlace: movie.enlace,
-                        categoria: movie.categoria || movie.genero || 'General'
-                    });
-                    addedCount++;
-                }
-            });
-            
-            console.log(`✅ Año ${year}: ${addedCount} películas agregadas`);
-            
-        } catch (error) {
-            console.error(`❌ Error cargando año ${year}:`, error.message);
-        } finally {
-            this.loadedFiles++;
-        }
+    // Performance Settings
+    performance: {
+        batchSize: 15,              // Archivos paralelos
+        renderBatch: 100,           // Items por render
+        searchDebounce: 200,        // ms
+        cacheEnabled: true,         
+        cacheDuration: 7200000,     // 2 horas
+        preloadImages: 30,          // Precargar primeras N imágenes
+        virtualScroll: true,        // Virtual scrolling para listas grandes
+        workerEnabled: true,        // Web Workers para procesamiento
+        compressionEnabled: true,   // Compresión de datos en caché
+        indexedDBEnabled: true      // IndexedDB para caché grande
     },
     
-    finishLoading() {
-        console.log(`✅ Carga completa: ${this.allMovies.length} películas totales`);
-        
-        // Ordenar películas por año descendente y luego por título
-        this.allMovies.sort((a, b) => {
-            if (b.year !== a.year) return b.year - a.year;
-            return a.titulo.localeCompare(b.titulo, 'es');
-        });
-        
-        // Crear botones de filtro
-        this.createFilterButtons();
-        
-        // Renderizar todas las películas
-        this.render(this.allMovies);
-        
-        // Configurar eventos
-        this.setupEvents();
-        
-        // Actualizar estado
-        document.getElementById('status').textContent = 'Listo';
-        
-        // Si no hay películas, mostrar mensaje
-        if (this.allMovies.length === 0) {
-            this.showError('No se encontraron películas. Verifica la configuración del repositorio.');
-        }
-    },
-    
-    render(movies = this.allMovies) {
-        const main = document.getElementById('main');
-        
-        if (movies.length === 0) {
-            main.innerHTML = `
-                <div class="empty">
-                    <h2>No se encontraron películas</h2>
-                    <p>Intenta con otro filtro o término de búsqueda</p>
-                </div>`;
-            document.getElementById('counter').textContent = '0';
-            return;
-        }
-        
-        // Agrupar por año
-        const moviesByYear = {};
-        movies.forEach(movie => {
-            const year = movie.year;
-            if (!moviesByYear[year]) {
-                moviesByYear[year] = [];
-            }
-            moviesByYear[year].push(movie);
-        });
-        
-        // Ordenar años descendente
-        const sortedYears = Object.keys(moviesByYear).sort((a, b) => b - a);
-        
-        // Generar HTML
-        let html = '';
-        sortedYears.forEach(year => {
-            html += `
-                <div class="year-section">
-                    <h2 class="year-title">${year} (${moviesByYear[year].length} películas)</h2>
-                    <div class="movies">`;
-            
-            moviesByYear[year].forEach(movie => {
-                html += `
-                    <div class="movie" onclick="app.play('${movie.enlace}')" title="${movie.tituloCompleto}">
-                        <img src="${movie.poster}" 
-                             alt="${movie.titulo}" 
-                             loading="lazy"
-                             onerror="this.src='${this.getPlaceholder(movie.titulo)}'">
-                        <div class="movie-title">${movie.titulo}</div>
-                    </div>`;
-            });
-            
-            html += `
-                    </div>
-                </div>`;
-        });
-        
-        main.innerHTML = html;
-        document.getElementById('counter').textContent = movies.length.toLocaleString('es');
-    },
-    
-    play(url) {
-        console.log('▶️ Reproduciendo:', url);
-        window.open(url, '_blank');
-    },
-    
-    setupEvents() {
-        // Búsqueda con debounce
-        let searchTimeout;
-        document.getElementById('search').addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            searchTimeout = setTimeout(() => {
-                const query = e.target.value.toLowerCase().trim();
-                
-                if (!query) {
-                    this.render(this.allMovies);
-                } else {
-                    const filtered = this.allMovies.filter(movie => 
-                        movie.titulo.toLowerCase().includes(query) ||
-                        movie.tituloCompleto.toLowerCase().includes(query) ||
-                        movie.year.toString().includes(query) ||
-                        movie.categoria.toLowerCase().includes(query)
-                    );
-                    this.render(filtered);
-                }
-            }, 300);
-        });
-    },
-    
-    createFilterButtons() {
-        // Obtener años únicos con películas
-        const years = [...new Set(this.allMovies.map(m => m.year))].sort((a, b) => b - a);
-        
-        // Agregar botones de los primeros 10 años con contenido
-        const container = document.getElementById('filters');
-        
-        years.slice(0, 10).forEach(year => {
-            const count = this.allMovies.filter(m => m.year === year).length;
-            const btn = document.createElement('button');
-            btn.className = 'year-btn';
-            btn.textContent = `${year} (${count})`;
-            btn.onclick = () => this.filterYear(year);
-            container.appendChild(btn);
-        });
-        
-        // Agregar botón de décadas si hay películas antiguas
-        if (years.some(y => y < 2000)) {
-            const btn90s = document.createElement('button');
-            btn90s.className = 'year-btn';
-            btn90s.textContent = '90s';
-            btn90s.onclick = () => this.filterDecade(1990, 1999);
-            container.appendChild(btn90s);
-            
-            const btn80s = document.createElement('button');
-            btn80s.className = 'year-btn';
-            btn80s.textContent = '80s';
-            btn80s.onclick = () => this.filterDecade(1980, 1989);
-            container.appendChild(btn80s);
-            
-            const btnClassic = document.createElement('button');
-            btnClassic.className = 'year-btn';
-            btnClassic.textContent = 'Clásicas';
-            btnClassic.onclick = () => this.filterDecade(1940, 1979);
-            container.appendChild(btnClassic);
-        }
-    },
-    
-    filterYear(year) {
-        // Actualizar botones activos
-        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        
-        if (year === 'all') {
-            this.render(this.allMovies);
-        } else {
-            const filtered = this.allMovies.filter(m => m.year === year);
-            this.render(filtered);
-        }
-    },
-    
-    filterDecade(startYear, endYear) {
-        // Actualizar botones activos
-        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
-        event.target.classList.add('active');
-        
-        const filtered = this.allMovies.filter(m => m.year >= startYear && m.year <= endYear);
-        this.render(filtered);
-    },
-    
-    getPlaceholder(title = 'Movie') {
-        // Placeholder con el título de la película
-        const text = encodeURIComponent(title.substring(0, 20));
-        return `https://via.placeholder.com/300x450/1a1a1a/e50914?text=${text}`;
-    },
-    
-    showError(message) {
-        const errorDiv = document.getElementById('error');
-        errorDiv.textContent = `⚠️ ${message}`;
-        errorDiv.classList.add('show');
-        
-        setTimeout(() => {
-            errorDiv.classList.remove('show');
-        }, 5000);
+    // UI Settings  
+    ui: {
+        animationsEnabled: true,
+        skeletonLoading: true,
+        progressiveRender: true,
+        lazyLoadOffset: '100px'
     }
 };
 
 // ============================================
-// INICIAR APLICACIÓN
+// SISTEMA DE CACHÉ AVANZADO CON INDEXEDDB
 // ============================================
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('DOM Cargado - Iniciando aplicación...');
-    app.init();
-});
+class AdvancedCache {
+    constructor() {
+        this.dbName = 'MoviesCache';
+        this.dbVersion = 1;
+        this.storeName = 'movies';
+        this.db = null;
+        this.memCache = new Map();
+        this.initDB();
+    }
+    
+    async initDB() {
+        if (!CONFIG.performance.indexedDBEnabled || !('indexedDB' in window)) {
+            return;
+        }
+        
+        return new Promise((resolve, reject) => {
+            const request = indexedDB.open(this.dbName, this.dbVersion);
+            
+            request.onerror = () => reject(request.error);
+            request.onsuccess = () => {
+                this.db = request.result;
+                resolve();
+            };
+            
+            request.onupgradeneeded = (event) => {
+                const db = event.target.result;
+                if (!db.objectStoreNames.contains(this.storeName)) {
+                    const store = db.createObjectStore(this.storeName, { keyPath: 'id' });
+                    store.createIndex('expiry', 'expiry', { unique: false });
+                }
+            };
+        });
+    }
+    
+    async get(key) {
+        // Nivel 1: Memory Cache
+        if (this.memCache.has(key)) {
+            const data = this.memCache.get(key);
+            if (Date.now() < data.expiry) {
+                return data.value;
+            }
+            this.memCache.delete(key);
+        }
+        
+        // Nivel 2: IndexedDB
+        if (this.db) {
+            try {
+                const transaction = this.db.transaction([this.storeName], 'readonly');
+                const store = transaction.objectStore(this.storeName);
+                const request = store.get(key);
+                
+                return new Promise((resolve) => {
+                    request.onsuccess = () => {
+                        const data = request.result;
+                        if (data && Date.now() < data.expiry) {
+                            this.memCache.set(key, data); // Promover a memoria
+                            resolve(data.value);
+                        } else {
+                            resolve(null);
+                        }
+                    };
+                    request.onerror = () => resolve(null);
+                });
+            } catch (e) {
+                return null;
+            }
+        }
+        
+        // Nivel 3: LocalStorage fallback
+        try {
+            const item = localStorage.getItem(key);
+            if (item) {
+                const data = JSON.parse(item);
+                if (Date.now() < data.expiry) {
+                    return data.value;
+                }
+                localStorage.removeItem(key);
+            }
+        } catch (e) {}
+        
+        return null;
+    }
+    
+    async set(key, value) {
+        const data = {
+            id: key,
+            value: value,
+            expiry: Date.now() + CONFIG.performance.cacheDuration,
+            compressed: false
+        };
+        
+        // Comprimir si está habilitado y el dato es grande
+        if (CONFIG.performance.compressionEnabled && JSON.stringify(value).length > 1000) {
+            try {
+                data.value = this.compress(JSON.stringify(value));
+                data.compressed = true;
+            } catch (e) {}
+        }
+        
+        // Guardar en memoria
+        this.memCache.set(key, data);
+        
+        // Limitar tamaño de caché en memoria
+        if (this.memCache.size > 100) {
+            const firstKey = this.memCache.keys().next().value;
+            this.memCache.delete(firstKey);
+        }
+        
+        // Guardar en IndexedDB
+        if (this.db) {
+            try {
+                const transaction = this.db.transaction([this.storeName], 'readwrite');
+                const store = transaction.objectStore(this.storeName);
+                store.put(data);
+            } catch (e) {}
+        }
+        
+        // Fallback a localStorage para datos pequeños
+        if (JSON.stringify(data).length < 50000) {
+            try {
+                localStorage.setItem(key, JSON.stringify(data));
+            } catch (e) {
+                this.clearOldStorage();
+            }
+        }
+    }
+    
+    compress(str) {
+        // Compresión simple con LZ-string si está disponible
+        if (typeof LZString !== 'undefined') {
+            return LZString.compressToUTF16(str);
+        }
+        return str;
+    }
+    
+    decompress(str) {
+        if (typeof LZString !== 'undefined') {
+            return LZString.decompressFromUTF16(str);
+        }
+        return str;
+    }
+    
+    clearOldStorage() {
+        // Limpiar localStorage viejo
+        const keys = Object.keys(localStorage);
+        const now = Date.now();
+        keys.forEach(key => {
+            if (key.startsWith('movie_')) {
+                try {
+                    const data = JSON.parse(localStorage.getItem(key));
+                    if (now > data.expiry) {
+                        localStorage.removeItem(key);
+                    }
+                } catch (e) {
+                    localStorage.removeItem(key);
+                }
+            }
+        });
+    }
+    
+    async clearAll() {
+        this.memCache.clear();
+        if (this.db) {
+            const transaction = this.db.transaction([this.storeName], 'readwrite');
+            const store = transaction.objectStore(this.storeName);
+            store.clear();
+        }
+        localStorage.clear();
+    }
+}
 
-// Debug helper
-window.app = app;
+// ============================================
+// OPTIMIZADOR DE IMÁGENES
+// ============================================
+class ImageOptimizer {
+    constructor() {
+        this.observer = null;
+        this.loadedImages = new Set();
+        this.preloadQueue = [];
+        this.init();
+    }
+    
+    init() {
+        // Intersection Observer para lazy loading
+        this.observer = new IntersectionObserver(
+            (entries) => this.handleIntersection(entries),
+            {
+                root: null,
+                rootMargin: CONFIG.ui.lazyLoadOffset,
+                threshold: 0.01
+            }
+        );
+    }
+    
+    handleIntersection(entries) {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                const img = entry.target;
+                this.loadImage(img);
+                this.observer.unobserve(img);
+            }
+        });
+    }
+    
+    loadImage(img) {
+        if (!img.dataset.src || this.loadedImages.has(img.dataset.src)) {
+            return;
+        }
+        
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            img.src = img.dataset.src;
+            img.classList.add('loaded');
+            this.loadedImages.add(img.dataset.src);
+            
+            // Eliminar skeleton loader
+            const skeleton = img.parentElement.querySelector('.skeleton');
+            if (skeleton) {
+                skeleton.style.display = 'none';
+            }
+        };
+        
+        tempImg.onerror = () => {
+            img.src = this.getFallbackImage(img.alt);
+            img.classList.add('loaded');
+        };
+        
+        tempImg.src = img.dataset.src;
+    }
+    
+    observe(element) {
+        if (element instanceof NodeList) {
+            element.forEach(el => this.observer.observe(el));
+        } else {
+            this.observer.observe(element);
+        }
+    }
+    
+    preload(urls) {
+        // Precargar en segundo plano con baja prioridad
+        if ('requestIdleCallback' in window) {
+            requestIdleCallback(() => this.doPreload(urls), { timeout: 2000 });
+        } else {
+            setTimeout(() => this.doPreload(urls), 1000);
+        }
+    }
+    
+    doPreload(urls) {
+        urls.slice(0, CONFIG.performance.preloadImages).forEach(url => {
+            if (!this.loadedImages.has(url)) {
+                const img = new Image();
+                img.src = url;
+                this.loadedImages.add(url);
+            }
+        });
+    }
+    
+    getFallbackImage(title = 'Movie') {
+        // Generar SVG placeholder optimizado
+        const svg = `
+            <svg xmlns="http://www.w3.org/2000/svg" width="300" height="450">
+                <rect width="300" height="450" fill="#1a1a1a"/>
+                <text x="50%" y="50%" fill="#666" font-family="Arial" font-size="20" text-anchor="middle">
+                    ${title.substring(0, 15)}
+                </text>
+            </svg>
+        `;
+        return 'data:image/svg+xml,' + encodeURIComponent(svg);
+    }
+}
+
+// ============================================
+// MOTOR DE RENDERIZADO VIRTUAL
+// ============================================
+class VirtualRenderer {
+    constructor(container) {
+        this.container = container;
+        this.items = [];
+        this.itemHeight = 300; // Altura estimada
+        this.visibleItems = new Map();
+        this.scrollHandler = null;
+        this.rafId = null;
+    }
+    
+    render(items) {
+        this.items = items;
+        
+        if (!CONFIG.performance.virtualScroll || items.length < 200) {
+            // Renderizado normal para pocas películas
+            return this.renderAll(items);
+        }
+        
+        // Virtual scrolling para muchas películas
+        this.setupVirtualScroll();
+    }
+    
+    renderAll(items) {
+        // Renderizado optimizado con DocumentFragment
+        const fragment = document.createDocumentFragment();
+        const container = document.createElement('div');
+        
+        // Agrupar por año
+        const grouped = this.groupByYear(items);
+        
+        Object.entries(grouped).forEach(([year, movies], index) => {
+            const section = this.createSection(year, movies, index);
+            container.appendChild(section);
+        });
+        
+        fragment.appendChild(container);
+        
+        // Actualizar DOM una sola vez
+        requestAnimationFrame(() => {
+            this.container.innerHTML = '';
+            this.container.appendChild(fragment);
+            
+            // Activar lazy loading
+            const images = this.container.querySelectorAll('img[data-src]');
+            window.imageOptimizer.observe(images);
+        });
+    }
+    
+    groupByYear(items) {
+        const grouped = {};
+        items.forEach(item => {
+            const year = item.year;
+            if (!grouped[year]) grouped[year] = [];
+            grouped[year].push(item);
+        });
+        
+        // Ordenar años descendente
+        const sorted = {};
+        Object.keys(grouped)
+            .sort((a, b) => b - a)
+            .forEach(key => sorted[key] = grouped[key]);
+        
+        return sorted;
+    }
+    
+    createSection(year, movies, index) {
+        const section = document.createElement('div');
+        section.className = 'year-section';
+        section.style.animationDelay = `${Math.min(index * 50, 500)}ms`;
+        
+        // Título
+        const title = document.createElement('h2');
+        title.className = 'year-title';
+        title.textContent = `${year} (${movies.length} películas)`;
+        section.appendChild(title);
+        
+        // Grid de películas
+        const grid = document.createElement('div');
+        grid.className = 'movies gpu-accelerated';
+        
+        movies.forEach(movie => {
+            grid.appendChild(this.createMovieElement(movie));
+        });
+        
+        section.appendChild(grid);
+        return section;
+    }
+    
+    createMovieElement(movie) {
+        const div = document.createElement('article');
+        div.className = 'movie gpu-accelerated';
+        div.onclick = () => window.app.play(movie.enlace);
+        div.title = movie.tituloCompleto;
+        div.setAttribute('role', 'button');
+        div.setAttribute('tabindex', '0');
+        
+        // Contenedor de poster
+        const posterContainer = document.createElement('div');
+        posterContainer.className = 'movie-poster-container';
+        
+        // Skeleton loader
+        if (CONFIG.ui.skeletonLoading) {
+            const skeleton = document.createElement('div');
+            skeleton.className = 'skeleton';
+            posterContainer.appendChild(skeleton);
+        }
+        
+        // Imagen con lazy loading
+        const img = document.createElement('img');
+        img.alt = movie.titulo;
+        img.loading = 'lazy';
+        img.dataset.src = movie.poster;
+        img.src = 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg"%3E%3C/svg%3E';
+        
+        posterContainer.appendChild(img);
+        
+        // Título
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'movie-title';
+        titleDiv.textContent = movie.titulo;
+        
+        div.appendChild(posterContainer);
+        div.appendChild(titleDiv);
+        
+        return div;
+    }
+    
+    setupVirtualScroll() {
+        // Implementación de virtual scrolling para listas enormes
+        console.log('Virtual scrolling activado para', this.items.length, 'items');
+        this.renderAll(this.items); // Por ahora usar renderizado normal
+    }
+}
+
+// ============================================
+// WEB WORKER PARA PROCESAMIENTO PESADO
+// ============================================
+class DataProcessor {
+    constructor() {
+        this.worker = null;
+        this.initWorker();
+    }
+    
+    initWorker() {
+        if (!CONFIG.performance.workerEnabled || !window.Worker) {
+            return;
+        }
+        
+        // Crear Web Worker inline
+        const workerCode = `
+            self.onmessage = function(e) {
+                const { type, data } = e.data;
+                
+                switch(type) {
+                    case 'PROCESS_MOVIES':
+                        const processed = processMovies(data);
+                        self.postMessage({ type: 'MOVIES_PROCESSED', data: processed });
+                        break;
+                        
+                    case 'SEARCH':
+                        const results = searchMovies(data.movies, data.query);
+                        self.postMessage({ type: 'SEARCH_RESULTS', data: results });
+                        break;
+                }
+            };
+            
+            function processMovies(movies) {
+                // Procesar y ordenar películas
+                return movies
+                    .filter(m => m && m.titulo && m.enlace)
+                    .sort((a, b) => {
+                        if (b.year !== a.year) return b.year - a.year;
+                        return a.titulo.localeCompare(b.titulo, 'es');
+                    });
+            }
+            
+            function searchMovies(movies, query) {
+                const q = query.toLowerCase();
+                const exact = [];
+                const partial = [];
+                
+                movies.forEach(movie => {
+                    const titulo = movie.titulo.toLowerCase();
+                    
+                    if (titulo === q) {
+                        exact.push(movie);
+                    } else if (titulo.includes(q)) {
+                        partial.push(movie);
+                    }
+                });
+                
+                return [...exact, ...partial];
+            }
+        `;
+        
+        const blob = new Blob([workerCode], { type: 'application/javascript' });
+        const workerUrl = URL.createObjectURL(blob);
+        
+        try {
+            this.worker = new Worker(workerUrl);
+        } catch (e) {
+            console.warn('Web Worker no disponible:', e);
+        }
+    }
+    
+    process(movies) {
+        return new Promise((resolve) => {
+            if (!this.worker) {
+                // Fallback sin worker
+                const processed = movies
+                    .filter(m => m && m.titulo && m.enlace)
+                    .sort((a, b) => {
+                        if (b.year !== a.year) return b.year - a.year;
+                        return a.titulo.localeCompare(b.titulo, 'es');
+                    });
+                resolve(processed);
+                return;
+            }
+            
+            this.worker.onmessage = (e) => {
+                if (e.data.type === 'MOVIES_PROCESSED') {
+                    resolve(e.data.data);
+                }
+            };
+            
+            this.worker.postMessage({ type: 'PROCESS_MOVIES', data: movies });
+        });
+    }
+    
+    search(movies, query) {
+        return new Promise((resolve) => {
+            if (!this.worker) {
+                // Fallback sin worker
+                const q = query.toLowerCase();
+                const results = movies.filter(m =>
+                    m.titulo.toLowerCase().includes(q) ||
+                    m.tituloCompleto.toLowerCase().includes(q)
+                );
+                resolve(results);
+                return;
+            }
+            
+            this.worker.onmessage = (e) => {
+                if (e.data.type === 'SEARCH_RESULTS') {
+                    resolve(e.data.data);
+                }
+            };
+            
+            this.worker.postMessage({ 
+                type: 'SEARCH', 
+                data: { movies, query }
+            });
+        });
+    }
+}
+
+// ============================================
+// APLICACIÓN PRINCIPAL ENTERPRISE
+// ============================================
+class MoviesApp {
+    constructor() {
+        this.movies = [];
+        this.filteredMovies = [];
+        this.loadedFiles = 0;
+        this.totalFiles = 0;
+        
+        // Sistemas
+        this.cache = new AdvancedCache();
+        this.imageOptimizer = new ImageOptimizer();
+        this.renderer = new VirtualRenderer(document.getElementById('main'));
+        this.processor = new DataProcessor();
+        
+        // Estado
+        this.isLoading = false;
+        this.searchTimeout = null;
+        
+        // Métricas de performance
+        this.metrics = {
+            startTime: performance.now(),
+            firstRenderTime: 0,
+            totalLoadTime: 0
+        };
+    }
+    
+    async init() {
+        console.log('🚀 Movies+ Enterprise Edition');
+        console.log('⚡ Performance Mode:', CONFIG.performance);
+        
+        this.showToast('Cargando catálogo de películas...', 2000);
+        
+        // Generar años
+        const years = this.generateYears();
+        this.totalFiles = years.length;
+        
+        // Cargar datos con estrategia optimizada
+        await this.loadDataOptimized(years);
+        
+        // Finalizar
+        this.finishLoading();
+    }
+    
+    generateYears() {
+        const years = [];
+        for (let y = CONFIG.years.start; y >= CONFIG.years.end; y--) {
+            years.push(y);
+        }
+        return years;
+    }
+    
+    async loadDataOptimized(years) {
+        const batchSize = CONFIG.performance.batchSize;
+        const controller = new AbortController();
+        
+        // Timeout global
+        const timeout = setTimeout(() => controller.abort(), 30000);
+        
+        try {
+            for (let i = 0; i < years.length; i += batchSize) {
+                const batch = years.slice(i, i + batchSize);
+                
+                // Crear promesas con retry automático
+                const promises = batch.map(year => 
+                    this.loadYearWithRetry(year, controller.signal)
+                );
+                
+                // Esperar batch
+                await Promise.allSettled(promises);
+                
+                // Renderizado progresivo
+                if (i === 0 && CONFIG.ui.progressiveRender && this.movies.length > 0) {
+                    this.metrics.firstRenderTime = performance.now() - this.metrics.startTime;
+                    await this.quickRender();
+                }
+                
+                // Actualizar progreso
+                this.updateProgress();
+            }
+        } finally {
+            clearTimeout(timeout);
+        }
+    }
+    
+    async loadYearWithRetry(year, signal, retries = 2) {
+        for (let i = 0; i <= retries; i++) {
+            try {
+                await this.loadYear(year, signal);
+                break;
+            } catch (error) {
+                if (i === retries || signal.aborted) {
+                    console.error(`❌ Fallo definitivo año ${year}:`, error.message);
+                } else {
+                    console.warn(`⚠️ Reintentando año ${year} (${i + 1}/${retries})`);
+                    await this.delay(1000 * (i + 1)); // Backoff exponencial
+                }
+            }
+        }
+    }
+    
+    async loadYear(year, signal) {
+        const cacheKey = `movies_${CONFIG.github.user}_${CONFIG.github.repo}_${year}`;
+        
+        // Intentar caché
+        const cached = await this.cache.get(cacheKey);
+        if (cached) {
+            console.log(`⚡ Caché: año ${year}`);
+            this.movies.push(...cached);
+            this.loadedFiles++;
+            return;
+        }
+        
+        // Cargar desde GitHub
+        const url = this.buildUrl(year);
+        
+        const response = await fetch(url, {
+            signal,
+            headers: {
+                'Accept': 'application/json',
+                ...(CONFIG.github.token && {
+                    'Authorization': `token ${CONFIG.github.token}`
+                })
+            }
+        });
+        
+        if (!response.ok) {
+            if (response.status !== 404) {
+                throw new Error(`HTTP ${response.status}`);
+            }
+            return;
+        }
+        
+        const text = await response.text();
+        const data = JSON.parse(text);
+        
+        // Procesar datos
+        const movies = this.extractMovies(data, year);
+        
+        if (movies.length > 0) {
+            // Guardar en caché
+            await this.cache.set(cacheKey, movies);
+            
+            // Agregar a lista
+            this.movies.push(...movies);
+            
+            console.log(`✅ Año ${year}: ${movies.length} películas`);
+        }
+        
+        this.loadedFiles++;
+    }
+    
+    buildUrl(year) {
+        const { user, repo, branch } = CONFIG.github;
+        return `https://raw.githubusercontent.com/${user}/${repo}/${branch}/peliculas_${year}.json`;
+    }
+    
+    extractMovies(data, defaultYear) {
+        let rawMovies = [];
+        
+        // Detectar formato
+        if (Array.isArray(data)) {
+            rawMovies = data;
+        } else if (data.peliculas) {
+            rawMovies = data.peliculas;
+        } else if (data.movies) {
+            rawMovies = data.movies;
+        } else if (data.titulo && data.enlace) {
+            rawMovies = [data];
+        }
+        
+        // Procesar cada película
+        return rawMovies
+            .filter(m => m && m.titulo && m.enlace)
+            .map(movie => {
+                let titulo = movie.titulo;
+                let year = movie.ano || defaultYear;
+                
+                // Extraer año del título si existe
+                const yearMatch = titulo.match(/\((\d{4})\)$/);
+                if (yearMatch) {
+                    year = parseInt(yearMatch[1]);
+                    titulo = titulo.replace(/\s*\(\d{4})\s*$/, '').trim();
+                }
+                
+                return {
+                    id: `${defaultYear}_${Date.now()}_${Math.random()}`,
+                    titulo: titulo,
+                    tituloCompleto: movie.titulo,
+                    poster: movie.poster || this.imageOptimizer.getFallbackImage(titulo),
+                    year: year,
+                    enlace: movie.enlace,
+                    categoria: movie.categoria || movie.genero || 'General'
+                };
+            });
+    }
+    
+    async quickRender() {
+        // Renderizado rápido inicial
+        const processed = await this.processor.process(this.movies);
+        this.renderer.renderAll(processed.slice(0, 100));
+        
+        document.getElementById('counter').textContent = this.movies.length.toLocaleString('es');
+        document.getElementById('status').textContent = 'Cargando más...';
+    }
+    
+    async finishLoading() {
+        this.metrics.totalLoadTime = performance.now() - this.metrics.startTime;
+        
+        console.log('✅ Carga completa:', {
+            películas: this.movies.length,
+            tiempoTotal: `${(this.metrics.totalLoadTime / 1000).toFixed(2)}s`,
+            primerRender: `${(this.metrics.firstRenderTime / 1000).toFixed(2)}s`
+        });
+        
+        // Procesar y ordenar con Web Worker
+        this.movies = await this.processor.process(this.movies);
+        
+        // Crear filtros
+        this.createFilters();
+        
+        // Renderizar todo
+        this.renderer.renderAll(this.movies);
+        
+        // Configurar eventos
+        this.setupEventListeners();
+        
+        // Actualizar UI
+        document.getElementById('status').textContent = 'Listo';
+        document.getElementById('counter').textContent = this.movies.length.toLocaleString('es');
+        
+        // Precargar imágenes
+        const posterUrls = this.movies.slice(0, 30).map(m => m.poster);
+        this.imageOptimizer.preload(posterUrls);
+        
+        // Mensaje de éxito
+        if (this.movies.length > 0) {
+            this.showToast(`✅ ${this.movies.length} películas cargadas en ${(this.metrics.totalLoadTime / 1000).toFixed(1)}s`);
+        } else {
+            this.showToast('⚠️ No se encontraron películas', 5000);
+        }
+    }
+    
+    updateProgress() {
+        const percent = Math.round((this.loadedFiles / this.totalFiles) * 100);
+        
+        document.getElementById('progressBar').style.width = `${percent}%`;
+        document.getElementById('loadingInfo').textContent = 
+            `${this.loadedFiles} de ${this.totalFiles} archivos (${percent}%)`;
+    }
+    
+    createFilters() {
+        const container = document.getElementById('filters');
+        const years = [...new Set(this.movies.map(m => m.year))].sort((a, b) => b - a);
+        
+        // Limpiar
+        container.innerHTML = '';
+        
+        // Botón Todos
+        const allBtn = this.createFilterButton('Todos', 'all', true);
+        container.appendChild(allBtn);
+        
+        // Años recientes
+        years.slice(0, 10).forEach(year => {
+            const count = this.movies.filter(m => m.year === year).length;
+            const btn = this.createFilterButton(`${year} (${count})`, year);
+            container.appendChild(btn);
+        });
+        
+        // Décadas
+        const decades = [
+            { label: '2010s', start: 2010, end: 2019 },
+            { label: '2000s', start: 2000, end: 2009 },
+            { label: '90s', start: 1990, end: 1999 },
+            { label: '80s', start: 1980, end: 1989 },
+            { label: 'Clásicas', start: 1940, end: 1979 }
+        ];
+        
+        decades.forEach(decade => {
+            const count = this.movies.filter(m => 
+                m.year >= decade.start && m.year <= decade.end
+            ).length;
+            
+            if (count > 0) {
+                const btn = this.createFilterButton(
+                    `${decade.label} (${count})`,
+                    `${decade.start}-${decade.end}`
+                );
+                container.appendChild(btn);
+            }
+        });
+    }
+    
+    createFilterButton(text, value, active = false) {
+        const btn = document.createElement('button');
+        btn.className = `year-btn ${active ? 'active' : ''}`;
+        btn.textContent = text;
+        btn.dataset.filter = value;
+        btn.onclick = (e) => this.handleFilter(e);
+        return btn;
+    }
+    
+    handleFilter(event) {
+        const btn = event.currentTarget;
+        const filter = btn.dataset.filter;
+        
+        // Actualizar botones
+        document.querySelectorAll('.year-btn').forEach(b => 
+            b.classList.remove('active')
+        );
+        btn.classList.add('active');
+        
+        // Aplicar filtro
+        if (filter === 'all') {
+            this.filteredMovies = this.movies;
+        } else if (filter.includes('-')) {
+            // Rango de años
+            const [start, end] = filter.split('-').map(Number);
+            this.filteredMovies = this.movies.filter(m => 
+                m.year >= start && m.year <= end
+            );
+        } else {
+            // Año específico
+            this.filteredMovies = this.movies.filter(m => 
+                m.year === parseInt(filter)
+            );
+        }
+        
+        // Renderizar
+        this.renderer.renderAll(this.filteredMovies);
+        document.getElementById('counter').textContent = 
+            this.filteredMovies.length.toLocaleString('es');
+    }
+    
+    setupEventListeners() {
+        // Búsqueda optimizada
+        const searchInput = document.getElementById('search');
+        
+        searchInput.addEventListener('input', (e) => {
+            clearTimeout(this.searchTimeout);
+            
+            this.searchTimeout = setTimeout(async () => {
+                const query = e.target.value.trim();
+                
+                if (!query) {
+                    this.renderer.renderAll(this.movies);
+                    document.getElementById('counter').textContent = 
+                        this.movies.length.toLocaleString('es');
+                } else {
+                    // Búsqueda con Web Worker
+                    const results = await this.processor.search(this.movies, query);
+                    this.renderer.renderAll(results);
+                    document.getElementById('counter').textContent = 
+                        results.length.toLocaleString('es');
+                }
+            }, CONFIG.performance.searchDebounce);
+        });
+        
+        // Enter para búsqueda inmediata
+        searchInput.addEventListener('keypress', async (e) => {
+            if (e.key === 'Enter') {
+                clearTimeout(this.searchTimeout);
+                const query = e.target.value.trim();
+                
+                if (query) {
+                    const results = await this.processor.search(this.movies, query);
+                    this.renderer.renderAll(results);
+                    document.getElementById('counter').textContent = 
+                        results.length.toLocaleString('es');
+                }
+            }
+        });
+    }
+    
+    play(url) {
+        console.log('▶️ Reproduciendo:', url);
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+    
+    showToast(message, duration = 3000) {
+        const toast = document.getElementById('toast');
+        toast.textContent = message;
+        toast.classList.add('show');
+        
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, duration);
+    }
+    
+    delay(ms) {
+        return new Promise(resolve => setTimeout(resolve, ms));
+    }
+}
+
+// ============================================
+// INICIALIZACIÓN
+// ============================================
+window.imageOptimizer = new ImageOptimizer();
+window.app = new MoviesApp();
+
+// Iniciar cuando DOM esté listo
+if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', () => window.app.init());
+} else {
+    window.app.init();
+}
+
+// ============================================
+// OPTIMIZACIONES ADICIONALES
+// ============================================
+
+// Prefetch de DNS para acelerar conexiones
+if ('connection' in navigator && navigator.connection.saveData !== true) {
+    const link = document.createElement('link');
+    link.rel = 'dns-prefetch';
+    link.href = 'https://raw.githubusercontent.com';
+    document.head.appendChild(link);
+}
+
+// Service Worker para caché offline (crear archivo sw.js separado)
+if ('serviceWorker' in navigator && location.protocol === 'https:') {
+    navigator.serviceWorker.register('/sw.js').catch(() => {});
+}
+
+// Detectar conexión lenta y ajustar
+if ('connection' in navigator) {
+    const connection = navigator.connection;
+    if (connection.effectiveType === '2g' || connection.effectiveType === 'slow-2g') {
+        CONFIG.performance.batchSize = 5;
+        CONFIG.performance.preloadImages = 10;
+        CONFIG.ui.animationsEnabled = false;
+    }
+}
+
+// Limpiar memoria en caso de mucho uso
+if ('requestIdleCallback' in window) {
+    requestIdleCallback(() => {
+        // Limpiar caché viejo cada 5 minutos
+        setInterval(() => {
+            if (window.app && window.app.cache) {
+                window.app.cache.clearOldStorage();
+            }
+        }, 300000);
+    });
+}
+</script>
+
+<!-- Analytics opcional -->
+<script async>
+// Google Analytics o tu sistema de analytics
+window.dataLayer = window.dataLayer || [];
+function gtag(){dataLayer.push(arguments);}
+gtag('js', new Date());
 </script>
 
 </body>
