@@ -20,90 +20,138 @@ header {
     display: flex;
     gap: 20px;
     align-items: center;
+    border-bottom: 2px solid #e50914;
 }
 h1 { 
     color: #e50914; 
-    font-size: 1.5rem;
+    font-size: 1.8rem;
 }
 input {
     flex: 1;
     max-width: 400px;
-    padding: 10px;
-    border: none;
+    padding: 10px 15px;
+    border: 1px solid #333;
     border-radius: 5px;
     background: #222;
     color: #fff;
+    font-size: 1rem;
+}
+.stats {
+    display: flex;
+    gap: 15px;
+    align-items: center;
 }
 .counter {
+    color: #fff;
+    font-size: 0.9rem;
+    background: #e50914;
+    padding: 5px 15px;
+    border-radius: 20px;
+}
+.status {
     color: #888;
     font-size: 0.9rem;
 }
-.years {
+.filters {
     display: flex;
     gap: 10px;
-    padding: 10px 20px;
-    background: #111;
+    padding: 15px 20px;
+    background: #0a0a0a;
     overflow-x: auto;
+    border-bottom: 1px solid #222;
 }
 .year-btn {
-    padding: 5px 15px;
-    background: #222;
-    border: none;
+    padding: 8px 20px;
+    background: #1a1a1a;
+    border: 1px solid #333;
     border-radius: 20px;
     color: #fff;
     cursor: pointer;
     white-space: nowrap;
+    transition: all 0.3s;
+}
+.year-btn:hover {
+    background: #333;
 }
 .year-btn.active {
     background: #e50914;
+    border-color: #e50914;
 }
 main {
     padding: 20px;
+    min-height: 80vh;
 }
 .year-section {
-    margin-bottom: 30px;
+    margin-bottom: 40px;
 }
 .year-title {
-    font-size: 1.5rem;
-    margin-bottom: 15px;
+    font-size: 1.8rem;
+    margin-bottom: 20px;
     color: #fff;
+    padding-left: 10px;
+    border-left: 4px solid #e50914;
 }
 .movies {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap: 15px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 20px;
 }
 .movie {
     cursor: pointer;
-    transition: transform 0.2s;
+    transition: transform 0.3s;
     position: relative;
     background: #111;
-    border-radius: 5px;
+    border-radius: 8px;
     overflow: hidden;
 }
 .movie:hover {
     transform: scale(1.05);
+    box-shadow: 0 5px 20px rgba(229, 9, 20, 0.5);
 }
 .movie img {
     width: 100%;
-    height: 225px;
+    height: 240px;
     object-fit: cover;
     display: block;
+    background: #1a1a1a;
 }
 .movie-title {
-    padding: 8px;
-    font-size: 0.85rem;
-    line-height: 1.2;
+    padding: 10px;
+    font-size: 0.9rem;
+    line-height: 1.3;
+    min-height: 50px;
 }
 .loading {
     text-align: center;
-    padding: 50px;
-    color: #666;
+    padding: 100px 20px;
+}
+.loader {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #333;
+    border-top: 3px solid #e50914;
+    border-radius: 50%;
+    margin: 0 auto 20px;
+    animation: spin 1s linear infinite;
+}
+@keyframes spin {
+    to { transform: rotate(360deg); }
 }
 .empty {
     text-align: center;
     padding: 100px 20px;
     color: #666;
+}
+.error {
+    background: #330000;
+    color: #ff6666;
+    padding: 10px;
+    margin: 20px;
+    border-radius: 5px;
+    display: none;
+}
+.error.show {
+    display: block;
 }
 @media (max-width: 600px) {
     .movies { 
@@ -111,7 +159,8 @@ main {
         gap: 10px;
     }
     .movie img { height: 150px; }
-    h1 { font-size: 1.2rem; }
+    h1 { font-size: 1.3rem; }
+    .movie-title { font-size: 0.8rem; padding: 8px; }
 }
 </style>
 </head>
@@ -119,122 +168,253 @@ main {
 
 <header>
     <h1>MOVIES+</h1>
-    <input type="text" id="search" placeholder="Buscar...">
-    <span class="counter" id="counter">0</span>
+    <input type="text" id="search" placeholder="Buscar películas...">
+    <div class="stats">
+        <span class="counter" id="counter">0</span>
+        <span class="status" id="status">Cargando...</span>
+    </div>
 </header>
 
-<div class="years" id="years">
-    <button class="year-btn active" data-year="all">Todos</button>
+<div class="filters" id="filters">
+    <button class="year-btn active" onclick="app.filterYear('all')">Todos</button>
 </div>
 
+<div class="error" id="error"></div>
+
 <main id="main">
-    <div class="loading">Cargando...</div>
+    <div class="loading">
+        <div class="loader"></div>
+        <p>Cargando películas...</p>
+        <p style="color: #666; margin-top: 10px" id="loadingInfo">0 archivos cargados</p>
+    </div>
 </main>
 
 <script>
-// CONFIGURACIÓN - CAMBIA ESTOS VALORES
+// ============================================
+// CONFIGURACIÓN - SOLO CAMBIA ESTOS VALORES
+// ============================================
 const CONFIG = {
-    github_user: 'rancier0102',      // <-- CAMBIA
-    github_repo: 'REPRODUCIBLE-1.0',  // <-- CAMBIA
-    github_branch: 'main'            // <-- CAMBIA si usas otra rama
+    github_user: 'rancier0102-rgb',        // <-- PON TU USUARIO DE GITHUB
+    github_repo: 'REPRODUCIBLE-1.0',    // <-- PON TU REPOSITORIO
+    github_branch: 'main',             // <-- RAMA (normalmente 'main' o 'master')
+    start_year: 2025,                  // Año inicial
+    end_year: 1940                     // Año final
 };
 
-// App minimalista
+// ============================================
+// APLICACIÓN MINIMALISTA
+// ============================================
 const app = {
-    movies: [],
-    filtered: [],
+    allMovies: [],
+    filteredMovies: [],
+    loadedFiles: 0,
+    totalFiles: 0,
     
     async init() {
-        // Generar años (2025 a 1940)
+        console.log('🎬 Iniciando Movies+');
+        console.log('📁 Repositorio:', `${CONFIG.github_user}/${CONFIG.github_repo}`);
+        
+        // Generar lista de años
         const years = [];
-        for(let y = 2025; y >= 1940; y--) years.push(y);
+        for(let y = CONFIG.start_year; y >= CONFIG.end_year; y--) {
+            years.push(y);
+        }
+        this.totalFiles = years.length;
         
-        // Cargar películas
-        const promises = years.map(year => this.loadYear(year));
-        await Promise.allSettled(promises);
+        // Cargar todos los archivos JSON
+        await this.loadAllYears(years);
         
-        // Renderizar
-        this.render();
-        this.setupEvents();
-        this.createYearButtons();
+        // Finalizar
+        this.finishLoading();
+    },
+    
+    async loadAllYears(years) {
+        // Dividir en lotes para cargar de a 5 archivos en paralelo
+        const batchSize = 5;
+        
+        for(let i = 0; i < years.length; i += batchSize) {
+            const batch = years.slice(i, i + batchSize);
+            const promises = batch.map(year => this.loadYear(year));
+            
+            // Esperar que termine el lote
+            await Promise.allSettled(promises);
+            
+            // Actualizar progreso
+            document.getElementById('loadingInfo').textContent = 
+                `${this.loadedFiles} de ${this.totalFiles} archivos procesados`;
+        }
     },
     
     async loadYear(year) {
+        const url = `https://raw.githubusercontent.com/${CONFIG.github_user}/${CONFIG.github_repo}/${CONFIG.github_branch}/peliculas_${year}.json`;
+        
         try {
-            const url = `https://raw.githubusercontent.com/${CONFIG.github_user}/${CONFIG.github_repo}/${CONFIG.github_branch}/peliculas_${year}.json`;
-            const res = await fetch(url);
-            if (!res.ok) return;
+            console.log(`📥 Cargando: peliculas_${year}.json`);
             
-            const data = await res.json();
-            const movies = Array.isArray(data) ? data : [data];
+            const response = await fetch(url);
             
-            movies.forEach(m => {
-                if (m?.titulo && m?.enlace) {
-                    // Extraer año del título si existe
-                    const yearMatch = m.titulo.match(/\((\d{4})\)/);
-                    const cleanTitle = m.titulo.replace(/\s*\(\d{4}\)\s*$/, '');
+            if (!response.ok) {
+                if (response.status !== 404) {
+                    console.warn(`⚠️ Error ${response.status} en año ${year}`);
+                }
+                return;
+            }
+            
+            const text = await response.text();
+            const data = JSON.parse(text);
+            
+            // Procesar los datos (puede ser array o objeto único)
+            let movies = [];
+            
+            if (Array.isArray(data)) {
+                movies = data;
+            } else if (data.peliculas && Array.isArray(data.peliculas)) {
+                movies = data.peliculas;
+            } else if (data.movies && Array.isArray(data.movies)) {
+                movies = data.movies;
+            } else if (data.titulo && data.enlace) {
+                // Es un objeto único
+                movies = [data];
+            }
+            
+            // Procesar cada película
+            let addedCount = 0;
+            movies.forEach(movie => {
+                if (movie && movie.titulo && movie.enlace) {
+                    // Limpiar título y extraer año si está en el formato "Título (Año)"
+                    let titulo = movie.titulo;
+                    let movieYear = movie.ano || year;
                     
-                    this.movies.push({
-                        titulo: cleanTitle || m.titulo,
-                        poster: m.poster || `https://via.placeholder.com/300x450/222/666?text=${year}`,
-                        year: yearMatch ? yearMatch[1] : (m.ano || year),
-                        enlace: m.enlace
+                    const yearMatch = titulo.match(/\((\d{4})\)$/);
+                    if (yearMatch) {
+                        movieYear = yearMatch[1];
+                        titulo = titulo.replace(/\s*\(\d{4})\s*$/, '').trim();
+                    }
+                    
+                    this.allMovies.push({
+                        id: `${year}_${Date.now()}_${Math.random()}`,
+                        titulo: titulo,
+                        tituloCompleto: movie.titulo,
+                        poster: movie.poster || this.getPlaceholder(titulo),
+                        year: parseInt(movieYear),
+                        enlace: movie.enlace,
+                        categoria: movie.categoria || movie.genero || 'General'
                     });
+                    addedCount++;
                 }
             });
-        } catch(e) {}
+            
+            console.log(`✅ Año ${year}: ${addedCount} películas agregadas`);
+            
+        } catch (error) {
+            console.error(`❌ Error cargando año ${year}:`, error.message);
+        } finally {
+            this.loadedFiles++;
+        }
     },
     
-    render(movies = this.movies) {
+    finishLoading() {
+        console.log(`✅ Carga completa: ${this.allMovies.length} películas totales`);
+        
+        // Ordenar películas por año descendente y luego por título
+        this.allMovies.sort((a, b) => {
+            if (b.year !== a.year) return b.year - a.year;
+            return a.titulo.localeCompare(b.titulo, 'es');
+        });
+        
+        // Crear botones de filtro
+        this.createFilterButtons();
+        
+        // Renderizar todas las películas
+        this.render(this.allMovies);
+        
+        // Configurar eventos
+        this.setupEvents();
+        
+        // Actualizar estado
+        document.getElementById('status').textContent = 'Listo';
+        
+        // Si no hay películas, mostrar mensaje
+        if (this.allMovies.length === 0) {
+            this.showError('No se encontraron películas. Verifica la configuración del repositorio.');
+        }
+    },
+    
+    render(movies = this.allMovies) {
+        const main = document.getElementById('main');
+        
         if (movies.length === 0) {
-            document.getElementById('main').innerHTML = '<div class="empty">No hay películas</div>';
+            main.innerHTML = `
+                <div class="empty">
+                    <h2>No se encontraron películas</h2>
+                    <p>Intenta con otro filtro o término de búsqueda</p>
+                </div>`;
+            document.getElementById('counter').textContent = '0';
             return;
         }
         
         // Agrupar por año
-        const byYear = {};
-        movies.forEach(m => {
-            if (!byYear[m.year]) byYear[m.year] = [];
-            byYear[m.year].push(m);
+        const moviesByYear = {};
+        movies.forEach(movie => {
+            const year = movie.year;
+            if (!moviesByYear[year]) {
+                moviesByYear[year] = [];
+            }
+            moviesByYear[year].push(movie);
         });
         
         // Ordenar años descendente
-        const years = Object.keys(byYear).sort((a,b) => b-a);
+        const sortedYears = Object.keys(moviesByYear).sort((a, b) => b - a);
         
         // Generar HTML
         let html = '';
-        years.forEach(year => {
-            html += `<div class="year-section">
-                <h2 class="year-title">${year}</h2>
-                <div class="movies">`;
+        sortedYears.forEach(year => {
+            html += `
+                <div class="year-section">
+                    <h2 class="year-title">${year} (${moviesByYear[year].length} películas)</h2>
+                    <div class="movies">`;
             
-            byYear[year].forEach(movie => {
-                html += `<div class="movie" onclick="window.open('${movie.enlace}','_blank')">
-                    <img src="${movie.poster}" loading="lazy" alt="${movie.titulo}">
-                    <div class="movie-title">${movie.titulo}</div>
-                </div>`;
+            moviesByYear[year].forEach(movie => {
+                html += `
+                    <div class="movie" onclick="app.play('${movie.enlace}')" title="${movie.tituloCompleto}">
+                        <img src="${movie.poster}" 
+                             alt="${movie.titulo}" 
+                             loading="lazy"
+                             onerror="this.src='${this.getPlaceholder(movie.titulo)}'">
+                        <div class="movie-title">${movie.titulo}</div>
+                    </div>`;
             });
             
-            html += '</div></div>';
+            html += `
+                    </div>
+                </div>`;
         });
         
-        document.getElementById('main').innerHTML = html;
-        document.getElementById('counter').textContent = movies.length;
+        main.innerHTML = html;
+        document.getElementById('counter').textContent = movies.length.toLocaleString('es');
+    },
+    
+    play(url) {
+        console.log('▶️ Reproduciendo:', url);
+        window.open(url, '_blank');
     },
     
     setupEvents() {
-        // Búsqueda
-        let timeout;
+        // Búsqueda con debounce
+        let searchTimeout;
         document.getElementById('search').addEventListener('input', (e) => {
-            clearTimeout(timeout);
-            timeout = setTimeout(() => {
-                const query = e.target.value.toLowerCase();
+            clearTimeout(searchTimeout);
+            searchTimeout = setTimeout(() => {
+                const query = e.target.value.toLowerCase().trim();
+                
                 if (!query) {
-                    this.render();
+                    this.render(this.allMovies);
                 } else {
-                    const filtered = this.movies.filter(m => 
-                        m.titulo.toLowerCase().includes(query) || 
-                        m.year.toString().includes(query)
+                    const filtered = this.allMovies.filter(movie => 
+                        movie.titulo.toLowerCase().includes(query) ||
+                        movie.tituloCompleto.toLowerCase().includes(query) ||
+                        movie.year.toString().includes(query) ||
+                        movie.categoria.toLowerCase().includes(query)
                     );
                     this.render(filtered);
                 }
@@ -242,39 +422,93 @@ const app = {
         });
     },
     
-    createYearButtons() {
-        // Obtener años únicos
-        const years = [...new Set(this.movies.map(m => m.year))].sort((a,b) => b-a);
+    createFilterButtons() {
+        // Obtener años únicos con películas
+        const years = [...new Set(this.allMovies.map(m => m.year))].sort((a, b) => b - a);
         
-        // Crear botones para años con contenido
-        const container = document.getElementById('years');
+        // Agregar botones de los primeros 10 años con contenido
+        const container = document.getElementById('filters');
+        
         years.slice(0, 10).forEach(year => {
+            const count = this.allMovies.filter(m => m.year === year).length;
             const btn = document.createElement('button');
             btn.className = 'year-btn';
-            btn.dataset.year = year;
-            btn.textContent = year;
-            btn.onclick = () => this.filterByYear(year, btn);
+            btn.textContent = `${year} (${count})`;
+            btn.onclick = () => this.filterYear(year);
             container.appendChild(btn);
         });
+        
+        // Agregar botón de décadas si hay películas antiguas
+        if (years.some(y => y < 2000)) {
+            const btn90s = document.createElement('button');
+            btn90s.className = 'year-btn';
+            btn90s.textContent = '90s';
+            btn90s.onclick = () => this.filterDecade(1990, 1999);
+            container.appendChild(btn90s);
+            
+            const btn80s = document.createElement('button');
+            btn80s.className = 'year-btn';
+            btn80s.textContent = '80s';
+            btn80s.onclick = () => this.filterDecade(1980, 1989);
+            container.appendChild(btn80s);
+            
+            const btnClassic = document.createElement('button');
+            btnClassic.className = 'year-btn';
+            btnClassic.textContent = 'Clásicas';
+            btnClassic.onclick = () => this.filterDecade(1940, 1979);
+            container.appendChild(btnClassic);
+        }
     },
     
-    filterByYear(year, btn) {
-        // Actualizar botones
+    filterYear(year) {
+        // Actualizar botones activos
         document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
-        btn.classList.add('active');
+        event.target.classList.add('active');
         
-        // Filtrar
         if (year === 'all') {
-            this.render();
+            this.render(this.allMovies);
         } else {
-            const filtered = this.movies.filter(m => m.year == year);
+            const filtered = this.allMovies.filter(m => m.year === year);
             this.render(filtered);
         }
+    },
+    
+    filterDecade(startYear, endYear) {
+        // Actualizar botones activos
+        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+        event.target.classList.add('active');
+        
+        const filtered = this.allMovies.filter(m => m.year >= startYear && m.year <= endYear);
+        this.render(filtered);
+    },
+    
+    getPlaceholder(title = 'Movie') {
+        // Placeholder con el título de la película
+        const text = encodeURIComponent(title.substring(0, 20));
+        return `https://via.placeholder.com/300x450/1a1a1a/e50914?text=${text}`;
+    },
+    
+    showError(message) {
+        const errorDiv = document.getElementById('error');
+        errorDiv.textContent = `⚠️ ${message}`;
+        errorDiv.classList.add('show');
+        
+        setTimeout(() => {
+            errorDiv.classList.remove('show');
+        }, 5000);
     }
 };
 
-// Iniciar
-app.init();
+// ============================================
+// INICIAR APLICACIÓN
+// ============================================
+document.addEventListener('DOMContentLoaded', () => {
+    console.log('DOM Cargado - Iniciando aplicación...');
+    app.init();
+});
+
+// Debug helper
+window.app = app;
 </script>
 
 </body>
