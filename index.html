@@ -1,15 +1,11 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html> 
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Series+ - Streaming Platform</title>
+<title>Series+ - Plataforma de Streaming</title>
 <style>
-/* ================================
-   TEMAS DE IDIOMA / LANGUAGE THEMES
-   ================================ */
 :root {
-    /* Default English Theme (Red) */
     --primary-color: #e50914;
     --background-dark: #141414;
     --background-card: #181818;
@@ -21,193 +17,13 @@
     --focus-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
 }
 
-/* Spanish Latino Theme (Sapphire Blue) */
-:root[data-language="es-LA"] {
-    --primary-color: #0052CC;
-    --background-dark: #0a1929;
-    --background-card: #0f2744;
-    --background-secondary: #1a3a52;
-    --text-light: #e3f2fd;
-    --muted: #90caf9;
-    --focus-shadow: 0 0 25px rgba(0, 82, 204, 0.9);
-}
-
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: 'Segoe UI', Arial, sans-serif;
     background: var(--background-dark);
     color: var(--text-light);
     overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-}
-
-/* Language Toggle Button */
-.language-toggle {
-    position: relative;
-    margin-left: auto;
-    margin-right: 20px;
-}
-
-.language-btn {
-    background: linear-gradient(135deg, rgba(255,255,255,0.1), rgba(255,255,255,0.05));
-    border: 2px solid rgba(255,255,255,0.2);
-    color: var(--text-light);
-    padding: 10px 20px;
-    border-radius: 25px;
-    cursor: pointer;
-    font-size: 0.9rem;
-    font-weight: 500;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-    min-width: 140px;
-    justify-content: center;
-}
-
-.language-btn:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.08));
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
-}
-
-.language-btn:active {
-    transform: scale(0.98);
-}
-
-.language-flag {
-    width: 20px;
-    height: 20px;
-    display: inline-block;
-    position: relative;
-    overflow: hidden;
-    border-radius: 3px;
-    box-shadow: 0 0 3px rgba(0,0,0,0.3);
-}
-
-/* USA Flag for English */
-.flag-usa {
-    background: linear-gradient(
-        to bottom,
-        #B22234 8.33%,
-        white 8.33% 16.66%,
-        #B22234 16.66% 25%,
-        white 25% 33.33%,
-        #B22234 33.33% 41.66%,
-        white 41.66% 50%,
-        #B22234 50% 58.33%,
-        white 58.33% 66.66%,
-        #B22234 66.66% 75%,
-        white 75% 83.33%,
-        #B22234 83.33% 91.66%,
-        white 91.66%
-    );
-}
-
-.flag-usa::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 40%;
-    height: 53.85%;
-    background: #3C3B6E;
-}
-
-/* Latin America Flag (Generic) */
-.flag-latam {
-    background: linear-gradient(
-        to bottom,
-        #0052CC 0% 33.33%,
-        white 33.33% 66.66%,
-        #0052CC 66.66% 100%
-    );
-}
-
-.flag-latam::before {
-    content: '☀';
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    color: #FFD700;
-    font-size: 14px;
-}
-
-/* Language Menu */
-.language-menu {
-    position: absolute;
-    top: calc(100% + 10px);
-    right: 0;
-    background: var(--background-card);
-    border: 1px solid rgba(255,255,255,0.1);
-    border-radius: 12px;
-    overflow: hidden;
-    opacity: 0;
-    visibility: hidden;
-    transform: translateY(-10px);
-    transition: all 0.3s ease;
-    z-index: 100;
-    min-width: 200px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-}
-
-.language-menu.show {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-}
-
-.language-option {
-    padding: 12px 16px;
-    display: flex;
-    align-items: center;
-    gap: 12px;
-    cursor: pointer;
-    transition: all 0.2s ease;
-    color: var(--text-light);
-    font-size: 0.9rem;
-}
-
-.language-option:hover {
-    background: rgba(255,255,255,0.1);
-    padding-left: 20px;
-}
-
-.language-option.active {
-    background: var(--primary-color);
-    color: white;
-}
-
-.language-option .checkmark {
-    margin-left: auto;
-    opacity: 0;
-    transition: opacity 0.2s ease;
-}
-
-.language-option.active .checkmark {
-    opacity: 1;
-}
-
-/* TV Optimization - Larger UI elements */
-@media screen and (min-width: 1920px) {
-    body {
-        zoom: 1.1;
-    }
-    .language-btn {
-        padding: 12px 24px;
-        font-size: 1rem;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    body {
-        zoom: 1.3;
-    }
 }
 
 /* Loader */
@@ -217,7 +33,7 @@ body {
     left: 50%;
     transform: translate(-50%, -50%);
     color: var(--primary-color);
-    font-size: 1.8rem;
+    font-size: 1.5rem;
     z-index: 1000;
 }
 
@@ -227,219 +43,56 @@ body {
 
 /* HEADER */
 header {
-    padding: 18px 30px;
-    background: linear-gradient(to bottom, rgba(20,20,20,0.98), rgba(20,20,20,0.95));
+    padding: 15px 40px;
+    background: rgba(0,0,0,0.9);
     position: sticky;
     top: 0;
     display: flex;
-    gap: 25px;
+    gap: 15px;
     align-items: center;
     z-index: 10;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    min-height: 70px;
-}
-
-:root[data-language="es-LA"] header {
-    background: linear-gradient(to bottom, rgba(10,25,41,0.98), rgba(10,25,41,0.95));
+    backdrop-filter: blur(10px);
 }
 
 .logo { 
     font-weight: bold; 
-    font-size: 1.8rem;
+    font-size: 1.8rem; 
     color: var(--primary-color);
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-right: 20px;
 }
 
-/* Professional Search Bar */
-.search-container {
-    flex: 1;
-    max-width: 500px;
-    position: relative;
-}
-
-.search-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.search-box {
-    width: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 25px;
-    padding: 12px 50px 12px 20px;
-    color: white;
-    font-size: 14px;
-    font-weight: 400;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.search-box::placeholder {
-    color: rgba(255,255,255,0.4);
-    font-weight: 300;
-    letter-spacing: 0.5px;
-}
-
-.search-box:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
-    border-color: rgba(255,255,255,0.15);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.05);
-}
-
-.search-box:focus {
-    outline: none;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
-    border-color: var(--primary-color);
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), 0 0 30px rgba(0, 82, 204, 0.2);
-    padding-left: 24px;
-}
-
-.search-box.focused {
-    transform: translateY(-1px);
-}
-
-.search-box.active-search {
-    border-color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(0, 82, 204, 0.1), rgba(0, 82, 204, 0.05));
-}
-
-/* Search Icon */
-.search-icon {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    pointer-events: none;
-    opacity: 0.5;
-    transition: all 0.3s ease;
-}
-
-.search-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-}
-
-.search-box:focus ~ .search-icon {
-    opacity: 0.8;
-    right: 16px;
-}
-
-/* Search Clear Button */
-.search-clear {
-    position: absolute;
-    right: 45px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
+/* Status indicator */
+.status-indicator {
+    margin-left: auto;
+    padding: 5px 12px;
     background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.search-clear:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.search-clear.visible {
-    display: flex;
-}
-
-/* Search Info Bar */
-.search-info {
-    display: none;
-    padding: 15px 30px;
-    background: linear-gradient(90deg, rgba(229, 9, 20, 0.1), transparent);
-    border-left: 3px solid var(--primary-color);
-    margin-bottom: 10px;
-    align-items: center;
-    justify-content: space-between;
-    animation: slideDown 0.3s ease;
-}
-
-:root[data-language="es-LA"] .search-info {
-    background: linear-gradient(90deg, rgba(0, 82, 204, 0.1), transparent);
-}
-
-.search-info.visible {
-    display: flex;
-}
-
-.search-info-text {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.9);
-}
-
-.search-info-text strong {
-    color: var(--primary-color);
-}
-
-.search-info-count {
-    background: rgba(0, 82, 204, 0.2);
-    padding: 4px 12px;
     border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-:root[data-language="en"] .search-info-count {
-    background: rgba(229, 9, 20, 0.2);
-}
-
-.clear-search {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 20px;
-    cursor: pointer;
     font-size: 0.85rem;
-    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    gap: 8px;
 }
 
-.clear-search:hover {
-    background: rgba(255,255,255,0.2);
-    transform: scale(1.05);
+.status-indicator.connected::before {
+    content: "";
+    width: 8px;
+    height: 8px;
+    background: #46d369;
+    border-radius: 50%;
+    animation: pulse 2s infinite;
 }
 
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+@keyframes pulse {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
 }
 
-/* MAIN GRID - INCREASED POSTERS PER ROW */
-.main-content {
-    padding-top: 5px;
-}
-
-.all-series-header {
-    padding: 15px 30px 10px;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
+/* MAIN GRID */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    padding: 0 30px 30px;
+    grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+    gap: 15px;
+    padding: 20px 40px;
     animation: fadeIn 0.5s ease-out;
 }
 
@@ -450,55 +103,27 @@ header {
 
 .card {
     background: transparent;
-    border-radius: 6px;
+    border-radius: 5px;
     overflow: hidden;
     cursor: pointer;
     transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
     position: relative;
-    border: 2px solid transparent;
+    border: 3px solid transparent;
     outline: none;
-}
-
-.card.hidden {
-    display: none;
-}
-
-.card.search-match {
-    animation: highlight 0.5s ease;
-    border-color: var(--primary-color);
-    box-shadow: 0 0 15px rgba(0, 82, 204, 0.2);
-}
-
-:root[data-language="en"] .card.search-match {
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.2);
-}
-
-@keyframes highlight {
-    0% {
-        transform: scale(0.95);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1.02);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
 }
 
 .card img { 
     width: 100%; 
-    height: 210px; 
+    height: 200px; 
     object-fit: cover;
     transition: transform 0.3s ease;
 }
 
 .card-title { 
-    padding: 10px; 
-    font-size: 0.85rem; 
+    padding: 12px; 
+    font-size: 0.9rem; 
     font-weight: 500;
-    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.9));
+    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.8));
     position: absolute;
     bottom: 0;
     left: 0;
@@ -508,7 +133,7 @@ header {
 
 .card.focused {
     border-color: var(--primary-color);
-    transform: scale(1.1);
+    transform: scale(1.12);
     box-shadow: var(--focus-shadow);
     z-index: 5;
 }
@@ -517,46 +142,33 @@ header {
     transform: scale(1.05);
 }
 
-/* No results message */
-.no-results-message {
-    display: none;
-    text-align: center;
-    padding: 60px 30px;
-    color: var(--muted);
-    font-size: 1.2rem;
-    grid-column: 1/-1;
-}
-
-.no-results-message.visible {
-    display: block;
-}
-
-.no-results-message strong {
-    color: var(--primary-color);
-    display: block;
-    margin-top: 10px;
-    font-size: 1rem;
+/* Focus ring for accessibility */
+.card:focus-visible,
+.season:focus-visible,
+.episode:focus-visible {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
 }
 
 /* BADGES */
 .badge {
     position: absolute;
-    top: 6px;
-    left: 6px;
+    top: 8px;
+    left: 8px;
     background: var(--primary-color);
     padding: 4px 10px;
     font-size: 0.7rem;
-    border-radius: 4px;
+    border-radius: 5px;
     font-weight: bold;
     z-index: 2;
     box-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.badge.dubbed { 
+.badge.doblado { 
     background: #46d369; 
 }
 
-.badge.premiere { 
+.badge.estreno { 
     background: #ff6b35;
     animation: glow 2s ease-in-out infinite;
 }
@@ -585,95 +197,18 @@ header {
     to { transform: translateX(0); }
 }
 
-/* SERIES BANNER - OPTIMIZED SIZE */
-.series-banner {
-    position: relative;
-    width: 100%;
-    height: 250px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-}
-
-:root[data-language="es-LA"] .series-banner {
-    background: linear-gradient(135deg, #1a3a52, #0a1929);
-}
-
-/* TV Responsive Banner Sizes */
-@media screen and (min-width: 1920px) {
-    .series-banner {
-        height: 280px;
-    }
-}
-
-@media screen and (min-width: 2560px) {
-    .series-banner {
-        height: 320px;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .series-banner {
-        height: 380px;
-    }
-}
-
-.series-banner-image {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center 25%;
-    filter: brightness(0.6);
-    transform: scale(1.1);
-}
-
-.series-banner-gradient {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80%;
-    background: linear-gradient(to top, var(--background-dark) 0%, rgba(20,20,20,0.8) 30%, transparent 100%);
-    pointer-events: none;
-}
-
-:root[data-language="es-LA"] .series-banner-gradient {
-    background: linear-gradient(to top, var(--background-dark) 0%, rgba(10,25,41,0.8) 30%, transparent 100%);
-}
-
-.series-banner-info {
-    position: absolute;
-    bottom: 25px;
-    left: 30px;
-    right: 30px;
-    z-index: 2;
-}
-
-.series-banner-title {
-    font-size: 2.2rem;
+.series-header {
+    font-size: 2.5rem;
     font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-    margin-bottom: 10px;
-    animation: fadeInUp 0.6s ease-out;
-    letter-spacing: 0.5px;
+    padding: 30px 40px 20px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    animation: fadeInDown 0.5s ease-out;
 }
 
-/* TV Font Sizes */
-@media screen and (min-width: 1920px) {
-    .series-banner-title {
-        font-size: 2.5rem;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .series-banner-title {
-        font-size: 3rem;
-    }
-}
-
-@keyframes fadeInUp {
-    from {
+@keyframes fadeInDown {
+    from { 
         opacity: 0;
-        transform: translateY(30px);
+        transform: translateY(-20px);
     }
     to {
         opacity: 1;
@@ -681,89 +216,13 @@ header {
     }
 }
 
-.series-banner-meta {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.8);
-    animation: fadeInUp 0.8s ease-out;
-}
-
-.series-banner-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    background: var(--primary-color);
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: bold;
-}
-
-.series-banner-play {
-    position: absolute;
-    bottom: 25px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    display: none; 
-    align-items: center;
-    justify-content: center;
-    font-size: 1.5rem;
-    color: white;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-    animation: pulse 2s infinite;
-}
-
-/* TV Play Button Size */
-@media screen and (min-width: 1920px) {
-    .series-banner-play {
-        width: 70px;
-        height: 70px;
-        font-size: 1.8rem;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .series-banner-play {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-.series-banner-play:hover {
-    transform: scale(1.1);
-    filter: brightness(1.2);
-}
-
-/* Season Bar with Banner */
+/* Season Bar */
 .season-bar {
     display: flex;
-    gap: 15px;
-    padding: 15px 30px 20px;
+    gap: 16px;
+    padding: 0 40px 24px;
     overflow-x: auto;
     scrollbar-width: none;
-    background: linear-gradient(to bottom, rgba(20,20,20,0.3), transparent);
-    margin-top: -10px;
-    position: relative;
-    z-index: 3;
-}
-
-:root[data-language="es-LA"] .season-bar {
-    background: linear-gradient(to bottom, rgba(10,25,41,0.3), transparent);
 }
 
 .season-bar::-webkit-scrollbar {
@@ -773,22 +232,16 @@ header {
 .season {
     background: rgba(24, 24, 24, 0.85);
     border-radius: var(--radius);
-    padding: 10px 20px;
+    padding: 12px 24px;
     color: var(--muted);
     border: 2px solid transparent;
     transition: all var(--transition);
     cursor: pointer;
     font-weight: 500;
-    font-size: 0.95rem;
     white-space: nowrap;
     box-shadow: 0 4px 8px rgba(0,0,0,0.3);
     outline: none;
     position: relative;
-    backdrop-filter: blur(10px);
-}
-
-:root[data-language="es-LA"] .season {
-    background: rgba(15, 39, 68, 0.85);
 }
 
 .season::after {
@@ -811,17 +264,9 @@ header {
     box-shadow: 0 8px 16px rgba(0,0,0,0.5);
 }
 
-:root[data-language="es-LA"] .season.focused {
-    background: rgba(15, 39, 68, 0.95);
-}
-
 .season.active {
     background: var(--primary-color);
     color: #fff;
-    box-shadow: 0 6px 12px rgba(0, 82, 204, 0.4);
-}
-
-:root[data-language="en"] .season.active {
     box-shadow: 0 6px 12px rgba(229, 9, 20, 0.4);
 }
 
@@ -829,11 +274,11 @@ header {
     width: 100%;
 }
 
-/* Episodes - REDUCED SIZE */
+/* Episodes */
 .episodes-container {
     background: var(--background-dark);
-    padding-top: 15px;
-    min-height: 300px;
+    padding-top: 20px;
+    min-height: 320px;
 }
 
 .episodes-row {
@@ -843,37 +288,24 @@ header {
 
 .episodes-track {
     display: flex;
-    gap: 15px;
-    padding: 0 30px 30px;
+    gap: 20px;
+    padding: 0 40px 40px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .episode {
-    flex: 0 0 280px;
+    flex: 0 0 320px;
     background: var(--background-card);
-    border-radius: 6px;
+    border-radius: var(--radius);
     border: 2px solid transparent;
     transition: all var(--transition);
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+    box-shadow: 0 6px 12px rgba(0,0,0,0.4);
     cursor: pointer;
     outline: none;
     position: relative;
-}
-
-/* TV Episode Card Size */
-@media screen and (min-width: 1920px) {
-    .episode {
-        flex: 0 0 320px;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .episode {
-        flex: 0 0 380px;
-    }
 }
 
 .episode::before {
@@ -894,18 +326,14 @@ header {
 
 .thumb {
     background: linear-gradient(135deg, #333, #1a1a1a);
-    height: 160px;
+    height: 180px;
     display: flex;
     align-items: center;
     justify-content: center;
     color: var(--muted);
-    font-size: 0.9rem;
+    font-size: 1rem;
     position: relative;
     overflow: hidden;
-}
-
-:root[data-language="es-LA"] .thumb {
-    background: linear-gradient(135deg, #1a3a52, #0a1929);
 }
 
 .thumb img {
@@ -916,30 +344,30 @@ header {
 
 .ep-number {
     position: absolute;
-    top: 8px;
-    left: 8px;
-    background: rgba(0,0,0,0.85);
+    top: 12px;
+    left: 12px;
+    background: rgba(0,0,0,0.8);
     color: white;
-    padding: 4px 8px;
+    padding: 6px 10px;
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     font-weight: bold;
 }
 
 .episode.focused {
     border-color: var(--primary-color);
-    transform: scale(1.08) translateY(-5px);
+    transform: scale(1.1) translateY(-5px);
     box-shadow: var(--focus-shadow);
     z-index: 5;
 }
 
-.episode.locked {
+.episode.bloqueado {
     opacity: 0.4;
     cursor: not-allowed;
     filter: grayscale(1);
 }
 
-.episode.locked::after {
+.episode.bloqueado::after {
     content: "🔒";
     position: absolute;
     top: 50%;
@@ -950,14 +378,26 @@ header {
 }
 
 .ep-info {
-    padding: 12px;
+    padding: 16px;
     background: linear-gradient(180deg, var(--background-card), rgba(0,0,0,0.5));
 }
 
 .ep-title {
-    font-size: 0.95rem;
+    font-size: 1.1rem;
     font-weight: 600;
-    line-height: 1.3;
+    margin-bottom: 8px;
+}
+
+.ep-meta {
+    font-size: 0.85rem;
+    color: var(--muted);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.ep-meta::before {
+    content: "⏱";
 }
 
 .play-icon {
@@ -965,9 +405,9 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    width: 50px;
-    height: 50px;
-    background: var(--primary-color);
+    width: 60px;
+    height: 60px;
+    background: rgba(229, 9, 20, 0.95);
     border-radius: 50%;
     display: flex;
     align-items: center;
@@ -989,36 +429,43 @@ header {
 .play-icon::after {
     content: "▶";
     color: white;
-    font-size: 1.2rem;
-    margin-left: 3px;
+    font-size: 1.4rem;
+    margin-left: 4px;
 }
 
-/* Navigation Help */
-.nav-help {
+/* Navigation hints */
+.nav-hints {
     position: fixed;
     bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.85);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 200;
+    right: 20px;
+    background: rgba(0,0,0,0.8);
+    padding: 10px 15px;
+    border-radius: 8px;
+    font-size: 0.85rem;
+    display: flex;
+    gap: 15px;
+    z-index: 50;
+    backdrop-filter: blur(10px);
 }
 
-.nav-help.show {
-    opacity: 1;
+.nav-hint {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.nav-hint kbd {
+    background: rgba(255,255,255,0.1);
+    padding: 2px 6px;
+    border-radius: 3px;
+    border: 1px solid rgba(255,255,255,0.2);
 }
 
 /* BACK BUTTON */
 .back-button {
     position: fixed;
-    top: 25px;
-    left: 25px;
+    top: 20px;
+    left: 20px;
     background: rgba(34, 34, 34, 0.95);
     color: var(--text-light);
     border: 2px solid transparent;
@@ -1026,14 +473,10 @@ header {
     border-radius: 8px;
     cursor: pointer;
     font-size: 1rem;
-    display: none !important;
+    display: none;
     z-index: 201;
     transition: all 0.3s ease;
     backdrop-filter: blur(10px);
-}
-
-:root[data-language="es-LA"] .back-button {
-    background: rgba(15, 39, 68, 0.95);
 }
 
 .back-button:hover,
@@ -1057,18 +500,18 @@ header {
 
 .close {
     position: fixed;
-    top: 25px;
-    right: 25px;
+    top: 20px;
+    right: 20px;
     font-size: 2.5rem;
     cursor: pointer;
     color: white;
     z-index: 201;
     width: 40px;
     height: 40px;
-    display: none; 
+    display: flex;
     align-items: center;
     justify-content: center;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0,0,0,0.5);
     border-radius: 50%;
     transition: all 0.3s ease;
 }
@@ -1084,14 +527,13 @@ header {
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    background: var(--primary-color);
+    background: rgba(229, 9, 20, 0.95);
     color: white;
     padding: 20px 30px;
     border-radius: 10px;
     z-index: 1000;
     display: none;
     animation: shake 0.5s ease-in-out;
-    font-size: 1rem;
 }
 
 @keyframes shake {
@@ -1104,199 +546,32 @@ header {
     display: block;
 }
 
-/* TV Responsive Adjustments - MORE POSTERS PER ROW */
-@media screen and (min-width: 1280px) and (max-width: 1919px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 14px;
-    }
-    
-    .card img {
-        height: 225px;
-    }
-    
-    .episode {
-        flex: 0 0 300px;
-    }
-    
-    .series-banner {
-        height: 240px;
-    }
-}
-
-@media screen and (min-width: 1920px) and (max-width: 2559px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-        gap: 16px;
-        padding: 0 40px 40px;
-    }
-    
-    .card img {
-        height: 255px;
-    }
-    
-    .card-title {
-        font-size: 0.9rem;
-        padding: 11px;
-    }
-    
-    .episode {
-        flex: 0 0 320px;
-    }
-    
-    .thumb {
-        height: 170px;
-    }
-}
-
-@media screen and (min-width: 2560px) and (max-width: 3839px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-        gap: 18px;
-        padding: 0 50px 50px;
-    }
-    
-    .card img {
-        height: 285px;
-    }
-    
-    .card-title {
-        font-size: 0.95rem;
-        padding: 12px;
-    }
-    
-    .episode {
-        flex: 0 0 350px;
-    }
-    
-    .thumb {
-        height: 180px;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-        padding: 0 60px 60px;
-    }
-    
-    .card img {
-        height: 330px;
-    }
-    
-    .card-title {
-        font-size: 1rem;
-        padding: 14px;
-    }
-    
-    .episode {
-        flex: 0 0 380px;
-    }
-    
-    .thumb {
-        height: 190px;
-    }
-    
-    header {
-        padding: 20px 50px;
-        min-height: 80px;
-    }
-    
-    .logo {
-        font-size: 2.2rem;
-    }
-}
-
-/* Mobile/Tablet Responsive */
+/* Responsive */
 @media (max-width: 768px) {
-    header, .grid, .season-bar, .episodes-track {
-        padding-left: 15px;
-        padding-right: 15px;
+    header, .grid, .series-header, .season-bar, .episodes-track {
+        padding-left: 20px;
+        padding-right: 20px;
     }
     
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 8px;
-    }
-    
-    .card img {
-        height: 150px;
-    }
-    
-    .card-title {
-        font-size: 0.75rem;
-        padding: 6px;
-    }
-    
-    .series-banner {
-        height: 200px;
-    }
-    
-    .series-banner-title {
-        font-size: 1.6rem;
-    }
-    
-    .series-banner-info {
-        left: 15px;
-        right: 15px;
-        bottom: 15px;
-    }
-    
-    .series-banner-play {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-        right: 15px;
-        bottom: 15px;
-    }
-    
-    .logo {
-        font-size: 1.3rem;
-        margin-right: 10px;
-    }
-    
-    .search-container {
-        max-width: 100%;
+    .series-header {
+        font-size: 1.8rem;
     }
     
     .episode {
-        flex: 0 0 240px;
+        flex: 0 0 280px;
     }
     
-    .thumb {
-        height: 135px;
+    .nav-hints {
+        display: none;
+    }
+    
+    .grid {
+        grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+        gap: 10px;
     }
     
     .card.focused {
-        transform: scale(1.06);
-    }
-    
-    .language-btn {
-        padding: 8px 12px;
-        font-size: 0.8rem;
-        min-width: 110px;
-    }
-    
-    .language-flag {
-        width: 16px;
-        height: 16px;
-    }
-}
-
-@media (max-width: 480px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 6px;
-    }
-    
-    .card img {
-        height: 120px;
-    }
-    
-    .badge {
-        font-size: 0.6rem;
-        padding: 2px 6px;
+        transform: scale(1.08);
     }
 }
 
@@ -1309,98 +584,41 @@ header {
     }
 }
 
-/* TV Focus States Enhancement */
-@media screen and (min-width: 1280px) {
-    .card.focused,
-    .episode.focused {
-        box-shadow: 0 0 0 3px var(--primary-color), var(--focus-shadow);
-    }
-    
-    .season.focused {
-        box-shadow: 0 0 0 2px var(--primary-color);
+/* High contrast mode */
+@media (prefers-contrast: high) {
+    .card:focus,
+    .season:focus,
+    .episode:focus {
+        outline: 4px solid white;
     }
 }
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader"></div>
+<div class="loader" id="loader">Cargando series...</div>
 
 <header>
     <div class="logo">SERIES+</div>
-    
-    <!-- Professional Search Bar -->
-    <div class="search-container">
-        <div class="search-wrapper">
-            <input type="text" class="search-box" id="searchBox" placeholder="Search series...">
-            <div class="search-clear" id="searchClear">×</div>
-            <div class="search-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
-        </div>
-    </div>
-    
-    <!-- Language Toggle -->
-    <div class="language-toggle">
-        <button class="language-btn" id="languageBtn">
-            <span class="language-flag flag-usa" id="currentFlag"></span>
-            <span id="currentLang">English</span>
-        </button>
-        <div class="language-menu" id="languageMenu">
-            <div class="language-option active" data-lang="en">
-                <span class="language-flag flag-usa"></span>
-                <span>English</span>
-                <span class="checkmark">✓</span>
-            </div>
-            <div class="language-option" data-lang="es-LA">
-                <span class="language-flag flag-latam"></span>
-                <span>Español</span>
-                <span class="checkmark">✓</span>
-            </div>
-        </div>
+    <div class="status-indicator connected" id="statusIndicator">
+        <span id="seriesCount">0 series</span>
     </div>
 </header>
 
 <button class="back-button" id="backButton">
     <span>←</span>
-    <span id="backBtnText">Back</span>
+    <span>Volver</span>
 </button>
 
-<!-- Main Content -->
-<div class="main-content">
-    <div class="search-info" id="searchInfo">
-        <div class="search-info-text">
-            <span id="resultsForText">Results for:</span> <strong id="searchQuery"></strong>
-        </div>
-        <div class="search-info-count" id="searchCount"></div>
-        <button class="clear-search" id="clearSearchBtn">Clear search</button>
-    </div>
-    
-    <div class="all-series-header" id="gridHeader">All Series</div>
-    <section class="grid" id="mainGrid">
-        <div class="no-results-message" id="noResults">
-            <span id="noResultsText">No results found</span>
-            <strong id="tryDifferentText">Try different search terms</strong>
-        </div>
-    </section>
-</div>
+<section class="grid" id="mainGrid">
+    <!-- Las tarjetas se cargarán dinámicamente -->
+</section>
 
 <!-- SERIES OVERLAY -->
 <div id="seriesOverlay" class="series-overlay">
     <span class="close" id="closeButton">×</span>
     
-    <!-- Series Banner -->
-    <div class="series-banner" id="seriesBanner">
-        <img class="series-banner-image" id="seriesBannerImage" src="" alt="">
-        <div class="series-banner-gradient"></div>
-        <div class="series-banner-info">
-            <h1 class="series-banner-title" id="seriesBannerTitle"></h1>
-            <div class="series-banner-meta" id="seriesBannerMeta"></div>
-        </div>
-        <div class="series-banner-play" id="seriesBannerPlay">▶</div>
-    </div>
+    <div class="series-header" id="seriesTitle">SERIE TÍTULO</div>
     
     <div class="season-bar" id="seasonBar"></div>
     
@@ -1411,719 +629,587 @@ header {
     </div>
 </div>
 
-<!-- Navigation Help -->
-<div class="nav-help" id="navHelp">
-    <span id="navHelpText">Press ↑ to search</span>
+<!-- Navigation hints -->
+<div class="nav-hints" id="navHints">
+    <div class="nav-hint">
+        <kbd>←→</kbd> Navegar
+    </div>
+    <div class="nav-hint">
+        <kbd>Enter</kbd> Seleccionar
+    </div>
+    <div class="nav-hint">
+        <kbd>Esc</kbd> Volver
+    </div>
 </div>
 
 <!-- Error message -->
 <div class="error-message" id="errorMessage">
-    Error loading content
+    Error cargando el contenido
 </div>
 
 <script>
 /* ========================================
-   MULTILANGUAGE STREAMING PLATFORM
+   STREAMING PLATFORM NAVIGATION SYSTEM
    ======================================== */
-
-// Language Translations
-const translations = {
-    'en': {
-        searchPlaceholder: 'Search series...',
-        allSeries: 'All Series',
-        searchResults: 'Search Results',
-        noResults: 'No Results',
-        resultsFor: 'Results for:',
-        clearSearch: 'Clear search',
-        noResultsFound: 'No results found',
-        tryDifferent: 'Try different search terms',
-        back: 'Back',
-        navHelp: 'Press ↑ to search',
-        errorLoading: 'Error loading content',
-        episodeNotAvailable: 'Episode not available',
-        noEpisodesAvailable: 'No episodes available',
-        season: 'Season',
-        seasons: 'Seasons',
-        noSeasonsAvailable: 'No seasons available',
-        loading: 'Loading...',
-        results: 'result(s)'
-    },
-    'es-LA': {
-        searchPlaceholder: 'Buscar series...',
-        allSeries: 'Todas las Series',
-        searchResults: 'Resultados de Búsqueda',
-        noResults: 'Sin Resultados',
-        resultsFor: 'Resultados para:',
-        clearSearch: 'Limpiar búsqueda',
-        noResultsFound: 'No se encontraron resultados',
-        tryDifferent: 'Intenta con términos diferentes',
-        back: 'Atrás',
-        navHelp: 'Presiona ↑ para buscar',
-        errorLoading: 'Error al cargar contenido',
-        episodeNotAvailable: 'Episodio no disponible',
-        noEpisodesAvailable: 'No hay episodios disponibles',
-        season: 'Temporada',
-        seasons: 'Temporadas',
-        noSeasonsAvailable: 'No hay temporadas disponibles',
-        loading: 'Cargando...',
-        results: 'resultado(s)'
-    }
-};
 
 class StreamingPlatform {
     constructor() {
-        // Core data - simple and clear
-        this.data = {};
-        this.filteredData = {};
+        this.seriesData = {};
         this.cards = [];
-        this.currentIndex = 0;
-        this.mode = 'grid'; // grid, search, series, season, episode
-        this.searchQuery = '';
+        this.index = 0;
+        this.currentSeries = null;
+        this.currentSeason = 0;
+        this.focusMode = "season";
+        this.seasonFocus = 0;
+        this.episodeFocus = 0;
+        this.scrollX = 0;
+        this.dataUrl = 'series-data.json'; // URL del archivo de datos
+        this.refreshInterval = null;
         
-        // Language state
-        this.currentLanguage = this.getSavedLanguage() || 'en';
-        
-        // Series viewer state
-        this.selectedSeries = null;
-        this.selectedSeriesId = null;
-        this.seasonIndex = 0;
-        this.episodeIndex = 0;
-        
-        this.init();
-    }
-    
-    // Simple initialization spell
-    init() {
-        this.cacheElements();
-        this.bindEvents();
-        this.applyLanguage(this.currentLanguage);
+        this.initializeElements();
         this.loadData();
     }
     
-    // Get saved language from localStorage
-    getSavedLanguage() {
-        return localStorage.getItem('preferredLanguage');
+    initializeElements() {
+        // Cache DOM elements
+        this.loader = document.getElementById('loader');
+        this.mainGrid = document.getElementById('mainGrid');
+        this.seriesOverlay = document.getElementById('seriesOverlay');
+        this.backButton = document.getElementById('backButton');
+        this.closeButton = document.getElementById('closeButton');
+        this.seriesTitle = document.getElementById('seriesTitle');
+        this.seasonBar = document.getElementById('seasonBar');
+        this.episodesTrack = document.getElementById('episodesTrack');
+        this.statusIndicator = document.getElementById('statusIndicator');
+        this.seriesCount = document.getElementById('seriesCount');
+        this.errorMessage = document.getElementById('errorMessage');
+        
+        // Event listeners
+        this.backButton.addEventListener('click', () => this.closeModal());
+        this.closeButton.addEventListener('click', () => this.closeModal());
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
+        
+        // Auto-refresh cada 5 minutos (opcional)
+        this.refreshInterval = setInterval(() => this.refreshData(), 300000);
     }
     
-    // Save language preference
-    saveLanguagePreference(lang) {
-        localStorage.setItem('preferredLanguage', lang);
-    }
-    
-    // Apply language and theme
-    applyLanguage(lang) {
-        this.currentLanguage = lang;
-        
-        // Update root data attribute for CSS
-        document.documentElement.setAttribute('data-language', lang);
-        
-        // Update all text content
-        this.updateTexts(lang);
-        
-        // Update language button
-        this.updateLanguageButton(lang);
-        
-        // Save preference
-        this.saveLanguagePreference(lang);
-    }
-    
-    // Update all text content
-    updateTexts(lang) {
-        const t = translations[lang];
-        
-        // Update placeholders and texts
-        if (this.elements.searchBox) {
-            this.elements.searchBox.placeholder = t.searchPlaceholder;
-        }
-        
-        if (this.elements.header) {
-            this.elements.header.textContent = this.searchQuery ? t.searchResults : t.allSeries;
-        }
-        
-        if (this.elements.clearBtn) {
-            this.elements.clearBtn.textContent = t.clearSearch;
-        }
-        
-        if (this.elements.backBtn) {
-            document.getElementById('backBtnText').textContent = t.back;
-        }
-        
-        if (document.getElementById('resultsForText')) {
-            document.getElementById('resultsForText').textContent = t.resultsFor;
-        }
-        
-        if (document.getElementById('noResultsText')) {
-            document.getElementById('noResultsText').textContent = t.noResultsFound;
-        }
-        
-        if (document.getElementById('tryDifferentText')) {
-            document.getElementById('tryDifferentText').textContent = t.tryDifferent;
-        }
-        
-        if (document.getElementById('navHelpText')) {
-            document.getElementById('navHelpText').textContent = t.navHelp;
-        }
-        
-        // Update search count if visible
-        if (this.elements.searchCount && this.searchQuery) {
-            this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} ${t.results}`;
-        }
-    }
-    
-    // Update language button appearance
-    updateLanguageButton(lang) {
-        const btn = document.getElementById('languageBtn');
-        const currentFlag = document.getElementById('currentFlag');
-        const currentLangText = document.getElementById('currentLang');
-        
-        if (lang === 'es-LA') {
-            currentFlag.className = 'language-flag flag-latam';
-            currentLangText.textContent = 'Español';
-        } else {
-            currentFlag.className = 'language-flag flag-usa';
-            currentLangText.textContent = 'English';
-        }
-        
-        // Update active state in menu
-        document.querySelectorAll('.language-option').forEach(option => {
-            option.classList.toggle('active', option.dataset.lang === lang);
-        });
-    }
-    
-    // Cache DOM elements once - unbreakable reference
-    cacheElements() {
-        this.elements = {
-            loader: document.getElementById('loader'),
-            grid: document.getElementById('mainGrid'),
-            overlay: document.getElementById('seriesOverlay'),
-            searchBox: document.getElementById('searchBox'),
-            searchClear: document.getElementById('searchClear'),
-            searchInfo: document.getElementById('searchInfo'),
-            searchQuery: document.getElementById('searchQuery'),
-            searchCount: document.getElementById('searchCount'),
-            clearBtn: document.getElementById('clearSearchBtn'),
-            header: document.getElementById('gridHeader'),
-            noResults: document.getElementById('noResults'),
-            backBtn: document.getElementById('backButton'),
-            closeBtn: document.getElementById('closeButton'),
-            seasonBar: document.getElementById('seasonBar'),
-            episodesTrack: document.getElementById('episodesTrack'),
-            errorMsg: document.getElementById('errorMessage'),
-            navHelp: document.getElementById('navHelp'),
-            languageBtn: document.getElementById('languageBtn'),
-            languageMenu: document.getElementById('languageMenu'),
-            banner: {
-                image: document.getElementById('seriesBannerImage'),
-                title: document.getElementById('seriesBannerTitle'),
-                meta: document.getElementById('seriesBannerMeta'),
-                play: document.getElementById('seriesBannerPlay')
-            }
-        };
-    }
-    
-    // Simple event binding - one place, easy to track
-    bindEvents() {
-        // Search events
-        this.elements.searchBox.addEventListener('input', (e) => this.search(e.target.value));
-        this.elements.searchBox.addEventListener('focus', () => this.setMode('search'));
-        this.elements.searchBox.addEventListener('blur', () => setTimeout(() => this.setMode('grid'), 200));
-        
-        // Clear buttons
-        this.elements.searchClear.addEventListener('click', () => this.clearSearch());
-        this.elements.clearBtn.addEventListener('click', () => this.clearSearch());
-        
-        // Navigation
-        this.elements.backBtn.addEventListener('click', () => this.closeSeries());
-        this.elements.closeBtn.addEventListener('click', () => this.closeSeries());
-        this.elements.banner.play.addEventListener('click', () => this.playFirstEpisode());
-        
-        // Language toggle
-        this.elements.languageBtn.addEventListener('click', (e) => {
-            e.stopPropagation();
-            this.elements.languageMenu.classList.toggle('show');
-        });
-        
-        // Language options
-        document.querySelectorAll('.language-option').forEach(option => {
-            option.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const lang = option.dataset.lang;
-                this.applyLanguage(lang);
-                this.elements.languageMenu.classList.remove('show');
-            });
-        });
-        
-        // Close language menu when clicking outside
-        document.addEventListener('click', () => {
-            this.elements.languageMenu.classList.remove('show');
-        });
-        
-        // Keyboard - the most powerful spell
-        document.addEventListener('keydown', (e) => this.handleKey(e));
-        
-        // Browser back button
-        window.addEventListener('popstate', () => {
-            if (this.elements.overlay.style.display === 'block') {
-                this.closeSeries();
-            }
-        });
-    }
-    
-    // Simple data loading
     async loadData() {
         try {
             this.showLoader(true);
-            const response = await fetch('series-data.json');
-            const json = await response.json();
             
-            // Simple data structure
-            this.data = {};
-            if (json.series) {
-                json.series.forEach(s => {
-                    this.data[s.id] = {
-                        id: s.id,
-                        title: s.title || '',
-                        displayTitle: s.displayTitle || s.title || '',
-                        poster: s.poster || '',
-                        badge: s.badge || '',
-                        badgeType: s.badgeType || '',
-                        seasons: s.seasons || {}
-                    };
-                });
-            }
+            const response = await fetch(this.dataUrl);
+            if (!response.ok) throw new Error('Error loading data');
             
-            this.filteredData = {...this.data};
-            this.render();
+            const data = await response.json();
+            this.processSeriesData(data);
+            this.renderGrid();
+            this.updateStatus();
+            
         } catch (error) {
-            this.showError(translations[this.currentLanguage].errorLoading);
-            // Simple fallback
-            this.data = {
-                'demo': {
-                    id: 'demo',
-                    title: 'Demo Series',
-                    displayTitle: 'Demo Series',
-                    poster: 'https://via.placeholder.com/300x450',
-                    badge: 'DEMO',
-                    badgeType: '',
-                    seasons: { 'Season 1': [{ title: 'Episode 1', url: '#' }] }
-                }
-            };
-            this.filteredData = {...this.data};
-            this.render();
+            console.error('Error loading series data:', error);
+            this.showError('Error cargando las series. Usando datos de respaldo.');
+            this.loadFallbackData();
         } finally {
             this.showLoader(false);
         }
     }
     
-    // Simple search - no complex algorithms
-    search(query) {
-        this.searchQuery = query.trim().toLowerCase();
-        const t = translations[this.currentLanguage];
+    processSeriesData(data) {
+        this.seriesData = {};
         
-        // Toggle clear button
-        this.elements.searchClear.classList.toggle('visible', !!this.searchQuery);
-        
-        if (!this.searchQuery) {
-            this.clearSearch();
-            return;
+        if (data.series && Array.isArray(data.series)) {
+            data.series.forEach(serie => {
+                this.seriesData[serie.id] = {
+                    title: serie.title,
+                    displayTitle: serie.displayTitle,
+                    poster: serie.poster,
+                    badge: serie.badge,
+                    badgeType: serie.badgeType,
+                    seasons: serie.seasons
+                };
+            });
         }
-        
-        // Simple filter - title includes query
-        this.filteredData = {};
-        Object.entries(this.data).forEach(([id, series]) => {
-            const title = (series.displayTitle || series.title).toLowerCase();
-            if (title.includes(this.searchQuery)) {
-                this.filteredData[id] = series;
+    }
+    
+    loadFallbackData() {
+        // Datos de respaldo mínimos
+        this.seriesData = {
+            "demo": {
+                title: "SERIE DEMO",
+                displayTitle: "Serie Demo",
+                poster: "https://via.placeholder.com/300x450",
+                seasons: {
+                    "Temporada 1": [
+                        { title: "Episodio 1", duration: "45 min", url: "#" }
+                    ]
+                }
             }
-        });
-        
-        // Update UI
-        this.elements.searchInfo.classList.add('visible');
-        this.elements.searchQuery.textContent = query;
-        this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} ${t.results}`;
-        this.elements.header.textContent = Object.keys(this.filteredData).length ? t.searchResults : t.noResults;
-        this.elements.searchBox.classList.add('active-search');
-        
-        this.render();
+        };
+        this.renderGrid();
+        this.updateStatus();
     }
     
-    // Clear search - simple reset
-    clearSearch() {
-        const t = translations[this.currentLanguage];
-        this.searchQuery = '';
-        this.elements.searchBox.value = '';
-        this.elements.searchClear.classList.remove('visible');
-        this.elements.searchInfo.classList.remove('visible');
-        this.elements.searchBox.classList.remove('active-search');
-        this.elements.header.textContent = t.allSeries;
-        this.filteredData = {...this.data};
-        this.render();
-    }
-    
-    // Simple render - one function, clear purpose
-    render() {
-        this.elements.grid.innerHTML = '';
+    renderGrid() {
+        this.mainGrid.innerHTML = '';
         this.cards = [];
         
-        const entries = Object.entries(this.filteredData);
-        
-        if (entries.length === 0) {
-            this.elements.noResults.classList.add('visible');
-            this.elements.grid.appendChild(this.elements.noResults);
-            return;
-        }
-        
-        this.elements.noResults.classList.remove('visible');
-        
-        entries.forEach(([id, series], index) => {
-            const card = this.createCard(series);
-            if (this.searchQuery) card.classList.add('search-match');
-            card.style.animationDelay = `${index * 0.03}s`;
-            this.elements.grid.appendChild(card);
+        Object.entries(this.seriesData).forEach(([id, serie], index) => {
+            const card = this.createCard(id, serie);
+            this.mainGrid.appendChild(card);
             this.cards.push(card);
+            
+            // Animation delay
+            card.style.animationDelay = `${index * 0.05}s`;
         });
         
-        this.currentIndex = 0;
-        if (this.mode === 'grid') this.focusCard();
+        if (this.cards.length > 0) {
+            this.index = 0;
+            this.focusCard();
+        }
     }
     
-    // Simple card creation
-    createCard(series) {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.dataset.id = series.id;
+    createCard(id, serie) {
+        const article = document.createElement('article');
+        article.className = 'card';
+        article.dataset.series = id;
+        article.tabIndex = -1;
         
-        if (series.badge) {
+        // Badge
+        if (serie.badge) {
             const badge = document.createElement('span');
-            badge.className = `badge ${series.badgeType === 'doblado' ? 'dubbed' : series.badgeType === 'estreno' ? 'premiere' : ''}`;
-            badge.textContent = series.badge;
-            card.appendChild(badge);
+            badge.className = `badge ${serie.badgeType || ''}`;
+            badge.textContent = serie.badge;
+            article.appendChild(badge);
         }
         
+        // Image
         const img = document.createElement('img');
-        img.src = series.poster || 'https://via.placeholder.com/300x450';
-        img.alt = series.displayTitle;
+        img.src = serie.poster;
+        img.alt = serie.displayTitle;
         img.loading = 'lazy';
-        card.appendChild(img);
+        img.onerror = () => { img.src = 'https://via.placeholder.com/300x450?text=' + encodeURIComponent(serie.displayTitle); };
+        article.appendChild(img);
         
-        const title = document.createElement('div');
-        title.className = 'card-title';
-        title.textContent = series.displayTitle;
-        card.appendChild(title);
+        // Title
+        const titleDiv = document.createElement('div');
+        titleDiv.className = 'card-title';
+        titleDiv.textContent = serie.displayTitle;
+        article.appendChild(titleDiv);
         
-        card.addEventListener('click', () => this.openSeries(series.id));
+        // Click event
+        article.addEventListener('click', () => this.openSeriesDetail(id));
         
-        return card;
+        return article;
     }
     
-    // Simple series opening
-    openSeries(id) {
-        this.selectedSeries = this.data[id] || this.filteredData[id];
-        if (!this.selectedSeries) return;
+    focusCard() {
+        if (this.cards.length === 0) return;
         
-        this.selectedSeriesId = id;
-        this.seasonIndex = 0;
-        this.episodeIndex = 0;
+        this.cards.forEach((c, i) => {
+            c.classList.remove('focused');
+            c.tabIndex = -1;
+        });
         
-        // Update banner
-        this.elements.banner.image.src = this.selectedSeries.poster;
-        this.elements.banner.title.textContent = this.selectedSeries.displayTitle;
-        
-        // Meta info
-        const t = translations[this.currentLanguage];
-        this.elements.banner.meta.innerHTML = '';
-        if (this.selectedSeries.badge) {
-            const badge = document.createElement('span');
-            badge.className = 'series-banner-badge';
-            badge.textContent = this.selectedSeries.badge;
-            this.elements.banner.meta.appendChild(badge);
+        const currentCard = this.cards[this.index];
+        if (currentCard) {
+            currentCard.classList.add('focused');
+            currentCard.tabIndex = 0;
+            currentCard.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center', 
+                inline: 'center' 
+            });
         }
+    }
+    
+    openSeriesDetail(seriesId) {
+        this.currentSeries = this.seriesData[seriesId];
+        if (!this.currentSeries) return;
         
-        const seasonCount = Object.keys(this.selectedSeries.seasons || {}).length;
-        if (seasonCount) {
-            const info = document.createElement('span');
-            info.textContent = `${seasonCount} ${seasonCount > 1 ? t.seasons : t.season}`;
-            this.elements.banner.meta.appendChild(info);
-        }
+        this.mainGrid.style.display = 'none';
+        this.seriesOverlay.style.display = 'block';
+        this.backButton.classList.add('visible');
         
-        // Show overlay
-        this.elements.grid.parentElement.style.display = 'none';
-        this.elements.overlay.style.display = 'block';
-        this.elements.backBtn.classList.add('visible');
+        this.seriesTitle.textContent = this.currentSeries.title;
+        
+        // Reset navigation
+        this.currentSeason = 0;
+        this.focusMode = 'season';
+        this.seasonFocus = 0;
+        this.episodeFocus = 0;
         
         this.renderSeasons();
         this.renderEpisodes();
-        this.setMode('season');
         
-        history.pushState({ modal: true }, '', '#' + id);
+        // Push state for browser back button
+        history.pushState({ modal: true }, '', '#' + seriesId);
     }
     
-    // Simple seasons render
     renderSeasons() {
-        const t = translations[this.currentLanguage];
-        this.elements.seasonBar.innerHTML = '';
-        const seasons = Object.keys(this.selectedSeries.seasons || {});
+        this.seasonBar.innerHTML = '';
+        const seasonKeys = Object.keys(this.currentSeries.seasons);
         
-        if (!seasons.length) {
-            this.elements.seasonBar.innerHTML = `<div class="season active">${t.noSeasonsAvailable}</div>`;
-            return;
-        }
-        
-        seasons.forEach((name, i) => {
-            const btn = document.createElement('div');
-            btn.className = 'season';
-            btn.textContent = name;
-            if (i === this.seasonIndex) btn.classList.add('active');
-            btn.addEventListener('click', () => {
-                this.seasonIndex = i;
-                this.episodeIndex = 0;
+        seasonKeys.forEach((seasonName, i) => {
+            const seasonDiv = document.createElement('div');
+            seasonDiv.className = 'season';
+            seasonDiv.tabIndex = -1;
+            
+            if (i === this.currentSeason) {
+                seasonDiv.classList.add('active');
+            }
+            
+            seasonDiv.textContent = seasonName;
+            seasonDiv.dataset.index = i;
+            
+            seasonDiv.addEventListener('click', () => {
+                this.currentSeason = i;
+                this.episodeFocus = 0;
                 this.renderSeasons();
                 this.renderEpisodes();
             });
-            this.elements.seasonBar.appendChild(btn);
+            
+            this.seasonBar.appendChild(seasonDiv);
         });
         
-        this.updateFocus();
+        this.updateSeriesFocus();
     }
     
-    // Simple episodes render
     renderEpisodes() {
-        const t = translations[this.currentLanguage];
-        this.elements.episodesTrack.innerHTML = '';
-        
-        const seasons = Object.values(this.selectedSeries.seasons || {});
-        const episodes = seasons[this.seasonIndex] || [];
-        
-        if (!episodes.length) {
-            this.elements.episodesTrack.innerHTML = `<div style="padding:30px;color:#999">${t.noEpisodesAvailable}</div>`;
-            return;
-        }
+        this.episodesTrack.innerHTML = '';
+        const seasonKeys = Object.keys(this.currentSeries.seasons);
+        const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
         
         episodes.forEach((ep, i) => {
-            const card = document.createElement('div');
-            card.className = 'episode';
-            if (ep.locked) card.classList.add('locked');
+            const episodeDiv = document.createElement('div');
+            episodeDiv.className = 'episode';
+            episodeDiv.tabIndex = -1;
+            
+            if (ep.locked) {
+                episodeDiv.classList.add('bloqueado');
+            }
             
             const thumb = document.createElement('div');
             thumb.className = 'thumb';
-            thumb.innerHTML = `
-                <div class="ep-number">${i + 1}</div>
-                ${ep.thumbnail ? `<img src="${ep.thumbnail}" alt="${ep.title}">` : `<span>${ep.title}</span>`}
-                <div class="play-icon"></div>
-            `;
             
-            const info = document.createElement('div');
-            info.className = 'ep-info';
-            info.innerHTML = `<div class="ep-title">${ep.title}</div>`;
+            const epNumber = document.createElement('div');
+            epNumber.className = 'ep-number';
+            epNumber.textContent = `${i + 1}`;
+            thumb.appendChild(epNumber);
             
-            card.appendChild(thumb);
-            card.appendChild(info);
-            
-            if (!ep.locked && ep.url) {
-                card.addEventListener('click', () => this.play(ep.url));
+            if (ep.thumbnail) {
+                const img = document.createElement('img');
+                img.src = ep.thumbnail;
+                img.alt = ep.title;
+                thumb.appendChild(img);
+            } else {
+                const placeholder = document.createElement('span');
+                placeholder.textContent = ep.title;
+                thumb.appendChild(placeholder);
             }
             
-            this.elements.episodesTrack.appendChild(card);
+            const playIcon = document.createElement('div');
+            playIcon.className = 'play-icon';
+            thumb.appendChild(playIcon);
+            
+            episodeDiv.appendChild(thumb);
+            
+            const epInfo = document.createElement('div');
+            epInfo.className = 'ep-info';
+            
+            const epTitle = document.createElement('div');
+            epTitle.className = 'ep-title';
+            epTitle.textContent = ep.title;
+            epInfo.appendChild(epTitle);
+            
+            const epMeta = document.createElement('div');
+            epMeta.className = 'ep-meta';
+            epMeta.textContent = ep.duration || '45 min';
+            epInfo.appendChild(epMeta);
+            
+            episodeDiv.appendChild(epInfo);
+            
+            episodeDiv.dataset.index = i;
+            
+            if (!ep.locked) {
+                episodeDiv.addEventListener('click', () => {
+                    if (ep.url) {
+                        this.playEpisode(ep.url);
+                    }
+                });
+            }
+            
+            this.episodesTrack.appendChild(episodeDiv);
         });
         
-        this.updateFocus();
+        // Reset scroll
+        this.scrollX = 0;
+        this.episodesTrack.style.transform = 'translateX(0)';
+        
+        this.updateSeriesFocus();
     }
     
-    // Simple close series
-    closeSeries() {
-        this.elements.overlay.style.display = 'none';
-        this.elements.backBtn.classList.remove('visible');
-        this.elements.grid.parentElement.style.display = 'block';
-        this.setMode('grid');
+    updateSeriesFocus() {
+        // Update seasons focus
+        const seasons = this.seasonBar.querySelectorAll('.season');
+        seasons.forEach((el, i) => {
+            el.classList.toggle('focused', this.focusMode === 'season' && i === this.seasonFocus);
+            el.tabIndex = (this.focusMode === 'season' && i === this.seasonFocus) ? 0 : -1;
+        });
+        
+        // Update episodes focus
+        const episodes = this.episodesTrack.querySelectorAll('.episode');
+        episodes.forEach((el, i) => {
+            el.classList.toggle('focused', this.focusMode === 'episode' && i === this.episodeFocus);
+            el.tabIndex = (this.focusMode === 'episode' && i === this.episodeFocus) ? 0 : -1;
+        });
+        
+        // Scroll to focused element
+        if (this.focusMode === 'season' && seasons[this.seasonFocus]) {
+            seasons[this.seasonFocus].scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'nearest', 
+                inline: 'center' 
+            });
+        }
+        
+        this.updateSeriesScroll();
+    }
+    
+    updateSeriesScroll() {
+        if (this.focusMode === 'episode') {
+            const episodeWidth = 340;
+            const containerWidth = window.innerWidth;
+            const episodes = this.episodesTrack.querySelectorAll('.episode');
+            
+            if (episodes[this.episodeFocus]) {
+                const focusedEpisode = episodes[this.episodeFocus];
+                const rect = focusedEpisode.getBoundingClientRect();
+                const containerRect = this.episodesTrack.parentElement.getBoundingClientRect();
+                
+                if (rect.left < containerRect.left || rect.right > containerRect.right) {
+                    this.scrollX = Math.max(0, 
+                        (this.episodeFocus * episodeWidth) - (containerWidth / 2) + (episodeWidth / 2)
+                    );
+                    
+                    const totalWidth = episodes.length * episodeWidth;
+                    const maxScroll = Math.max(0, totalWidth - containerWidth + 80);
+                    this.scrollX = Math.min(this.scrollX, maxScroll);
+                    
+                    this.episodesTrack.style.transform = `translateX(${-this.scrollX}px)`;
+                }
+            }
+        }
+    }
+    
+    playEpisode(url) {
+        if (url && url !== '#') {
+            // Guardar progreso antes de navegar
+            this.saveProgress();
+            window.location.href = url;
+        }
+    }
+    
+    saveProgress() {
+        if (this.currentSeries) {
+            const progress = {
+                seriesId: Object.keys(this.seriesData).find(
+                    key => this.seriesData[key] === this.currentSeries
+                ),
+                season: this.currentSeason,
+                episode: this.episodeFocus
+            };
+            localStorage.setItem('lastWatched', JSON.stringify(progress));
+        }
+    }
+    
+    closeModal() {
+        this.seriesOverlay.style.display = 'none';
+        this.backButton.classList.remove('visible');
+        this.mainGrid.style.display = 'grid';
+        
+        // Find and focus the current series card
+        const seriesId = Object.keys(this.seriesData).find(
+            key => this.seriesData[key] === this.currentSeries
+        );
+        
+        if (seriesId) {
+            const cardIndex = this.cards.findIndex(
+                card => card.dataset.series === seriesId
+            );
+            if (cardIndex !== -1) {
+                this.index = cardIndex;
+                this.focusCard();
+            }
+        }
+        
+        // Clear hash
         history.replaceState(null, '', ' ');
     }
     
-    // Simple play
-    play(url) {
-        const t = translations[this.currentLanguage];
-        if (url && url !== '#') {
-            window.location.href = url;
+    handleKeyboard(e) {
+        // Prevent default for navigation keys
+        if (['ArrowUp', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'Enter', 'Escape', 'Backspace'].includes(e.key)) {
+            e.preventDefault();
+        }
+        
+        if (this.seriesOverlay.style.display === 'block') {
+            this.handleSeriesNavigation(e);
         } else {
-            this.showError(t.episodeNotAvailable);
+            this.handleGridNavigation(e);
         }
     }
     
-    // Simple play first available
-    playFirstEpisode() {
-        const t = translations[this.currentLanguage];
-        const seasons = Object.values(this.selectedSeries.seasons || {});
-        for (let episodes of seasons) {
-            for (let ep of episodes || []) {
-                if (!ep.locked && ep.url) {
-                    this.play(ep.url);
-                    return;
+    handleGridNavigation(e) {
+        const gridWidth = Math.floor(this.mainGrid.offsetWidth / (this.cards[0]?.offsetWidth || 180));
+        
+        switch(e.key) {
+            case 'ArrowRight':
+                this.index = (this.index + 1) % this.cards.length;
+                break;
+            case 'ArrowLeft':
+                this.index = (this.index - 1 + this.cards.length) % this.cards.length;
+                break;
+            case 'ArrowDown':
+                this.index = Math.min(this.index + gridWidth, this.cards.length - 1);
+                break;
+            case 'ArrowUp':
+                this.index = Math.max(this.index - gridWidth, 0);
+                break;
+            case 'Enter':
+            case ' ':
+                if (this.cards[this.index]) {
+                    this.cards[this.index].click();
                 }
-            }
+                break;
         }
-        this.showError(t.noEpisodesAvailable);
+        
+        this.focusCard();
     }
     
-    // Simple keyboard handler - the magic spell
-    handleKey(e) {
-        const isOverlay = this.elements.overlay.style.display === 'block';
+    handleSeriesNavigation(e) {
+        if (!this.currentSeries) return;
         
-        // Language shortcut: Alt + L
-        if (e.altKey && e.key === 'l') {
-            e.preventDefault();
-            this.toggleLanguage();
-            return;
-        }
+        const seasonKeys = Object.keys(this.currentSeries.seasons);
         
-        // Escape - universal back
-        if (e.key === 'Escape') {
-            e.preventDefault();
-            if (this.searchQuery) {
-                this.clearSearch();
-            } else if (isOverlay) {
-                this.closeSeries();
-            }
-            return;
-        }
-        
-        // Enter - universal select
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (!isOverlay && this.cards[this.currentIndex]) {
-                this.cards[this.currentIndex].click();
-            }
-            return;
-        }
-        
-        // Arrow navigation
-        if (e.key.startsWith('Arrow')) {
-            e.preventDefault();
+        if (this.focusMode === 'season') {
+            const totalSeasons = seasonKeys.length;
             
-            if (!isOverlay) {
-                // Grid navigation
-                const width = this.getGridWidth();
-                switch(e.key) {
-                    case 'ArrowRight':
-                        this.currentIndex = (this.currentIndex + 1) % this.cards.length;
-                        break;
-                    case 'ArrowLeft':
-                        this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
-                        break;
-                    case 'ArrowDown':
-                        this.currentIndex = Math.min(this.currentIndex + width, this.cards.length - 1);
-                        break;
-                    case 'ArrowUp':
-                        if (this.currentIndex < width) {
-                            this.elements.searchBox.focus();
-                            return;
-                        }
-                        this.currentIndex = Math.max(this.currentIndex - width, 0);
-                        break;
-                }
-                this.focusCard();
-            } else {
-                // Series navigation - simple mode switching
-                this.navigateSeries(e.key);
-            }
-        }
-    }
-    
-    // Toggle language
-    toggleLanguage() {
-        const newLang = this.currentLanguage === 'en' ? 'es-LA' : 'en';
-        this.applyLanguage(newLang);
-    }
-    
-    // Simple series navigation
-    navigateSeries(key) {
-        const seasons = this.elements.seasonBar.querySelectorAll('.season');
-        const episodes = this.elements.episodesTrack.querySelectorAll('.episode');
-        
-        if (this.mode === 'season') {
-            switch(key) {
+            switch(e.key) {
                 case 'ArrowRight':
-                    this.seasonIndex = Math.min(this.seasonIndex + 1, seasons.length - 1);
+                    this.seasonFocus = Math.min(this.seasonFocus + 1, totalSeasons - 1);
                     break;
                 case 'ArrowLeft':
-                    this.seasonIndex = Math.max(this.seasonIndex - 1, 0);
+                    this.seasonFocus = Math.max(this.seasonFocus - 1, 0);
                     break;
                 case 'ArrowDown':
-                    this.setMode('episode');
-                    break;
+                case 'Enter':
+                case ' ':
+                    this.currentSeason = this.seasonFocus;
+                    this.focusMode = 'episode';
+                    this.episodeFocus = 0;
+                    this.renderSeasons();
+                    this.renderEpisodes();
+                    return;
             }
-        } else if (this.mode === 'episode') {
-            switch(key) {
+        } else if (this.focusMode === 'episode') {
+            const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
+            const total = episodes.length;
+            
+            switch(e.key) {
                 case 'ArrowRight':
-                    this.episodeIndex = Math.min(this.episodeIndex + 1, episodes.length - 1);
+                    this.episodeFocus = Math.min(this.episodeFocus + 1, total - 1);
                     break;
                 case 'ArrowLeft':
-                    this.episodeIndex = Math.max(this.episodeIndex - 1, 0);
+                    this.episodeFocus = Math.max(this.episodeFocus - 1, 0);
                     break;
                 case 'ArrowUp':
-                    this.setMode('season');
+                    this.focusMode = 'season';
+                    this.seasonFocus = this.currentSeason;
                     break;
+                case 'Enter':
+                case ' ':
+                    const ep = episodes[this.episodeFocus];
+                    if (!ep.locked && ep.url) {
+                        this.playEpisode(ep.url);
+                    } else if (ep.locked) {
+                        this.showError('Este episodio está bloqueado');
+                    }
+                    return;
             }
         }
         
-        this.updateFocus();
-    }
-    
-    // Simple focus update
-    updateFocus() {
-        if (this.mode === 'season') {
-            this.elements.seasonBar.querySelectorAll('.season').forEach((s, i) => {
-                s.classList.toggle('focused', i === this.seasonIndex);
-            });
-        } else if (this.mode === 'episode') {
-            this.elements.episodesTrack.querySelectorAll('.episode').forEach((e, i) => {
-                e.classList.toggle('focused', i === this.episodeIndex);
-            });
+        if (e.key === 'Escape' || e.key === 'Backspace') {
+            if (this.focusMode === 'episode') {
+                this.focusMode = 'season';
+                this.seasonFocus = this.currentSeason;
+            } else {
+                this.closeModal();
+            }
         }
+        
+        this.updateSeriesFocus();
     }
     
-    // Simple card focus
-    focusCard() {
-        this.cards.forEach((c, i) => {
-            c.classList.toggle('focused', i === this.currentIndex);
-        });
-        if (this.cards[this.currentIndex]) {
-            this.cards[this.currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
-    
-    // Simple mode setter
-    setMode(mode) {
-        this.mode = mode;
-        if (mode === 'search') {
-            this.elements.searchBox.classList.add('focused');
-        } else {
-            this.elements.searchBox.classList.remove('focused');
-        }
-    }
-    
-    // Simple grid width calculator
-    getGridWidth() {
-        if (!this.cards.length) return 1;
-        return Math.floor(this.elements.grid.offsetWidth / (this.cards[0]?.offsetWidth || 160));
-    }
-    
-    // Simple loader
     showLoader(show) {
-        this.elements.loader.textContent = translations[this.currentLanguage].loading;
-        this.elements.loader.classList.toggle('hidden', !show);
+        if (this.loader) {
+            this.loader.classList.toggle('hidden', !show);
+        }
     }
     
-    // Simple error
-    showError(msg) {
-        this.elements.errorMsg.textContent = msg;
-        this.elements.errorMsg.classList.add('show');
-        setTimeout(() => this.elements.errorMsg.classList.remove('show'), 3000);
+    showError(message) {
+        this.errorMessage.textContent = message;
+        this.errorMessage.classList.add('show');
+        setTimeout(() => {
+            this.errorMessage.classList.remove('show');
+        }, 3000);
+    }
+    
+    updateStatus() {
+        const count = Object.keys(this.seriesData).length;
+        this.seriesCount.textContent = `${count} series`;
+    }
+    
+    async refreshData() {
+        // Refresh data from server
+        console.log('Refreshing series data...');
+        await this.loadData();
+    }
+    
+    destroy() {
+        // Cleanup
+        if (this.refreshInterval) {
+            clearInterval(this.refreshInterval);
+        }
+        document.removeEventListener('keydown', this.handleKeyboard);
     }
 }
 
-// "With great power comes great responsibility" - Keep it simple
+// Initialize platform when DOM is ready
+let platform = null;
+
 document.addEventListener('DOMContentLoaded', () => {
-    window.platform = new StreamingPlatform();
-    console.log('✨ Multilanguage Platform Initialized - Series+');
+    platform = new StreamingPlatform();
+    
+    // Handle browser back button
+    window.addEventListener('popstate', (event) => {
+        if (platform.seriesOverlay.style.display === 'block') {
+            platform.closeModal();
+        }
+    });
+    
+    // Expose platform instance for debugging
+    window.streamingPlatform = platform;
+});
+
+// Handle page visibility for auto-pause
+document.addEventListener('visibilitychange', () => {
+    if (document.hidden && platform) {
+        // Pause any background activities
+        console.log('Page hidden, pausing activities');
+    } else if (platform) {
+        // Resume activities
+        console.log('Page visible, resuming activities');
+    }
 });
 </script>
 
