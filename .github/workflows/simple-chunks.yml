@@ -1,13 +1,9 @@
-name: 🚀 Generate Movie Chunks
+name: Generate Chunks Simple
 
 on:
   workflow_dispatch:
   push:
     branches: [main]
-    paths:
-      - '**.json'
-      - 'generate-chunks.js'
-      - '.github/workflows/*.yml'
 
 permissions:
   contents: write
@@ -15,406 +11,58 @@ permissions:
 jobs:
   generate:
     runs-on: ubuntu-latest
-    
     steps:
-    - name: 📥 Checkout
-      uses: actions/checkout@v4
-    
-    - name: 🔧 Setup Node.js
-      uses: actions/setup-node@v4
+    - uses: actions/checkout@v4
+      
+    - uses: actions/setup-node@v4
       with:
         node-version: '20'
     
-    - name: 📁 Prepare directories and files
+    - name: Generate chunks
       run: |
-        echo "=== Preparando ambiente ==="
+        # Crear directorios
+        mkdir -p chunks data
         
-        # Crear directorios necesarios
-        mkdir -p chunks
-        mkdir -p data
-        
-        # Mostrar estructura actual
-        echo ""
-        echo "📁 Estructura del repositorio:"
-        ls -la
-        
-        echo ""
-        echo "📄 Archivos JSON encontrados:"
-        find . -name "*.json" -type f | head -20
-        
-        # Si no hay JSONs, crear uno de ejemplo
-        if [ -z "$(find . -name "peliculas*.json" -type f)" ]; then
-          echo ""
-          echo "⚠️ No se encontraron archivos de películas, creando ejemplo..."
-          cat > data/peliculas_ejemplo.json << 'EJEMPLO'
-          [
-            {
-              "titulo": "Película Ejemplo 1",
-              "enlace": "https://example.com/ver/1",
-              "poster": "https://via.placeholder.com/300x450/FF0000/FFFFFF?text=Ejemplo+1",
-              "ano": 2024,
-              "genero": "Acción",
-              "calidad": "HD"
-            },
-            {
-              "titulo": "Película Ejemplo 2",
-              "enlace": "https://example.com/ver/2",
-              "poster": "https://via.placeholder.com/300x450/00FF00/FFFFFF?text=Ejemplo+2",
-              "ano": 2023,
-              "genero": "Comedia",
-              "calidad": "4K"
-            }
-          ]
-          EJEMPLO
-          echo "✅ Archivo de ejemplo creado"
-        fi
-    
-    - name: 🚀 Generate chunks with inline script
-      run: |
-        echo "=== Generando chunks ==="
-        
-        cat > generator.js << 'GENERATOR_SCRIPT'
+        # Script inline simple
+        node << 'SCRIPT'
         const fs = require('fs');
-        const path = require('path');
         
-        console.log('🚀 Iniciando generación de chunks\n');
-        console.log('Directorio actual:', process.cwd());
-        console.log('Archivos en el directorio:');
-        console.log(fs.readdirSync('.').filter(f => !f.startsWith('.')).join(', '));
-        console.log('');
+        console.log('Generando chunks...');
         
-        // Configuración de períodos
-        const PERIODS = [
-          { id: 'latest', name: 'Últimos Estrenos', years: [2025, 2024, 2023], priority: 1 },
-          { id: 'recent', name: 'Recientes', years: [2022, 2021, 2020], priority: 2 },
-          { id: '2010s', name: 'Década 2010', years: Array.from({length: 10}, (_, i) => 2019 - i), priority: 3 },
-          { id: '2000s', name: 'Década 2000', years: Array.from({length: 10}, (_, i) => 2009 - i), priority: 4 },
-          { id: '90s', name: 'Años 90', years: Array.from({length: 10}, (_, i) => 1999 - i), priority: 5 },
-          { id: 'classics', name: 'Clásicas', years: 'rest', priority: 6 }
-        ];
+        // Buscar archivos
+        const files = fs.readdirSync('.')
+          .filter(f => f.includes('peliculas') && f.endsWith('.json'));
         
-        // Buscar archivos JSON de películas
-        function findMovieFiles() {
-          const patterns = [
-            './data/*.json',
-            './peliculas*.json',
-            './*peliculas*.json',
-            './movies*.json'
-          ];
-          
-          const files = new Set();
-          
-          // Buscar en data/
-          if (fs.existsSync('./data')) {
-            fs.readdirSync('./data')
-              .filter(f => f.endsWith('.json'))
-              .forEach(f => files.add(path.join('./data', f)));
-          }
-          
-          // Buscar en raíz
-          fs.readdirSync('.')
-            .filter(f => f.endsWith('.json') && !f.includes('package') && !f.includes('manifest'))
-            .forEach(f => files.add(`./${f}`));
-          
-          return Array.from(files);
-        }
+        let all = [];
+        files.forEach(f => {
+          try {
+            const d = JSON.parse(fs.readFileSync(f, 'utf8'));
+            all.push(...(Array.isArray(d) ? d : [d]));
+            console.log(f, 'OK');
+          } catch(e) {}
+        });
         
-        // Cargar todas las películas
-        function loadMovies(files) {
-          const allMovies = [];
-          
-          files.forEach(file => {
-            try {
-              console.log(`📄 Procesando: ${file}`);
-              const content = fs.readFileSync(file, 'utf8');
-              
-              // Intentar parsear el JSON
-              let data;
-              try {
-                data = JSON.parse(content);
-              } catch (e) {
-                console.log(`  ⚠️ Error parseando JSON: ${e.message}`);
-                return;
-              }
-              
-              // Extraer año del nombre del archivo si es posible
-              const yearMatch = path.basename(file).match(/(\d{4})/);
-              const defaultYear = yearMatch ? parseInt(yearMatch[1]) : new Date().getFullYear();
-              
-              // Normalizar estructura de datos
-              let movies = [];
-              if (Array.isArray(data)) {
-                movies = data;
-              } else if (data && typeof data === 'object') {
-                if (data.peliculas && Array.isArray(data.peliculas)) {
-                  movies = data.peliculas;
-                } else if (data.movies && Array.isArray(data.movies)) {
-                  movies = data.movies;
-                } else if (data.titulo || data.title) {
-                  movies = [data];
-                }
-              }
-              
-              // Procesar cada película
-              movies.forEach((movie, idx) => {
-                if (movie && (movie.titulo || movie.title)) {
-                  // Asegurar que tenga año
-                  if (!movie.year && !movie.ano && !movie.año) {
-                    movie.year = defaultYear;
-                  }
-                  allMovies.push(movie);
-                }
-              });
-              
-              console.log(`  ✅ ${movies.length} películas cargadas`);
-              
-            } catch (error) {
-              console.log(`  ❌ Error procesando ${file}: ${error.message}`);
-            }
-          });
-          
-          return allMovies;
-        }
+        // Crear chunk
+        const chunk = {movies: all, count: all.length};
+        fs.writeFileSync('chunks/all.json', JSON.stringify(chunk));
         
-        // Comprimir campos de película
-        function compressMovie(movie) {
-          return {
-            t: movie.titulo || movie.title || 'Sin título',
-            l: movie.enlace || movie.link || movie.url || '#',
-            y: parseInt(movie.year || movie.ano || movie.año || 2024),
-            p: movie.poster || movie.image || movie.imagen || '',
-            g: movie.genero || movie.genre || movie.categoria || '',
-            q: movie.quality || movie.calidad || movie.qualidade || ''
-          };
-        }
+        // Crear manifest
+        const manifest = {
+          chunks: [{
+            id: 'all',
+            file: 'chunks/all.json',
+            movies: all.length
+          }]
+        };
+        fs.writeFileSync('manifest.json', JSON.stringify(manifest));
         
-        // MAIN
-        try {
-          // Encontrar archivos
-          const files = findMovieFiles();
-          console.log(`\n📁 Archivos encontrados: ${files.length}`);
-          
-          if (files.length === 0) {
-            console.log('⚠️ No se encontraron archivos JSON de películas');
-            
-            // Crear manifest vacío
-            const emptyManifest = {
-              version: '2.0.0',
-              generated: new Date().toISOString(),
-              statistics: { totalMovies: 0 },
-              chunks: []
-            };
-            fs.writeFileSync('./manifest.json', JSON.stringify(emptyManifest, null, 2));
-            console.log('📄 Manifest vacío creado');
-            process.exit(0);
-          }
-          
-          // Cargar películas
-          const allMovies = loadMovies(files);
-          console.log(`\n🎬 Total de películas cargadas: ${allMovies.length}`);
-          
-          if (allMovies.length === 0) {
-            console.log('⚠️ No se encontraron películas en los archivos');
-            const emptyManifest = {
-              version: '2.0.0',
-              generated: new Date().toISOString(),
-              statistics: { totalMovies: 0 },
-              chunks: []
-            };
-            fs.writeFileSync('./manifest.json', JSON.stringify(emptyManifest, null, 2));
-            process.exit(0);
-          }
-          
-          // Comprimir y eliminar duplicados
-          const uniqueMovies = new Map();
-          allMovies.forEach(movie => {
-            const compressed = compressMovie(movie);
-            const key = `${compressed.t}_${compressed.y}`.toLowerCase();
-            if (!uniqueMovies.has(key)) {
-              uniqueMovies.set(key, compressed);
-            }
-          });
-          
-          const processedMovies = Array.from(uniqueMovies.values());
-          console.log(`📊 Películas únicas después de procesar: ${processedMovies.length}`);
-          
-          // Crear chunks por período
-          console.log('\n📦 Creando chunks por período:');
-          
-          if (!fs.existsSync('./chunks')) {
-            fs.mkdirSync('./chunks', { recursive: true });
-          }
-          
-          const manifest = {
-            version: '2.0.0',
-            generated: new Date().toISOString(),
-            repository: {
-              user: process.env.GITHUB_REPOSITORY ? process.env.GITHUB_REPOSITORY.split('/')[0] : 'unknown',
-              repo: process.env.GITHUB_REPOSITORY ? process.env.GITHUB_REPOSITORY.split('/')[1] : 'unknown'
-            },
-            statistics: {
-              totalMovies: processedMovies.length,
-              years: {
-                min: Math.min(...processedMovies.map(m => m.y)),
-                max: Math.max(...processedMovies.map(m => m.y))
-              }
-            },
-            chunks: []
-          };
-          
-          const usedYears = new Set();
-          
-          // Generar chunks por período
-          PERIODS.forEach(period => {
-            let periodMovies;
-            
-            if (period.years === 'rest') {
-              // Todas las películas de años no usados
-              periodMovies = processedMovies.filter(m => !usedYears.has(m.y));
-            } else {
-              // Películas de años específicos
-              periodMovies = processedMovies.filter(m => period.years.includes(m.y));
-              period.years.forEach(y => usedYears.add(y));
-            }
-            
-            if (periodMovies.length > 0) {
-              const chunk = {
-                id: period.id,
-                name: period.name,
-                generated: new Date().toISOString(),
-                count: periodMovies.length,
-                priority: period.priority,
-                movies: periodMovies.sort((a, b) => b.y - a.y || a.t.localeCompare(b.t))
-              };
-              
-              const chunkPath = `./chunks/${period.id}.json`;
-              fs.writeFileSync(chunkPath, JSON.stringify(chunk));
-              
-              manifest.chunks.push({
-                id: period.id,
-                name: period.name,
-                file: `chunks/${period.id}.json`,
-                movies: periodMovies.length,
-                priority: period.priority,
-                size: Buffer.byteLength(JSON.stringify(chunk)),
-                sizeKB: (Buffer.byteLength(JSON.stringify(chunk)) / 1024).toFixed(1)
-              });
-              
-              console.log(`  ✅ ${period.name}: ${periodMovies.length} películas`);
-            }
-          });
-          
-          // Si no hay chunks por período, crear uno con todas las películas
-          if (manifest.chunks.length === 0 && processedMovies.length > 0) {
-            console.log('\n⚠️ No se pudieron crear chunks por período, creando chunk único...');
-            
-            const allChunk = {
-              id: 'all',
-              name: 'Todas las películas',
-              generated: new Date().toISOString(),
-              count: processedMovies.length,
-              priority: 1,
-              movies: processedMovies
-            };
-            
-            fs.writeFileSync('./chunks/all.json', JSON.stringify(allChunk));
-            
-            manifest.chunks.push({
-              id: 'all',
-              name: 'Todas las películas',
-              file: 'chunks/all.json',
-              movies: processedMovies.length,
-              priority: 1,
-              size: Buffer.byteLength(JSON.stringify(allChunk)),
-              sizeKB: (Buffer.byteLength(JSON.stringify(allChunk)) / 1024).toFixed(1)
-            });
-            
-            console.log(`  ✅ Chunk único: ${processedMovies.length} películas`);
-          }
-          
-          // Guardar manifest
-          fs.writeFileSync('./manifest.json', JSON.stringify(manifest, null, 2));
-          
-          console.log('\n✅ GENERACIÓN COMPLETADA');
-          console.log('📋 Resumen:');
-          console.log(`  • Total de películas: ${processedMovies.length}`);
-          console.log(`  • Chunks generados: ${manifest.chunks.length}`);
-          console.log(`  • Años: ${manifest.statistics.years.min} - ${manifest.statistics.years.max}`);
-          
-        } catch (error) {
-          console.error('\n❌ ERROR FATAL:', error);
-          console.error(error.stack);
-          process.exit(1);
-        }
-        GENERATOR_SCRIPT
-        
-        # Ejecutar el generador
-        node generator.js
-        
-        # Verificar resultados
-        echo ""
-        echo "=== Verificando resultados ==="
-        
-        if [ -f manifest.json ]; then
-          echo "✅ manifest.json creado"
-          echo "📊 Contenido:"
-          cat manifest.json | head -20
-        else
-          echo "❌ No se creó manifest.json"
-        fi
-        
-        echo ""
-        echo "📦 Archivos en chunks/:"
-        ls -la chunks/ 2>/dev/null || echo "No hay archivos en chunks/"
+        console.log('Done:', all.length, 'movies');
+        SCRIPT
     
-    - name: 💾 Commit changes
+    - name: Commit
       run: |
-        # Configurar Git
-        git config --global user.name "github-actions[bot]"
-        git config --global user.email "github-actions[bot]@users.noreply.github.com"
-        
-        # Ver cambios
-        echo "=== Cambios detectados ==="
-        git status
-        
-        # Agregar archivos
-        git add -A
-        
-        # Hacer commit solo si hay cambios
-        if git diff --staged --quiet; then
-          echo "📝 No hay cambios para commitear"
-        else
-          git commit -m "🎬 Auto-generated chunks" \
-                     -m "Generated at: $(date '+%Y-%m-%d %H:%M:%S UTC')" \
-                     -m "Action run: ${{ github.run_number }}"
-          
-          # Push
-          git push origin main || {
-            echo "⚠️ Push falló, intentando pull primero..."
-            git pull --rebase origin main
-            git push origin main
-          }
-          
-          echo "✅ Cambios subidos exitosamente"
-        fi
-    
-    - name: 📊 Final Summary
-      if: always()
-      run: |
-        echo "### 🎬 Generación de Chunks Completada" >> $GITHUB_STEP_SUMMARY
-        echo "" >> $GITHUB_STEP_SUMMARY
-        
-        if [ -f manifest.json ]; then
-          TOTAL=$(grep -o '"totalMovies":[0-9]*' manifest.json | grep -o '[0-9]*' || echo "0")
-          CHUNKS=$(grep -c '"id":' manifest.json || echo "0")
-          
-          echo "✅ **Estado:** Exitoso" >> $GITHUB_STEP_SUMMARY
-          echo "📊 **Películas totales:** $TOTAL" >> $GITHUB_STEP_SUMMARY
-          echo "📦 **Chunks generados:** $CHUNKS" >> $GITHUB_STEP_SUMMARY
-        else
-          echo "⚠️ **Estado:** Sin datos generados" >> $GITHUB_STEP_SUMMARY
-        fi
-        
-        echo "" >> $GITHUB_STEP_SUMMARY
-        echo "🕒 **Fecha:** $(date '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
-        echo "🔢 **Run:** #${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+        git config user.name "github-actions[bot]"
+        git config user.email "github-actions[bot]@users.noreply.github.com"
+        git add .
+        git diff --staged --quiet || git commit -m "Update chunks"
+        git push || true
