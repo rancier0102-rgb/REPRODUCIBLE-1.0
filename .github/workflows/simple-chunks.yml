@@ -4,6 +4,10 @@ on:
   workflow_dispatch:
   push:
     branches: [main]
+    paths:
+      - '**.json'
+      - '!manifest.json'
+      - '!package*.json'
 
 permissions:
   contents: write
@@ -23,46 +27,139 @@ jobs:
         # Crear directorios
         mkdir -p chunks data
         
-        # Script inline simple
+        # Mostrar archivos encontrados
+        echo "📁 Archivos JSON encontrados:"
+        find . -name "*.json" -not -path "./node_modules/*" | head -20
+        
+        # Script inline para generar chunks
         node << 'SCRIPT'
         const fs = require('fs');
         
-        console.log('Generando chunks...');
+        console.log('🚀 Generando chunks...\n');
         
         // Buscar archivos
-        const files = fs.readdirSync('.')
-          .filter(f => f.includes('peliculas') && f.endsWith('.json'));
+        const files = [];
         
-        let all = [];
-        files.forEach(f => {
+        // Buscar en data/
+        if (fs.existsSync('./data')) {
+          fs.readdirSync('./data')
+            .filter(f => f.endsWith('.json'))
+            .forEach(f => files.push(`./data/${f}`));
+        }
+        
+        // Buscar en raíz
+        fs.readdirSync('.')
+          .filter(f => f.includes('peliculas') && f.endsWith('.json'))
+          .forEach(f => files.push(`./${f}`));
+        
+        console.log('Archivos encontrados:', files.length);
+        
+        let allMovies = [];
+        
+        files.forEach(file => {
           try {
-            const d = JSON.parse(fs.readFileSync(f, 'utf8'));
-            all.push(...(Array.isArray(d) ? d : [d]));
-            console.log(f, 'OK');
-          } catch(e) {}
+            const content = fs.readFileSync(file, 'utf8');
+            const data = JSON.parse(content);
+            
+            // Extraer películas del formato que sea
+            let movies = [];
+            if (Array.isArray(data)) {
+              movies = data;
+            } else if (data.peliculas) {
+              movies = data.peliculas;
+            } else if (data.movies) {
+              movies = data.movies;
+            } else if (data.titulo || data.title) {
+              movies = [data];
+            }
+            
+            allMovies.push(...movies);
+            console.log(`✓ ${file}: ${movies.length} películas`);
+          } catch(e) {
+            console.log(`✗ Error en ${file}:`, e.message);
+          }
         });
         
-        // Crear chunk
-        const chunk = {movies: all, count: all.length};
-        fs.writeFileSync('chunks/all.json', JSON.stringify(chunk));
+        // Si no hay películas, crear ejemplos
+        if (allMovies.length === 0) {
+          console.log('\n⚠️ No se encontraron películas, creando ejemplos...');
+          allMovies = [
+            {
+              titulo: "Película de Ejemplo 1",
+              enlace: "https://example.com/movie1",
+              poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+1",
+              year: 2024,
+              genero: "Acción"
+            },
+            {
+              titulo: "Película de Ejemplo 2",
+              enlace: "https://example.com/movie2", 
+              poster: "https://via.placeholder.com/300x450/00a8ff/ffffff?text=Ejemplo+2",
+              year: 2023,
+              genero: "Comedia"
+            }
+          ];
+        }
         
-        // Crear manifest
+        console.log(`\nTotal: ${allMovies.length} películas`);
+        
+        // Comprimir películas
+        const compressed = allMovies.map(m => ({
+          t: m.titulo || m.title || 'Sin título',
+          l: m.enlace || m.link || m.url || '#',
+          y: m.year || m.ano || m.año || 2024,
+          p: m.poster || m.image || '',
+          g: m.genero || m.genre || m.categoria || '',
+          q: m.calidad || m.quality || ''
+        }));
+        
+        // Crear chunk con el formato correcto
+        const chunk = {
+          id: 'all',
+          name: 'Todas las películas',
+          count: compressed.length,
+          movies: compressed
+        };
+        
+        // Guardar chunk
+        fs.writeFileSync('chunks/all.json', JSON.stringify(chunk));
+        console.log('\n✓ Chunk creado: chunks/all.json');
+        
+        // Crear manifest con el formato correcto
         const manifest = {
+          version: '2.0.0',
+          generated: new Date().toISOString(),
+          statistics: {
+            totalMovies: compressed.length
+          },
           chunks: [{
             id: 'all',
             file: 'chunks/all.json',
-            movies: all.length
+            movies: compressed.length,
+            priority: 1
           }]
         };
-        fs.writeFileSync('manifest.json', JSON.stringify(manifest));
         
-        console.log('Done:', all.length, 'movies');
+        fs.writeFileSync('manifest.json', JSON.stringify(manifest, null, 2));
+        console.log('✓ Manifest creado: manifest.json');
+        
+        console.log('\n✅ Generación completada!');
+        console.log(`📊 Total: ${compressed.length} películas`);
         SCRIPT
+    
+    - name: Verify files
+      run: |
+        echo ""
+        echo "📁 Archivos generados:"
+        ls -la chunks/ || echo "No chunks"
+        echo ""
+        echo "📋 Contenido del manifest:"
+        cat manifest.json || echo "No manifest"
     
     - name: Commit
       run: |
         git config user.name "github-actions[bot]"
         git config user.email "github-actions[bot]@users.noreply.github.com"
         git add .
-        git diff --staged --quiet || git commit -m "Update chunks"
-        git push || true
+        git diff --staged --quiet || git commit -m "🎬 Update chunks [skip ci]"
+        git push || echo "No changes to push"
