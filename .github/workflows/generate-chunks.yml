@@ -1,0 +1,192 @@
+name: 🚀 Generate Movie Chunks
+
+on:
+  # Ejecutar cuando se modifican archivos JSON
+  push:
+    paths:
+      - 'data/**/*.json'
+      - 'peliculas_*.json'
+      - 'generate-chunks.js'
+  
+  # Ejecutar cada domingo
+  schedule:
+    - cron: '0 0 * * 0'
+  
+  # Permitir ejecución manual
+  workflow_dispatch:
+
+# Permisos necesarios para escribir
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  generate-chunks:
+    name: 📦 Generate and Optimize Chunks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+        fetch-depth: 0
+    
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v4
+      with:
+        node-version: '20'
+    
+    - name: 📁 Create directories
+      run: |
+        mkdir -p chunks
+        mkdir -p chunks/indexes
+        mkdir -p data
+    
+    - name: 🚀 Run chunk generator
+      run: |
+        if [ -f generate-chunks.js ]; then
+          echo "Ejecutando generador de chunks..."
+          node generate-chunks.js || echo "Continuando aunque haya advertencias..."
+        else
+          echo "⚠️ No se encontró generate-chunks.js, creando script temporal..."
+          
+          # Crear script temporal si no existe
+          cat > temp-generator.js << 'EOF'
+          const fs = require('fs');
+          const path = require('path');
+          
+          console.log('🚀 Generador temporal de chunks\n');
+          
+          // Buscar archivos JSON
+          let allMovies = [];
+          let files = [];
+          
+          // Buscar en data/
+          if (fs.existsSync('./data')) {
+            files.push(...fs.readdirSync('./data')
+              .filter(f => f.endsWith('.json'))
+              .map(f => path.join('./data', f)));
+          }
+          
+          // Buscar en raíz
+          files.push(...fs.readdirSync('.')
+            .filter(f => f.match(/^peliculas.*\.json$/)));
+          
+          if (files.length === 0) {
+            console.log('⚠️ No se encontraron archivos JSON');
+            process.exit(0);
+          }
+          
+          // Cargar películas
+          files.forEach(file => {
+            try {
+              const content = fs.readFileSync(file, 'utf8');
+              const data = JSON.parse(content);
+              const movies = Array.isArray(data) ? data : [data];
+              allMovies.push(...movies);
+              console.log('✓', path.basename(file), ':', movies.length, 'películas');
+            } catch(e) {
+              console.log('✗ Error en', path.basename(file), ':', e.message);
+            }
+          });
+          
+          console.log('\nTotal:', allMovies.length, 'películas');
+          
+          // Crear chunks básicos
+          if (!fs.existsSync('./chunks')) fs.mkdirSync('./chunks', {recursive: true});
+          
+          const manifest = {
+            version: '2.0.0',
+            generated: new Date().toISOString(),
+            statistics: { totalMovies: allMovies.length },
+            chunks: []
+          };
+          
+          // Chunk único para prueba
+          if (allMovies.length > 0) {
+            const chunk = {
+              id: 'all',
+              name: 'Todas las películas',
+              count: allMovies.length,
+              movies: allMovies.map(m => ({
+                t: m.titulo || m.title || 'Sin título',
+                l: m.enlace || m.link || m.url || '#',
+                y: m.year || m.ano || 2024,
+                p: m.poster || '',
+                g: m.genero || m.genre || '',
+                q: m.quality || m.calidad || ''
+              }))
+            };
+            
+            fs.writeFileSync('./chunks/all.json', JSON.stringify(chunk));
+            manifest.chunks.push({
+              id: 'all',
+              name: 'Todas las películas',
+              file: 'chunks/all.json',
+              movies: allMovies.length,
+              priority: 1,
+              size: Buffer.byteLength(JSON.stringify(chunk))
+            });
+          }
+          
+          fs.writeFileSync('./manifest.json', JSON.stringify(manifest, null, 2));
+          console.log('\n✅ Generación completada!');
+          EOF
+          
+          node temp-generator.js
+        fi
+    
+    - name: 📊 Show results
+      run: |
+        echo "📁 Archivos generados:"
+        ls -la chunks/ 2>/dev/null || echo "No hay chunks"
+        
+        if [ -f manifest.json ]; then
+          echo ""
+          echo "📊 Contenido del manifest:"
+          cat manifest.json | head -20
+        fi
+    
+    - name: 🔍 Check for changes
+      id: verify
+      run: |
+        git status
+        echo "CHANGES=$(git status --porcelain | wc -l)" >> $GITHUB_OUTPUT
+    
+    - name: 💾 Commit and push changes
+      if: steps.verify.outputs.CHANGES != '0'
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Configurar Git
+        git config --global user.email "41898282+github-actions[bot]@users.noreply.github.com"
+        git config --global user.name "github-actions[bot]"
+        
+        # Agregar archivos
+        git add -A
+        
+        # Crear commit
+        git commit -m "🎬 Auto-generated chunks [skip ci]" \
+                   -m "Generated on: $(date '+%Y-%m-%d %H:%M:%S UTC')" \
+                   -m "Total files: $(ls chunks/*.json 2>/dev/null | wc -l || echo 0)" || true
+        
+        # Push
+        git push origin main || git push --force-with-lease origin main
+    
+    - name: ✅ Summary
+      if: always()
+      run: |
+        echo "### 📊 Resumen de la ejecución" >> $GITHUB_STEP_SUMMARY
+        echo "" >> $GITHUB_STEP_SUMMARY
+        
+        if [ -f manifest.json ]; then
+          TOTAL=$(node -e "try{const m=require('./manifest.json');console.log(m.statistics.totalMovies)}catch{console.log(0)}" 2>/dev/null || echo "0")
+          CHUNKS=$(ls chunks/*.json 2>/dev/null | wc -l || echo 0)
+          
+          echo "- ✅ **Películas totales:** $TOTAL" >> $GITHUB_STEP_SUMMARY
+          echo "- 📦 **Chunks generados:** $CHUNKS" >> $GITHUB_STEP_SUMMARY
+          echo "- 🕒 **Fecha:** $(date '+%Y-%m-%d %H:%M:%S UTC')" >> $GITHUB_STEP_SUMMARY
+        else
+          echo "⚠️ No se generó manifest.json" >> $GITHUB_STEP_SUMMARY
+        fi
