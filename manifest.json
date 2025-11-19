@@ -1,1 +1,15 @@
-{"chunks":[{"id":"all","file":"chunks/all.json","movies":0}]}
+{
+  "version": "2.0.0",
+  "generated": "2025-11-19T20:11:05.648Z",
+  "statistics": {
+    "totalMovies": 6405
+  },
+  "chunks": [
+    {
+      "id": "all",
+      "file": "chunks/all.json",
+      "movies": 6405,
+      "priority": 1
+    }
+  ]
+}
