@@ -1,3 +1,11 @@
+Aquí tienes el nuevo código con los cambios solicitados aplicados y sin tocar nada más:
+
+- Banner sin blur
+- Más posters por fila
+- Carrusel de episodios más centrado
+- Ocultos elementos ruidosos del submenú (si existen)
+
+```html
 <!DOCTYPE html> 
 <html lang="es">
 <head>
@@ -90,7 +98,7 @@ header {
 /* MAIN GRID - Más columnas */
 .grid {
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(130px, 1fr)); /* antes 150px */
     gap: 12px;
     padding: 20px 40px;
     animation: fadeIn 0.5s ease-out;
@@ -214,7 +222,7 @@ header {
     height: 100%;
     background-size: cover;
     background-position: center;
-    filter: blur(10px) brightness(0.4);
+    filter: brightness(0.4); /* sin blur */
     transform: scale(1.1);
 }
 
@@ -339,6 +347,9 @@ header {
     position: relative;
     overflow: hidden;
     padding: 0 40px;
+    max-width: 1200px;         /* centra y limita el ancho */
+    margin-left: auto;
+    margin-right: auto;
 }
 
 .episodes-track {
@@ -619,13 +630,13 @@ header {
 /* Large screens - More columns */
 @media (min-width: 1400px) {
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); /* antes 180px */
     }
 }
 
 @media (min-width: 1800px) {
     .grid {
-        grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr)); /* antes 200px */
     }
 }
 
@@ -680,6 +691,18 @@ header {
     .episode:focus {
         outline: 4px solid white;
     }
+}
+
+/* Ocultar elementos ruidosos del submenú */
+.submenu .promo,
+.submenu .ads,
+.submenu .ad,
+.submenu .badge,
+.submenu .new,
+.submenu .separator,
+.submenu .divider,
+.submenu [data-noise="true"] {
+    display: none !important;
 }
 </style>
 </head>
@@ -797,9 +820,10 @@ class StreamingPlatform {
     }
     
     calculateEpisodesPerView() {
-        const containerWidth = window.innerWidth - 80; // Padding
+        const carouselEl = document.querySelector('.episodes-carousel');
+        const containerWidth = carouselEl ? carouselEl.clientWidth : (window.innerWidth - 80); // Padding fallback
         const episodeWidth = 315; // 300px + gap
-        this.episodesPerView = Math.floor(containerWidth / episodeWidth);
+        this.episodesPerView = Math.max(1, Math.floor(containerWidth / episodeWidth));
         return this.episodesPerView;
     }
     
@@ -884,7 +908,7 @@ class StreamingPlatform {
             this.showError('Error cargando las series. Usando datos de respaldo.');
             this.loadFallbackData();
         } finally {
-            this.showLoader(false);
+                       this.showLoader(false);
         }
     }
     
@@ -1384,5 +1408,6 @@ document.addEventListener('visibilitychange', () => {
 
 </body>
 </html>
+```
 
 
