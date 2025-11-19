@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Latino VOD+ - Plataforma de Streaming</title>
 <style>
+/* TODOS LOS ESTILOS SE MANTIENEN IGUAL */
 :root {
     --primary-color: #e50914;
     --background-dark: #141414;
@@ -428,49 +429,6 @@ header {
     font-size: 1rem;
 }
 
-/* Language Selector */
-.language-selector {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-}
-
-.language-label {
-    color: var(--muted);
-    font-size: 0.9rem;
-}
-
-.language-buttons {
-    display: flex;
-    gap: 8px;
-}
-
-.lang-btn {
-    padding: 8px 16px;
-    background: rgba(255,255,255,0.1);
-    color: var(--text-light);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    font-size: 0.9rem;
-    cursor: pointer;
-    transition: all var(--transition);
-}
-
-.lang-btn:hover {
-    background: rgba(255,255,255,0.2);
-    border-color: var(--primary-color);
-}
-
-.lang-btn.active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-.lang-btn:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
 /* BACK BUTTON */
 .back-button {
     position: fixed;
@@ -556,14 +514,6 @@ header {
     display: block;
 }
 
-/* No results */
-.no-results {
-    text-align: center;
-    padding: 50px;
-    color: var(--muted);
-    font-size: 1.2rem;
-}
-
 .empty-state {
     text-align: center;
     padding: 100px 20px;
@@ -628,12 +578,6 @@ header {
     .carousel-nav {
         display: none;
     }
-    
-    .language-selector {
-        flex-direction: column;
-        align-items: flex-start;
-        width: 100%;
-    }
 }
 
 /* Accessibility */
@@ -648,7 +592,7 @@ header {
 </head>
 <body>
 
-<div class="loader" id="loader"></div>
+<div class="loader" id="loader">Cargando películas...</div>
 
 <header>
     <div class="logo">MOVIES+</div>
@@ -682,19 +626,13 @@ header {
                 <div class="movie-metadata">
                     <span id="movieYear">2024</span>
                     <span>•</span>
-                    <span id="movieCategory">Categoría</span>
+                    <span id="movieCategory">Película</span>
                 </div>
                 <p class="movie-description" id="movieDescription">
                     Disfruta de esta película en la mejor calidad disponible.
                 </p>
                 <div class="movie-actions">
                     <button class="btn-play" id="playButton">Reproducir</button>
-                    <div class="language-selector" id="languageSelector" style="display: none;">
-                        <span class="language-label">Idioma:</span>
-                        <div class="language-buttons" id="languageButtons">
-                            <!-- Los botones de idioma se generarán dinámicamente -->
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>
@@ -708,7 +646,7 @@ header {
 
 <script>
 /* ========================================
-   MOVIES STREAMING PLATFORM - Year Carousel
+   MOVIES STREAMING PLATFORM - JSON Version
    ======================================== */
 
 class MoviesStreamingPlatform {
@@ -717,12 +655,11 @@ class MoviesStreamingPlatform {
         this.moviesByYear = {};
         this.currentMovie = null;
         this.currentMovieId = null;
-        this.dataUrl = 'movies.m3u';
+        this.dataUrl = 'peliculas.json'; // Archivo JSON
         this.refreshInterval = null;
         this.focusedCard = null;
         this.focusedYear = null;
         this.focusedIndex = 0;
-        this.selectedLanguageUrl = null;
         
         this.initializeElements();
         this.loadData();
@@ -745,8 +682,6 @@ class MoviesStreamingPlatform {
         this.playButton = document.getElementById('playButton');
         this.statusIndicator = document.getElementById('statusIndicator');
         this.errorMessage = document.getElementById('errorMessage');
-        this.languageSelector = document.getElementById('languageSelector');
-        this.languageButtons = document.getElementById('languageButtons');
     }
     
     setupEventListeners() {
@@ -766,8 +701,8 @@ class MoviesStreamingPlatform {
             const response = await fetch(this.dataUrl);
             if (!response.ok) throw new Error('Error loading data');
             
-            const text = await response.text();
-            this.parseM3U(text);
+            const jsonData = await response.json();
+            this.parseJSON(jsonData);
             this.organizeByYear();
             this.renderCarousels();
             
@@ -780,166 +715,32 @@ class MoviesStreamingPlatform {
         }
     }
     
-    parseM3U(text) {
+    parseJSON(jsonData) {
         this.moviesData = [];
-        const lines = text.split('\n');
-        let movieId = 0;
-        let currentMovieGroup = null;
         
-        for (let i = 0; i < lines.length; i++) {
-            const line = lines[i].trim();
-            
-            if (line.startsWith('#EXTINF:')) {
-                // Si ya tenemos un grupo de película, guardarlo
-                if (currentMovieGroup && currentMovieGroup.urls.length > 0) {
-                    this.moviesData.push(currentMovieGroup);
-                }
-                
-                // Crear nuevo grupo de película
-                currentMovieGroup = {
-                    id: `movie_${movieId++}`,
-                    urls: [],
-                    languages: []
-                };
-                
-                // Extract tvg-name
-                const nameMatch = line.match(/tvg-name="([^"]+)"/);
-                if (nameMatch) {
-                    currentMovieGroup.fullTitle = nameMatch[1];
-                    
-                    // Detectar idioma en el título
-                    const langInTitle = this.detectLanguageInTitle(currentMovieGroup.fullTitle);
-                    
-                    // Extraer título limpio y año
-                    const titleParts = currentMovieGroup.fullTitle.match(/^(.+?)\s*\((\d{4})\)/);
-                    if (titleParts) {
-                        currentMovieGroup.displayTitle = this.cleanTitle(titleParts[1].trim());
-                        currentMovieGroup.year = parseInt(titleParts[2]);
-                    } else {
-                        currentMovieGroup.displayTitle = this.cleanTitle(currentMovieGroup.fullTitle);
-                        currentMovieGroup.year = new Date().getFullYear();
-                    }
-                    
-                    // Si es el primer item del grupo, establecer metadatos base
-                    if (currentMovieGroup.urls.length === 0) {
-                        // Extract logo/poster
-                        const logoMatch = line.match(/tvg-logo="([^"]+)"/);
-                        currentMovieGroup.poster = logoMatch ? logoMatch[1] : 
-                            `https://via.placeholder.com/300x450?text=${encodeURIComponent(currentMovieGroup.displayTitle || 'Movie')}`;
-                        
-                        // Extract group-title (categoría)
-                        const groupMatch = line.match(/group-title="([^"]+)"/);
-                        currentMovieGroup.category = groupMatch ? groupMatch[1] : 'Sin categoría';
-                    }
-                    
-                    // Get URL from next line
-                    if (i + 1 < lines.length && !lines[i + 1].startsWith('#')) {
-                        const url = lines[i + 1].trim();
-                        const language = langInTitle || 'Español';
-                        
-                        currentMovieGroup.urls.push({
-                            url: url,
-                            language: language
-                        });
-                        
-                        if (!currentMovieGroup.languages.includes(language)) {
-                            currentMovieGroup.languages.push(language);
-                        }
-                        
-                        i++; // Skip URL line
-                    }
-                } else {
-                    // Fallback
-                    const titleMatch = line.match(/,(.+)$/);
-                    if (titleMatch && currentMovieGroup) {
-                        currentMovieGroup.fullTitle = titleMatch[1].trim();
-                        currentMovieGroup.displayTitle = this.cleanTitle(currentMovieGroup.fullTitle);
-                        currentMovieGroup.year = new Date().getFullYear();
-                    }
-                }
-            } else if (currentMovieGroup && !line.startsWith('#') && line.length > 0) {
-                // Si encontramos una URL suelta que pertenece al grupo actual
-                if (!currentMovieGroup.urls.some(u => u.url === line)) {
-                    const language = 'Español';
-                    currentMovieGroup.urls.push({
-                        url: line,
-                        language: language
-                    });
-                    
-                    if (!currentMovieGroup.languages.includes(language)) {
-                        currentMovieGroup.languages.push(language);
-                    }
-                }
-            }
+        // El JSON puede tener las películas en un array directo o dentro de una propiedad
+        let peliculas = jsonData.peliculas || jsonData.movies || jsonData;
+        
+        // Si no es un array, intentar convertirlo
+        if (!Array.isArray(peliculas)) {
+            peliculas = [peliculas];
         }
         
-        // Agregar el último grupo si existe
-        if (currentMovieGroup && currentMovieGroup.urls.length > 0) {
-            this.moviesData.push(currentMovieGroup);
-        }
-        
-        // Consolidar películas duplicadas por título
-        this.consolidateMovies();
-        
-        console.log(`Loaded ${this.moviesData.length} movies`);
-    }
-    
-    detectLanguageInTitle(title) {
-        const languagePatterns = [
-            { pattern: /\[ESP\]|\[ES\]|español|castellano|spanish/i, lang: 'Español' },
-            { pattern: /\[ENG\]|\[EN\]|english|inglés|ingles/i, lang: 'English' },
-            { pattern: /\[LAT\]|latino|latinoamericano/i, lang: 'Latino' },
-            { pattern: /\[SUB\]|subtitulado|subtitled|subs/i, lang: 'Subtitulado' },
-            { pattern: /\[FR\]|français|francés|frances|french/i, lang: 'Français' },
-            { pattern: /\[IT\]|italiano|italian/i, lang: 'Italiano' },
-            { pattern: /\[PT\]|português|portugués|portugues|portuguese/i, lang: 'Português' },
-            { pattern: /\[DE\]|deutsch|alemán|aleman|german/i, lang: 'Deutsch' }
-        ];
-        
-        for (const {pattern, lang} of languagePatterns) {
-            if (pattern.test(title)) {
-                return lang;
-            }
-        }
-        
-        return null;
-    }
-    
-    cleanTitle(title) {
-        // Eliminar indicadores de idioma del título
-        return title
-            .replace(/\[.*?\]/g, '') // Remove [ESP], [ENG], etc.
-            .replace(/\s*-\s*(español|english|latino|subtitulado|castellano|inglés|ingles).*/i, '')
-            .replace(/\s*\((español|english|latino|subtitulado|castellano|inglés|ingles)\)/i, '')
-            .trim();
-    }
-    
-    consolidateMovies() {
-        const consolidated = {};
-        
-        this.moviesData.forEach(movie => {
-            const key = `${movie.displayTitle}_${movie.year}`;
-            
-            if (!consolidated[key]) {
-                consolidated[key] = {
-                    ...movie,
-                    urls: [...movie.urls],
-                    languages: [...movie.languages]
-                };
-            } else {
-                // Combinar URLs y lenguajes
-                movie.urls.forEach(urlObj => {
-                    if (!consolidated[key].urls.some(u => u.url === urlObj.url)) {
-                        consolidated[key].urls.push(urlObj);
-                    }
-                    if (!consolidated[key].languages.includes(urlObj.language)) {
-                        consolidated[key].languages.push(urlObj.language);
-                    }
+        // Procesar cada película
+        peliculas.forEach((pelicula, index) => {
+            // Validar que tenga los campos requeridos
+            if (pelicula.titulo && pelicula.enlace) {
+                this.moviesData.push({
+                    id: `movie_${index}`,
+                    titulo: pelicula.titulo,
+                    poster: pelicula.poster || `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(pelicula.titulo)}`,
+                    ano: pelicula.ano || new Date().getFullYear(),
+                    enlace: pelicula.enlace
                 });
             }
         });
         
-        this.moviesData = Object.values(consolidated);
+        console.log(`Loaded ${this.moviesData.length} movies from JSON`);
     }
     
     organizeByYear() {
@@ -947,7 +748,7 @@ class MoviesStreamingPlatform {
         
         // Agrupar películas por año
         this.moviesData.forEach(movie => {
-            const year = movie.year || 'Sin fecha';
+            const year = movie.ano || 'Sin fecha';
             if (!this.moviesByYear[year]) {
                 this.moviesByYear[year] = [];
             }
@@ -957,39 +758,37 @@ class MoviesStreamingPlatform {
         // Ordenar cada grupo de películas alfabéticamente
         Object.keys(this.moviesByYear).forEach(year => {
             this.moviesByYear[year].sort((a, b) => 
-                a.displayTitle.localeCompare(b.displayTitle)
+                a.titulo.localeCompare(b.titulo)
             );
         });
     }
     
     loadFallbackData() {
-        this.moviesData = [
-            {
-                id: 'demo1',
-                fullTitle: 'Película Demo (2024)',
-                displayTitle: 'Película Demo',
-                poster: 'https://via.placeholder.com/300x450/e50914/ffffff?text=Demo+2024',
-                category: 'Demo',
-                year: 2024,
-                urls: [
-                    { url: '#', language: 'Español' },
-                    { url: '#', language: 'English' }
-                ],
-                languages: ['Español', 'English']
-            },
-            {
-                id: 'demo2',
-                fullTitle: 'Otra Película (2023)',
-                displayTitle: 'Otra Película',
-                poster: 'https://via.placeholder.com/300x450/e50914/ffffff?text=Demo+2023',
-                category: 'Demo',
-                year: 2023,
-                urls: [
-                    { url: '#', language: 'Español' }
-                ],
-                languages: ['Español']
-            }
-        ];
+        // Datos de ejemplo en caso de error
+        const fallbackData = {
+            peliculas: [
+                {
+                    titulo: "Película de Ejemplo 1",
+                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+1",
+                    ano: "2024",
+                    enlace: "#"
+                },
+                {
+                    titulo: "Película de Ejemplo 2",
+                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+2",
+                    ano: "2023",
+                    enlace: "#"
+                },
+                {
+                    titulo: "Película de Ejemplo 3",
+                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+3",
+                    ano: "2023",
+                    enlace: "#"
+                }
+            ]
+        };
+        
+        this.parseJSON(fallbackData);
         this.organizeByYear();
         this.renderCarousels();
     }
@@ -1093,10 +892,10 @@ class MoviesStreamingPlatform {
         // Image
         const img = document.createElement('img');
         img.src = movie.poster;
-        img.alt = movie.displayTitle;
+        img.alt = movie.titulo;
         img.loading = 'lazy';
         img.onerror = () => { 
-            img.src = `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(movie.displayTitle)}`;
+            img.src = `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(movie.titulo)}`;
         };
         card.appendChild(img);
         
@@ -1109,7 +908,7 @@ class MoviesStreamingPlatform {
         // Title
         const title = document.createElement('div');
         title.className = 'movie-card-title';
-        title.textContent = movie.displayTitle;
+        title.textContent = movie.titulo;
         card.appendChild(title);
         
         // Click event
@@ -1169,80 +968,34 @@ class MoviesStreamingPlatform {
     openMovieDetail(movie) {
         this.currentMovie = movie;
         this.currentMovieId = movie.id;
-        this.selectedLanguageUrl = null;
         
         this.mainContent.style.display = 'none';
         this.movieOverlay.style.display = 'block';
         this.backButton.classList.add('visible');
         
         // Setup movie details
-        this.movieTitle.textContent = movie.displayTitle;
+        this.movieTitle.textContent = movie.titulo;
         this.movieBannerBg.style.backgroundImage = `url('${movie.poster}')`;
         this.moviePoster.src = movie.poster;
-        this.moviePoster.alt = movie.displayTitle;
-        this.movieYear.textContent = movie.year;
-        this.movieCategory.textContent = movie.category;
-        this.movieDescription.textContent = `Disfruta de "${movie.displayTitle}" desde nuestra plataforma. ${movie.category}.`;
-        
-        // Setup language selector if multiple languages available
-        this.setupLanguageSelector(movie);
+        this.moviePoster.alt = movie.titulo;
+        this.movieYear.textContent = movie.ano;
+        this.movieCategory.textContent = 'Película';
+        this.movieDescription.textContent = `Disfruta de "${movie.titulo}" en alta calidad desde nuestra plataforma de streaming.`;
         
         // Play button
-        this.playButton.onclick = () => this.playMovie();
+        this.playButton.onclick = () => this.playMovie(movie);
         
         // Push state for browser back button
         history.pushState({ modal: true }, '', '#' + movie.id);
     }
     
-    setupLanguageSelector(movie) {
-        this.languageButtons.innerHTML = '';
-        
-        if (movie.urls.length > 1) {
-            // Show language selector
-            this.languageSelector.style.display = 'flex';
-            
-            // Create language buttons
-            movie.urls.forEach((urlObj, index) => {
-                const btn = document.createElement('button');
-                btn.className = 'lang-btn';
-                btn.textContent = urlObj.language;
-                btn.dataset.url = urlObj.url;
-                
-                // Set first as active by default
-                if (index === 0) {
-                    btn.classList.add('active');
-                    this.selectedLanguageUrl = urlObj.url;
-                }
-                
-                btn.addEventListener('click', () => {
-                    // Remove active from all buttons
-                    this.languageButtons.querySelectorAll('.lang-btn').forEach(b => 
-                        b.classList.remove('active')
-                    );
-                    
-                    // Add active to clicked button
-                    btn.classList.add('active');
-                    this.selectedLanguageUrl = urlObj.url;
-                });
-                
-                this.languageButtons.appendChild(btn);
-            });
-        } else {
-            // Hide language selector if only one option
-            this.languageSelector.style.display = 'none';
-            this.selectedLanguageUrl = movie.urls[0]?.url;
-        }
-    }
-    
-    playMovie() {
-        const urlToPlay = this.selectedLanguageUrl || this.currentMovie.urls[0]?.url;
-        
-        if (urlToPlay && urlToPlay !== '#') {
+    playMovie(movie) {
+        if (movie.enlace && movie.enlace !== '#') {
             // Save progress
-            this.saveProgress();
+            this.saveProgress(movie);
             
-            // Try to play in iframe first, if fails then redirect
-            this.tryPlayback(urlToPlay);
+            // Try to play
+            this.tryPlayback(movie.enlace);
         } else {
             this.showError('URL de reproducción no disponible');
         }
@@ -1251,7 +1004,7 @@ class MoviesStreamingPlatform {
     tryPlayback(url) {
         // Check if URL is playable
         if (url.includes('.m3u8') || url.includes('.mp4') || url.includes('stream')) {
-            // For streaming URLs, open in new window/tab with proper headers
+            // For streaming URLs, open in new window/tab
             const win = window.open('', '_blank');
             if (win) {
                 win.location = url;
@@ -1265,14 +1018,11 @@ class MoviesStreamingPlatform {
         }
     }
     
-    saveProgress() {
-        if (this.currentMovie) {
+    saveProgress(movie) {
+        if (movie) {
             const progress = {
-                movieId: this.currentMovieId,
-                title: this.currentMovie.displayTitle,
-                language: this.selectedLanguageUrl ? 
-                    this.currentMovie.urls.find(u => u.url === this.selectedLanguageUrl)?.language : 
-                    this.currentMovie.urls[0]?.language,
+                movieId: movie.id,
+                title: movie.titulo,
                 timestamp: Date.now()
             };
             localStorage.setItem('lastWatched', JSON.stringify(progress));
@@ -1372,33 +1122,13 @@ class MoviesStreamingPlatform {
             case 'Enter':
             case ' ':
                 e.preventDefault();
-                this.playMovie();
+                this.playMovie(this.currentMovie);
                 break;
                 
             case 'Escape':
             case 'Backspace':
                 e.preventDefault();
                 this.closeModal();
-                break;
-                
-            case 'ArrowLeft':
-            case 'ArrowRight':
-                // Navigate between language options if available
-                const langButtons = this.languageButtons.querySelectorAll('.lang-btn');
-                if (langButtons.length > 1) {
-                    e.preventDefault();
-                    const activeBtn = this.languageButtons.querySelector('.lang-btn.active');
-                    const currentIndex = Array.from(langButtons).indexOf(activeBtn);
-                    let newIndex = currentIndex;
-                    
-                    if (e.key === 'ArrowRight') {
-                        newIndex = (currentIndex + 1) % langButtons.length;
-                    } else {
-                        newIndex = (currentIndex - 1 + langButtons.length) % langButtons.length;
-                    }
-                    
-                    langButtons[newIndex].click();
-                }
                 break;
         }
     }
