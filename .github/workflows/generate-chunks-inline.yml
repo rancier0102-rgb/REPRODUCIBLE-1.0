@@ -1,0 +1,158 @@
+name: 🚀 Generate Movie Chunks Inline
+
+on:
+  push:
+    paths:
+      - 'data/*.json'
+      - 'peliculas_*.json'
+  
+  schedule:
+    - cron: '0 0 * * 0'
+  
+  workflow_dispatch:
+
+jobs:
+  generate-chunks:
+    name: 📦 Generate Chunks
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: 📥 Checkout repository
+      uses: actions/checkout@v3
+    
+    - name: 🔧 Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+    
+    - name: 🚀 Generate chunks inline
+      run: |
+        node << 'SCRIPT'
+        const fs = require('fs');
+        const path = require('path');
+        const crypto = require('crypto');
+
+        // Configuración
+        const CONFIG = {
+          periods: [
+            { id: 'latest', name: 'Últimos Estrenos', years: [2025, 2024, 2023], priority: 1 },
+            { id: 'recent', name: 'Recientes', years: [2022, 2021, 2020], priority: 2 },
+            { id: '2010s', name: 'Década 2010', years: [2019,2018,2017,2016,2015,2014,2013,2012,2011,2010], priority: 3 },
+            { id: '2000s', name: 'Década 2000', years: [2009,2008,2007,2006,2005,2004,2003,2002,2001,2000], priority: 4 },
+            { id: '90s', name: 'Años 90', years: [1999,1998,1997,1996,1995,1994,1993,1992,1991,1990], priority: 5 },
+            { id: 'classics', name: 'Clásicas', years: 'rest', priority: 6 }
+          ]
+        };
+
+        console.log('🚀 Generando chunks...\n');
+
+        // Buscar archivos JSON
+        let allMovies = [];
+        let files = [];
+        
+        // Buscar en data/
+        if (fs.existsSync('./data')) {
+          files.push(...fs.readdirSync('./data')
+            .filter(f => f.endsWith('.json'))
+            .map(f => path.join('./data', f)));
+        }
+        
+        // Buscar en raíz
+        files.push(...fs.readdirSync('.')
+          .filter(f => f.match(/^peliculas_\d{4}\.json$/)));
+        
+        // Cargar películas
+        files.forEach(file => {
+          try {
+            const content = fs.readFileSync(file, 'utf8');
+            const data = JSON.parse(content);
+            const year = file.match(/(\d{4})/)?.[1] || 2024;
+            
+            let movies = Array.isArray(data) ? data : 
+                        data.peliculas ? data.peliculas :
+                        data.movies ? data.movies : [data];
+            
+            movies.forEach(m => {
+              if (!m.year && !m.ano) m.year = parseInt(year);
+            });
+            
+            allMovies.push(...movies);
+            console.log('✓', path.basename(file), ':', movies.length, 'películas');
+          } catch(e) {
+            console.log('✗ Error en', path.basename(file));
+          }
+        });
+
+        console.log('\nTotal:', allMovies.length, 'películas\n');
+
+        // Crear directorios
+        if (!fs.existsSync('./chunks')) fs.mkdirSync('./chunks', {recursive: true});
+
+        // Comprimir campos
+        const compress = (movie) => ({
+          t: movie.titulo || movie.title,
+          l: movie.enlace || movie.link || movie.url,
+          y: movie.year || movie.ano || 2024,
+          p: movie.poster,
+          g: movie.genero || movie.genre,
+          q: movie.quality || movie.calidad
+        });
+
+        allMovies = allMovies.map(compress);
+
+        // Crear chunks
+        const manifest = {
+          version: '2.0.0',
+          generated: new Date().toISOString(),
+          statistics: { totalMovies: allMovies.length },
+          chunks: []
+        };
+
+        const usedYears = new Set();
+        
+        CONFIG.periods.forEach(period => {
+          let movies;
+          
+          if (period.years === 'rest') {
+            movies = allMovies.filter(m => !usedYears.has(m.y));
+          } else {
+            movies = allMovies.filter(m => period.years.includes(m.y));
+            period.years.forEach(y => usedYears.add(y));
+          }
+          
+          if (movies.length > 0) {
+            const chunk = {
+              id: period.id,
+              name: period.name,
+              count: movies.length,
+              movies: movies
+            };
+            
+            const json = JSON.stringify(chunk);
+            fs.writeFileSync(`./chunks/${period.id}.json`, json);
+            
+            manifest.chunks.push({
+              id: period.id,
+              name: period.name,
+              file: `chunks/${period.id}.json`,
+              movies: movies.length,
+              priority: period.priority,
+              size: Buffer.byteLength(json)
+            });
+            
+            console.log('✓ Chunk', period.name, ':', movies.length, 'películas');
+          }
+        });
+
+        // Guardar manifest
+        fs.writeFileSync('./manifest.json', JSON.stringify(manifest, null, 2));
+        console.log('\n✅ Generación completada!');
+        SCRIPT
+    
+    - name: 💾 Commit changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add -A
+        git diff --staged --quiet || git commit -m "🎬 Auto-generated chunks [skip ci]"
+        git push
