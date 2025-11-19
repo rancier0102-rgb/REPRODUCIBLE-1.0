@@ -27,15 +27,40 @@ body {
     overflow-x: hidden;
 }
 
-/* Loader */
+/* Loader mejorado */
 .loader {
     position: fixed;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    color: var(--primary-color);
-    font-size: 1.5rem;
+    text-align: center;
     z-index: 1000;
+}
+
+.loader-spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid rgba(229, 9, 20, 0.3);
+    border-top: 3px solid var(--primary-color);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    margin: 0 auto 20px;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+.loader-text {
+    color: var(--text-light);
+    font-size: 1.2rem;
+}
+
+.loader-progress {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 0.9rem;
 }
 
 .loader.hidden {
@@ -62,6 +87,84 @@ header {
     text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
 }
 
+/* Search bar */
+.search-container {
+    flex: 1;
+    max-width: 400px;
+    margin: 0 auto;
+    position: relative;
+}
+
+.search-input {
+    width: 100%;
+    padding: 8px 40px 8px 15px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 25px;
+    color: var(--text-light);
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+}
+
+.search-input:focus {
+    outline: none;
+    background: rgba(255,255,255,0.15);
+    border-color: var(--primary-color);
+}
+
+.search-input::placeholder {
+    color: var(--muted);
+}
+
+.search-clear {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 5px;
+    display: none;
+}
+
+.search-clear.visible {
+    display: block;
+}
+
+.search-clear:hover {
+    color: var(--text-light);
+}
+
+/* Filter controls */
+.filter-controls {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.filter-btn {
+    padding: 8px 16px;
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.2);
+    border-radius: 20px;
+    color: var(--text-light);
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.filter-btn:hover {
+    background: rgba(255,255,255,0.2);
+    border-color: var(--primary-color);
+}
+
+.filter-btn.active {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
 /* Status indicator */
 .status-indicator {
     padding: 5px 12px;
@@ -71,7 +174,6 @@ header {
     display: flex;
     align-items: center;
     gap: 8px;
-    margin-left: auto;
 }
 
 .status-indicator.connected::before {
@@ -83,14 +185,29 @@ header {
     animation: pulse 2s infinite;
 }
 
+.status-indicator.loading::before {
+    background: #ffa500;
+}
+
+.status-indicator.error::before {
+    background: #ff4444;
+}
+
 @keyframes pulse {
     0%, 100% { opacity: 1; }
     50% { opacity: 0.5; }
 }
 
+/* Movie count */
+.movie-count {
+    color: var(--muted);
+    font-size: 0.85rem;
+}
+
 /* MAIN CONTENT */
 .main-content {
     padding: 20px 0;
+    min-height: 500px;
 }
 
 /* YEAR CAROUSEL SECTION */
@@ -99,12 +216,6 @@ header {
     opacity: 0;
     animation: fadeIn 0.5s ease-out forwards;
 }
-
-.year-section:nth-child(1) { animation-delay: 0.1s; }
-.year-section:nth-child(2) { animation-delay: 0.2s; }
-.year-section:nth-child(3) { animation-delay: 0.3s; }
-.year-section:nth-child(4) { animation-delay: 0.4s; }
-.year-section:nth-child(5) { animation-delay: 0.5s; }
 
 @keyframes fadeIn {
     from { 
@@ -131,6 +242,11 @@ header {
     color: var(--text-light);
 }
 
+.year-count {
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
 /* CAROUSEL CONTAINER */
 .carousel-container {
     position: relative;
@@ -144,6 +260,7 @@ header {
     scroll-behavior: smooth;
     scrollbar-width: none;
     padding: 10px 0;
+    will-change: transform;
 }
 
 .carousel-track::-webkit-scrollbar {
@@ -197,7 +314,7 @@ header {
     cursor: not-allowed;
 }
 
-/* MOVIE CARDS */
+/* MOVIE CARDS con lazy loading mejorado */
 .movie-card {
     flex: 0 0 150px;
     background: transparent;
@@ -208,6 +325,19 @@ header {
     position: relative;
     border: 2px solid transparent;
     outline: none;
+    will-change: transform;
+}
+
+.movie-card.skeleton {
+    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    height: 225px;
+}
+
+@keyframes loading {
+    0% { background-position: 200% 0; }
+    100% { background-position: -200% 0; }
 }
 
 .movie-card img { 
@@ -215,7 +345,12 @@ header {
     height: auto;
     aspect-ratio: 2/3;
     object-fit: cover;
-    transition: transform 0.3s ease;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    opacity: 0;
+}
+
+.movie-card img.loaded {
+    opacity: 1;
 }
 
 .movie-card-title { 
@@ -265,6 +400,7 @@ header {
     justify-content: center;
     opacity: 0;
     transition: opacity 0.3s ease;
+    pointer-events: none;
 }
 
 .movie-card:hover .play-overlay,
@@ -525,6 +661,36 @@ header {
     margin-bottom: 10px;
 }
 
+/* Scroll to top button */
+.scroll-top {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    width: 50px;
+    height: 50px;
+    background: var(--primary-color);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    font-size: 1.5rem;
+    cursor: pointer;
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    transition: all 0.3s ease;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+
+.scroll-top.visible {
+    display: flex;
+}
+
+.scroll-top:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+}
+
 /* Large screens */
 @media (min-width: 1400px) {
     .movie-card {
@@ -542,6 +708,14 @@ header {
 @media (max-width: 768px) {
     header {
         padding: 15px;
+        flex-wrap: wrap;
+    }
+    
+    .search-container {
+        order: 3;
+        flex-basis: 100%;
+        max-width: none;
+        margin-top: 10px;
     }
     
     .year-header,
@@ -588,17 +762,37 @@ header {
         transition-duration: 0.01ms !important;
     }
 }
+
+/* Performance optimizations */
+.hardware-accelerated {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader">Cargando películas...</div>
+<div class="loader" id="loader">
+    <div class="loader-spinner"></div>
+    <div class="loader-text">Cargando películas...</div>
+    <div class="loader-progress" id="loaderProgress"></div>
+</div>
 
 <header>
     <div class="logo">MOVIES+</div>
     
+    <div class="search-container">
+        <input type="text" 
+               class="search-input" 
+               id="searchInput" 
+               placeholder="Buscar películas...">
+        <button class="search-clear" id="searchClear">✕</button>
+    </div>
+    
+    <div class="movie-count" id="movieCount">0 películas</div>
+    
     <div class="status-indicator connected" id="statusIndicator">
-        <span>Activo</span>
+        <span id="statusText">Conectado</span>
     </div>
 </header>
 
@@ -610,6 +804,9 @@ header {
 <main class="main-content" id="mainContent">
     <!-- Los carruseles por año se cargarán dinámicamente aquí -->
 </main>
+
+<!-- Scroll to top button -->
+<button class="scroll-top" id="scrollTop">↑</button>
 
 <!-- MOVIE DETAIL OVERLAY -->
 <div id="movieOverlay" class="movie-overlay">
@@ -646,29 +843,52 @@ header {
 
 <script>
 /* ========================================
-   MOVIES STREAMING PLATFORM - JSON Version
+   OPTIMIZED MOVIES STREAMING PLATFORM - JSON Version
+   Optimizado para listas extensas desde GitHub
    ======================================== */
 
 class MoviesStreamingPlatform {
     constructor() {
+        // Data management
         this.moviesData = [];
         this.moviesByYear = {};
+        this.filteredMovies = [];
         this.currentMovie = null;
         this.currentMovieId = null;
-        this.dataUrl = 'peliculas.json'; // Archivo JSON
-        this.refreshInterval = null;
+        
+        // Configuration - Cambiar esta URL por tu archivo en GitHub
+        this.dataUrl = 'https://raw.githubusercontent.com/TU_USUARIO/TU_REPO/main/peliculas.json';
+        // Ejemplo: 'https://raw.githubusercontent.com/usuario/repo/main/peliculas.json'
+        
+        // Performance settings
+        this.chunkSize = 50; // Películas a cargar por chunk
+        this.imageLoadDelay = 100; // Delay entre carga de imágenes
+        this.cacheEnabled = true;
+        this.cacheExpiry = 3600000; // 1 hora en millisegundos
+        
+        // UI State
+        this.isLoading = false;
+        this.searchTimeout = null;
+        this.scrollTimeout = null;
         this.focusedCard = null;
         this.focusedYear = null;
         this.focusedIndex = 0;
         
+        // Image loading queue
+        this.imageQueue = [];
+        this.isProcessingImages = false;
+        
+        // Initialize
         this.initializeElements();
         this.loadData();
         this.setupEventListeners();
+        this.setupIntersectionObserver();
     }
     
     initializeElements() {
         // Cache DOM elements
         this.loader = document.getElementById('loader');
+        this.loaderProgress = document.getElementById('loaderProgress');
         this.mainContent = document.getElementById('mainContent');
         this.movieOverlay = document.getElementById('movieOverlay');
         this.backButton = document.getElementById('backButton');
@@ -681,7 +901,12 @@ class MoviesStreamingPlatform {
         this.movieDescription = document.getElementById('movieDescription');
         this.playButton = document.getElementById('playButton');
         this.statusIndicator = document.getElementById('statusIndicator');
+        this.statusText = document.getElementById('statusText');
         this.errorMessage = document.getElementById('errorMessage');
+        this.searchInput = document.getElementById('searchInput');
+        this.searchClear = document.getElementById('searchClear');
+        this.movieCount = document.getElementById('movieCount');
+        this.scrollTop = document.getElementById('scrollTop');
     }
     
     setupEventListeners() {
@@ -690,28 +915,106 @@ class MoviesStreamingPlatform {
         this.closeButton.addEventListener('click', () => this.closeModal());
         document.addEventListener('keydown', (e) => this.handleKeyboard(e));
         
-        // Auto-refresh cada 5 minutos
-        this.refreshInterval = setInterval(() => this.refreshData(), 300000);
+        // Search functionality
+        this.searchInput.addEventListener('input', (e) => this.handleSearch(e));
+        this.searchClear.addEventListener('click', () => this.clearSearch());
+        
+        // Scroll to top
+        this.scrollTop.addEventListener('click', () => {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        // Scroll visibility
+        window.addEventListener('scroll', () => this.handleScroll());
+        
+        // Page visibility for pausing/resuming
+        document.addEventListener('visibilitychange', () => this.handleVisibilityChange());
+    }
+    
+    setupIntersectionObserver() {
+        // Observer para lazy loading de imágenes
+        this.imageObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const img = entry.target;
+                    this.loadImage(img);
+                    this.imageObserver.unobserve(img);
+                }
+            });
+        }, {
+            rootMargin: '50px',
+            threshold: 0.01
+        });
     }
     
     async loadData() {
         try {
-            this.showLoader(true);
+            this.setLoadingState(true);
+            this.updateStatus('loading', 'Cargando...');
             
-            const response = await fetch(this.dataUrl);
-            if (!response.ok) throw new Error('Error loading data');
+            // Check cache first
+            const cachedData = this.getCachedData();
+            if (cachedData) {
+                console.log('Using cached data');
+                this.moviesData = cachedData;
+                this.organizeByYear();
+                this.renderCarousels();
+                this.updateStatus('connected', 'Desde caché');
+                return;
+            }
             
-            const jsonData = await response.json();
-            this.parseJSON(jsonData);
+            // Fetch from GitHub with retry logic
+            const data = await this.fetchWithRetry(this.dataUrl, 3);
+            
+            this.parseJSON(data);
+            
+            // Cache the data
+            if (this.cacheEnabled) {
+                this.setCachedData(this.moviesData);
+            }
+            
             this.organizeByYear();
             this.renderCarousels();
+            this.updateStatus('connected', 'Conectado');
             
         } catch (error) {
             console.error('Error loading movies data:', error);
-            this.showError('Error cargando las películas. Usando datos de respaldo.');
+            this.updateStatus('error', 'Error');
+            this.showError('Error cargando las películas. Intentando con datos de respaldo...');
             this.loadFallbackData();
         } finally {
-            this.showLoader(false);
+            this.setLoadingState(false);
+        }
+    }
+    
+    async fetchWithRetry(url, retries = 3) {
+        for (let i = 0; i < retries; i++) {
+            try {
+                const controller = new AbortController();
+                const timeout = setTimeout(() => controller.abort(), 10000); // 10 second timeout
+                
+                const response = await fetch(url, {
+                    signal: controller.signal,
+                    headers: {
+                        'Accept': 'application/json',
+                        'Cache-Control': 'no-cache'
+                    }
+                });
+                
+                clearTimeout(timeout);
+                
+                if (!response.ok) throw new Error(`HTTP error! status: ${response.status}`);
+                
+                const data = await response.json();
+                return data;
+                
+            } catch (error) {
+                console.warn(`Attempt ${i + 1} failed:`, error);
+                if (i === retries - 1) throw error;
+                
+                // Wait before retry with exponential backoff
+                await new Promise(resolve => setTimeout(resolve, Math.pow(2, i) * 1000));
+            }
         }
     }
     
@@ -726,21 +1029,56 @@ class MoviesStreamingPlatform {
             peliculas = [peliculas];
         }
         
-        // Procesar cada película
+        // Update progress
+        const total = peliculas.length;
+        let processed = 0;
+        
+        // Procesar cada película con validación
         peliculas.forEach((pelicula, index) => {
+            processed++;
+            if (processed % 100 === 0) {
+                this.updateProgress(`Procesando ${processed}/${total} películas...`);
+            }
+            
             // Validar que tenga los campos requeridos
             if (pelicula.titulo && pelicula.enlace) {
                 this.moviesData.push({
                     id: `movie_${index}`,
-                    titulo: pelicula.titulo,
-                    poster: pelicula.poster || `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(pelicula.titulo)}`,
-                    ano: pelicula.ano || new Date().getFullYear(),
-                    enlace: pelicula.enlace
+                    titulo: this.sanitizeTitle(pelicula.titulo),
+                    poster: pelicula.poster || this.getPlaceholderImage(pelicula.titulo),
+                    ano: this.validateYear(pelicula.ano),
+                    enlace: pelicula.enlace,
+                    // Campos adicionales opcionales para mejor experiencia
+                    descripcion: pelicula.descripcion || null,
+                    duracion: pelicula.duracion || null,
+                    genero: pelicula.genero || null
                 });
             }
         });
         
-        console.log(`Loaded ${this.moviesData.length} movies from JSON`);
+        console.log(`Successfully parsed ${this.moviesData.length} movies`);
+        this.updateMovieCount(this.moviesData.length);
+    }
+    
+    sanitizeTitle(title) {
+        // Limpiar y normalizar títulos
+        return title.trim().replace(/\s+/g, ' ');
+    }
+    
+    validateYear(year) {
+        const yearNum = parseInt(year);
+        const currentYear = new Date().getFullYear();
+        
+        if (isNaN(yearNum) || yearNum < 1895 || yearNum > currentYear + 1) {
+            return 'Sin fecha';
+        }
+        
+        return yearNum.toString();
+    }
+    
+    getPlaceholderImage(title) {
+        // Generar placeholder con mejor diseño
+        return `https://via.placeholder.com/300x450/2a2a2a/e50914?text=${encodeURIComponent(title.substring(0, 20))}`;
     }
     
     organizeByYear() {
@@ -758,39 +1096,9 @@ class MoviesStreamingPlatform {
         // Ordenar cada grupo de películas alfabéticamente
         Object.keys(this.moviesByYear).forEach(year => {
             this.moviesByYear[year].sort((a, b) => 
-                a.titulo.localeCompare(b.titulo)
+                a.titulo.localeCompare(b.titulo, 'es', { numeric: true })
             );
         });
-    }
-    
-    loadFallbackData() {
-        // Datos de ejemplo en caso de error
-        const fallbackData = {
-            peliculas: [
-                {
-                    titulo: "Película de Ejemplo 1",
-                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+1",
-                    ano: "2024",
-                    enlace: "#"
-                },
-                {
-                    titulo: "Película de Ejemplo 2",
-                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+2",
-                    ano: "2023",
-                    enlace: "#"
-                },
-                {
-                    titulo: "Película de Ejemplo 3",
-                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+3",
-                    ano: "2023",
-                    enlace: "#"
-                }
-            ]
-        };
-        
-        this.parseJSON(fallbackData);
-        this.organizeByYear();
-        this.renderCarousels();
     }
     
     renderCarousels() {
@@ -799,50 +1107,76 @@ class MoviesStreamingPlatform {
         // Obtener años ordenados de más reciente a más antiguo
         const sortedYears = Object.keys(this.moviesByYear)
             .sort((a, b) => {
-                // Manejar "Sin fecha" al final
                 if (a === 'Sin fecha') return 1;
                 if (b === 'Sin fecha') return -1;
                 return parseInt(b) - parseInt(a);
             });
         
         if (sortedYears.length === 0) {
-            this.mainContent.innerHTML = `
-                <div class="empty-state">
-                    <h2>No se encontraron películas</h2>
-                    <p>No hay películas disponibles en este momento</p>
-                </div>
-            `;
+            this.renderEmptyState();
             return;
         }
         
-        sortedYears.forEach((year, yearIndex) => {
-            const movies = this.moviesByYear[year];
-            const section = this.createYearSection(year, movies, yearIndex);
-            this.mainContent.appendChild(section);
-        });
+        // Renderizar por chunks para mejor performance
+        let yearIndex = 0;
         
-        // Setup carousel navigation
-        this.setupCarouselNavigation();
-        
-        // Focus first card if exists
-        if (sortedYears.length > 0) {
-            const firstCard = this.mainContent.querySelector('.movie-card');
-            if (firstCard) {
-                this.focusCard(firstCard);
+        const renderNextChunk = () => {
+            const chunk = sortedYears.slice(yearIndex, yearIndex + 5);
+            
+            chunk.forEach((year, idx) => {
+                const movies = this.moviesByYear[year];
+                const section = this.createYearSection(year, movies, yearIndex + idx);
+                this.mainContent.appendChild(section);
+                
+                // Lazy load images for this section
+                requestAnimationFrame(() => {
+                    const images = section.querySelectorAll('.movie-card img');
+                    images.forEach(img => this.imageObserver.observe(img));
+                });
+            });
+            
+            yearIndex += chunk.length;
+            
+            // Continue rendering if more years
+            if (yearIndex < sortedYears.length) {
+                requestAnimationFrame(renderNextChunk);
+            } else {
+                // Setup carousel navigation after all sections are rendered
+                this.setupCarouselNavigation();
+                
+                // Focus first card
+                const firstCard = this.mainContent.querySelector('.movie-card');
+                if (firstCard) {
+                    this.focusCard(firstCard);
+                }
             }
-        }
+        };
+        
+        // Start rendering
+        requestAnimationFrame(renderNextChunk);
+    }
+    
+    renderEmptyState() {
+        this.mainContent.innerHTML = `
+            <div class="empty-state">
+                <h2>No se encontraron películas</h2>
+                <p>No hay películas disponibles en este momento</p>
+            </div>
+        `;
     }
     
     createYearSection(year, movies, index) {
         const section = document.createElement('div');
-        section.className = 'year-section';
+        section.className = 'year-section hardware-accelerated';
         section.dataset.year = year;
+        section.style.animationDelay = `${Math.min(index * 0.1, 0.5)}s`;
         
         // Header
         const header = document.createElement('div');
         header.className = 'year-header';
         header.innerHTML = `
             <h2 class="year-title">${year}</h2>
+            <span class="year-count">(${movies.length} películas)</span>
         `;
         section.appendChild(header);
         
@@ -855,6 +1189,7 @@ class MoviesStreamingPlatform {
         prevBtn.className = 'carousel-nav prev';
         prevBtn.innerHTML = '‹';
         prevBtn.dataset.year = year;
+        prevBtn.setAttribute('aria-label', 'Anterior');
         container.appendChild(prevBtn);
         
         // Next button
@@ -862,6 +1197,7 @@ class MoviesStreamingPlatform {
         nextBtn.className = 'carousel-nav next';
         nextBtn.innerHTML = '›';
         nextBtn.dataset.year = year;
+        nextBtn.setAttribute('aria-label', 'Siguiente');
         container.appendChild(nextBtn);
         
         // Carousel track
@@ -869,13 +1205,31 @@ class MoviesStreamingPlatform {
         track.className = 'carousel-track';
         track.dataset.year = year;
         
-        // Add movie cards
-        movies.forEach((movie, movieIndex) => {
+        // Add movie cards - limit initial render for performance
+        const moviesToRender = movies.slice(0, Math.min(movies.length, 20));
+        moviesToRender.forEach((movie, movieIndex) => {
             const card = this.createMovieCard(movie);
             card.dataset.yearIndex = index;
             card.dataset.movieIndex = movieIndex;
             track.appendChild(card);
         });
+        
+        // Load remaining movies after initial render
+        if (movies.length > 20) {
+            setTimeout(() => {
+                const remainingMovies = movies.slice(20);
+                remainingMovies.forEach((movie, idx) => {
+                    const card = this.createMovieCard(movie);
+                    card.dataset.yearIndex = index;
+                    card.dataset.movieIndex = 20 + idx;
+                    track.appendChild(card);
+                    
+                    // Observe new images
+                    const img = card.querySelector('img');
+                    if (img) this.imageObserver.observe(img);
+                });
+            }, 100);
+        }
         
         container.appendChild(track);
         section.appendChild(container);
@@ -885,18 +1239,21 @@ class MoviesStreamingPlatform {
     
     createMovieCard(movie) {
         const card = document.createElement('div');
-        card.className = 'movie-card';
+        card.className = 'movie-card hardware-accelerated';
         card.dataset.movieId = movie.id;
         card.tabIndex = -1;
+        card.setAttribute('role', 'button');
+        card.setAttribute('aria-label', movie.titulo);
         
-        // Image
+        // Start with skeleton
+        card.classList.add('skeleton');
+        
+        // Image with lazy loading
         const img = document.createElement('img');
-        img.src = movie.poster;
+        img.dataset.src = movie.poster; // Use data-src for lazy loading
         img.alt = movie.titulo;
         img.loading = 'lazy';
-        img.onerror = () => { 
-            img.src = `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(movie.titulo)}`;
-        };
+        img.setAttribute('aria-hidden', 'true');
         card.appendChild(img);
         
         // Play overlay
@@ -911,54 +1268,208 @@ class MoviesStreamingPlatform {
         title.textContent = movie.titulo;
         card.appendChild(title);
         
-        // Click event
-        card.addEventListener('click', () => this.openMovieDetail(movie));
+        // Click event with debouncing
+        let clickTimeout;
+        card.addEventListener('click', () => {
+            clearTimeout(clickTimeout);
+            clickTimeout = setTimeout(() => this.openMovieDetail(movie), 100);
+        });
         
         return card;
     }
     
+    loadImage(img) {
+        const src = img.dataset.src;
+        if (!src || img.src === src) return;
+        
+        // Create new image to preload
+        const tempImg = new Image();
+        tempImg.onload = () => {
+            img.src = src;
+            img.classList.add('loaded');
+            
+            // Remove skeleton from parent card
+            const card = img.closest('.movie-card');
+            if (card) {
+                card.classList.remove('skeleton');
+            }
+        };
+        
+        tempImg.onerror = () => {
+            // Fallback image on error
+            img.src = this.getPlaceholderImage(img.alt);
+            img.classList.add('loaded');
+            
+            const card = img.closest('.movie-card');
+            if (card) {
+                card.classList.remove('skeleton');
+            }
+        };
+        
+        tempImg.src = src;
+    }
+    
     setupCarouselNavigation() {
-        // Setup navigation for each carousel
+        // Setup navigation for each carousel with throttling
         document.querySelectorAll('.carousel-container').forEach(container => {
             const track = container.querySelector('.carousel-track');
             const prevBtn = container.querySelector('.carousel-nav.prev');
             const nextBtn = container.querySelector('.carousel-nav.next');
             
+            if (!track || !prevBtn || !nextBtn) return;
+            
             const updateButtons = () => {
-                const scrollLeft = track.scrollLeft;
-                const maxScroll = track.scrollWidth - track.clientWidth;
-                
-                prevBtn.classList.toggle('disabled', scrollLeft <= 0);
-                nextBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 1);
+                requestAnimationFrame(() => {
+                    const scrollLeft = track.scrollLeft;
+                    const maxScroll = track.scrollWidth - track.clientWidth;
+                    
+                    prevBtn.classList.toggle('disabled', scrollLeft <= 0);
+                    nextBtn.classList.toggle('disabled', scrollLeft >= maxScroll - 1);
+                });
+            };
+            
+            // Throttled scroll handler
+            let scrolling = false;
+            const handleScroll = () => {
+                if (!scrolling) {
+                    scrolling = true;
+                    requestAnimationFrame(() => {
+                        updateButtons();
+                        scrolling = false;
+                    });
+                }
             };
             
             prevBtn.addEventListener('click', () => {
-                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12; // width + gap
+                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12;
                 track.scrollBy({ left: -cardWidth * 3, behavior: 'smooth' });
             });
             
             nextBtn.addEventListener('click', () => {
-                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12; // width + gap
+                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12;
                 track.scrollBy({ left: cardWidth * 3, behavior: 'smooth' });
             });
             
-            track.addEventListener('scroll', updateButtons);
+            track.addEventListener('scroll', handleScroll, { passive: true });
             updateButtons();
         });
     }
     
+    handleSearch(e) {
+        const query = e.target.value.trim();
+        
+        // Show/hide clear button
+        this.searchClear.classList.toggle('visible', query.length > 0);
+        
+        // Debounce search
+        clearTimeout(this.searchTimeout);
+        this.searchTimeout = setTimeout(() => {
+            this.performSearch(query);
+        }, 300);
+    }
+    
+    performSearch(query) {
+        if (!query) {
+            this.clearSearch();
+            return;
+        }
+        
+        // Normalize query for better matching
+        const normalizedQuery = query.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+        
+        // Filter movies
+        this.filteredMovies = this.moviesData.filter(movie => {
+            const normalizedTitle = movie.titulo.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+            return normalizedTitle.includes(normalizedQuery) || 
+                   movie.ano?.toString().includes(query);
+        });
+        
+        // Update display
+        if (this.filteredMovies.length > 0) {
+            this.renderFilteredMovies();
+        } else {
+            this.renderNoResults(query);
+        }
+        
+        this.updateMovieCount(this.filteredMovies.length);
+    }
+    
+    renderFilteredMovies() {
+        this.mainContent.innerHTML = '';
+        
+        const section = document.createElement('div');
+        section.className = 'year-section';
+        
+        // Header
+        const header = document.createElement('div');
+        header.className = 'year-header';
+        header.innerHTML = `
+            <h2 class="year-title">Resultados de búsqueda</h2>
+            <span class="year-count">(${this.filteredMovies.length} películas)</span>
+        `;
+        section.appendChild(header);
+        
+        // Container
+        const container = document.createElement('div');
+        container.className = 'carousel-container';
+        
+        // Track with all filtered movies
+        const track = document.createElement('div');
+        track.className = 'carousel-track';
+        track.style.flexWrap = 'wrap'; // Allow wrapping for search results
+        
+        this.filteredMovies.forEach((movie, idx) => {
+            const card = this.createMovieCard(movie);
+            card.dataset.yearIndex = 0;
+            card.dataset.movieIndex = idx;
+            track.appendChild(card);
+            
+            // Observe image
+            const img = card.querySelector('img');
+            if (img) {
+                this.imageObserver.observe(img);
+            }
+        });
+        
+        container.appendChild(track);
+        section.appendChild(container);
+        this.mainContent.appendChild(section);
+    }
+    
+    renderNoResults(query) {
+        this.mainContent.innerHTML = `
+            <div class="empty-state">
+                <h2>No se encontraron resultados</h2>
+                <p>No hay películas que coincidan con "${query}"</p>
+            </div>
+        `;
+    }
+    
+    clearSearch() {
+        this.searchInput.value = '';
+        this.searchClear.classList.remove('visible');
+        this.filteredMovies = [];
+        this.renderCarousels();
+        this.updateMovieCount(this.moviesData.length);
+    }
+    
     focusCard(card) {
-        // Remove previous focus
         if (this.focusedCard) {
             this.focusedCard.classList.remove('focused');
             this.focusedCard.tabIndex = -1;
         }
         
-        // Add new focus
         this.focusedCard = card;
         card.classList.add('focused');
         card.tabIndex = 0;
-        card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        
+        // Smooth scroll into view only if needed
+        const rect = card.getBoundingClientRect();
+        const isVisible = rect.top >= 0 && rect.bottom <= window.innerHeight;
+        
+        if (!isVisible) {
+            card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
+        }
         
         // Update focused position
         this.focusedYear = parseInt(card.dataset.yearIndex);
@@ -966,9 +1477,12 @@ class MoviesStreamingPlatform {
     }
     
     openMovieDetail(movie) {
+        if (this.isLoading) return;
+        
         this.currentMovie = movie;
         this.currentMovieId = movie.id;
         
+        // Hide main content
         this.mainContent.style.display = 'none';
         this.movieOverlay.style.display = 'block';
         this.backButton.classList.add('visible');
@@ -979,20 +1493,28 @@ class MoviesStreamingPlatform {
         this.moviePoster.src = movie.poster;
         this.moviePoster.alt = movie.titulo;
         this.movieYear.textContent = movie.ano;
-        this.movieCategory.textContent = 'Película';
-        this.movieDescription.textContent = `Disfruta de "${movie.titulo}" en alta calidad desde nuestra plataforma de streaming.`;
+        this.movieCategory.textContent = movie.genero || 'Película';
+        
+        // Enhanced description
+        let description = `Disfruta de "${movie.titulo}" en alta calidad desde nuestra plataforma de streaming.`;
+        if (movie.descripcion) {
+            description = movie.descripcion;
+        } else if (movie.duracion) {
+            description += ` Duración: ${movie.duracion}.`;
+        }
+        this.movieDescription.textContent = description;
         
         // Play button
         this.playButton.onclick = () => this.playMovie(movie);
         
-        // Push state for browser back button
+        // Update URL without page reload
         history.pushState({ modal: true }, '', '#' + movie.id);
     }
     
     playMovie(movie) {
         if (movie.enlace && movie.enlace !== '#') {
-            // Save progress
-            this.saveProgress(movie);
+            // Save to history
+            this.saveToHistory(movie);
             
             // Try to play
             this.tryPlayback(movie.enlace);
@@ -1002,30 +1524,51 @@ class MoviesStreamingPlatform {
     }
     
     tryPlayback(url) {
-        // Check if URL is playable
+        // Detect URL type and handle accordingly
         if (url.includes('.m3u8') || url.includes('.mp4') || url.includes('stream')) {
-            // For streaming URLs, open in new window/tab
+            // Streaming URLs
             const win = window.open('', '_blank');
             if (win) {
                 win.location = url;
             } else {
-                // If popup blocked, redirect in same window
                 window.location.href = url;
             }
+        } else if (url.includes('youtube.com') || url.includes('youtu.be')) {
+            // YouTube URLs
+            window.open(url, '_blank');
         } else {
-            // For other URLs, direct redirect
+            // Other URLs
             window.location.href = url;
         }
     }
     
-    saveProgress(movie) {
-        if (movie) {
-            const progress = {
-                movieId: movie.id,
-                title: movie.titulo,
+    saveToHistory(movie) {
+        try {
+            const history = JSON.parse(localStorage.getItem('watchHistory') || '[]');
+            
+            // Remove if already exists
+            const existingIndex = history.findIndex(item => item.id === movie.id);
+            if (existingIndex > -1) {
+                history.splice(existingIndex, 1);
+            }
+            
+            // Add to beginning
+            history.unshift({
+                id: movie.id,
+                titulo: movie.titulo,
+                poster: movie.poster,
+                ano: movie.ano,
                 timestamp: Date.now()
-            };
-            localStorage.setItem('lastWatched', JSON.stringify(progress));
+            });
+            
+            // Keep only last 50 items
+            if (history.length > 50) {
+                history.pop();
+            }
+            
+            localStorage.setItem('watchHistory', JSON.stringify(history));
+        } catch (error) {
+            console.error('Error saving to history:', error);
         }
     }
     
@@ -1043,7 +1586,7 @@ class MoviesStreamingPlatform {
         }
         
         // Clear hash
-        history.replaceState(null, '', ' ');
+        history.replaceState(null, '', window.location.pathname);
     }
     
     handleKeyboard(e) {
@@ -1055,7 +1598,7 @@ class MoviesStreamingPlatform {
     }
     
     handleCarouselNavigation(e) {
-        if (!this.focusedCard) return;
+        if (!this.focusedCard || this.searchInput === document.activeElement) return;
         
         const yearSections = document.querySelectorAll('.year-section');
         const currentSection = yearSections[this.focusedYear];
@@ -1114,6 +1657,11 @@ class MoviesStreamingPlatform {
                     this.focusedCard.click();
                 }
                 break;
+                
+            case '/':
+                e.preventDefault();
+                this.searchInput.focus();
+                break;
         }
     }
     
@@ -1133,10 +1681,88 @@ class MoviesStreamingPlatform {
         }
     }
     
-    showLoader(show) {
-        if (this.loader) {
-            this.loader.classList.toggle('hidden', !show);
+    handleScroll() {
+        clearTimeout(this.scrollTimeout);
+        this.scrollTimeout = setTimeout(() => {
+            // Show/hide scroll to top button
+            const scrolled = window.pageYOffset || document.documentElement.scrollTop;
+            this.scrollTop.classList.toggle('visible', scrolled > 500);
+        }, 100);
+    }
+    
+    handleVisibilityChange() {
+        if (document.hidden) {
+            console.log('Page hidden, pausing image loading');
+            this.pauseImageLoading = true;
+        } else {
+            console.log('Page visible, resuming operations');
+            this.pauseImageLoading = false;
         }
+    }
+    
+    // Cache management
+    getCachedData() {
+        if (!this.cacheEnabled) return null;
+        
+        try {
+            const cached = localStorage.getItem('moviesCache');
+            if (!cached) return null;
+            
+            const { data, timestamp } = JSON.parse(cached);
+            
+            // Check if cache expired
+            if (Date.now() - timestamp > this.cacheExpiry) {
+                localStorage.removeItem('moviesCache');
+                return null;
+            }
+            
+            return data;
+        } catch (error) {
+            console.error('Error reading cache:', error);
+            return null;
+        }
+    }
+    
+    setCachedData(data) {
+        try {
+            const cacheData = {
+                data: data,
+                timestamp: Date.now()
+            };
+            localStorage.setItem('moviesCache', JSON.stringify(cacheData));
+        } catch (error) {
+            console.error('Error setting cache:', error);
+            // If localStorage is full, clear old data
+            if (error.name === 'QuotaExceededError') {
+                localStorage.removeItem('moviesCache');
+                localStorage.removeItem('watchHistory');
+            }
+        }
+    }
+    
+    // UI State management
+    setLoadingState(loading) {
+        this.isLoading = loading;
+        this.loader.classList.toggle('hidden', !loading);
+        
+        if (!loading) {
+            this.updateProgress('');
+        }
+    }
+    
+    updateProgress(text) {
+        if (this.loaderProgress) {
+            this.loaderProgress.textContent = text;
+        }
+    }
+    
+    updateStatus(status, text) {
+        this.statusIndicator.className = `status-indicator ${status}`;
+        this.statusText.textContent = text;
+    }
+    
+    updateMovieCount(count) {
+        this.movieCount.textContent = `${count.toLocaleString()} películas`;
     }
     
     showError(message) {
@@ -1144,19 +1770,58 @@ class MoviesStreamingPlatform {
         this.errorMessage.classList.add('show');
         setTimeout(() => {
             this.errorMessage.classList.remove('show');
-        }, 3000);
+        }, 4000);
     }
     
-    async refreshData() {
-        console.log('Refreshing movies data...');
-        await this.loadData();
+    loadFallbackData() {
+        // Datos de ejemplo en caso de error
+        const fallbackData = {
+            peliculas: [
+                {
+                    titulo: "Película de Ejemplo 1",
+                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+1",
+                    ano: "2024",
+                    enlace: "#",
+                    descripcion: "Esta es una película de ejemplo",
+                    genero: "Demo"
+                },
+                {
+                    titulo: "Película de Ejemplo 2",
+                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+2",
+                    ano: "2023",
+                    enlace: "#",
+                    descripcion: "Otra película de ejemplo",
+                    genero: "Demo"
+                },
+                {
+                    titulo: "Película de Ejemplo 3",
+                    poster: "https://via.placeholder.com/300x450/e50914/ffffff?text=Ejemplo+3",
+                    ano: "2023",
+                    enlace: "#",
+                    descripcion: "Una película más de ejemplo",
+                    genero: "Demo"
+                }
+            ]
+        };
+        
+        this.parseJSON(fallbackData);
+        this.organizeByYear();
+        this.renderCarousels();
+        this.updateStatus('error', 'Modo offline');
     }
     
     destroy() {
-        if (this.refreshInterval) {
-            clearInterval(this.refreshInterval);
-        }
+        // Cleanup
         document.removeEventListener('keydown', this.handleKeyboard);
+        window.removeEventListener('scroll', this.handleScroll);
+        document.removeEventListener('visibilitychange', this.handleVisibilityChange);
+        
+        if (this.imageObserver) {
+            this.imageObserver.disconnect();
+        }
+        
+        clearTimeout(this.searchTimeout);
+        clearTimeout(this.scrollTimeout);
     }
 }
 
@@ -1168,23 +1833,39 @@ document.addEventListener('DOMContentLoaded', () => {
     
     // Handle browser back button
     window.addEventListener('popstate', (event) => {
-        if (moviesPlatform.movieOverlay.style.display === 'block') {
+        if (moviesPlatform && moviesPlatform.movieOverlay.style.display === 'block') {
             moviesPlatform.closeModal();
         }
     });
     
-    // Expose platform instance for debugging
-    window.moviesPlatform = moviesPlatform;
-});
-
-// Handle page visibility
-document.addEventListener('visibilitychange', () => {
-    if (document.hidden && moviesPlatform) {
-        console.log('Page hidden, pausing activities');
-    } else if (moviesPlatform) {
-        console.log('Page visible, resuming activities');
+    // Handle online/offline events
+    window.addEventListener('online', () => {
+        if (moviesPlatform) {
+            moviesPlatform.updateStatus('connected', 'Conectado');
+            moviesPlatform.loadData(); // Reload data when back online
+        }
+    });
+    
+    window.addEventListener('offline', () => {
+        if (moviesPlatform) {
+            moviesPlatform.updateStatus('error', 'Sin conexión');
+        }
+    });
+    
+    // Expose platform instance for debugging (remove in production)
+    if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+        window.moviesPlatform = moviesPlatform;
     }
 });
+
+// Service Worker registration for offline support (optional)
+if ('serviceWorker' in navigator && window.location.protocol === 'https:') {
+    window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/sw.js').catch(err => {
+            console.log('ServiceWorker registration failed:', err);
+        });
+    });
+}
 </script>
 
 </body>
