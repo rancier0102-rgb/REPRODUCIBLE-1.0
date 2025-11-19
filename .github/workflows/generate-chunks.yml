@@ -1,41 +1,84 @@
-name: Generate Movie Chunks
+name: 🚀 Generate Movie Chunks
 
 on:
+  # Ejecutar cuando se modifican archivos JSON
   push:
     paths:
+      - 'data/*.json'
       - 'peliculas_*.json'
+      - 'generate-chunks.js'
+  
+  # Ejecutar cada domingo a medianoche
   schedule:
-    - cron: '0 0 * * 0'  # Cada domingo a medianoche
+    - cron: '0 0 * * 0'
+  
+  # Permitir ejecución manual
   workflow_dispatch:
+    inputs:
+      force_regenerate:
+        description: 'Forzar regeneración completa'
+        required: false
+        default: 'false'
 
 jobs:
   generate-chunks:
+    name: 📦 Generate and Optimize Chunks
     runs-on: ubuntu-latest
     
     steps:
-    - name: Checkout repository
+    - name: 📥 Checkout repository
       uses: actions/checkout@v3
-      
-    - name: Setup Node.js
+      with:
+        fetch-depth: 0
+    
+    - name: 🔧 Setup Node.js
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        
-    - name: Generate chunks
+        cache: 'npm'
+    
+    - name: 📊 Check for changes
+      id: check
       run: |
-        # Crear el script inline
-        cat > generate-chunks.js << 'EOF'
-        // Aquí va todo el código del generador de chunks
-        // (el código completo del punto 1)
-        EOF
-        
-        # Ejecutar generador
+        echo "Verificando cambios en archivos JSON..."
+        git diff --name-only HEAD^ HEAD | grep -E '\.(json|js)$' || echo "No hay cambios"
+    
+    - name: 🚀 Run chunk generator
+      run: |
+        echo "Ejecutando generador de chunks..."
         node generate-chunks.js
-        
-    - name: Commit and push chunks
+    
+    - name: 📈 Show statistics
+      run: |
+        if [ -f manifest.json ]; then
+          echo "📊 Estadísticas del manifest:"
+          node -e "
+            const manifest = require('./manifest.json');
+            console.log('Total películas:', manifest.statistics.totalMovies);
+            console.log('Total chunks:', manifest.chunks.length);
+            console.log('Tamaño total:', manifest.statistics.totalSizeMB, 'MB');
+          "
+        fi
+    
+    - name: 💾 Commit and push changes
       run: |
         git config --local user.email "action@github.com"
         git config --local user.name "GitHub Action"
+        
+        # Agregar archivos generados
         git add chunks/ manifest.json
-        git diff --quiet && git diff --staged --quiet || git commit -m "🚀 Auto-generated chunks [skip ci]"
-        git push
+        
+        # Verificar si hay cambios
+        if git diff --staged --quiet; then
+          echo "No hay cambios para commitear"
+        else
+          # Crear commit
+          MOVIES_COUNT=$(node -e "const m=require('./manifest.json'); console.log(m.statistics.totalMovies)")
+          git commit -m "🎬 Auto-generated chunks: $MOVIES_COUNT movies [skip ci]" \
+                     -m "Generated on $(date '+%Y-%m-%d %H:%M:%S')" \
+                     -m "Chunks: $(ls -1 chunks/*.json | wc -l) files"
+          
+          # Push changes
+          git push
+          echo "✅ Chunks actualizados y subidos exitosamente"
+        fi
