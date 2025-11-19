@@ -198,7 +198,7 @@ header {
     to { transform: translateX(0); }
 }
 
-/* Series Banner - Simplificado sin póster */
+/* Series Banner */
 .series-banner {
     position: relative;
     height: 250px;
@@ -215,7 +215,7 @@ header {
     background-size: cover;
     background-position: center;
     filter: blur(10px) brightness(0.4);
-    transform: scale(1.1);
+    transform: scale(1); /* alejada (antes 1.1) */
 }
 
 .series-banner-overlay {
@@ -280,17 +280,18 @@ header {
 .season-bar {
     display: flex;
     gap: 16px;
-    padding: 0; /* antes: 0 40px 30px */
+    padding: 0;
     overflow-x: auto;
     scrollbar-width: none;
     scroll-behavior: smooth;
-    justify-content: flex-start; /* antes: center */
+    justify-content: flex-start;
 }
 
 .season-bar::-webkit-scrollbar {
     display: none;
 }
 
+/* Botones de temporadas ocultos */
 .season-btn {
     position: absolute;
     top: 50%;
@@ -304,14 +305,12 @@ header {
     cursor: pointer;
     z-index: 11;
     transition: all 0.3s ease;
-    display: flex;
+    display: none !important; /* oculto */
     align-items: center;
     justify-content: center;
     border-radius: 8px;
     opacity: 0.7;
 }
-
-.season-carousel:hover .season-btn { opacity: 0.9; }
 .season-btn.prev { left: 0; }
 .season-btn.next { right: 0; }
 .season-btn.disabled { opacity: 0.3; cursor: not-allowed; }
@@ -370,7 +369,7 @@ header {
 
 .episodes-carousel {
     position: relative;
-    overflow: hidden;
+    overflow: visible; /* para que no se recorte el foco en TV */
     padding: 0 40px;
     max-width: 1200px; /* centrado */
     margin-left: auto;
@@ -383,7 +382,7 @@ header {
     transition: transform 0.5s cubic-bezier(0.4, 0, 0.2, 1);
 }
 
-/* Carousel Navigation Buttons */
+/* Carousel Navigation Buttons (ocultos) */
 .carousel-btn {
     position: absolute;
     top: 50%;
@@ -397,39 +396,15 @@ header {
     cursor: pointer;
     z-index: 10;
     transition: all 0.3s ease;
-    display: flex;
+    display: none !important; /* oculto */
     align-items: center;
     justify-content: center;
     opacity: 0;
 }
 
-.episodes-carousel:hover .carousel-btn {
-    opacity: 0.8;
-}
-
-.carousel-btn:hover {
-    background: rgba(229, 9, 20, 0.8);
-    opacity: 1 !important;
-}
-
-.carousel-btn.prev {
-    left: 0;
-    border-radius: 0 8px 8px 0;
-}
-
-.carousel-btn.next {
-    right: 0;
-    border-radius: 8px 0 0 8px;
-}
-
-.carousel-btn.disabled {
-    opacity: 0.3 !important;
-    cursor: not-allowed;
-}
-
-.carousel-btn.disabled:hover {
-    background: rgba(0,0,0,0.8);
-}
+.carousel-btn.prev { left: 0; border-radius: 0 8px 8px 0; }
+.carousel-btn.next { right: 0; border-radius: 8px 0 0 8px; }
+.carousel-btn.disabled { opacity: 0.3 !important; cursor: not-allowed; }
 
 /* Episode Cards - Carousel Style */
 .episode {
@@ -665,6 +640,16 @@ header {
     }
 }
 
+/* TV safe: asegurar que el episodio se vea completo y centrado */
+@media (min-width: 1280px) {
+    .episodes-carousel {
+        padding: 0 96px;   /* más margen lateral para evitar recortes por overscan */
+        overflow: visible; /* no recortar el foco ampliado */
+    }
+    .episode:hover { transform: scale(1.04); }
+    .episode.focused { transform: scale(1.06); }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
     header, .grid {
@@ -687,18 +672,6 @@ header {
     
     .episode {
         flex: 0 0 250px;
-    }
-    
-    .carousel-btn {
-        width: 40px;
-        height: 80px;
-        font-size: 1.5rem;
-    }
-
-    .season-btn {
-        width: 34px;
-        height: 54px;
-        font-size: 1.2rem;
     }
     
     .card.focused {
@@ -749,7 +722,7 @@ header {
 <div id="seriesOverlay" class="series-overlay">
     <span class="close" id="closeButton">×</span>
     
-    <!-- Banner sin póster duplicado -->
+    <!-- Banner -->
     <div class="series-banner">
         <div class="series-banner-bg" id="seriesBannerBg"></div>
         <div class="series-banner-overlay"></div>
@@ -901,7 +874,7 @@ class StreamingPlatform {
         } else {
             containerWidth = window.innerWidth - 80;
         }
-        const visibleWidth = this.episodesPerView * 315; // ancho de visibles (card+gap)
+        const visibleWidth = this.episodesPerView * 315; // ancho visible (card+gap)
         const centerOffset = Math.max(0, (containerWidth - visibleWidth) / 2);
         const offset = this.carouselPosition * 315; // Episode width + gap
         this.episodesTrack.style.transform = `translateX(${centerOffset - offset}px)`;
@@ -952,12 +925,11 @@ class StreamingPlatform {
 
     moveSeasonCarousel(direction) {
         if (!this.seasonBar) return;
-        const step = this.seasonBar.clientWidth * 0.8; // avanza ~80% del viewport del carrusel
+        const step = this.seasonBar.clientWidth * 0.8; // avanza ~80%
         const target = direction === 'next'
             ? this.seasonBar.scrollLeft + step
             : this.seasonBar.scrollLeft - step;
         this.seasonBar.scrollTo({ left: target, behavior: 'smooth' });
-        // actualizar estado de botones tras el scroll
         setTimeout(() => this.updateSeasonButtons(), 300);
     }
 
@@ -1251,7 +1223,7 @@ class StreamingPlatform {
             el.classList.toggle('focused', this.focusMode === 'season' && i === this.seasonFocus);
             el.tabIndex = (this.focusMode === 'season' && i === this.seasonFocus) ? 0 : -1;
         });
-        // Asegura que la temporada enfocada quede visible en el carrusel
+        // Asegura que la temporada enfocada quede visible
         if (this.focusMode === 'season' && seasons[this.seasonFocus]) {
             seasons[this.seasonFocus].scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
         }
@@ -1388,7 +1360,6 @@ class StreamingPlatform {
                 case 'ArrowRight':
                     if (this.episodeFocus < total - 1) {
                         this.episodeFocus++;
-                        // Auto-advance carousel if needed
                         if (this.episodeFocus >= this.carouselPosition + this.episodesPerView) {
                             this.moveCarousel('next');
                         }
@@ -1397,7 +1368,6 @@ class StreamingPlatform {
                 case 'ArrowLeft':
                     if (this.episodeFocus > 0) {
                         this.episodeFocus--;
-                        // Auto-advance carousel if needed
                         if (this.episodeFocus < this.carouselPosition) {
                             this.moveCarousel('prev');
                         }
