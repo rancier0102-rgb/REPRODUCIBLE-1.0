@@ -1,0 +1,41 @@
+name: Generate Movie Chunks
+
+on:
+  push:
+    paths:
+      - 'peliculas_*.json'
+  schedule:
+    - cron: '0 0 * * 0'  # Cada domingo a medianoche
+  workflow_dispatch:
+
+jobs:
+  generate-chunks:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '18'
+        
+    - name: Generate chunks
+      run: |
+        # Crear el script inline
+        cat > generate-chunks.js << 'EOF'
+        // Aquí va todo el código del generador de chunks
+        // (el código completo del punto 1)
+        EOF
+        
+        # Ejecutar generador
+        node generate-chunks.js
+        
+    - name: Commit and push chunks
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        git add chunks/ manifest.json
+        git diff --quiet && git diff --staged --quiet || git commit -m "🚀 Auto-generated chunks [skip ci]"
+        git push
