@@ -1,1918 +1,280 @@
-<!DOCTYPE html> 
+<!DOCTYPE html>
 <html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Latino VOD+ - Plataforma Multi-Fuente Ultra Optimizada</title>
+<title>Movies HD</title>
 <style>
-/* ESTILOS BASE - Color azul neón cambiado */
-:root {
-    --primary-color: #e50914;
-    --secondary-color: #46d369;
-    --accent-color: #00ffff; /* Cyan neón en lugar de azul */
-    --background-dark: #141414;
-    --background-card: #181818;
-    --background-secondary: #222;
-    --text-light: #fff;
-    --muted: #b3b3b3;
-    --radius: 8px;
-    --transition: 0.25s ease;
-    --focus-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { 
+    font-family: -apple-system, sans-serif; 
+    background: #000; 
+    color: #fff; 
 }
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    font-family: 'Segoe UI', Arial, sans-serif;
-    background: var(--background-dark);
-    color: var(--text-light);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-}
-
-/* Optimización: Usar will-change para animaciones predecibles */
-.movie-card,
-.carousel-track {
-    will-change: transform;
-}
-
-/* Loader mejorado con mejor performance */
-.loader {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    z-index: 1000;
-    background: rgba(20, 20, 20, 0.98);
-    padding: 30px;
-    border-radius: 15px;
-    min-width: 350px;
-    max-width: 600px;
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.loader-spinner {
-    width: 60px;
-    height: 60px;
-    border: 3px solid rgba(229, 9, 20, 0.3);
-    border-top: 3px solid var(--primary-color);
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-    margin: 0 auto 20px;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-.loader-text {
-    color: var(--text-light);
-    font-size: 1.3rem;
-    margin-bottom: 10px;
-    font-weight: 600;
-}
-
-.loader-progress {
-    margin-top: 10px;
-    color: var(--muted);
-    font-size: 0.95rem;
-}
-
-.loader-progress-bar {
-    width: 100%;
-    height: 4px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 2px;
-    margin: 15px 0;
-    overflow: hidden;
-}
-
-.loader-progress-fill {
-    height: 100%;
-    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
-    border-radius: 2px;
-    width: 0%;
-    transition: width 0.3s ease;
-}
-
-.loader-sources {
-    margin-top: 20px;
-    text-align: left;
-    max-height: 250px;
-    overflow-y: auto;
-    padding-right: 10px;
-    scrollbar-width: thin;
-    scrollbar-color: rgba(255,255,255,0.2) transparent;
-}
-
-.loader-sources::-webkit-scrollbar {
-    width: 6px;
-}
-
-.loader-sources::-webkit-scrollbar-track {
-    background: rgba(255,255,255,0.05);
-    border-radius: 3px;
-}
-
-.loader-sources::-webkit-scrollbar-thumb {
-    background: rgba(255,255,255,0.2);
-    border-radius: 3px;
-}
-
-.loader-source-item {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    padding: 8px;
-    margin: 5px 0;
-    border-radius: 5px;
-    background: rgba(255, 255, 255, 0.05);
-    transition: all 0.3s ease;
-}
-
-.loader-source-item:hover {
-    background: rgba(255, 255, 255, 0.08);
-}
-
-.loader-source-status {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    background: var(--muted);
-    flex-shrink: 0;
-}
-
-.loader-source-status.loading {
-    background: #ffa500;
-    animation: pulse 1s infinite;
-}
-
-.loader-source-status.success {
-    background: var(--secondary-color);
-}
-
-.loader-source-status.error {
-    background: #ff4444;
-}
-
-.loader-source-status.cached {
-    background: var(--accent-color);
-}
-
-.loader-source-name {
-    flex: 1;
-    font-size: 0.9rem;
-}
-
-.loader-source-count {
-    font-size: 0.8rem;
-    color: var(--muted);
-}
-
-.loader.hidden {
-    display: none;
-}
-
-@keyframes pulse {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.5; }
-}
-
-/* HEADER */
 header {
-    padding: 15px 40px;
-    background: linear-gradient(180deg, rgba(0,0,0,0.95), rgba(0,0,0,0.8));
+    padding: 20px;
+    background: #111;
     position: sticky;
     top: 0;
-    display: flex;
-    gap: 15px;
-    align-items: center;
     z-index: 10;
-    backdrop-filter: blur(10px);
-    flex-wrap: wrap;
-    border-bottom: 1px solid rgba(255,255,255,0.1);
+    display: flex;
+    gap: 20px;
+    align-items: center;
 }
-
-.logo { 
-    font-weight: bold; 
-    font-size: 1.8rem; 
-    background: linear-gradient(45deg, var(--primary-color), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    text-shadow: 0 0 30px rgba(229, 9, 20, 0.5);
+h1 { 
+    color: #e50914; 
+    font-size: 1.5rem;
 }
-
-.search-container {
+input {
     flex: 1;
     max-width: 400px;
-    margin: 0 auto;
-    position: relative;
-}
-
-.search-input {
-    width: 100%;
-    padding: 10px 45px 10px 20px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 25px;
-    color: var(--text-light);
-    font-size: 0.95rem;
-    transition: all 0.3s ease;
-}
-
-.search-input:focus {
-    outline: none;
-    background: rgba(255,255,255,0.15);
-    border-color: var(--primary-color);
-    box-shadow: 0 0 20px rgba(229, 9, 20, 0.3);
-}
-
-.search-clear {
-    position: absolute;
-    right: 15px;
-    top: 50%;
-    transform: translateY(-50%);
-    background: none;
+    padding: 10px;
     border: none;
-    color: var(--muted);
-    cursor: pointer;
-    padding: 5px;
-    display: none;
-    font-size: 1.2rem;
-    transition: all 0.3s ease;
+    border-radius: 5px;
+    background: #222;
+    color: #fff;
 }
-
-.search-clear.visible {
+.counter {
+    color: #888;
+    font-size: 0.9rem;
+}
+.years {
+    display: flex;
+    gap: 10px;
+    padding: 10px 20px;
+    background: #111;
+    overflow-x: auto;
+}
+.year-btn {
+    padding: 5px 15px;
+    background: #222;
+    border: none;
+    border-radius: 20px;
+    color: #fff;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.year-btn.active {
+    background: #e50914;
+}
+main {
+    padding: 20px;
+}
+.year-section {
+    margin-bottom: 30px;
+}
+.year-title {
+    font-size: 1.5rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+.movies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+    gap: 15px;
+}
+.movie {
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    background: #111;
+    border-radius: 5px;
+    overflow: hidden;
+}
+.movie:hover {
+    transform: scale(1.05);
+}
+.movie img {
+    width: 100%;
+    height: 225px;
+    object-fit: cover;
     display: block;
 }
-
-.search-clear:hover {
-    color: var(--primary-color);
-}
-
-/* SOURCE SELECTOR */
-.source-selector {
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    padding: 12px 40px;
-    background: rgba(0,0,0,0.5);
-    border-bottom: 1px solid rgba(255,255,255,0.1);
-    overflow-x: auto;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
-}
-
-.source-label {
-    color: var(--muted);
-    font-size: 0.9rem;
-    margin-right: 10px;
-    white-space: nowrap;
-    font-weight: 600;
-}
-
-.source-btn {
-    padding: 8px 16px;
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    color: var(--text-light);
+.movie-title {
+    padding: 8px;
     font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    position: relative;
-    font-weight: 500;
-}
-
-.source-btn:hover {
-    background: rgba(255,255,255,0.2);
-    border-color: var(--primary-color);
-    transform: translateY(-2px);
-}
-
-.source-btn.active {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-}
-
-.source-btn .badge {
-    position: absolute;
-    top: -8px;
-    right: -8px;
-    background: var(--secondary-color);
-    color: white;
-    font-size: 0.7rem;
-    padding: 2px 6px;
-    border-radius: 10px;
-    font-weight: bold;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.3);
-}
-
-/* CATEGORY FILTER */
-.category-filter {
-    display: flex;
-    gap: 10px;
-    padding: 12px 40px;
-    background: rgba(0,0,0,0.3);
-    overflow-x: auto;
-    scrollbar-width: thin;
-    -webkit-overflow-scrolling: touch;
-}
-
-.category-btn {
-    padding: 8px 16px;
-    background: transparent;
-    border: 1px solid rgba(255,255,255,0.2);
-    border-radius: 20px;
-    color: var(--muted);
-    font-size: 0.85rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    white-space: nowrap;
-    font-weight: 500;
-}
-
-.category-btn:hover {
-    color: var(--text-light);
-    border-color: var(--primary-color);
-    background: rgba(229, 9, 20, 0.1);
-}
-
-.category-btn.active {
-    background: var(--primary-color);
-    color: white;
-    border-color: var(--primary-color);
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.4);
-}
-
-/* Status bar */
-.status-bar {
-    display: flex;
-    gap: 20px;
-    align-items: center;
-    margin-left: auto;
-}
-
-.movie-count {
-    color: var(--text-light);
-    font-size: 0.9rem;
-    font-weight: 600;
-    padding: 6px 12px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 20px;
-}
-
-.status-indicator {
-    padding: 6px 12px;
-    background: rgba(70, 211, 105, 0.2);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-weight: 500;
-}
-
-.status-indicator::before {
-    content: "";
-    width: 8px;
-    height: 8px;
-    background: var(--secondary-color);
-    border-radius: 50%;
-    animation: pulse 2s infinite;
-}
-
-/* MAIN CONTENT */
-.main-content {
-    padding: 20px 0;
-    min-height: 500px;
-}
-
-/* YEAR GROUPS */
-.year-group {
-    margin-bottom: 60px;
-    opacity: 0;
-    animation: fadeIn 0.5s ease-out forwards;
-}
-
-.year-group-header {
-    padding: 0 40px;
-    margin-bottom: 25px;
-    display: flex;
-    align-items: center;
-    gap: 20px;
-    position: relative;
-}
-
-.year-group-header::before {
-    content: "";
-    position: absolute;
-    left: 0;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 4px;
-    height: 30px;
-    background: linear-gradient(180deg, var(--primary-color), var(--accent-color));
-    border-radius: 2px;
-}
-
-.year-group-title {
-    font-size: 2rem;
-    font-weight: 700;
-    background: linear-gradient(45deg, var(--text-light), var(--accent-color));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-}
-
-.year-group-count {
-    color: var(--muted);
-    font-size: 1rem;
-    padding: 4px 12px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 20px;
-}
-
-@keyframes fadeIn {
-    from { 
-        opacity: 0; 
-        transform: translateY(20px); 
-    }
-    to { 
-        opacity: 1; 
-        transform: translateY(0); 
-    }
-}
-
-/* CAROUSEL */
-.carousel-container {
-    position: relative;
-    padding: 0 40px;
-    margin-bottom: 20px;
-}
-
-.carousel-track {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    padding: 10px 0 20px;
-    -webkit-overflow-scrolling: touch;
-}
-
-.carousel-track::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-nav {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 40px;
-    height: 100px;
-    background: linear-gradient(90deg, rgba(20,20,20,0.95), transparent);
-    border: none;
-    color: white;
-    font-size: 1.8rem;
-    cursor: pointer;
-    z-index: 5;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.carousel-nav.prev {
-    left: 0;
-}
-
-.carousel-nav.next {
-    right: 0;
-    background: linear-gradient(-90deg, rgba(20,20,20,0.95), transparent);
-}
-
-.carousel-container:hover .carousel-nav {
-    opacity: 0.8;
-}
-
-.carousel-nav:hover {
-    opacity: 1 !important;
-}
-
-/* MOVIE CARDS - Optimizado */
-.movie-card {
-    flex: 0 0 160px;
-    background: var(--background-card);
-    border-radius: 8px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    border: 2px solid transparent;
-    contain: layout style paint;
-}
-
-.movie-card.skeleton {
-    background: linear-gradient(90deg, #2a2a2a 25%, #333 50%, #2a2a2a 75%);
-    background-size: 200% 100%;
-    animation: loading 1.5s infinite;
-    height: 240px;
-}
-
-@keyframes loading {
-    to { background-position-x: -200%; }
-}
-
-.movie-card img { 
-    width: 100%; 
-    height: 240px;
-    object-fit: cover;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.movie-card img.loaded {
-    opacity: 1;
-}
-
-.movie-source-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 4px 8px;
-    background: rgba(0,0,0,0.9);
-    color: white;
-    font-size: 0.65rem;
-    border-radius: 12px;
-    font-weight: bold;
-    z-index: 2;
-    backdrop-filter: blur(10px);
-}
-
-.movie-year-badge {
-    position: absolute;
-    top: 8px;
-    left: 8px;
-    padding: 4px 8px;
-    background: rgba(229, 9, 20, 0.9);
-    color: white;
-    font-size: 0.7rem;
-    border-radius: 12px;
-    font-weight: bold;
-    z-index: 2;
-}
-
-.movie-card-title {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 20px 10px 10px;
-    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
-    color: white;
-    font-size: 0.85rem;
-    font-weight: 600;
     line-height: 1.2;
 }
-
-.movie-card:hover {
-    transform: scale(1.05);
-    z-index: 3;
-    border-color: var(--primary-color);
-    box-shadow: 0 10px 30px rgba(229, 9, 20, 0.5);
+.loading {
+    text-align: center;
+    padding: 50px;
+    color: #666;
 }
-
-.play-overlay {
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0,0,0,0.7);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-}
-
-.movie-card:hover .play-overlay {
-    opacity: 1;
-}
-
-.play-icon {
-    width: 60px;
-    height: 60px;
-    background: rgba(229, 9, 20, 0.9);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    box-shadow: 0 4px 20px rgba(229, 9, 20, 0.6);
-}
-
-.play-icon::after {
-    content: "▶";
-    color: white;
-    font-size: 1.5rem;
-    margin-left: 3px;
-}
-
-/* Back button */
-.back-button {
-    position: fixed;
-    top: 20px;
-    left: 20px;
-    background: rgba(34, 34, 34, 0.95);
-    color: var(--text-light);
-    border: 2px solid transparent;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: none;
-    z-index: 201;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.back-button.visible {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.back-button:hover {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-}
-
-/* Empty state */
-.empty-state {
+.empty {
     text-align: center;
     padding: 100px 20px;
-    color: var(--muted);
+    color: #666;
 }
-
-.empty-state h2 {
-    font-size: 2rem;
-    margin-bottom: 15px;
-    color: var(--text-light);
-}
-
-.empty-state p {
-    font-size: 1.1rem;
-}
-
-/* Responsive */
-@media (max-width: 768px) {
-    header {
-        padding: 12px 15px;
+@media (max-width: 600px) {
+    .movies { 
+        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+        gap: 10px;
     }
-    
-    .logo {
-        font-size: 1.4rem;
-    }
-    
-    .source-selector,
-    .category-filter {
-        padding: 10px 15px;
-    }
-    
-    .year-group-header,
-    .carousel-container {
-        padding: 0 15px;
-    }
-    
-    .year-group-title {
-        font-size: 1.5rem;
-    }
-    
-    .movie-card {
-        flex: 0 0 120px;
-    }
-    
-    .movie-card img {
-        height: 180px;
-    }
-    
-    .carousel-nav {
-        display: none;
-    }
-}
-
-/* Loading animation optimizada */
-@keyframes shimmer {
-    0% {
-        background-position: -1000px 0;
-    }
-    100% {
-        background-position: 1000px 0;
-    }
-}
-
-.skeleton-shimmer {
-    background: linear-gradient(90deg, #2a2a2a 0%, #333 50%, #2a2a2a 100%);
-    background-size: 1000px 100%;
-    animation: shimmer 2s infinite;
+    .movie img { height: 150px; }
+    h1 { font-size: 1.2rem; }
 }
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader">
-    <div class="loader-spinner"></div>
-    <div class="loader-text">Cargando películas...</div>
-    <div class="loader-progress-bar">
-        <div class="loader-progress-fill" id="progressFill"></div>
-    </div>
-    <div class="loader-progress" id="loaderProgress">Iniciando...</div>
-    <div class="loader-sources" id="loaderSources"></div>
-</div>
-
 <header>
-    <div class="logo">MOVIES+ HD</div>
-    
-    <div class="search-container">
-        <input type="text" 
-               class="search-input" 
-               id="searchInput" 
-               placeholder="Buscar películas..."
-               autocomplete="off">
-        <button class="search-clear" id="searchClear">✕</button>
-    </div>
-    
-    <div class="status-bar">
-        <div class="movie-count" id="movieCount">0 películas</div>
-        <div class="status-indicator" id="statusIndicator">
-            <span id="statusText">Conectando...</span>
-        </div>
-    </div>
+    <h1>MOVIES+</h1>
+    <input type="text" id="search" placeholder="Buscar...">
+    <span class="counter" id="counter">0</span>
 </header>
 
-<div class="source-selector" id="sourceSelector">
-    <span class="source-label">Años:</span>
-    <button class="source-btn active" data-source="all">
-        Todas
-        <span class="badge" id="allCount">0</span>
-    </button>
+<div class="years" id="years">
+    <button class="year-btn active" data-year="all">Todos</button>
 </div>
 
-<div class="category-filter" id="categoryFilter">
-    <button class="category-btn active" data-category="all">Todas</button>
-    <button class="category-btn" data-category="accion">Acción</button>
-    <button class="category-btn" data-category="comedia">Comedia</button>
-    <button class="category-btn" data-category="drama">Drama</button>
-    <button class="category-btn" data-category="terror">Terror</button>
-    <button class="category-btn" data-category="scifi">Ciencia Ficción</button>
-    <button class="category-btn" data-category="romance">Romance</button>
-    <button class="category-btn" data-category="animacion">Animación</button>
-    <button class="category-btn" data-category="thriller">Thriller</button>
-    <button class="category-btn" data-category="aventura">Aventura</button>
-</div>
-
-<button class="back-button" id="backButton">
-    <span>←</span>
-    <span>Volver</span>
-</button>
-
-<main class="main-content" id="mainContent"></main>
-
-<div id="movieOverlay" class="movie-overlay" style="display: none;">
-    <span class="close" id="closeButton">×</span>
-</div>
+<main id="main">
+    <div class="loading">Cargando...</div>
+</main>
 
 <script>
-/**
- * ========================================
- * PLATAFORMA ULTRA OPTIMIZADA CON GENERACIÓN AUTOMÁTICA
- * Version 3.0 - Auto-Generated Sources (2025-1940)
- * ========================================
- */
+// CONFIGURACIÓN - CAMBIA ESTOS VALORES
+const CONFIG = {
+    github_user: 'rancier0102',      // <-- CAMBIA
+    github_repo: 'REPRODUCIBLE-1.0',  // <-- CAMBIA
+    github_branch: 'main'            // <-- CAMBIA si usas otra rama
+};
 
-class UltraOptimizedMoviesPlatform {
-    constructor() {
-        // Configuración del repositorio
-        this.repoConfig = {
-            username: 'TU_USUARIO', // CAMBIA ESTO
-            repo: 'TU_REPOSITORIO', // CAMBIA ESTO
-            branch: 'main'
-        };
-        
-        // Generación automática de fuentes (2025 a 1940)
-        this.sources = this.generateYearSources();
-        
-        // Configuración de rendimiento mejorada
-        this.config = {
-            cacheEnabled: true,
-            cacheExpiry: 7200000, // 2 horas
-            concurrentLoads: 6, // Cargar 6 fuentes en paralelo
-            batchSize: 30, // Renderizar 30 películas por lote
-            debounceDelay: 250, // Delay para búsqueda
-            lazyLoadOffset: 200, // Pixels antes de cargar imágenes
-            retryDelay: 1500, // 1.5 segundos entre reintentos
-            maxRetries: 2,
-            progressiveLoading: true, // Cargar y mostrar progresivamente
-            priorityYears: [2025, 2024, 2023, 2022, 2021], // Años prioritarios
-            useCompression: true
-        };
-        
-        // Estado de la aplicación
-        this.state = {
-            allMovies: [],
-            filteredMovies: [],
-            currentSource: 'all',
-            currentCategory: 'all',
-            searchQuery: '',
-            isLoading: false,
-            loadedSources: 0,
-            totalSources: 0,
-            failedSources: [],
-            moviesByYear: {},
-            moviesByCategory: {},
-            imageCache: new Map(),
-            abortController: null,
-            loadStartTime: null
-        };
-        
-        // Índices para búsqueda ultra rápida
-        this.searchIndex = new Map();
-        this.yearIndex = new Map();
-        this.categoryIndex = new Map();
-        
-        // Inicialización
-        this.init();
-    }
-    
-    generateYearSources() {
-        const sources = [];
-        const startYear = 2025;
-        const endYear = 1940;
-        const baseUrl = `https://raw.githubusercontent.com/${this.repoConfig.username}/${this.repoConfig.repo}/${this.repoConfig.branch}`;
-        
-        // Generar colores para cada década
-        const getColorForYear = (year) => {
-            const colors = {
-                '2020s': '#e50914', // Rojo Netflix
-                '2010s': '#46d369', // Verde
-                '2000s': '#00ffff', // Cyan neón
-                '1990s': '#ffa500', // Naranja
-                '1980s': '#ff69b4', // Rosa
-                '1970s': '#9b59b6', // Púrpura
-                '1960s': '#3498db', // Azul cielo
-                '1950s': '#f1c40f', // Dorado
-                '1940s': '#95a5a6'  // Plata
-            };
-            
-            const decade = Math.floor(year / 10) * 10;
-            return colors[`${decade}s`] || '#e50914';
-        };
-        
-        // Generar fuentes año por año
-        for (let year = startYear; year >= endYear; year--) {
-            const priority = startYear - year + 1; // Prioridad inversa (años recientes primero)
-            
-            sources.push({
-                id: `year_${year}`,
-                name: `📅 ${year}`,
-                year: year,
-                url: `${baseUrl}/peliculas_${year}.json`,
-                enabled: true,
-                priority: priority,
-                color: getColorForYear(year),
-                movies: [],
-                status: 'pending',
-                retryCount: 0,
-                maxRetries: this.config?.maxRetries || 2,
-                isDecadePriority: year % 10 === 0, // Priorizar cambios de década
-                loadTime: null
-            });
-        }
-        
-        return sources;
-    }
+// App minimalista
+const app = {
+    movies: [],
+    filtered: [],
     
     async init() {
-        console.log('🚀 Inicializando plataforma con', this.sources.length, 'fuentes');
+        // Generar años (2025 a 1940)
+        const years = [];
+        for(let y = 2025; y >= 1940; y--) years.push(y);
         
-        this.cacheDOMElements();
-        this.setupEventListeners();
-        this.setupObservers();
-        this.loadFromCache();
-        await this.loadAllSourcesProgressive();
-        this.setupPeriodicRefresh();
-    }
+        // Cargar películas
+        const promises = years.map(year => this.loadYear(year));
+        await Promise.allSettled(promises);
+        
+        // Renderizar
+        this.render();
+        this.setupEvents();
+        this.createYearButtons();
+    },
     
-    cacheDOMElements() {
-        this.elements = {
-            loader: document.getElementById('loader'),
-            loaderProgress: document.getElementById('loaderProgress'),
-            loaderSources: document.getElementById('loaderSources'),
-            progressFill: document.getElementById('progressFill'),
-            mainContent: document.getElementById('mainContent'),
-            movieCount: document.getElementById('movieCount'),
-            searchInput: document.getElementById('searchInput'),
-            searchClear: document.getElementById('searchClear'),
-            sourceSelector: document.getElementById('sourceSelector'),
-            categoryFilter: document.getElementById('categoryFilter'),
-            statusText: document.getElementById('statusText'),
-            statusIndicator: document.getElementById('statusIndicator'),
-            allCount: document.getElementById('allCount'),
-            backButton: document.getElementById('backButton'),
-            movieOverlay: document.getElementById('movieOverlay'),
-            closeButton: document.getElementById('closeButton')
-        };
-    }
-    
-    setupEventListeners() {
-        // Búsqueda optimizada con debounce
-        let searchTimeout;
-        this.elements.searchInput.addEventListener('input', (e) => {
-            clearTimeout(searchTimeout);
-            const value = e.target.value;
-            this.elements.searchClear.classList.toggle('visible', value.length > 0);
-            searchTimeout = setTimeout(() => this.performSearch(value), this.config.debounceDelay);
-        });
-        
-        this.elements.searchClear.addEventListener('click', () => {
-            this.elements.searchInput.value = '';
-            this.elements.searchClear.classList.remove('visible');
-            this.performSearch('');
-        });
-        
-        // Delegación de eventos optimizada
-        this.elements.sourceSelector.addEventListener('click', (e) => {
-            const btn = e.target.closest('.source-btn');
-            if (btn) this.filterByYear(btn.dataset.source);
-        });
-        
-        this.elements.categoryFilter.addEventListener('click', (e) => {
-            const btn = e.target.closest('.category-btn');
-            if (btn) this.filterByCategory(btn.dataset.category);
-        });
-        
-        // Navegación
-        this.elements.backButton.addEventListener('click', () => this.closeMovieDetail());
-        this.elements.closeButton.addEventListener('click', () => this.closeMovieDetail());
-        
-        // Atajos de teclado
-        document.addEventListener('keydown', (e) => {
-            if (e.key === 'Escape') this.closeMovieDetail();
-            if (e.key === 'f' && e.ctrlKey) {
-                e.preventDefault();
-                this.elements.searchInput.focus();
-            }
-        });
-        
-        // Scroll infinito (opcional)
-        window.addEventListener('scroll', () => this.handleScroll());
-    }
-    
-    setupObservers() {
-        // Intersection Observer para lazy loading de imágenes
-        this.imageObserver = new IntersectionObserver(
-            (entries) => {
-                entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        this.loadImage(entry.target);
-                    }
-                });
-            },
-            {
-                rootMargin: `${this.config.lazyLoadOffset}px`,
-                threshold: 0.01
-            }
-        );
-    }
-    
-    async loadAllSourcesProgressive() {
-        this.state.loadStartTime = Date.now();
-        this.state.isLoading = true;
-        this.state.totalSources = this.sources.length;
-        this.showLoader(true);
-        this.renderLoadingProgress();
-        
-        // Cancelar cargas anteriores
-        if (this.state.abortController) {
-            this.state.abortController.abort();
-        }
-        this.state.abortController = new AbortController();
-        
-        // Separar fuentes por prioridad
-        const prioritySources = this.sources.filter(s => 
-            this.config.priorityYears.includes(s.year)
-        );
-        const regularSources = this.sources.filter(s => 
-            !this.config.priorityYears.includes(s.year)
-        );
-        
-        // Cargar fuentes prioritarias primero
-        console.log('📌 Cargando años prioritarios:', this.config.priorityYears);
-        await this.loadSourceBatch(prioritySources, true);
-        
-        // Renderizar contenido prioritario inmediatamente
-        if (this.state.allMovies.length > 0) {
-            this.processAndRender();
-        }
-        
-        // Cargar el resto de fuentes
-        console.log('📚 Cargando años restantes...');
-        await this.loadSourceBatch(regularSources, false);
-        
-        // Procesamiento final
-        this.finalizeLoading();
-    }
-    
-    async loadSourceBatch(sources, isPriority = false) {
-        const chunks = this.chunkArray(sources, this.config.concurrentLoads);
-        
-        for (const chunk of chunks) {
-            const promises = chunk.map(source => this.loadSourceWithRetry(source));
-            const results = await Promise.allSettled(promises);
-            
-            // Actualizar progreso
-            this.updateProgress();
-            
-            // Si es carga progresiva y hay contenido, actualizar vista
-            if (this.config.progressiveLoading && this.state.allMovies.length > 0) {
-                this.processAndRender();
-            }
-            
-            // Log de resultados
-            const successful = results.filter(r => r.status === 'fulfilled').length;
-            console.log(`✅ Lote completado: ${successful}/${chunk.length} fuentes`);
-        }
-    }
-    
-    async loadSourceWithRetry(source) {
-        let lastError = null;
-        
-        for (let attempt = 0; attempt <= source.maxRetries; attempt++) {
-            try {
-                await this.loadSource(source);
-                return; // Éxito
-            } catch (error) {
-                lastError = error;
-                source.retryCount = attempt + 1;
-                
-                if (attempt < source.maxRetries) {
-                    console.log(`⚠️ Reintento ${attempt + 1} para ${source.name}`);
-                    await this.delay(this.config.retryDelay * (attempt + 1));
-                }
-            }
-        }
-        
-        // Si llegamos aquí, todos los reintentos fallaron
-        this.handleSourceError(source, lastError);
-    }
-    
-    async loadSource(source) {
-        const startTime = Date.now();
-        this.updateSourceStatus(source.id, 'loading');
-        
-        // Verificar caché
-        const cached = this.getCachedData(source.id);
-        if (cached && !this.isCacheExpired(cached.timestamp)) {
-            source.movies = cached.data;
-            source.status = 'cached';
-            source.loadTime = Date.now() - startTime;
-            this.state.loadedSources++;
-            this.addMoviesToState(source.movies);
-            this.updateSourceStatus(source.id, 'cached');
-            return;
-        }
-        
-        // Fetch con timeout
-        const controller = new AbortController();
-        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 segundos timeout
-        
+    async loadYear(year) {
         try {
-            const response = await fetch(source.url, {
-                signal: controller.signal,
-                headers: {
-                    'Accept': 'application/json',
-                    'Cache-Control': 'max-age=3600'
+            const url = `https://raw.githubusercontent.com/${CONFIG.github_user}/${CONFIG.github_repo}/${CONFIG.github_branch}/peliculas_${year}.json`;
+            const res = await fetch(url);
+            if (!res.ok) return;
+            
+            const data = await res.json();
+            const movies = Array.isArray(data) ? data : [data];
+            
+            movies.forEach(m => {
+                if (m?.titulo && m?.enlace) {
+                    // Extraer año del título si existe
+                    const yearMatch = m.titulo.match(/\((\d{4})\)/);
+                    const cleanTitle = m.titulo.replace(/\s*\(\d{4}\)\s*$/, '');
+                    
+                    this.movies.push({
+                        titulo: cleanTitle || m.titulo,
+                        poster: m.poster || `https://via.placeholder.com/300x450/222/666?text=${year}`,
+                        year: yearMatch ? yearMatch[1] : (m.ano || year),
+                        enlace: m.enlace
+                    });
                 }
             });
-            
-            clearTimeout(timeoutId);
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
-            
-            const text = await response.text();
-            const data = JSON.parse(text);
-            
-            // Procesar películas
-            source.movies = this.parseMovies(data, source);
-            source.status = 'success';
-            source.loadTime = Date.now() - startTime;
-            
-            // Agregar al estado
-            this.addMoviesToState(source.movies);
-            
-            // Actualizar progreso
-            this.state.loadedSources++;
-            this.updateSourceStatus(source.id, 'success');
-            
-            // Guardar en caché
-            this.setCachedData(source.id, source.movies);
-            
-            console.log(`✓ ${source.name}: ${source.movies.length} películas (${source.loadTime}ms)`);
-            
-        } catch (error) {
-            clearTimeout(timeoutId);
-            
-            if (error.name === 'AbortError') {
-                throw new Error('Timeout');
-            }
-            throw error;
-        }
-    }
+        } catch(e) {}
+    },
     
-    parseMovies(data, source) {
-        const movies = [];
-        let items = data.peliculas || data.movies || data.items || data;
-        
-        if (!Array.isArray(items)) {
-            items = Object.values(items);
-        }
-        
-        items.forEach((item, index) => {
-            if (this.isValidMovie(item)) {
-                const movie = this.normalizeMovie(item, source, index);
-                movies.push(movie);
-                
-                // Agregar al índice de búsqueda inmediatamente
-                this.addToSearchIndex(movie);
-            }
-        });
-        
-        return movies;
-    }
-    
-    isValidMovie(item) {
-        return item && 
-               (item.titulo || item.title || item.nombre || item.name) && 
-               (item.enlace || item.url || item.link || item.href);
-    }
-    
-    normalizeMovie(item, source, index) {
-        const title = item.titulo || item.title || item.nombre || item.name;
-        const movie = {
-            id: `${source.id}_${index}_${Date.now()}`,
-            titulo: title,
-            poster: this.normalizePosterUrl(item.poster || item.imagen || item.image || item.img),
-            ano: source.year, // Usar el año de la fuente
-            enlace: item.enlace || item.url || item.link || item.href,
-            source: source.name,
-            sourceId: source.id,
-            sourceColor: source.color,
-            categoria: this.normalizeCategory(item.categoria || item.genero || item.genre || item.category),
-            descripcion: item.descripcion || item.description || item.sinopsis || '',
-            duracion: item.duracion || item.duration || item.runtime || null,
-            calidad: item.calidad || item.quality || 'HD',
-            idioma: item.idioma || item.language || item.lang || 'Español',
-            rating: item.rating || item.puntuacion || null,
-            _searchText: null
-        };
-        
-        // Pre-calcular texto de búsqueda
-        movie._searchText = `${movie.titulo} ${movie.ano} ${movie.categoria}`.toLowerCase();
-        
-        return movie;
-    }
-    
-    normalizePosterUrl(url) {
-        if (!url) return this.getPlaceholderImage();
-        
-        // Manejar URLs relativas
-        if (url.startsWith('//')) {
-            return 'https:' + url;
-        }
-        
-        if (url.startsWith('/')) {
-            // Asumiendo que es relativo al repositorio
-            return `https://raw.githubusercontent.com/${this.repoConfig.username}/${this.repoConfig.repo}/${this.repoConfig.branch}${url}`;
-        }
-        
-        // Verificar si es URL válida
-        try {
-            new URL(url);
-            return url;
-        } catch {
-            return this.getPlaceholderImage();
-        }
-    }
-    
-    normalizeCategory(category) {
-        if (!category) return 'general';
-        
-        const normalized = category.toLowerCase().trim();
-        const categoryMap = {
-            'action': 'accion',
-            'comedy': 'comedia',
-            'drama': 'drama',
-            'horror': 'terror',
-            'terror': 'terror',
-            'sci-fi': 'scifi',
-            'science fiction': 'scifi',
-            'ciencia ficcion': 'scifi',
-            'romance': 'romance',
-            'romantico': 'romance',
-            'animation': 'animacion',
-            'animated': 'animacion',
-            'animado': 'animacion',
-            'thriller': 'thriller',
-            'suspense': 'thriller',
-            'adventure': 'aventura',
-            'aventuras': 'aventura',
-            'fantasy': 'fantasia',
-            'fantasía': 'fantasia',
-            'documentary': 'documental',
-            'documental': 'documental',
-            'musical': 'musical',
-            'western': 'western',
-            'war': 'belica',
-            'guerra': 'belica',
-            'crime': 'crimen',
-            'criminal': 'crimen',
-            'mystery': 'misterio'
-        };
-        
-        return categoryMap[normalized] || normalized;
-    }
-    
-    addMoviesToState(movies) {
-        // Agregar películas al estado general
-        this.state.allMovies.push(...movies);
-        
-        // Actualizar índices
-        movies.forEach(movie => {
-            // Índice por año
-            if (!this.state.moviesByYear[movie.ano]) {
-                this.state.moviesByYear[movie.ano] = [];
-            }
-            this.state.moviesByYear[movie.ano].push(movie);
-            
-            // Índice por categoría
-            if (!this.state.moviesByCategory[movie.categoria]) {
-                this.state.moviesByCategory[movie.categoria] = [];
-            }
-            this.state.moviesByCategory[movie.categoria].push(movie);
-        });
-    }
-    
-    addToSearchIndex(movie) {
-        // Indexar por primera letra del título
-        const firstLetter = movie.titulo.charAt(0).toLowerCase();
-        if (!this.searchIndex.has(firstLetter)) {
-            this.searchIndex.set(firstLetter, []);
-        }
-        this.searchIndex.get(firstLetter).push(movie);
-        
-        // Indexar por año
-        if (!this.yearIndex.has(movie.ano)) {
-            this.yearIndex.set(movie.ano, []);
-        }
-        this.yearIndex.get(movie.ano).push(movie);
-        
-        // Indexar por categoría
-        if (!this.categoryIndex.has(movie.categoria)) {
-            this.categoryIndex.set(movie.categoria, []);
-        }
-        this.categoryIndex.get(movie.categoria).push(movie);
-    }
-    
-    processAndRender() {
-        // Eliminar duplicados
-        this.removeDuplicates();
-        
-        // Renderizar contenido
-        this.renderContent();
-        
-        // Actualizar UI
-        this.updateUI();
-    }
-    
-    removeDuplicates() {
-        const seen = new Map();
-        const unique = [];
-        
-        this.state.allMovies.forEach(movie => {
-            const key = `${movie.titulo.toLowerCase()}_${movie.ano}`;
-            
-            if (!seen.has(key)) {
-                seen.set(key, true);
-                unique.push(movie);
-            }
-        });
-        
-        this.state.allMovies = unique;
-    }
-    
-    renderContent() {
-        const movies = this.getFilteredMovies();
-        
+    render(movies = this.movies) {
         if (movies.length === 0) {
-            this.renderEmptyState();
+            document.getElementById('main').innerHTML = '<div class="empty">No hay películas</div>';
             return;
         }
         
-        // Agrupar películas por década para mejor organización
-        const moviesByDecade = this.groupMoviesByDecade(movies);
+        // Agrupar por año
+        const byYear = {};
+        movies.forEach(m => {
+            if (!byYear[m.year]) byYear[m.year] = [];
+            byYear[m.year].push(m);
+        });
         
-        // Crear contenido usando DocumentFragment para mejor rendimiento
-        const fragment = document.createDocumentFragment();
+        // Ordenar años descendente
+        const years = Object.keys(byYear).sort((a,b) => b-a);
         
-        Object.entries(moviesByDecade)
-            .sort(([a], [b]) => b - a) // Décadas más recientes primero
-            .forEach(([decade, decadeMovies]) => {
-                const section = this.createDecadeSection(decade, decadeMovies);
-                fragment.appendChild(section);
+        // Generar HTML
+        let html = '';
+        years.forEach(year => {
+            html += `<div class="year-section">
+                <h2 class="year-title">${year}</h2>
+                <div class="movies">`;
+            
+            byYear[year].forEach(movie => {
+                html += `<div class="movie" onclick="window.open('${movie.enlace}','_blank')">
+                    <img src="${movie.poster}" loading="lazy" alt="${movie.titulo}">
+                    <div class="movie-title">${movie.titulo}</div>
+                </div>`;
             });
-        
-        // Actualizar DOM una sola vez
-        this.elements.mainContent.innerHTML = '';
-        this.elements.mainContent.appendChild(fragment);
-        
-        // Observar imágenes para lazy loading
-        this.observeImages();
-    }
-    
-    groupMoviesByDecade(movies) {
-        const grouped = {};
-        
-        movies.forEach(movie => {
-            const decade = Math.floor(movie.ano / 10) * 10;
-            const decadeKey = `${decade}s`;
             
-            if (!grouped[decadeKey]) {
-                grouped[decadeKey] = {};
-            }
-            
-            if (!grouped[decadeKey][movie.ano]) {
-                grouped[decadeKey][movie.ano] = [];
-            }
-            
-            grouped[decadeKey][movie.ano].push(movie);
+            html += '</div></div>';
         });
         
-        return grouped;
-    }
+        document.getElementById('main').innerHTML = html;
+        document.getElementById('counter').textContent = movies.length;
+    },
     
-    createDecadeSection(decade, yearMovies) {
-        const section = document.createElement('div');
-        section.className = 'year-group';
-        
-        // Título de la década
-        const totalMovies = Object.values(yearMovies).reduce((sum, movies) => sum + movies.length, 0);
-        section.innerHTML = `
-            <div class="year-group-header">
-                <h2 class="year-group-title">Década ${decade}</h2>
-                <span class="year-group-count">${totalMovies} películas</span>
-            </div>
-        `;
-        
-        // Ordenar años dentro de la década
-        const sortedYears = Object.keys(yearMovies).sort((a, b) => b - a);
-        
-        // Crear carrusel para cada año
-        sortedYears.forEach(year => {
-            const yearSection = this.createYearCarousel(year, yearMovies[year]);
-            section.appendChild(yearSection);
-        });
-        
-        return section;
-    }
-    
-    createYearCarousel(year, movies) {
-        const container = document.createElement('div');
-        container.className = 'carousel-container';
-        container.innerHTML = `
-            <div class="year-group-header" style="padding: 0 40px; margin-bottom: 15px;">
-                <h3 style="font-size: 1.3rem; color: var(--text-light);">${year}</h3>
-                <span class="year-group-count" style="font-size: 0.85rem;">${movies.length} películas</span>
-            </div>
-        `;
-        
-        // Navegación
-        const prevBtn = document.createElement('button');
-        prevBtn.className = 'carousel-nav prev';
-        prevBtn.innerHTML = '‹';
-        
-        const nextBtn = document.createElement('button');
-        nextBtn.className = 'carousel-nav next';
-        nextBtn.innerHTML = '›';
-        
-        // Track con películas
-        const track = document.createElement('div');
-        track.className = 'carousel-track';
-        
-        // Crear tarjetas de películas
-        movies.forEach(movie => {
-            const card = this.createMovieCard(movie);
-            track.appendChild(card);
-        });
-        
-        // Configurar navegación
-        prevBtn.onclick = () => this.scrollCarousel(track, -1);
-        nextBtn.onclick = () => this.scrollCarousel(track, 1);
-        
-        container.appendChild(prevBtn);
-        container.appendChild(nextBtn);
-        container.appendChild(track);
-        
-        return container;
-    }
-    
-    createMovieCard(movie) {
-        const card = document.createElement('div');
-        card.className = 'movie-card skeleton';
-        card.dataset.movieId = movie.id;
-        
-        // Crear estructura de la tarjeta
-        card.innerHTML = `
-            <div class="movie-year-badge">${movie.ano}</div>
-            <div class="movie-source-badge" style="background-color: ${movie.sourceColor}20; border: 1px solid ${movie.sourceColor};">
-                ${movie.calidad || 'HD'}
-            </div>
-            <img data-src="${movie.poster}" 
-                 alt="${movie.titulo}" 
-                 loading="lazy"
-                 class="movie-poster">
-            <div class="play-overlay">
-                <div class="play-icon"></div>
-            </div>
-            <div class="movie-card-title">${movie.titulo}</div>
-        `;
-        
-        // Event listener para abrir detalles
-        card.addEventListener('click', () => this.openMovieDetail(movie));
-        
-        return card;
-    }
-    
-    observeImages() {
-        const images = this.elements.mainContent.querySelectorAll('img[data-src]');
-        images.forEach(img => this.imageObserver.observe(img));
-    }
-    
-    loadImage(img) {
-        const src = img.dataset.src;
-        if (!src || img.src === src) return;
-        
-        // Verificar caché
-        if (this.state.imageCache.has(src)) {
-            img.src = this.state.imageCache.get(src);
-            img.classList.add('loaded');
-            this.removeSkeletonFromCard(img);
-            this.imageObserver.unobserve(img);
-            return;
-        }
-        
-        // Cargar imagen
-        const tempImg = new Image();
-        
-        tempImg.onload = () => {
-            img.src = src;
-            img.classList.add('loaded');
-            this.removeSkeletonFromCard(img);
-            this.state.imageCache.set(src, src);
-            this.imageObserver.unobserve(img);
-        };
-        
-        tempImg.onerror = () => {
-            const placeholder = this.getPlaceholderImage(img.alt);
-            img.src = placeholder;
-            img.classList.add('loaded');
-            this.removeSkeletonFromCard(img);
-            this.imageObserver.unobserve(img);
-        };
-        
-        tempImg.src = src;
-    }
-    
-    removeSkeletonFromCard(img) {
-        const card = img.closest('.movie-card');
-        if (card) {
-            card.classList.remove('skeleton');
-        }
-    }
-    
-    scrollCarousel(track, direction) {
-        const cardWidth = 175; // 160px + 15px gap
-        const scrollAmount = cardWidth * 4;
-        track.scrollBy({
-            left: scrollAmount * direction,
-            behavior: 'smooth'
-        });
-    }
-    
-    performSearch(query) {
-        this.state.searchQuery = query.trim().toLowerCase();
-        
-        if (!query) {
-            this.state.filteredMovies = [];
-        } else {
-            // Búsqueda ultra rápida usando índices
-            const results = [];
-            const seen = new Set();
-            
-            // Buscar por título
-            if (query.length > 0) {
-                const firstLetter = query.charAt(0);
-                const candidates = this.searchIndex.get(firstLetter) || [];
-                
-                candidates.forEach(movie => {
-                    if (movie._searchText.includes(query) && !seen.has(movie.id)) {
-                        results.push(movie);
-                        seen.add(movie.id);
-                    }
-                });
-            }
-            
-            // Si hay pocos resultados, buscar en toda la base
-            if (results.length < 10) {
-                this.state.allMovies.forEach(movie => {
-                    if (movie._searchText.includes(query) && !seen.has(movie.id)) {
-                        results.push(movie);
-                        seen.add(movie.id);
-                    }
-                });
-            }
-            
-            this.state.filteredMovies = results;
-        }
-        
-        this.renderContent();
-        this.updateMovieCount();
-    }
-    
-    filterByYear(yearOrSource) {
-        this.state.currentSource = yearOrSource;
-        
-        // Actualizar botones
-        document.querySelectorAll('.source-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.source === yearOrSource);
-        });
-        
-        this.renderContent();
-        this.updateMovieCount();
-    }
-    
-    filterByCategory(category) {
-        this.state.currentCategory = category;
-        
-        // Actualizar botones
-        document.querySelectorAll('.category-btn').forEach(btn => {
-            btn.classList.toggle('active', btn.dataset.category === category);
-        });
-        
-        this.renderContent();
-        this.updateMovieCount();
-    }
-    
-    getFilteredMovies() {
-        let movies = [...this.state.allMovies];
-        
-        // Aplicar filtro de búsqueda si existe
-        if (this.state.filteredMovies.length > 0 || this.state.searchQuery) {
-            movies = this.state.filteredMovies;
-        }
-        
-        // Filtrar por año/fuente
-        if (this.state.currentSource !== 'all') {
-            const sourceYear = this.state.currentSource.replace('year_', '');
-            movies = movies.filter(m => m.ano == sourceYear);
-        }
-        
-        // Filtrar por categoría
-        if (this.state.currentCategory !== 'all') {
-            movies = movies.filter(m => m.categoria === this.state.currentCategory);
-        }
-        
-        return movies;
-    }
-    
-    openMovieDetail(movie) {
-        console.log('Abriendo película:', movie);
-        // Aquí implementarías la lógica del modal/overlay
-        // Por ahora solo abrimos el enlace
-        if (movie.enlace) {
-            window.open(movie.enlace, '_blank');
-        }
-    }
-    
-    closeMovieDetail() {
-        this.elements.movieOverlay.style.display = 'none';
-        this.elements.backButton.classList.remove('visible');
-    }
-    
-    updateUI() {
-        this.updateSourceButtons();
-        this.updateMovieCount();
-        this.updateStatus();
-    }
-    
-    updateSourceButtons() {
-        // Limpiar botones existentes (excepto "Todas")
-        const existingButtons = this.elements.sourceSelector.querySelectorAll('.source-btn:not([data-source="all"])');
-        existingButtons.forEach(btn => btn.remove());
-        
-        // Agrupar por décadas para los botones
-        const decades = {};
-        this.sources.forEach(source => {
-            if (source.movies.length > 0) {
-                const decade = Math.floor(source.year / 10) * 10;
-                if (!decades[decade]) {
-                    decades[decade] = {
-                        count: 0,
-                        years: []
-                    };
+    setupEvents() {
+        // Búsqueda
+        let timeout;
+        document.getElementById('search').addEventListener('input', (e) => {
+            clearTimeout(timeout);
+            timeout = setTimeout(() => {
+                const query = e.target.value.toLowerCase();
+                if (!query) {
+                    this.render();
+                } else {
+                    const filtered = this.movies.filter(m => 
+                        m.titulo.toLowerCase().includes(query) || 
+                        m.year.toString().includes(query)
+                    );
+                    this.render(filtered);
                 }
-                decades[decade].count += source.movies.length;
-                decades[decade].years.push(source.year);
-            }
+            }, 300);
         });
-        
-        // Crear botones de década
-        Object.keys(decades)
-            .sort((a, b) => b - a)
-            .slice(0, 10) // Mostrar solo las últimas 10 décadas con contenido
-            .forEach(decade => {
-                const btn = document.createElement('button');
-                btn.className = 'source-btn';
-                btn.dataset.source = `decade_${decade}`;
-                btn.innerHTML = `
-                    ${decade}s
-                    <span class="badge">${decades[decade].count}</span>
-                `;
-                btn.onclick = () => this.filterByDecade(decade);
-                this.elements.sourceSelector.appendChild(btn);
-            });
-        
-        // Actualizar contador total
-        this.elements.allCount.textContent = this.state.allMovies.length;
-    }
+    },
     
-    filterByDecade(decade) {
-        // Implementar filtro por década
-        console.log('Filtrar por década:', decade);
-    }
+    createYearButtons() {
+        // Obtener años únicos
+        const years = [...new Set(this.movies.map(m => m.year))].sort((a,b) => b-a);
+        
+        // Crear botones para años con contenido
+        const container = document.getElementById('years');
+        years.slice(0, 10).forEach(year => {
+            const btn = document.createElement('button');
+            btn.className = 'year-btn';
+            btn.dataset.year = year;
+            btn.textContent = year;
+            btn.onclick = () => this.filterByYear(year, btn);
+            container.appendChild(btn);
+        });
+    },
     
-    updateMovieCount() {
-        const count = this.getFilteredMovies().length;
-        this.elements.movieCount.textContent = `${count.toLocaleString('es')} películas`;
-    }
-    
-    updateStatus() {
-        const total = this.state.totalSources;
-        const loaded = this.state.loadedSources;
-        const failed = this.state.failedSources.length;
+    filterByYear(year, btn) {
+        // Actualizar botones
+        document.querySelectorAll('.year-btn').forEach(b => b.classList.remove('active'));
+        btn.classList.add('active');
         
-        let status = 'connected';
-        let text = `${loaded}/${total} fuentes`;
-        
-        if (failed > 0) {
-            text += ` (${failed} errores)`;
-            status = failed > total / 2 ? 'error' : 'partial';
-        }
-        
-        this.elements.statusText.textContent = text;
-        this.elements.statusIndicator.className = `status-indicator ${status}`;
-    }
-    
-    updateProgress() {
-        const percent = Math.round((this.state.loadedSources / this.state.totalSources) * 100);
-        this.elements.progressFill.style.width = `${percent}%`;
-        this.elements.loaderProgress.textContent = `${percent}% completado (${this.state.loadedSources}/${this.state.totalSources} fuentes)`;
-    }
-    
-    renderLoadingProgress() {
-        // Mostrar solo una muestra de las fuentes (primeras 20 y últimas 5)
-        const sourcesToShow = [
-            ...this.sources.slice(0, 20),
-            ...this.sources.slice(-5)
-        ];
-        
-        const html = sourcesToShow.map(source => `
-            <div class="loader-source-item">
-                <div class="loader-source-status" id="source-status-${source.id}"></div>
-                <div class="loader-source-name">${source.name}</div>
-                <div class="loader-source-count" id="source-count-${source.id}"></div>
-            </div>
-        `).join('');
-        
-        if (this.sources.length > 25) {
-            this.elements.loaderSources.innerHTML = html + `
-                <div style="text-align: center; padding: 10px; color: var(--muted);">
-                    ... y ${this.sources.length - 25} fuentes más ...
-                </div>
-            `;
+        // Filtrar
+        if (year === 'all') {
+            this.render();
         } else {
-            this.elements.loaderSources.innerHTML = html;
+            const filtered = this.movies.filter(m => m.year == year);
+            this.render(filtered);
         }
     }
-    
-    updateSourceStatus(sourceId, status) {
-        const statusEl = document.getElementById(`source-status-${sourceId}`);
-        if (statusEl) {
-            statusEl.className = `loader-source-status ${status}`;
-        }
-        
-        const countEl = document.getElementById(`source-count-${sourceId}`);
-        if (countEl && status === 'success') {
-            const source = this.sources.find(s => s.id === sourceId);
-            if (source) {
-                countEl.textContent = `${source.movies.length} películas`;
-            }
-        }
-    }
-    
-    showLoader(show) {
-        this.elements.loader.classList.toggle('hidden', !show);
-    }
-    
-    renderEmptyState() {
-        this.elements.mainContent.innerHTML = `
-            <div class="empty-state">
-                <h2>No se encontraron películas</h2>
-                <p>Intenta ajustar los filtros o verificar tu búsqueda</p>
-            </div>
-        `;
-    }
-    
-    finalizeLoading() {
-        const loadTime = Date.now() - this.state.loadStartTime;
-        console.log(`✅ Carga completada en ${(loadTime / 1000).toFixed(2)}s`);
-        console.log(`📊 Total: ${this.state.allMovies.length} películas de ${this.state.loadedSources} fuentes`);
-        
-        this.showLoader(false);
-        this.state.isLoading = false;
-        
-        // Guardar todo en caché
-        this.saveAllToCache();
-    }
-    
-    handleSourceError(source, error) {
-        console.error(`❌ Error en ${source.name}:`, error.message);
-        source.status = 'error';
-        this.state.failedSources.push(source);
-        this.updateSourceStatus(source.id, 'error');
-    }
-    
-    // Métodos de caché
-    loadFromCache() {
-        let cachedCount = 0;
-        
-        this.sources.forEach(source => {
-            const cached = this.getCachedData(source.id);
-            if (cached && cached.data && !this.isCacheExpired(cached.timestamp)) {
-                source.movies = cached.data;
-                this.addMoviesToState(source.movies);
-                cachedCount++;
-            }
-        });
-        
-        if (cachedCount > 0) {
-            console.log(`📦 Cargadas ${cachedCount} fuentes desde caché`);
-            this.processAndRender();
-        }
-    }
-    
-    getCachedData(key) {
-        if (!this.config.cacheEnabled) return null;
-        
-        try {
-            const cached = localStorage.getItem(`movie_cache_${key}`);
-            return cached ? JSON.parse(cached) : null;
-        } catch (error) {
-            console.error('Error leyendo caché:', error);
-            return null;
-        }
-    }
-    
-    setCachedData(key, data) {
-        if (!this.config.cacheEnabled) return;
-        
-        try {
-            const cacheData = {
-                data: data,
-                timestamp: Date.now(),
-                version: '3.0'
-            };
-            localStorage.setItem(`movie_cache_${key}`, JSON.stringify(cacheData));
-        } catch (error) {
-            console.warn('Error guardando caché:', error);
-            // Limpiar caché si está lleno
-            this.clearOldCache();
-        }
-    }
-    
-    isCacheExpired(timestamp) {
-        return Date.now() - timestamp > this.config.cacheExpiry;
-    }
-    
-    saveAllToCache() {
-        this.sources.forEach(source => {
-            if (source.status === 'success' && source.movies.length > 0) {
-                this.setCachedData(source.id, source.movies);
-            }
-        });
-    }
-    
-    clearOldCache() {
-        // Limpiar entradas de caché antiguas
-        const keys = Object.keys(localStorage);
-        const oldKeys = keys.filter(k => k.startsWith('movie_cache_'));
-        
-        oldKeys.forEach(key => {
-            try {
-                const data = JSON.parse(localStorage.getItem(key));
-                if (!data || !data.timestamp || this.isCacheExpired(data.timestamp * 2)) {
-                    localStorage.removeItem(key);
-                }
-            } catch {
-                localStorage.removeItem(key);
-            }
-        });
-    }
-    
-    setupPeriodicRefresh() {
-        // Actualizar fuentes cada 2 horas
-        setInterval(() => {
-            console.log('🔄 Actualizando fuentes...');
-            this.loadAllSourcesProgressive();
-        }, 7200000); // 2 horas
-    }
-    
-    handleScroll() {
-        // Implementar carga infinita si es necesario
-        const scrollPosition = window.innerHeight + window.scrollY;
-        const threshold = document.body.offsetHeight - 500;
-        
-        if (scrollPosition > threshold && !this.state.isLoading) {
-            // Cargar más contenido si es necesario
-        }
-    }
-    
-    // Utilidades
-    getPlaceholderImage(title = 'Movie') {
-        const text = encodeURIComponent(title ? title.substring(0, 20) : 'Sin Título');
-        return `https://via.placeholder.com/300x450/1a1a1a/00ffff?text=${text}`;
-    }
-    
-    chunkArray(array, size) {
-        const chunks = [];
-        for (let i = 0; i < array.length; i += size) {
-            chunks.push(array.slice(i, i + size));
-        }
-        return chunks;
-    }
-    
-    delay(ms) {
-        return new Promise(resolve => setTimeout(resolve, ms));
-    }
-}
+};
 
-// Inicialización cuando el DOM esté listo
-document.addEventListener('DOMContentLoaded', () => {
-    console.log('🎬 Iniciando Movies+ HD Platform');
-    
-    // CONFIGURACIÓN IMPORTANTE: Actualiza estos valores
-    const config = {
-        username: 'rancier0102-rgb', // <-- CAMBIA ESTO
-        repo: 'REPRODUCIBLE-1.0',        // <-- CAMBIA ESTO
-        branch: 'main'                  // <-- CAMBIA ESTO si usas otra rama
-    };
-    
-    // Crear instancia de la plataforma
-    window.moviesPlatform = new UltraOptimizedMoviesPlatform();
-    
-    // Actualizar configuración del repositorio
-    window.moviesPlatform.repoConfig = config;
-    
-    // Regenerar fuentes con la nueva configuración
-    window.moviesPlatform.sources = window.moviesPlatform.generateYearSources();
-    
-    // Re-inicializar con las nuevas fuentes
-    window.moviesPlatform.init();
-});
-
-// Registrar Service Worker para funcionamiento offline (opcional)
-if ('serviceWorker' in navigator && location.protocol === 'https:') {
-    navigator.serviceWorker.register('/sw.js').catch(() => {
-        console.log('Service Worker no disponible');
-    });
-}
+// Iniciar
+app.init();
 </script>
 
 </body>
