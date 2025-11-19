@@ -35,7 +35,7 @@ jobs:
       uses: actions/setup-node@v3
       with:
         node-version: '18'
-        cache: 'npm'
+        # NO usar cache ya que no tenemos package-lock.json
     
     - name: 📊 Check for changes
       id: check
@@ -73,10 +73,10 @@ jobs:
           echo "No hay cambios para commitear"
         else
           # Crear commit
-          MOVIES_COUNT=$(node -e "const m=require('./manifest.json'); console.log(m.statistics.totalMovies)")
+          MOVIES_COUNT=$(node -e "const m=require('./manifest.json'); console.log(m.statistics.totalMovies)" 2>/dev/null || echo "0")
           git commit -m "🎬 Auto-generated chunks: $MOVIES_COUNT movies [skip ci]" \
                      -m "Generated on $(date '+%Y-%m-%d %H:%M:%S')" \
-                     -m "Chunks: $(ls -1 chunks/*.json | wc -l) files"
+                     -m "Chunks: $(ls -1 chunks/*.json 2>/dev/null | wc -l || echo 0) files"
           
           # Push changes
           git push
