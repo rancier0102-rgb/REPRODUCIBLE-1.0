@@ -15,8 +15,8 @@ const CONFIG = {
   
   // Información del repositorio (actualizar si es necesario)
   REPOSITORY: {
-    user: 'TU_USUARIO',           // <-- CAMBIAR
-    repo: 'TU_REPOSITORIO',       // <-- CAMBIAR
+    user: 'rancier0102-rgb',           // <-- CAMBIAR
+    repo: 'REPRODUCIBLE-1.0',       // <-- CAMBIAR
     branch: 'main'
   },
   
