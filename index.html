@@ -3,22 +3,11 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Movies HD - Catálogo de películas ultra rápido">
-<title>Movies+ HD - Sistema de Chunks</title>
-
-<!-- Preconexiones para máxima velocidad -->
-<link rel="dns-prefetch" href="https://cdn.jsdelivr.net">
-<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-<!-- Precarga del manifest -->
-<link rel="preload" 
-      href="https://cdn.jsdelivr.net/gh/TU_USUARIO/TU_REPOSITORIO@main/manifest.json" 
-      as="fetch" 
-      crossorigin>
+<title>Movies+ HD</title>
 
 <style>
 /* ============================================
-   ESTILOS CRÍTICOS INLINE
+   ESTILOS CRÍTICOS
    ============================================ */
 :root {
   --primary: #e50914;
@@ -26,7 +15,6 @@
   --card: #111;
   --text: #fff;
   --text-muted: #999;
-  --border: rgba(255,255,255,0.1);
 }
 
 * {
@@ -36,16 +24,13 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   background: var(--bg);
   color: var(--text);
   line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
 }
 
-/* ============================================
-   LOADER
-   ============================================ */
+/* Loader */
 .loader-container {
   position: fixed;
   inset: 0;
@@ -64,9 +49,9 @@ body {
 }
 
 .loader {
-  width: 60px;
-  height: 60px;
-  border: 3px solid rgba(255,255,255,0.1);
+  width: 50px;
+  height: 50px;
+  border: 3px solid #333;
   border-top-color: var(--primary);
   border-radius: 50%;
   animation: spin 1s linear infinite;
@@ -82,44 +67,19 @@ body {
   font-size: 14px;
 }
 
-.progress-container {
-  width: 300px;
-  max-width: 90%;
-  margin-top: 20px;
-}
-
-.progress-bar {
-  height: 3px;
-  background: rgba(255,255,255,0.1);
-  border-radius: 3px;
-  overflow: hidden;
-}
-
-.progress-fill {
-  height: 100%;
-  background: linear-gradient(90deg, var(--primary), #ff6b6b);
-  width: 0%;
-  transition: width 0.3s ease;
-  box-shadow: 0 0 10px rgba(229, 9, 20, 0.5);
-}
-
-/* ============================================
-   HEADER
-   ============================================ */
+/* Header */
 header {
   background: var(--card);
   border-bottom: 2px solid var(--primary);
+  padding: 1rem;
   position: sticky;
   top: 0;
   z-index: 100;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
 }
 
 .header-content {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 1rem;
   display: flex;
   align-items: center;
   gap: 1rem;
@@ -127,158 +87,60 @@ header {
 }
 
 .logo {
-  font-size: 1.8rem;
+  font-size: 1.5rem;
   font-weight: bold;
   color: var(--primary);
-  text-decoration: none;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
 }
 
-.search-container {
+.search-box {
   flex: 1;
   min-width: 250px;
-  position: relative;
 }
 
 .search-input {
   width: 100%;
-  padding: 0.75rem 1rem 0.75rem 2.5rem;
+  padding: 0.75rem 1rem;
   background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
+  border: 1px solid #333;
   border-radius: 25px;
   color: var(--text);
   font-size: 14px;
-  transition: all 0.2s;
 }
 
 .search-input:focus {
   outline: none;
-  background: rgba(255,255,255,0.1);
   border-color: var(--primary);
-}
-
-.search-icon {
-  position: absolute;
-  left: 12px;
-  top: 50%;
-  transform: translateY(-50%);
-  color: var(--text-muted);
-  pointer-events: none;
+  background: rgba(255,255,255,0.1);
 }
 
 .stats {
   display: flex;
   gap: 1rem;
-  align-items: center;
 }
 
-.stat-badge {
+.stat {
   background: rgba(255,255,255,0.1);
   padding: 0.5rem 1rem;
   border-radius: 20px;
   font-size: 13px;
-  white-space: nowrap;
 }
 
-.stat-badge.primary {
+.stat.primary {
   background: var(--primary);
   font-weight: 600;
 }
 
-/* ============================================
-   NAVIGATION FILTERS
-   ============================================ */
-.nav-filters {
-  background: rgba(0,0,0,0.5);
-  border-bottom: 1px solid var(--border);
-  position: sticky;
-  top: 70px;
-  z-index: 90;
-  backdrop-filter: blur(10px);
-}
-
-.filters-content {
-  max-width: 1400px;
-  margin: 0 auto;
-  padding: 1rem;
-  display: flex;
-  gap: 0.5rem;
-  overflow-x: auto;
-  scrollbar-width: thin;
-}
-
-.filters-content::-webkit-scrollbar {
-  height: 4px;
-}
-
-.filters-content::-webkit-scrollbar-track {
-  background: rgba(255,255,255,0.05);
-}
-
-.filters-content::-webkit-scrollbar-thumb {
-  background: var(--primary);
-  border-radius: 2px;
-}
-
-.filter-btn {
-  padding: 0.5rem 1.25rem;
-  background: rgba(255,255,255,0.05);
-  border: 1px solid var(--border);
-  border-radius: 20px;
-  color: var(--text);
-  font-size: 13px;
-  cursor: pointer;
-  transition: all 0.2s;
-  white-space: nowrap;
-  display: flex;
-  align-items: center;
-  gap: 0.5rem;
-}
-
-.filter-btn:hover {
-  background: rgba(255,255,255,0.1);
-  transform: translateY(-1px);
-}
-
-.filter-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
-  font-weight: 600;
-}
-
-.filter-count {
-  opacity: 0.8;
-  font-size: 12px;
-}
-
-/* ============================================
-   MAIN CONTENT
-   ============================================ */
+/* Main */
 .main-content {
   max-width: 1400px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  min-height: 60vh;
 }
 
 .movies-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
-  gap: 1.25rem;
-  animation: fadeIn 0.5s ease;
-}
-
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+  gap: 1rem;
 }
 
 .movie-card {
@@ -286,22 +148,18 @@ header {
   border-radius: 8px;
   overflow: hidden;
   cursor: pointer;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  position: relative;
-  isolation: isolate;
+  transition: transform 0.3s, box-shadow 0.3s;
 }
 
 .movie-card:hover {
-  transform: scale(1.05) translateZ(0);
-  box-shadow: 0 10px 30px rgba(229, 9, 20, 0.3);
-  z-index: 10;
+  transform: scale(1.05);
+  box-shadow: 0 5px 20px rgba(229, 9, 20, 0.4);
 }
 
 .movie-poster-container {
   position: relative;
   padding-bottom: 150%;
-  background: linear-gradient(135deg, #1a1a1a 0%, #2a2a2a 100%);
-  overflow: hidden;
+  background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
 }
 
 .movie-poster {
@@ -310,214 +168,46 @@ header {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: opacity 0.3s;
-}
-
-.movie-poster.loading {
-  opacity: 0;
-}
-
-.poster-skeleton {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(
-    90deg,
-    rgba(255,255,255,0.05) 25%,
-    rgba(255,255,255,0.1) 50%,
-    rgba(255,255,255,0.05) 75%
-  );
-  background-size: 200% 100%;
-  animation: shimmer 1.5s infinite;
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% 0; }
-  100% { background-position: 200% 0; }
-}
-
-.movie-quality {
-  position: absolute;
-  top: 8px;
-  right: 8px;
-  background: var(--primary);
-  padding: 4px 8px;
-  border-radius: 4px;
-  font-size: 11px;
-  font-weight: bold;
-  text-transform: uppercase;
-  z-index: 1;
 }
 
 .movie-info {
-  padding: 12px;
+  padding: 0.75rem;
 }
 
 .movie-title {
-  font-size: 14px;
+  font-size: 0.9rem;
   font-weight: 500;
-  line-height: 1.4;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
-  min-height: 40px;
-}
-
-.movie-meta {
-  margin-top: 8px;
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 12px;
-  color: var(--text-muted);
 }
 
 .movie-year {
-  font-weight: 600;
-  color: var(--primary);
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-top: 0.25rem;
 }
 
-.movie-genre {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-}
-
-/* ============================================
-   EMPTY STATE
-   ============================================ */
 .empty-state {
   text-align: center;
   padding: 4rem 1rem;
   color: var(--text-muted);
-  display: none;
 }
 
-.empty-state.show {
-  display: block;
-}
-
-.empty-icon {
-  font-size: 4rem;
-  margin-bottom: 1rem;
-  opacity: 0.3;
-}
-
-.empty-title {
-  font-size: 1.5rem;
-  margin-bottom: 0.5rem;
-  color: var(--text);
-}
-
-.empty-message {
-  font-size: 14px;
-}
-
-/* ============================================
-   TOAST NOTIFICATIONS
-   ============================================ */
-.toast {
-  position: fixed;
-  bottom: 2rem;
-  right: 2rem;
-  background: var(--card);
-  padding: 1rem 1.5rem;
+.error {
+  background: #330000;
+  color: #ff6666;
+  padding: 1rem;
+  margin: 1rem;
   border-radius: 8px;
-  border-left: 3px solid var(--primary);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-  transform: translateX(400px);
-  transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  z-index: 1000;
-  max-width: 350px;
-}
-
-.toast.show {
-  transform: translateX(0);
-}
-
-/* ============================================
-   RESPONSIVE DESIGN
-   ============================================ */
-@media (max-width: 768px) {
-  .header-content {
-    padding: 0.75rem;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
-  }
-  
-  .search-container {
-    order: 3;
-    flex-basis: 100%;
-  }
-  
-  .movies-grid {
-    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
-    gap: 0.75rem;
-  }
-  
-  .movie-title {
-    font-size: 12px;
-    -webkit-line-clamp: 1;
-    min-height: auto;
-  }
-  
-  .movie-info {
-    padding: 8px;
-  }
-  
-  .toast {
-    right: 1rem;
-    left: 1rem;
-    max-width: none;
-  }
-}
-
-@media (max-width: 480px) {
-  .movies-grid {
-    grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
-    gap: 0.5rem;
-  }
-  
-  .filter-btn {
-    padding: 0.4rem 0.8rem;
-    font-size: 12px;
-  }
-}
-
-/* ============================================
-   UTILIDADES
-   ============================================ */
-.hidden {
-  display: none !important;
-}
-
-.text-center {
   text-align: center;
 }
 
-.mt-1 { margin-top: 0.5rem; }
-.mt-2 { margin-top: 1rem; }
-.mt-3 { margin-top: 1.5rem; }
-.mt-4 { margin-top: 2rem; }
-
-/* ============================================
-   ANIMACIONES SUAVES
-   ============================================ */
-@media (prefers-reduced-motion: no-preference) {
-  * {
-    scroll-behavior: smooth;
-  }
-}
-
-/* ============================================
-   MODO OSCURO (ya está por defecto)
-   ============================================ */
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
+@media (max-width: 768px) {
+  .movies-grid {
+    grid-template-columns: repeat(auto-fill, minmax(110px, 1fr));
   }
 }
 </style>
@@ -527,818 +217,430 @@ header {
 <!-- Loader -->
 <div class="loader-container" id="loader">
   <div class="loader"></div>
-  <p class="loader-text" id="loaderText">Inicializando...</p>
-  <div class="progress-container">
-    <div class="progress-bar">
-      <div class="progress-fill" id="progressBar"></div>
-    </div>
-  </div>
+  <p class="loader-text" id="loaderText">Cargando películas...</p>
 </div>
 
 <!-- Header -->
 <header>
   <div class="header-content">
-    <a href="/" class="logo">
-      <span>🎬</span>
-      <span>MOVIES+</span>
-    </a>
-    
-    <div class="search-container">
-      <span class="search-icon">🔍</span>
+    <div class="logo">🎬 MOVIES+</div>
+    <div class="search-box">
       <input 
         type="search" 
         class="search-input" 
         id="searchInput" 
         placeholder="Buscar películas..."
-        autocomplete="off"
-        spellcheck="false">
+        autocomplete="off">
     </div>
-    
     <div class="stats">
-      <div class="stat-badge primary" id="movieCount">0 películas</div>
-      <div class="stat-badge" id="loadStatus">Cargando...</div>
+      <div class="stat primary" id="movieCount">0 películas</div>
+      <div class="stat" id="status">Cargando...</div>
     </div>
   </div>
 </header>
 
-<!-- Navigation Filters -->
-<nav class="nav-filters">
-  <div class="filters-content" id="filters">
-    <button class="filter-btn active" data-filter="all" onclick="app.applyFilter('all')">
-      Todas <span class="filter-count" id="countAll">0</span>
-    </button>
-  </div>
-</nav>
-
 <!-- Main Content -->
 <main class="main-content">
-  <div class="movies-grid" id="moviesGrid">
-    <!-- Las películas se cargarán aquí dinámicamente -->
+  <div class="movies-grid" id="moviesGrid"></div>
+  <div class="empty-state" id="emptyState" style="display:none">
+    <h2>No se encontraron películas</h2>
+    <p>Intenta con otro término de búsqueda</p>
   </div>
-  
-  <div class="empty-state" id="emptyState">
-    <div class="empty-icon">🎬</div>
-    <h2 class="empty-title">No se encontraron películas</h2>
-    <p class="empty-message">Intenta con otro término de búsqueda o filtro</p>
-  </div>
+  <div class="error" id="errorState" style="display:none"></div>
 </main>
-
-<!-- Toast Notifications -->
-<div class="toast" id="toast"></div>
 
 <script>
 'use strict';
 
 // ============================================
-// CONFIGURACIÓN PRINCIPAL
+// CONFIGURACIÓN - CAMBIAR ESTOS VALORES
 // ============================================
 const CONFIG = {
-  // IMPORTANTE: CAMBIAR ESTOS VALORES
-  GITHUB_USER: 'rancier0102-rgb',           // <-- CAMBIAR POR TU USUARIO
-  GITHUB_REPO: 'REPRODUCIBLE-1.0',       // <-- CAMBIAR POR TU REPO
-  GITHUB_BRANCH: 'main',                // <-- Normalmente 'main' o 'master'
+  // IMPORTANTE: Cambia estos valores por los tuyos
+  GITHUB_USER: 'rancier0102-rgb',         // <-- TU USUARIO DE GITHUB
+  GITHUB_REPO: 'REPRODUCIBLE-1.0',     // <-- TU REPOSITORIO
+  GITHUB_BRANCH: 'main',              // <-- BRANCH (generalmente 'main' o 'master')
   
-  // CDN Configuration
-  CDN_BASE: 'https://cdn.jsdelivr.net/gh',
-  
-  // URLs dinámicas
-  getManifestUrl() {
-    return `${this.CDN_BASE}/${this.GITHUB_USER}/${this.GITHUB_REPO}@${this.GITHUB_BRANCH}/manifest.json`;
+  // URLs automáticas (no cambiar)
+  get BASE_URL() {
+    return `https://raw.githubusercontent.com/${this.GITHUB_USER}/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}`;
   },
   
-  getChunkUrl(chunkFile) {
-    return `${this.CDN_BASE}/${this.GITHUB_USER}/${this.GITHUB_REPO}@${this.GITHUB_BRANCH}/${chunkFile}`;
+  get MANIFEST_URL() {
+    return `${this.BASE_URL}/manifest.json`;
   },
   
-  // Performance Settings
-  CACHE_ENABLED: true,
-  CACHE_TTL: 3600000,              // 1 hora
-  PROGRESSIVE_RENDER: true,        // Renderizar mientras carga
-  RENDER_BATCH_SIZE: 50,           // Películas por lote
-  LAZY_LOAD_IMAGES: true,         // Carga perezosa de imágenes
-  SEARCH_DEBOUNCE: 300,            // Delay búsqueda (ms)
-  USE_WEB_WORKERS: false,          // Web Workers (futuro)
+  // Configuración de caché
+  USE_CACHE: true,
+  CACHE_DURATION: 3600000, // 1 hora
   
-  // UI Settings
-  SHOW_YEAR_IN_CARD: true,
-  SHOW_GENRE_IN_CARD: true,
-  SHOW_QUALITY_BADGE: true,
-  DEFAULT_POSTER: 'data:image/svg+xml,%3Csvg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450"%3E%3Crect width="300" height="450" fill="%231a1a1a"/%3E%3Ctext x="150" y="225" font-family="Arial" font-size="20" fill="%23666" text-anchor="middle"%3E🎬%3C/text%3E%3C/svg%3E'
+  // UI
+  RENDER_BATCH: 50
 };
 
 // ============================================
-// CLASE PRINCIPAL DE LA APLICACIÓN
+// APLICACIÓN PRINCIPAL
 // ============================================
-class MoviesChunkApp {
+class MoviesApp {
   constructor() {
-    // Estado
-    this.manifest = null;
-    this.chunks = new Map();
     this.movies = [];
     this.filteredMovies = [];
-    this.currentFilter = 'all';
-    this.searchQuery = '';
-    this.loadedChunks = new Set();
+    this.manifest = null;
     
-    // Cache
-    this.cache = new Map();
-    this.db = null;
-    
-    // UI Elements
+    // Elementos DOM
     this.elements = {
       loader: document.getElementById('loader'),
       loaderText: document.getElementById('loaderText'),
-      progressBar: document.getElementById('progressBar'),
       movieCount: document.getElementById('movieCount'),
-      loadStatus: document.getElementById('loadStatus'),
+      status: document.getElementById('status'),
       searchInput: document.getElementById('searchInput'),
-      filters: document.getElementById('filters'),
       moviesGrid: document.getElementById('moviesGrid'),
       emptyState: document.getElementById('emptyState'),
-      toast: document.getElementById('toast'),
-      countAll: document.getElementById('countAll')
+      errorState: document.getElementById('errorState')
     };
     
-    // Performance
-    this.startTime = performance.now();
-    this.imageObserver = null;
-    
-    // Bindings
-    this.handleSearch = this.debounce(this.performSearch.bind(this), CONFIG.SEARCH_DEBOUNCE);
+    this.init();
   }
   
-  // ============================================
-  // INICIALIZACIÓN
-  // ============================================
   async init() {
+    console.log('🚀 Iniciando Movies+');
+    console.log('📁 Repositorio:', `${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}`);
+    
     try {
-      console.log('🚀 Iniciando Movies+ Chunk System');
-      console.log('📁 Repositorio:', `${CONFIG.GITHUB_USER}/${CONFIG.GITHUB_REPO}`);
-      
-      // Inicializar sistemas
-      await this.initCache();
-      this.initImageObserver();
-      
-      // Cargar datos
+      // Paso 1: Cargar manifest
       await this.loadManifest();
+      
+      // Paso 2: Cargar chunks
       await this.loadChunks();
       
-      // Configurar UI
-      this.setupEventListeners();
-      this.createFilterButtons();
+      // Paso 3: Renderizar
+      this.render();
       
-      // Finalizar
-      this.finishLoading();
+      // Paso 4: Configurar eventos
+      this.setupEvents();
+      
+      // Ocultar loader
+      this.hideLoader();
+      
+      console.log(`✅ ${this.movies.length} películas cargadas`);
       
     } catch (error) {
-      console.error('❌ Error fatal:', error);
-      this.showError('Error cargando el catálogo. Por favor, recarga la página.');
+      console.error('❌ Error:', error);
+      this.showError(`Error cargando películas: ${error.message}`);
+      this.hideLoader();
     }
   }
   
-  // ============================================
-  // CARGA DE DATOS
-  // ============================================
   async loadManifest() {
     this.updateLoader('Cargando catálogo...');
     
     // Intentar desde caché
-    const cached = await this.getFromCache('manifest');
-    if (cached) {
-      console.log('⚡ Manifest desde caché');
-      this.manifest = cached;
-      return;
+    if (CONFIG.USE_CACHE) {
+      const cached = this.getFromCache('manifest');
+      if (cached) {
+        console.log('📦 Manifest desde caché');
+        this.manifest = cached;
+        return;
+      }
     }
     
-    // Cargar desde CDN
+    // Cargar desde GitHub
+    console.log('📥 Cargando manifest desde:', CONFIG.MANIFEST_URL);
+    
     try {
-      const response = await fetch(CONFIG.getManifestUrl());
+      const response = await fetch(CONFIG.MANIFEST_URL);
+      
       if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
+        throw new Error(`HTTP ${response.status}: No se pudo cargar el manifest`);
       }
       
-      this.manifest = await response.json();
-      console.log(`📋 Manifest cargado:`, {
-        películas: this.manifest.statistics?.totalMovies || 0,
-        chunks: this.manifest.chunks?.length || 0
-      });
+      const text = await response.text();
+      console.log('📄 Respuesta recibida, tamaño:', text.length);
+      
+      this.manifest = JSON.parse(text);
+      console.log('✅ Manifest cargado:', this.manifest);
       
       // Guardar en caché
-      await this.saveToCache('manifest', this.manifest);
+      if (CONFIG.USE_CACHE) {
+        this.saveToCache('manifest', this.manifest);
+      }
       
     } catch (error) {
-      throw new Error('No se pudo cargar el catálogo. Verifica la configuración.');
+      console.error('❌ Error cargando manifest:', error);
+      
+      // Fallback: intentar cargar directamente un chunk por defecto
+      console.log('🔄 Intentando fallback directo...');
+      this.manifest = {
+        chunks: [{
+          id: 'all',
+          file: 'chunks/all.json',
+          movies: 0
+        }]
+      };
     }
   }
   
   async loadChunks() {
-    if (!this.manifest?.chunks) {
+    if (!this.manifest || !this.manifest.chunks) {
       throw new Error('Manifest inválido o sin chunks');
     }
     
-    const sortedChunks = [...this.manifest.chunks].sort((a, b) => 
-      (a.priority || 99) - (b.priority || 99)
-    );
+    console.log(`📦 Cargando ${this.manifest.chunks.length} chunks...`);
     
-    let loadedCount = 0;
-    const totalMovies = this.manifest.statistics?.totalMovies || 0;
-    
-    for (const chunkInfo of sortedChunks) {
-      // Actualizar progreso
-      const progress = totalMovies > 0 
-        ? Math.round((loadedCount / totalMovies) * 100)
-        : Math.round(((sortedChunks.indexOf(chunkInfo) + 1) / sortedChunks.length) * 100);
+    for (const chunkInfo of this.manifest.chunks) {
+      this.updateLoader(`Cargando ${chunkInfo.id}...`);
       
-      this.updateLoader(
-        `Cargando ${chunkInfo.name || chunkInfo.id}...`,
-        progress
-      );
-      
-      // Cargar chunk
-      const chunkData = await this.loadChunk(chunkInfo);
-      
-      if (chunkData?.movies) {
-        // Procesar películas
-        const movies = chunkData.movies.map(m => this.processMovie(m));
-        this.movies.push(...movies);
-        loadedCount += movies.length;
-        
-        console.log(`✅ ${chunkInfo.name}: ${movies.length} películas`);
-        
-        // Renderizado progresivo
-        if (CONFIG.PROGRESSIVE_RENDER && chunkInfo.priority === 1) {
-          this.renderMovies(this.movies);
-          this.updateStats();
-        }
-      }
-    }
-  }
-  
-  async loadChunk(chunkInfo) {
-    const cacheKey = `chunk_${chunkInfo.id}`;
-    
-    // Evitar cargar dos veces
-    if (this.loadedChunks.has(chunkInfo.id)) {
-      return this.chunks.get(chunkInfo.id);
-    }
-    
-    // Intentar desde caché
-    const cached = await this.getFromCache(cacheKey);
-    if (cached) {
-      console.log(`⚡ Chunk ${chunkInfo.id} desde caché`);
-      this.chunks.set(chunkInfo.id, cached);
-      this.loadedChunks.add(chunkInfo.id);
-      return cached;
-    }
-    
-    try {
-      // Cargar desde CDN con timeout
-      const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 10000);
-      
-      const response = await fetch(CONFIG.getChunkUrl(chunkInfo.file), {
-        signal: controller.signal
-      });
-      
-      clearTimeout(timeoutId);
-      
-      if (!response.ok) {
-        throw new Error(`HTTP ${response.status}`);
-      }
-      
-      const data = await response.json();
-      
-      // Guardar en caché
-      await this.saveToCache(cacheKey, data);
-      
-      // Guardar en memoria
-      this.chunks.set(chunkInfo.id, data);
-      this.loadedChunks.add(chunkInfo.id);
-      
-      return data;
-      
-    } catch (error) {
-      console.error(`❌ Error cargando chunk ${chunkInfo.id}:`, error.message);
-      return null;
-    }
-  }
-  
-  processMovie(movie) {
-    // Expandir campos comprimidos
-    return {
-      titulo: movie.t || movie.titulo || 'Sin título',
-      enlace: movie.l || movie.enlace || movie.url || '#',
-      year: movie.y || movie.year || movie.ano || new Date().getFullYear(),
-      poster: movie.p || movie.poster || CONFIG.DEFAULT_POSTER,
-      genero: movie.g || movie.genero || movie.genre || '',
-      quality: movie.q || movie.quality || movie.calidad || '',
-      rating: movie.r || movie.rating || 0,
-      duration: movie.d || movie.duration || ''
-    };
-  }
-  
-  // ============================================
-  // SISTEMA DE CACHÉ
-  // ============================================
-  async initCache() {
-    if (!CONFIG.CACHE_ENABLED) return;
-    
-    // Inicializar IndexedDB
-    if (window.indexedDB) {
       try {
-        const request = indexedDB.open('MoviesChunkDB', 1);
+        const chunkUrl = `${CONFIG.BASE_URL}/${chunkInfo.file}`;
+        console.log(`📥 Cargando chunk: ${chunkUrl}`);
         
-        request.onupgradeneeded = (event) => {
-          const db = event.target.result;
-          if (!db.objectStoreNames.contains('cache')) {
-            db.createObjectStore('cache', { keyPath: 'key' });
+        // Intentar caché primero
+        if (CONFIG.USE_CACHE) {
+          const cached = this.getFromCache(`chunk_${chunkInfo.id}`);
+          if (cached) {
+            console.log(`✅ Chunk ${chunkInfo.id} desde caché`);
+            this.processChunk(cached);
+            continue;
           }
-        };
-        
-        return new Promise((resolve) => {
-          request.onsuccess = () => {
-            this.db = request.result;
-            console.log('✅ IndexedDB inicializado');
-            resolve();
-          };
-          request.onerror = () => {
-            console.warn('⚠️ IndexedDB no disponible');
-            resolve();
-          };
-        });
-      } catch (error) {
-        console.warn('⚠️ Error inicializando IndexedDB:', error);
-      }
-    }
-  }
-  
-  async getFromCache(key) {
-    if (!CONFIG.CACHE_ENABLED) return null;
-    
-    // Nivel 1: Memoria
-    if (this.cache.has(key)) {
-      const item = this.cache.get(key);
-      if (Date.now() < item.expiry) {
-        return item.data;
-      }
-      this.cache.delete(key);
-    }
-    
-    // Nivel 2: IndexedDB
-    if (this.db) {
-      try {
-        return await new Promise((resolve) => {
-          const transaction = this.db.transaction(['cache'], 'readonly');
-          const request = transaction.objectStore('cache').get(key);
-          
-          request.onsuccess = () => {
-            const result = request.result;
-            if (result && Date.now() < result.expiry) {
-              // Promover a memoria
-              this.cache.set(key, result);
-              resolve(result.data);
-            } else {
-              resolve(null);
-            }
-          };
-          
-          request.onerror = () => resolve(null);
-        });
-      } catch (error) {
-        console.warn('Error leyendo caché:', error);
-      }
-    }
-    
-    // Nivel 3: LocalStorage
-    try {
-      const item = localStorage.getItem(key);
-      if (item) {
-        const parsed = JSON.parse(item);
-        if (Date.now() < parsed.expiry) {
-          return parsed.data;
         }
-        localStorage.removeItem(key);
-      }
-    } catch (error) {}
-    
-    return null;
-  }
-  
-  async saveToCache(key, data) {
-    if (!CONFIG.CACHE_ENABLED) return;
-    
-    const item = {
-      key,
-      data,
-      expiry: Date.now() + CONFIG.CACHE_TTL
-    };
-    
-    // Guardar en memoria
-    this.cache.set(key, item);
-    
-    // Limitar tamaño del caché en memoria
-    if (this.cache.size > 50) {
-      const firstKey = this.cache.keys().next().value;
-      this.cache.delete(firstKey);
-    }
-    
-    // Guardar en IndexedDB
-    if (this.db) {
-      try {
-        const transaction = this.db.transaction(['cache'], 'readwrite');
-        transaction.objectStore('cache').put(item);
+        
+        // Cargar desde GitHub
+        const response = await fetch(chunkUrl);
+        
+        if (!response.ok) {
+          console.error(`❌ Error cargando chunk ${chunkInfo.id}: HTTP ${response.status}`);
+          continue;
+        }
+        
+        const chunkData = await response.json();
+        console.log(`✅ Chunk ${chunkInfo.id} cargado:`, chunkData);
+        
+        // Guardar en caché
+        if (CONFIG.USE_CACHE) {
+          this.saveToCache(`chunk_${chunkInfo.id}`, chunkData);
+        }
+        
+        // Procesar chunk
+        this.processChunk(chunkData);
+        
       } catch (error) {
-        console.warn('Error guardando en IndexedDB:', error);
+        console.error(`❌ Error procesando chunk ${chunkInfo.id}:`, error);
       }
     }
     
-    // Guardar en LocalStorage si es pequeño
-    try {
-      const serialized = JSON.stringify(item);
-      if (serialized.length < 50000) {
-        localStorage.setItem(key, serialized);
-      }
-    } catch (error) {}
+    console.log(`📊 Total de películas cargadas: ${this.movies.length}`);
   }
   
-  // ============================================
-  // RENDERIZADO
-  // ============================================
-  renderMovies(movies = this.filteredMovies.length ? this.filteredMovies : this.movies) {
+  processChunk(chunkData) {
+    // El chunk puede tener diferentes formatos
+    let movies = [];
+    
+    if (chunkData.movies && Array.isArray(chunkData.movies)) {
+      movies = chunkData.movies;
+    } else if (Array.isArray(chunkData)) {
+      movies = chunkData;
+    } else if (chunkData.data && Array.isArray(chunkData.data)) {
+      movies = chunkData.data;
+    }
+    
+    // Procesar cada película
+    movies.forEach(movie => {
+      // Expandir campos comprimidos si es necesario
+      const processedMovie = {
+        titulo: movie.t || movie.titulo || movie.title || 'Sin título',
+        enlace: movie.l || movie.enlace || movie.link || movie.url || '#',
+        year: movie.y || movie.year || movie.ano || movie.año || 2024,
+        poster: movie.p || movie.poster || movie.image || this.getDefaultPoster(),
+        genero: movie.g || movie.genero || movie.genre || '',
+        calidad: movie.q || movie.calidad || movie.quality || ''
+      };
+      
+      this.movies.push(processedMovie);
+    });
+    
+    console.log(`📊 Películas procesadas del chunk: ${movies.length}`);
+  }
+  
+  render(moviesToRender = this.movies) {
     const grid = this.elements.moviesGrid;
     
-    // Mostrar/ocultar estado vacío
-    if (movies.length === 0) {
+    if (moviesToRender.length === 0) {
       grid.innerHTML = '';
-      this.elements.emptyState.classList.add('show');
+      this.elements.emptyState.style.display = 'block';
+      this.elements.errorState.style.display = 'none';
       return;
     }
     
-    this.elements.emptyState.classList.remove('show');
+    this.elements.emptyState.style.display = 'none';
+    this.elements.errorState.style.display = 'none';
     
-    // Crear fragmento para mejor performance
+    // Limpiar grid
+    grid.innerHTML = '';
+    
+    // Renderizar películas
     const fragment = document.createDocumentFragment();
     
-    // Renderizar por lotes
-    const batchSize = CONFIG.RENDER_BATCH_SIZE;
-    const firstBatch = movies.slice(0, batchSize);
-    
-    firstBatch.forEach(movie => {
-      fragment.appendChild(this.createMovieCard(movie));
+    moviesToRender.slice(0, CONFIG.RENDER_BATCH).forEach(movie => {
+      const card = this.createMovieCard(movie);
+      fragment.appendChild(card);
     });
     
-    // Limpiar y agregar primer lote
-    grid.innerHTML = '';
     grid.appendChild(fragment);
     
-    // Renderizar resto en idle time
-    if (movies.length > batchSize) {
-      if (window.requestIdleCallback) {
-        requestIdleCallback(() => {
-          const restFragment = document.createDocumentFragment();
-          movies.slice(batchSize).forEach(movie => {
-            restFragment.appendChild(this.createMovieCard(movie));
-          });
-          grid.appendChild(restFragment);
-          this.observeImages();
+    // Renderizar el resto en segundo plano
+    if (moviesToRender.length > CONFIG.RENDER_BATCH) {
+      setTimeout(() => {
+        const restFragment = document.createDocumentFragment();
+        moviesToRender.slice(CONFIG.RENDER_BATCH).forEach(movie => {
+          const card = this.createMovieCard(movie);
+          restFragment.appendChild(card);
         });
-      } else {
-        // Fallback sin requestIdleCallback
-        setTimeout(() => {
-          const restFragment = document.createDocumentFragment();
-          movies.slice(batchSize).forEach(movie => {
-            restFragment.appendChild(this.createMovieCard(movie));
-          });
-          grid.appendChild(restFragment);
-          this.observeImages();
-        }, 100);
-      }
-    } else {
-      this.observeImages();
+        grid.appendChild(restFragment);
+      }, 100);
     }
+    
+    // Actualizar estadísticas
+    this.updateStats(moviesToRender.length);
   }
   
   createMovieCard(movie) {
     const card = document.createElement('article');
     card.className = 'movie-card';
     card.onclick = () => this.playMovie(movie);
-    card.title = `${movie.titulo} (${movie.year})`;
+    card.title = movie.titulo;
     
-    // Construir HTML
-    let html = '<div class="movie-poster-container">';
+    card.innerHTML = `
+      <div class="movie-poster-container">
+        <img 
+          class="movie-poster" 
+          src="${movie.poster}" 
+          alt="${movie.titulo}"
+          loading="lazy"
+          onerror="this.src='${this.getDefaultPoster()}'">
+      </div>
+      <div class="movie-info">
+        <div class="movie-title">${movie.titulo}</div>
+        <div class="movie-year">${movie.year}</div>
+      </div>
+    `;
     
-    // Quality badge
-    if (CONFIG.SHOW_QUALITY_BADGE && movie.quality) {
-      html += `<div class="movie-quality">${movie.quality}</div>`;
-    }
-    
-    // Poster con lazy loading
-    if (CONFIG.LAZY_LOAD_IMAGES) {
-      html += '<div class="poster-skeleton"></div>';
-      html += `<img class="movie-poster loading" data-src="${movie.poster}" alt="${movie.titulo}">`;
-    } else {
-      html += `<img class="movie-poster" src="${movie.poster}" alt="${movie.titulo}">`;
-    }
-    
-    html += '</div>';
-    html += '<div class="movie-info">';
-    html += `<div class="movie-title">${movie.titulo}</div>`;
-    
-    // Metadata
-    if (CONFIG.SHOW_YEAR_IN_CARD || CONFIG.SHOW_GENRE_IN_CARD) {
-      html += '<div class="movie-meta">';
-      if (CONFIG.SHOW_YEAR_IN_CARD) {
-        html += `<span class="movie-year">${movie.year}</span>`;
-      }
-      if (CONFIG.SHOW_GENRE_IN_CARD && movie.genero) {
-        html += `<span class="movie-genre">${movie.genero}</span>`;
-      }
-      html += '</div>';
-    }
-    
-    html += '</div>';
-    
-    card.innerHTML = html;
     return card;
   }
   
-  // ============================================
-  // LAZY LOADING DE IMÁGENES
-  // ============================================
-  initImageObserver() {
-    if (!CONFIG.LAZY_LOAD_IMAGES || !window.IntersectionObserver) return;
-    
-    this.imageObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const img = entry.target;
-          this.loadImage(img);
-          this.imageObserver.unobserve(img);
-        }
-      });
-    }, {
-      rootMargin: '50px'
+  setupEvents() {
+    // Búsqueda
+    let searchTimeout;
+    this.elements.searchInput.addEventListener('input', (e) => {
+      clearTimeout(searchTimeout);
+      searchTimeout = setTimeout(() => {
+        this.search(e.target.value);
+      }, 300);
     });
   }
   
-  observeImages() {
-    if (!this.imageObserver) return;
-    
-    const images = this.elements.moviesGrid.querySelectorAll('img[data-src]');
-    images.forEach(img => this.imageObserver.observe(img));
-  }
-  
-  loadImage(img) {
-    const src = img.dataset.src;
-    if (!src) return;
-    
-    const tempImg = new Image();
-    
-    tempImg.onload = () => {
-      img.src = src;
-      img.classList.remove('loading');
-      delete img.dataset.src;
-      
-      // Ocultar skeleton
-      const skeleton = img.parentElement.querySelector('.poster-skeleton');
-      if (skeleton) {
-        skeleton.style.display = 'none';
-      }
-    };
-    
-    tempImg.onerror = () => {
-      img.src = CONFIG.DEFAULT_POSTER;
-      img.classList.remove('loading');
-    };
-    
-    tempImg.src = src;
-  }
-  
-  // ============================================
-  // FILTROS Y BÚSQUEDA
-  // ============================================
-  createFilterButtons() {
-    const filters = this.elements.filters;
-    
-    // Obtener años únicos
-    const years = [...new Set(this.movies.map(m => m.year))].sort((a, b) => b - a);
-    
-    // Crear filtros por década
-    const decades = [
-      { id: '2020s', label: '2020s', test: y => y >= 2020 },
-      { id: '2010s', label: '2010s', test: y => y >= 2010 && y < 2020 },
-      { id: '2000s', label: '2000s', test: y => y >= 2000 && y < 2010 },
-      { id: '90s', label: '90s', test: y => y >= 1990 && y < 2000 },
-      { id: '80s', label: '80s', test: y => y >= 1980 && y < 1990 },
-      { id: 'classics', label: 'Clásicas', test: y => y < 1980 }
-    ];
-    
-    decades.forEach(decade => {
-      const count = this.movies.filter(m => decade.test(m.year)).length;
-      if (count > 0) {
-        const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.dataset.filter = decade.id;
-        btn.innerHTML = `${decade.label} <span class="filter-count">${count}</span>`;
-        btn.onclick = () => this.applyFilter(decade.id, m => decade.test(m.year));
-        filters.appendChild(btn);
-      }
-    });
-    
-    // Crear filtros por género si hay géneros
-    const genres = [...new Set(this.movies.map(m => m.genero).filter(g => g))];
-    if (genres.length > 0 && genres.length < 20) {
-      // Separador
-      const separator = document.createElement('div');
-      separator.style.width = '1px';
-      separator.style.background = 'var(--border)';
-      separator.style.margin = '0 0.5rem';
-      filters.appendChild(separator);
-      
-      // Top 5 géneros
-      genres.slice(0, 5).forEach(genre => {
-        const count = this.movies.filter(m => m.genero === genre).length;
-        const btn = document.createElement('button');
-        btn.className = 'filter-btn';
-        btn.dataset.filter = `genre_${genre}`;
-        btn.innerHTML = `${genre} <span class="filter-count">${count}</span>`;
-        btn.onclick = () => this.applyFilter(`genre_${genre}`, m => m.genero === genre);
-        filters.appendChild(btn);
-      });
-    }
-    
-    // Actualizar contador total
-    this.elements.countAll.textContent = this.movies.length;
-  }
-  
-  applyFilter(filterId, filterFn = null) {
-    // Actualizar botones activos
-    document.querySelectorAll('.filter-btn').forEach(btn => {
-      btn.classList.toggle('active', btn.dataset.filter === filterId);
-    });
-    
-    this.currentFilter = filterId;
-    
-    if (filterId === 'all' || !filterFn) {
-      this.filteredMovies = [];
-      this.renderMovies(this.movies);
-    } else {
-      this.filteredMovies = this.movies.filter(filterFn);
-      this.renderMovies(this.filteredMovies);
-    }
-    
-    this.updateStats();
-  }
-  
-  performSearch() {
-    const query = this.searchQuery.toLowerCase();
+  search(query) {
+    query = query.toLowerCase().trim();
     
     if (!query) {
       this.filteredMovies = [];
-      this.renderMovies(this.movies);
-    } else {
-      // Búsqueda optimizada
-      this.filteredMovies = this.movies.filter(movie => {
-        return movie.titulo.toLowerCase().includes(query) ||
-               movie.year.toString().includes(query) ||
-               (movie.genero && movie.genero.toLowerCase().includes(query));
-      });
-      
-      this.renderMovies(this.filteredMovies);
+      this.render(this.movies);
+      return;
     }
     
-    this.updateStats();
-  }
-  
-  // ============================================
-  // EVENT LISTENERS
-  // ============================================
-  setupEventListeners() {
-    // Búsqueda
-    this.elements.searchInput.addEventListener('input', (e) => {
-      this.searchQuery = e.target.value.trim();
-      this.handleSearch();
+    this.filteredMovies = this.movies.filter(movie => {
+      return movie.titulo.toLowerCase().includes(query) ||
+             movie.year.toString().includes(query) ||
+             movie.genero.toLowerCase().includes(query);
     });
     
-    // Enter para búsqueda inmediata
-    this.elements.searchInput.addEventListener('keypress', (e) => {
-      if (e.key === 'Enter') {
-        e.preventDefault();
-        this.performSearch();
-      }
-    });
+    this.render(this.filteredMovies);
   }
   
-  // ============================================
-  // UTILIDADES
-  // ============================================
   playMovie(movie) {
     console.log('▶️ Reproduciendo:', movie.titulo);
-    
     if (movie.enlace && movie.enlace !== '#') {
-      window.open(movie.enlace, '_blank', 'noopener,noreferrer');
+      window.open(movie.enlace, '_blank');
     } else {
-      this.showToast('⚠️ Enlace no disponible');
+      alert('Enlace no disponible');
     }
   }
   
-  updateLoader(text, progress = 0) {
+  updateLoader(text) {
     this.elements.loaderText.textContent = text;
-    this.elements.progressBar.style.width = `${progress}%`;
   }
   
-  updateStats() {
-    const count = this.filteredMovies.length || this.movies.length;
-    this.elements.movieCount.textContent = `${count.toLocaleString('es')} películas`;
-  }
-  
-  finishLoading() {
-    // Ocultar loader
+  hideLoader() {
     this.elements.loader.classList.add('hidden');
     setTimeout(() => {
       this.elements.loader.style.display = 'none';
     }, 300);
-    
-    // Actualizar estado
-    this.elements.loadStatus.textContent = 'Listo';
-    this.updateStats();
-    
-    // Mostrar estadísticas
-    const loadTime = ((performance.now() - this.startTime) / 1000).toFixed(2);
-    console.log(`✅ Carga completa en ${loadTime}s`);
-    
-    // Toast de éxito
-    this.showToast(`✅ ${this.movies.length} películas cargadas en ${loadTime}s`);
   }
   
-  showToast(message, duration = 3000) {
-    this.elements.toast.textContent = message;
-    this.elements.toast.classList.add('show');
-    
-    setTimeout(() => {
-      this.elements.toast.classList.remove('show');
-    }, duration);
+  updateStats(count) {
+    this.elements.movieCount.textContent = `${count} películas`;
+    this.elements.status.textContent = 'Listo';
   }
   
   showError(message) {
-    this.elements.moviesGrid.innerHTML = `
-      <div class="empty-state show">
-        <div class="empty-icon">⚠️</div>
-        <h2 class="empty-title">Error</h2>
-        <p class="empty-message">${message}</p>
-        <button onclick="location.reload()" style="
-          margin-top: 1rem;
-          padding: 0.75rem 2rem;
-          background: var(--primary);
-          border: none;
-          border-radius: 5px;
-          color: white;
-          cursor: pointer;
-          font-size: 14px;
-          font-weight: 600;
-        ">Reintentar</button>
-      </div>
-    `;
-    
-    // Ocultar loader
-    this.elements.loader.classList.add('hidden');
+    this.elements.errorState.textContent = message;
+    this.elements.errorState.style.display = 'block';
+    this.elements.emptyState.style.display = 'none';
   }
   
-  debounce(func, wait) {
-    let timeout;
-    return function executedFunction(...args) {
-      const later = () => {
-        clearTimeout(timeout);
-        func(...args);
+  getDefaultPoster() {
+    return 'data:image/svg+xml,' + encodeURIComponent(`
+      <svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">
+        <rect width="300" height="450" fill="#1a1a1a"/>
+        <text x="150" y="225" font-family="Arial" font-size="20" fill="#666" text-anchor="middle">🎬</text>
+      </svg>
+    `);
+  }
+  
+  // Sistema de caché simple
+  getFromCache(key) {
+    if (!CONFIG.USE_CACHE) return null;
+    
+    try {
+      const item = localStorage.getItem(key);
+      if (!item) return null;
+      
+      const data = JSON.parse(item);
+      if (Date.now() > data.expiry) {
+        localStorage.removeItem(key);
+        return null;
+      }
+      
+      return data.value;
+    } catch (e) {
+      return null;
+    }
+  }
+  
+  saveToCache(key, value) {
+    if (!CONFIG.USE_CACHE) return;
+    
+    try {
+      const data = {
+        value: value,
+        expiry: Date.now() + CONFIG.CACHE_DURATION
       };
-      clearTimeout(timeout);
-      timeout = setTimeout(later, wait);
-    };
+      localStorage.setItem(key, JSON.stringify(data));
+    } catch (e) {
+      console.warn('No se pudo guardar en caché:', e);
+    }
   }
 }
 
 // ============================================
-// INICIALIZACIÓN
+// INICIAR APLICACIÓN
 // ============================================
-window.app = new MoviesChunkApp();
+window.addEventListener('DOMContentLoaded', () => {
+  console.log('🎬 DOM Cargado, iniciando aplicación...');
+  window.app = new MoviesApp();
+});
 
-// Iniciar cuando el DOM esté listo
-if (document.readyState === 'loading') {
-  document.addEventListener('DOMContentLoaded', () => {
-    window.app.init();
-  });
-} else {
-  window.app.init();
-}
-
-// ============================================
-// SERVICE WORKER (Opcional)
-// ============================================
-if ('serviceWorker' in navigator && location.protocol === 'https:') {
-  navigator.serviceWorker.register('/sw.js').catch(() => {
-    console.log('Service Worker no disponible');
-  });
-}
+// Debug helper
+console.log('📌 Para debug, usa: window.app');
 </script>
 
 </body>
