@@ -198,12 +198,89 @@ header {
     to { transform: translateX(0); }
 }
 
+/* Series Banner */
+.series-banner {
+    position: relative;
+    height: 400px;
+    overflow: hidden;
+    margin-bottom: 20px;
+}
+
+.series-banner-bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-size: cover;
+    background-position: center;
+    filter: blur(8px);
+    transform: scale(1.1);
+    opacity: 0.4;
+}
+
+.series-banner-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        rgba(0,0,0,0.3) 0%,
+        rgba(0,0,0,0.7) 50%,
+        var(--background-dark) 100%
+    );
+}
+
+.series-banner-content {
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: flex-end;
+    padding: 40px;
+    z-index: 2;
+}
+
+.series-poster {
+    width: 200px;
+    height: 300px;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.8);
+    margin-right: 40px;
+}
+
+.series-info {
+    flex: 1;
+    padding-bottom: 20px;
+}
+
 .series-header {
-    font-size: 2.5rem;
+    font-size: 3rem;
     font-weight: 700;
-    padding: 30px 40px 20px;
     text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    margin-bottom: 15px;
     animation: fadeInDown 0.5s ease-out;
+}
+
+.series-meta {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    font-size: 1.1rem;
+    color: var(--text-light);
+    opacity: 0.9;
+}
+
+.series-meta-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.series-meta-item::before {
+    content: "📺";
 }
 
 @keyframes fadeInDown {
@@ -224,6 +301,7 @@ header {
     padding: 0 40px 24px;
     overflow-x: auto;
     scrollbar-width: none;
+    justify-content: center;
 }
 
 .season-bar::-webkit-scrollbar {
@@ -275,11 +353,19 @@ header {
     width: 100%;
 }
 
-/* Episodes */
+/* Episodes - Centrado para TV */
 .episodes-container {
     background: var(--background-dark);
-    padding-top: 20px;
+    padding: 40px 0;
     min-height: 320px;
+    display: flex;
+    justify-content: center;
+}
+
+.episodes-wrapper {
+    width: 100%;
+    max-width: 1600px;
+    margin: 0 auto;
 }
 
 .episodes-row {
@@ -290,8 +376,10 @@ header {
 .episodes-track {
     display: flex;
     gap: 20px;
-    padding: 0 40px 40px;
+    padding: 0 60px;
     transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    justify-content: center;
+    flex-wrap: wrap;
 }
 
 .episode {
@@ -547,15 +635,42 @@ header {
     display: block;
 }
 
+/* TV Mode - Episodes Grid */
+@media (min-width: 1400px) {
+    .episodes-track {
+        justify-content: center;
+        max-width: 1400px;
+        margin: 0 auto;
+    }
+}
+
 /* Responsive */
 @media (max-width: 768px) {
-    header, .grid, .series-header, .season-bar, .episodes-track {
+    header, .grid, .season-bar, .episodes-track {
         padding-left: 20px;
         padding-right: 20px;
     }
     
     .series-header {
         font-size: 1.8rem;
+    }
+    
+    .series-banner {
+        height: 300px;
+    }
+    
+    .series-banner-content {
+        padding: 20px;
+    }
+    
+    .series-poster {
+        width: 120px;
+        height: 180px;
+        margin-right: 20px;
+    }
+    
+    .series-header {
+        font-size: 1.5rem;
     }
     
     .episode {
@@ -619,13 +734,30 @@ header {
 <div id="seriesOverlay" class="series-overlay">
     <span class="close" id="closeButton">×</span>
     
-    <div class="series-header" id="seriesTitle">SERIE TÍTULO</div>
+    <!-- Banner con fondo -->
+    <div class="series-banner">
+        <div class="series-banner-bg" id="seriesBannerBg"></div>
+        <div class="series-banner-overlay"></div>
+        <div class="series-banner-content">
+            <img class="series-poster" id="seriesPoster" src="" alt="">
+            <div class="series-info">
+                <div class="series-header" id="seriesTitle">SERIE TÍTULO</div>
+                <div class="series-meta">
+                    <div class="series-meta-item" id="seasonsInfo">
+                        <span id="seasonsCount">0 Temporadas disponibles</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
     
     <div class="season-bar" id="seasonBar"></div>
     
     <div class="episodes-container">
-        <div class="episodes-row">
-            <div class="episodes-track" id="episodesTrack"></div>
+        <div class="episodes-wrapper">
+            <div class="episodes-row">
+                <div class="episodes-track" id="episodesTrack"></div>
+            </div>
         </div>
     </div>
 </div>
@@ -659,6 +791,7 @@ class StreamingPlatform {
         this.cards = [];
         this.index = 0;
         this.currentSeries = null;
+        this.currentSeriesId = null;
         this.currentSeason = 0;
         this.focusMode = "season";
         this.seasonFocus = 0;
@@ -679,6 +812,9 @@ class StreamingPlatform {
         this.backButton = document.getElementById('backButton');
         this.closeButton = document.getElementById('closeButton');
         this.seriesTitle = document.getElementById('seriesTitle');
+        this.seriesBannerBg = document.getElementById('seriesBannerBg');
+        this.seriesPoster = document.getElementById('seriesPoster');
+        this.seasonsCount = document.getElementById('seasonsCount');
         this.seasonBar = document.getElementById('seasonBar');
         this.episodesTrack = document.getElementById('episodesTrack');
         this.statusIndicator = document.getElementById('statusIndicator');
@@ -825,13 +961,22 @@ class StreamingPlatform {
     
     openSeriesDetail(seriesId) {
         this.currentSeries = this.seriesData[seriesId];
+        this.currentSeriesId = seriesId;
         if (!this.currentSeries) return;
         
         this.mainGrid.style.display = 'none';
         this.seriesOverlay.style.display = 'block';
         this.backButton.classList.add('visible');
         
+        // Setup banner
         this.seriesTitle.textContent = this.currentSeries.title;
+        this.seriesBannerBg.style.backgroundImage = `url('${this.currentSeries.poster}')`;
+        this.seriesPoster.src = this.currentSeries.poster;
+        this.seriesPoster.alt = this.currentSeries.title;
+        
+        // Update seasons info
+        const seasonCount = Object.keys(this.currentSeries.seasons).length;
+        this.seasonsCount.textContent = `${seasonCount} ${seasonCount === 1 ? 'Temporada disponible' : 'Temporadas disponibles'}`;
         
         // Reset navigation
         this.currentSeason = 0;
@@ -978,26 +1123,15 @@ class StreamingPlatform {
     
     updateSeriesScroll() {
         if (this.focusMode === 'episode') {
-            const episodeWidth = 340;
-            const containerWidth = window.innerWidth;
             const episodes = this.episodesTrack.querySelectorAll('.episode');
             
             if (episodes[this.episodeFocus]) {
                 const focusedEpisode = episodes[this.episodeFocus];
-                const rect = focusedEpisode.getBoundingClientRect();
-                const containerRect = this.episodesTrack.parentElement.getBoundingClientRect();
-                
-                if (rect.left < containerRect.left || rect.right > containerRect.right) {
-                    this.scrollX = Math.max(0, 
-                        (this.episodeFocus * episodeWidth) - (containerWidth / 2) + (episodeWidth / 2)
-                    );
-                    
-                    const totalWidth = episodes.length * episodeWidth;
-                    const maxScroll = Math.max(0, totalWidth - containerWidth + 80);
-                    this.scrollX = Math.min(this.scrollX, maxScroll);
-                    
-                    this.episodesTrack.style.transform = `translateX(${-this.scrollX}px)`;
-                }
+                focusedEpisode.scrollIntoView({
+                    behavior: 'smooth',
+                    block: 'nearest',
+                    inline: 'center'
+                });
             }
         }
     }
@@ -1013,9 +1147,7 @@ class StreamingPlatform {
     saveProgress() {
         if (this.currentSeries) {
             const progress = {
-                seriesId: Object.keys(this.seriesData).find(
-                    key => this.seriesData[key] === this.currentSeries
-                ),
+                seriesId: this.currentSeriesId,
                 season: this.currentSeason,
                 episode: this.episodeFocus
             };
@@ -1029,13 +1161,9 @@ class StreamingPlatform {
         this.mainGrid.style.display = 'grid';
         
         // Find and focus the current series card
-        const seriesId = Object.keys(this.seriesData).find(
-            key => this.seriesData[key] === this.currentSeries
-        );
-        
-        if (seriesId) {
+        if (this.currentSeriesId) {
             const cardIndex = this.cards.findIndex(
-                card => card.dataset.series === seriesId
+                card => card.dataset.series === this.currentSeriesId
             );
             if (cardIndex !== -1) {
                 this.index = cardIndex;
@@ -1115,6 +1243,7 @@ class StreamingPlatform {
         } else if (this.focusMode === 'episode') {
             const episodes = this.currentSeries.seasons[seasonKeys[this.currentSeason]];
             const total = episodes.length;
+            const episodesPerRow = Math.floor((window.innerWidth - 120) / 340);
             
             switch(e.key) {
                 case 'ArrowRight':
@@ -1123,9 +1252,20 @@ class StreamingPlatform {
                 case 'ArrowLeft':
                     this.episodeFocus = Math.max(this.episodeFocus - 1, 0);
                     break;
+                case 'ArrowDown':
+                    const nextRow = this.episodeFocus + episodesPerRow;
+                    if (nextRow < total) {
+                        this.episodeFocus = nextRow;
+                    }
+                    break;
                 case 'ArrowUp':
-                    this.focusMode = 'season';
-                    this.seasonFocus = this.currentSeason;
+                    const prevRow = this.episodeFocus - episodesPerRow;
+                    if (prevRow >= 0) {
+                        this.episodeFocus = prevRow;
+                    } else {
+                        this.focusMode = 'season';
+                        this.seasonFocus = this.currentSeason;
+                    }
                     break;
                 case 'Enter':
                 case ' ':
@@ -1215,6 +1355,5 @@ document.addEventListener('visibilitychange', () => {
 
 </body>
 </html>
-
 
 
