@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Movies+ HD - Netflix Style</title>
+<title>Movies+ HD</title>
 
 <style>
 /* ============================================
@@ -18,7 +18,6 @@
   --text: #ffffff;
   --text-muted: #999999;
   --text-dim: #666666;
-  --navbar-bg: linear-gradient(180deg, rgba(0,0,0,0.7) 10%, rgba(0,0,0,0));
 }
 
 * {
@@ -34,6 +33,7 @@ body {
   overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  padding-top: 40px;
 }
 
 /* Scrollbar personalizada */
@@ -78,18 +78,6 @@ body {
   text-align: center;
 }
 
-.loader-logo {
-  font-size: 4rem;
-  color: var(--primary);
-  margin-bottom: 2rem;
-  animation: pulse 1.5s ease infinite;
-}
-
-@keyframes pulse {
-  0%, 100% { transform: scale(1); opacity: 1; }
-  50% { transform: scale(1.1); opacity: 0.8; }
-}
-
 .loader-spinner {
   width: 50px;
   height: 50px;
@@ -111,192 +99,12 @@ body {
 }
 
 /* ============================================
-   HEADER
-   ============================================ */
-header {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  z-index: 1000;
-  padding: 20px 4%;
-  background: var(--navbar-bg);
-  transition: background 0.3s ease;
-}
-
-header.scrolled {
-  background: var(--bg);
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.logo {
-  font-size: 2rem;
-  font-weight: bold;
-  color: var(--primary);
-  text-transform: uppercase;
-  letter-spacing: 2px;
-  cursor: pointer;
-  transition: transform 0.3s ease;
-}
-
-.logo:hover {
-  transform: scale(1.05);
-}
-
-.nav-buttons {
-  display: flex;
-  gap: 1rem;
-}
-
-.nav-btn {
-  padding: 8px 20px;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  border-radius: 4px;
-  color: var(--text);
-  font-size: 0.9rem;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  backdrop-filter: blur(10px);
-}
-
-.nav-btn:hover {
-  background: rgba(229, 9, 20, 0.8);
-  border-color: var(--primary);
-  transform: translateY(-2px);
-}
-
-.nav-btn.active {
-  background: var(--primary);
-  border-color: var(--primary);
-}
-
-/* ============================================
-   HERO SECTION
-   ============================================ */
-.hero {
-  height: 70vh;
-  min-height: 500px;
-  position: relative;
-  margin-top: -80px;
-  display: flex;
-  align-items: center;
-  background: linear-gradient(to bottom, 
-    transparent 0%,
-    rgba(20,20,20,0.5) 50%,
-    #141414 100%);
-  overflow: hidden;
-}
-
-.hero-bg {
-  position: absolute;
-  inset: 0;
-  z-index: -1;
-}
-
-.hero-bg img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.5;
-}
-
-.hero-gradient {
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(77deg, 
-    rgba(0,0,0,0.8) 0%, 
-    rgba(0,0,0,0.4) 50%, 
-    transparent 100%);
-  z-index: -1;
-}
-
-.hero-content {
-  padding: 0 4%;
-  max-width: 50%;
-  z-index: 1;
-  animation: slideInLeft 1s ease;
-}
-
-@keyframes slideInLeft {
-  from {
-    opacity: 0;
-    transform: translateX(-50px);
-  }
-  to {
-    opacity: 1;
-    transform: translateX(0);
-  }
-}
-
-.hero-title {
-  font-size: clamp(2rem, 5vw, 4rem);
-  font-weight: bold;
-  margin-bottom: 1rem;
-  line-height: 1.1;
-  text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
-}
-
-.hero-description {
-  font-size: clamp(1rem, 2vw, 1.25rem);
-  line-height: 1.6;
-  margin-bottom: 2rem;
-  color: var(--text-muted);
-  text-shadow: 1px 1px 2px rgba(0,0,0,0.7);
-}
-
-.hero-buttons {
-  display: flex;
-  gap: 1rem;
-  flex-wrap: wrap;
-}
-
-.hero-btn {
-  padding: 12px 30px;
-  font-size: 1.1rem;
-  font-weight: 600;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  display: flex;
-  align-items: center;
-  gap: 10px;
-}
-
-.hero-btn.primary {
-  background: var(--primary);
-  color: white;
-}
-
-.hero-btn.primary:hover {
-  background: #f40612;
-  transform: scale(1.05);
-}
-
-.hero-btn.secondary {
-  background: rgba(109, 109, 110, 0.7);
-  color: white;
-  backdrop-filter: blur(4px);
-}
-
-.hero-btn.secondary:hover {
-  background: rgba(109, 109, 110, 0.9);
-  transform: scale(1.05);
-}
-
-/* ============================================
    CONTENIDO PRINCIPAL
    ============================================ */
 .main-content {
   position: relative;
   padding-bottom: 50px;
   min-height: 100vh;
-  margin-top: -100px;
 }
 
 /* ============================================
@@ -314,6 +122,7 @@ header.scrolled {
 .carousel-section:nth-child(2) { animation-delay: 0.2s; }
 .carousel-section:nth-child(3) { animation-delay: 0.3s; }
 .carousel-section:nth-child(4) { animation-delay: 0.4s; }
+.carousel-section:nth-child(5) { animation-delay: 0.5s; }
 
 @keyframes fadeIn {
   to {
@@ -329,7 +138,7 @@ header.scrolled {
 }
 
 .carousel-title {
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 600;
   color: var(--text);
   transition: color 0.3s ease;
@@ -584,33 +393,6 @@ header.scrolled {
 }
 
 /* ============================================
-   FOOTER
-   ============================================ */
-footer {
-  margin-top: 100px;
-  padding: 50px 4%;
-  background: var(--bg-secondary);
-  text-align: center;
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-.footer-content {
-  max-width: 1200px;
-  margin: 0 auto;
-}
-
-.footer-logo {
-  font-size: 2.5rem;
-  color: var(--primary);
-  margin-bottom: 2rem;
-}
-
-.footer-text {
-  color: var(--text-muted);
-  font-size: 0.9rem;
-}
-
-/* ============================================
    RESPONSIVE
    ============================================ */
 @media (max-width: 1200px) {
@@ -620,8 +402,8 @@ footer {
 }
 
 @media (max-width: 768px) {
-  .hero-content {
-    max-width: 80%;
+  body {
+    padding-top: 20px;
   }
   
   .movie-card {
@@ -636,21 +418,12 @@ footer {
     display: none;
   }
   
-  .nav-buttons {
-    display: none;
+  .carousel-title {
+    font-size: 1.2rem;
   }
 }
 
 @media (max-width: 480px) {
-  .hero {
-    height: 60vh;
-    min-height: 400px;
-  }
-  
-  .hero-content {
-    max-width: 100%;
-  }
-  
   .movie-card {
     width: 120px;
   }
@@ -660,15 +433,12 @@ footer {
   }
   
   .carousel-title {
-    font-size: 1.2rem;
+    font-size: 1.1rem;
   }
   
-  header {
-    padding: 15px 4%;
-  }
-  
-  .logo {
-    font-size: 1.5rem;
+  .movie-count {
+    font-size: 0.75rem;
+    padding: 2px 8px;
   }
 }
 
@@ -692,45 +462,10 @@ footer {
 <!-- Loader -->
 <div class="loader-container" id="loader">
   <div class="loader-content">
-    <div class="loader-logo">MOVIES+</div>
     <div class="loader-spinner"></div>
-    <div class="loader-text">Cargando catálogo...</div>
+    <div class="loader-text">Cargando películas...</div>
   </div>
 </div>
-
-<!-- Header -->
-<header id="header">
-  <div class="header-content">
-    <div class="logo">MOVIES+</div>
-    <div class="nav-buttons">
-      <button class="nav-btn active" onclick="scrollToTop()">Inicio</button>
-      <button class="nav-btn" onclick="scrollToRandom()">Sorpréndeme</button>
-    </div>
-  </div>
-</header>
-
-<!-- Hero Section -->
-<section class="hero" id="hero">
-  <div class="hero-bg">
-    <img id="heroImage" src="" alt="Hero">
-  </div>
-  <div class="hero-gradient"></div>
-  <div class="hero-content">
-    <h1 class="hero-title" id="heroTitle">Bienvenido a Movies+</h1>
-    <p class="hero-description" id="heroDescription">
-      Disfruta del mejor catálogo de películas organizadas por año. 
-      Encuentra tus favoritas y descubre nuevos clásicos.
-    </p>
-    <div class="hero-buttons">
-      <button class="hero-btn primary" onclick="playFeatured()">
-        ▶ Reproducir
-      </button>
-      <button class="hero-btn secondary" onclick="scrollToContent()">
-        ℹ Más información
-      </button>
-    </div>
-  </div>
-</section>
 
 <!-- Main Content -->
 <main class="main-content" id="mainContent">
@@ -746,16 +481,6 @@ footer {
   </p>
 </div>
 
-<!-- Footer -->
-<footer>
-  <div class="footer-content">
-    <div class="footer-logo">🎬</div>
-    <p class="footer-text">
-      Movies+ © 2024 | Tu catálogo personal de películas
-    </p>
-  </div>
-</footer>
-
 <script>
 'use strict';
 
@@ -763,10 +488,10 @@ footer {
 // CONFIGURACIÓN
 // ============================================
 const CONFIG = {
-  // IMPORTANTE: Actualiza estos valores
-  GITHUB_USER: 'rancier0102-rgb',         // <-- CAMBIA
-  GITHUB_REPO: 'REPRODUCIBLE-1.0',     // <-- CAMBIA
-  GITHUB_BRANCH: 'main',
+  // IMPORTANTE: Actualiza estos valores con tu información
+  GITHUB_USER: 'rancier0102-rgb',         // <-- CAMBIA POR TU USUARIO
+  GITHUB_REPO: 'REPRODUCIBLE-1.0',     // <-- CAMBIA POR TU REPOSITORIO
+  GITHUB_BRANCH: 'main',              // <-- 'main' o 'master'
   
   get BASE_URL() {
     return `https://raw.githubusercontent.com/${this.GITHUB_USER}/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}`;
@@ -780,24 +505,23 @@ const CONFIG = {
   MOVIES_PER_ROW: 8,
   SCROLL_AMOUNT: 3,
   USE_CACHE: true,
-  CACHE_DURATION: 3600000
+  CACHE_DURATION: 3600000 // 1 hora
 };
 
 // ============================================
 // APLICACIÓN PRINCIPAL
 // ============================================
-class NetflixMoviesApp {
+class MoviesCarouselApp {
   constructor() {
     this.movies = [];
     this.moviesByYear = {};
-    this.featuredMovie = null;
     this.currentScrollPositions = {};
     
     this.init();
   }
   
   async init() {
-    console.log('🎬 Iniciando Movies+ Netflix Style');
+    console.log('🎬 Iniciando Movies+ Carousel');
     
     try {
       // Cargar datos
@@ -807,13 +531,17 @@ class NetflixMoviesApp {
       // Organizar por año
       this.organizeByYear();
       
-      // Configurar UI
-      this.setupHero();
+      // Renderizar carruseles
       this.renderCarousels();
+      
+      // Configurar eventos
+      this.setupCarouselNavigation();
       this.setupScrollEffects();
       
       // Ocultar loader
       this.hideLoader();
+      
+      console.log(`✅ ${this.movies.length} películas cargadas`);
       
     } catch (error) {
       console.error('❌ Error:', error);
@@ -827,14 +555,19 @@ class NetflixMoviesApp {
     if (CONFIG.USE_CACHE) {
       const cached = this.getFromCache('manifest');
       if (cached) {
+        console.log('📦 Manifest desde caché');
         this.manifest = cached;
         return;
       }
     }
     
     // Cargar desde GitHub
+    console.log('📥 Cargando manifest desde:', CONFIG.MANIFEST_URL);
     const response = await fetch(CONFIG.MANIFEST_URL);
-    if (!response.ok) throw new Error('No se pudo cargar el manifest');
+    
+    if (!response.ok) {
+      throw new Error('No se pudo cargar el manifest');
+    }
     
     this.manifest = await response.json();
     
@@ -845,7 +578,11 @@ class NetflixMoviesApp {
   }
   
   async loadChunks() {
-    if (!this.manifest?.chunks) throw new Error('No hay chunks disponibles');
+    if (!this.manifest?.chunks) {
+      throw new Error('No hay chunks disponibles');
+    }
+    
+    console.log(`📦 Cargando ${this.manifest.chunks.length} chunks...`);
     
     for (const chunkInfo of this.manifest.chunks) {
       try {
@@ -855,14 +592,20 @@ class NetflixMoviesApp {
         if (CONFIG.USE_CACHE) {
           const cached = this.getFromCache(`chunk_${chunkInfo.id}`);
           if (cached) {
+            console.log(`⚡ Chunk ${chunkInfo.id} desde caché`);
             this.processChunk(cached);
             continue;
           }
         }
         
         // Cargar desde GitHub
+        console.log(`📥 Cargando chunk: ${chunkInfo.id}`);
         const response = await fetch(chunkUrl);
-        if (!response.ok) continue;
+        
+        if (!response.ok) {
+          console.error(`❌ Error cargando chunk ${chunkInfo.id}`);
+          continue;
+        }
         
         const chunkData = await response.json();
         
@@ -886,7 +629,7 @@ class NetflixMoviesApp {
       const processedMovie = {
         titulo: movie.t || movie.titulo || 'Sin título',
         enlace: movie.l || movie.enlace || '#',
-        year: movie.y || movie.year || 2024,
+        year: movie.y || movie.year || movie.ano || 2024,
         poster: movie.p || movie.poster || this.getDefaultPoster(),
         genero: movie.g || movie.genero || '',
         calidad: movie.q || movie.calidad || 'HD'
@@ -907,32 +650,12 @@ class NetflixMoviesApp {
       this.moviesByYear[year].push(movie);
     });
     
-    // Ordenar películas dentro de cada año
+    // Ordenar películas dentro de cada año alfabéticamente
     Object.keys(this.moviesByYear).forEach(year => {
       this.moviesByYear[year].sort((a, b) => 
         a.titulo.localeCompare(b.titulo, 'es')
       );
     });
-  }
-  
-  setupHero() {
-    // Seleccionar película destacada aleatoria
-    if (this.movies.length > 0) {
-      const recentMovies = this.movies.filter(m => m.year >= 2020);
-      const pool = recentMovies.length > 0 ? recentMovies : this.movies;
-      this.featuredMovie = pool[Math.floor(Math.random() * pool.length)];
-      
-      // Actualizar hero
-      const heroImage = document.getElementById('heroImage');
-      const heroTitle = document.getElementById('heroTitle');
-      const heroDescription = document.getElementById('heroDescription');
-      
-      heroImage.src = this.featuredMovie.poster;
-      heroImage.onerror = () => { heroImage.src = this.getDefaultPoster(); };
-      
-      heroTitle.textContent = this.featuredMovie.titulo;
-      heroDescription.textContent = `${this.featuredMovie.year} • ${this.featuredMovie.genero || 'Drama'} • ${this.featuredMovie.calidad}`;
-    }
   }
   
   renderCarousels() {
@@ -956,9 +679,6 @@ class NetflixMoviesApp {
       const section = this.createCarouselSection(year, movies, index);
       mainContent.appendChild(section);
     });
-    
-    // Configurar navegación de carruseles
-    this.setupCarouselNavigation();
   }
   
   createCarouselSection(year, movies, index) {
@@ -966,23 +686,8 @@ class NetflixMoviesApp {
     section.className = 'carousel-section fade-in';
     section.dataset.year = year;
     
-    // Determinar título especial para años recientes
-    let sectionTitle = `Películas ${year}`;
-    const currentYear = new Date().getFullYear();
-    
-    if (parseInt(year) === currentYear) {
-      sectionTitle = `🔥 Estrenos ${year}`;
-    } else if (parseInt(year) === currentYear - 1) {
-      sectionTitle = `✨ Películas ${year}`;
-    } else if (parseInt(year) >= 2020) {
-      sectionTitle = `📺 Películas ${year}`;
-    } else if (parseInt(year) >= 2010) {
-      sectionTitle = `🎬 Películas ${year}`;
-    } else if (parseInt(year) >= 2000) {
-      sectionTitle = `🎞️ Clásicos ${year}`;
-    } else {
-      sectionTitle = `🏆 Clásicos ${year}`;
-    }
+    // Título simple sin iconos
+    const sectionTitle = `Películas ${year}`;
     
     section.innerHTML = `
       <div class="carousel-header">
@@ -1035,11 +740,13 @@ class NetflixMoviesApp {
       });
     });
     
-    // Configurar scroll con mouse wheel
+    // Configurar scroll con mouse wheel para desplazamiento horizontal
     document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
       wrapper.addEventListener('wheel', (e) => {
-        e.preventDefault();
-        wrapper.scrollLeft += e.deltaY;
+        if (e.deltaY !== 0) {
+          e.preventDefault();
+          wrapper.scrollLeft += e.deltaY;
+        }
       });
     });
   }
@@ -1058,21 +765,6 @@ class NetflixMoviesApp {
   }
   
   setupScrollEffects() {
-    // Header scroll effect
-    let lastScroll = 0;
-    window.addEventListener('scroll', () => {
-      const header = document.getElementById('header');
-      const currentScroll = window.pageYOffset;
-      
-      if (currentScroll > 100) {
-        header.classList.add('scrolled');
-      } else {
-        header.classList.remove('scrolled');
-      }
-      
-      lastScroll = currentScroll;
-    });
-    
     // Fade in animation on scroll
     const observer = new IntersectionObserver((entries) => {
       entries.forEach(entry => {
@@ -1080,7 +772,10 @@ class NetflixMoviesApp {
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.1 });
+    }, { 
+      threshold: 0.1,
+      rootMargin: '50px'
+    });
     
     document.querySelectorAll('.fade-in').forEach(el => {
       observer.observe(el);
@@ -1090,7 +785,9 @@ class NetflixMoviesApp {
   playMovie(url) {
     console.log('▶️ Reproduciendo:', url);
     if (url && url !== '#') {
-      window.open(url, '_blank');
+      window.open(url, '_blank', 'noopener,noreferrer');
+    } else {
+      console.log('URL no válida');
     }
   }
   
@@ -1116,7 +813,7 @@ class NetflixMoviesApp {
     `);
   }
   
-  // Sistema de caché
+  // Sistema de caché simple
   getFromCache(key) {
     if (!CONFIG.USE_CACHE) return null;
     
@@ -1152,39 +849,15 @@ class NetflixMoviesApp {
 }
 
 // ============================================
-// FUNCIONES GLOBALES
-// ============================================
-function playFeatured() {
-  if (window.app.featuredMovie) {
-    window.app.playMovie(window.app.featuredMovie.enlace);
-  }
-}
-
-function scrollToContent() {
-  document.getElementById('mainContent').scrollIntoView({ 
-    behavior: 'smooth',
-    block: 'start'
-  });
-}
-
-function scrollToTop() {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-}
-
-function scrollToRandom() {
-  const sections = document.querySelectorAll('.carousel-section');
-  if (sections.length > 0) {
-    const random = sections[Math.floor(Math.random() * sections.length)];
-    random.scrollIntoView({ behavior: 'smooth', block: 'center' });
-  }
-}
-
-// ============================================
 // INICIALIZACIÓN
 // ============================================
 window.addEventListener('DOMContentLoaded', () => {
-  window.app = new NetflixMoviesApp();
+  console.log('DOM Cargado, iniciando aplicación...');
+  window.app = new MoviesCarouselApp();
 });
+
+// Para debugging
+console.log('Para debug usa: window.app');
 </script>
 
 </body>
