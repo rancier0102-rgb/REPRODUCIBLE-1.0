@@ -1,14 +1,14 @@
 {
   "version": "2.0.0",
-  "generated": "2025-11-20T00:32:27.146Z",
+  "generated": "2025-11-20T00:32:45.210Z",
   "statistics": {
-    "totalMovies": 6399
+    "totalMovies": 6393
   },
   "chunks": [
     {
       "id": "all",
       "file": "chunks/all.json",
-      "movies": 6399,
+      "movies": 6393,
       "priority": 1
     }
   ]
