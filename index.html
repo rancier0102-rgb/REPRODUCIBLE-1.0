@@ -650,20 +650,16 @@ header {
 
 <script>
 /* ========================================
-   MOVIES STREAMING PLATFORM - GitHub Version
-   Sistema de alimentación externa desde GitHub
+   MOVIES STREAMING PLATFORM - GitHub Enhanced Version
    ======================================== */
 
-// ============================================
-// CONFIGURACIÓN GITHUB - ACTUALIZA ESTOS VALORES
-// ============================================
+// CONFIGURACIÓN GITHUB
 const GITHUB_CONFIG = {
-    // CAMBIA ESTOS VALORES CON TU INFORMACIÓN
-    GITHUB_USER: 'rancier0102-rgb',        // <-- Tu usuario de GitHub
-    GITHUB_REPO: 'REPRODUCIBLE-1.0',    // <-- Tu repositorio
-    GITHUB_BRANCH: 'main',             // <-- rama (main o master)
+    // Configuración para GitHub - ACTUALIZA ESTOS VALORES
+    GITHUB_USER: 'rancier0102-rgb',        
+    GITHUB_REPO: 'REPRODUCIBLE-1.0',           
+    GITHUB_BRANCH: 'main',
     
-    // URLs generadas automáticamente
     get BASE_URL() {
         return `https://raw.githubusercontent.com/${this.GITHUB_USER}/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}`;
     },
@@ -676,12 +672,9 @@ const GITHUB_CONFIG = {
         return `${this.BASE_URL}/peliculas.json`;
     },
     
-    // Configuración de caché
     USE_CACHE: true,
     CACHE_DURATION: 3600000, // 1 hora
-    
-    // Tipo de fuente: 'json' o 'manifest'
-    SOURCE_TYPE: 'json'
+    SOURCE_TYPE: 'json' // 'json' o 'manifest'
 };
 
 class MoviesStreamingPlatform {
@@ -690,26 +683,15 @@ class MoviesStreamingPlatform {
         this.moviesByYear = {};
         this.currentMovie = null;
         this.currentMovieId = null;
+        this.dataUrl = 'peliculas.json'; // Archivo JSON local por defecto
         this.refreshInterval = null;
         this.focusedCard = null;
         this.focusedYear = null;
         this.focusedIndex = 0;
         
-        // Determinar fuente de datos
-        this.dataSource = this.determineDataSource();
-        
         this.initializeElements();
         this.loadData();
         this.setupEventListeners();
-    }
-    
-    determineDataSource() {
-        // Detectar si usar GitHub o archivo local
-        if (GITHUB_CONFIG.GITHUB_USER !== 'tu-usuario' && 
-            GITHUB_CONFIG.GITHUB_REPO !== 'tu-repositorio') {
-            return 'github';
-        }
-        return 'local'; // Usar archivo JSON local
     }
     
     initializeElements() {
@@ -745,9 +727,13 @@ class MoviesStreamingPlatform {
         try {
             this.showLoader(true);
             
-            if (this.dataSource === 'github') {
+            // Intentar primero con GitHub si está configurado
+            if (GITHUB_CONFIG.GITHUB_USER !== 'your-username') {
+                console.log('Intentando cargar desde GitHub...');
                 await this.loadFromGitHub();
             } else {
+                // Cargar desde archivo local
+                console.log('Cargando desde archivo local...');
                 await this.loadFromLocal();
             }
             
@@ -764,13 +750,11 @@ class MoviesStreamingPlatform {
     }
     
     async loadFromGitHub() {
-        console.log('📥 Cargando desde GitHub...');
-        
-        // Intentar cargar desde caché primero
+        // Intentar caché primero
         if (GITHUB_CONFIG.USE_CACHE) {
             const cached = this.getFromCache('github_movies');
             if (cached) {
-                console.log('📦 Datos desde caché');
+                console.log('📦 Cargando desde caché');
                 this.moviesData = cached;
                 this.updateStatus('GitHub (Caché)', 'github');
                 return;
@@ -778,126 +762,106 @@ class MoviesStreamingPlatform {
         }
         
         try {
+            let jsonData;
+            
             if (GITHUB_CONFIG.SOURCE_TYPE === 'manifest') {
-                // Cargar usando manifest con chunks
-                await this.loadFromManifest();
-            } else {
-                // Cargar archivo JSON directo
-                const response = await fetch(GITHUB_CONFIG.JSON_URL);
-                if (!response.ok) throw new Error('No se pudo cargar desde GitHub');
+                // Cargar con manifest
+                const manifestResponse = await fetch(GITHUB_CONFIG.MANIFEST_URL);
+                if (!manifestResponse.ok) throw new Error('Manifest no encontrado');
                 
-                const jsonData = await response.json();
-                this.parseJSON(jsonData);
+                const manifest = await manifestResponse.json();
+                jsonData = { peliculas: [] };
+                
+                // Cargar chunks
+                for (const chunk of (manifest.chunks || [])) {
+                    try {
+                        const chunkUrl = `${GITHUB_CONFIG.BASE_URL}/${chunk.file}`;
+                        const chunkResponse = await fetch(chunkUrl);
+                        if (chunkResponse.ok) {
+                            const chunkData = await chunkResponse.json();
+                            const movies = chunkData.movies || chunkData.peliculas || [];
+                            jsonData.peliculas.push(...movies);
+                        }
+                    } catch (err) {
+                        console.error(`Error en chunk ${chunk.id}:`, err);
+                    }
+                }
+            } else {
+                // Cargar JSON directo
+                const response = await fetch(GITHUB_CONFIG.JSON_URL);
+                if (!response.ok) throw new Error('JSON no encontrado en GitHub');
+                jsonData = await response.json();
             }
             
-            // Guardar en caché
+            this.parseJSON(jsonData);
+            
+            // Guardar en caché si hay datos
             if (GITHUB_CONFIG.USE_CACHE && this.moviesData.length > 0) {
                 this.saveToCache('github_movies', this.moviesData);
             }
             
             this.updateStatus('GitHub', 'github');
-            console.log(`✅ ${this.moviesData.length} películas cargadas desde GitHub`);
+            console.log(`✅ ${this.moviesData.length} películas desde GitHub`);
             
         } catch (error) {
-            console.error('Error cargando desde GitHub:', error);
-            throw error;
+            console.error('Error con GitHub, intentando local...', error);
+            // Fallback a archivo local
+            await this.loadFromLocal();
         }
-    }
-    
-    async loadFromManifest() {
-        const manifestResponse = await fetch(GITHUB_CONFIG.MANIFEST_URL);
-        if (!manifestResponse.ok) throw new Error('No se pudo cargar el manifest');
-        
-        const manifest = await manifestResponse.json();
-        
-        // Cargar chunks
-        for (const chunk of manifest.chunks || []) {
-            try {
-                const chunkUrl = `${GITHUB_CONFIG.BASE_URL}/${chunk.file}`;
-                const chunkResponse = await fetch(chunkUrl);
-                
-                if (chunkResponse.ok) {
-                    const chunkData = await chunkResponse.json();
-                    this.processChunk(chunkData);
-                }
-            } catch (error) {
-                console.error(`Error cargando chunk ${chunk.id}:`, error);
-            }
-        }
-    }
-    
-    processChunk(chunkData) {
-        const items = chunkData.movies || chunkData.peliculas || chunkData.series || [];
-        
-        items.forEach((item, index) => {
-            const movie = {
-                id: item.id || `movie_${Date.now()}_${index}`,
-                titulo: item.titulo || item.title || item.t || 'Sin título',
-                enlace: item.enlace || item.url || item.l || '#',
-                poster: item.poster || item.p || this.getDefaultPoster(item.titulo),
-                ano: item.ano || item.year || item.y || new Date().getFullYear()
-            };
-            
-            this.moviesData.push(movie);
-        });
     }
     
     async loadFromLocal() {
-        console.log('📥 Cargando archivo local...');
-        
-        const response = await fetch('peliculas.json');
-        if (!response.ok) throw new Error('Error loading local data');
-        
-        const jsonData = await response.json();
-        this.parseJSON(jsonData);
-        this.updateStatus('Local', 'connected');
+        try {
+            const response = await fetch(this.dataUrl);
+            if (!response.ok) throw new Error('Error loading local data');
+            
+            const jsonData = await response.json();
+            this.parseJSON(jsonData);
+            this.updateStatus('Local', 'connected');
+            console.log(`✅ ${this.moviesData.length} películas desde archivo local`);
+            
+        } catch (error) {
+            console.error('Error loading local file:', error);
+            throw error;
+        }
     }
     
     parseJSON(jsonData) {
         this.moviesData = [];
         
-        // El JSON puede tener las películas en un array directo o dentro de una propiedad
+        // Manejar diferentes formatos de JSON
         let peliculas = jsonData.peliculas || jsonData.movies || jsonData;
         
-        // Si no es un array, intentar convertirlo
         if (!Array.isArray(peliculas)) {
             peliculas = [peliculas];
         }
         
-        // Procesar cada película
         peliculas.forEach((pelicula, index) => {
-            // Validar que tenga los campos requeridos
-            if (pelicula.titulo && pelicula.enlace) {
+            // Validar datos mínimos
+            if (pelicula && (pelicula.titulo || pelicula.title || pelicula.t)) {
                 this.moviesData.push({
                     id: `movie_${index}`,
-                    titulo: pelicula.titulo,
-                    poster: pelicula.poster || this.getDefaultPoster(pelicula.titulo),
-                    ano: pelicula.ano || new Date().getFullYear(),
-                    enlace: pelicula.enlace
+                    titulo: pelicula.titulo || pelicula.title || pelicula.t || 'Sin título',
+                    poster: pelicula.poster || pelicula.p || this.getDefaultPoster(pelicula.titulo),
+                    ano: pelicula.ano || pelicula.year || pelicula.y || new Date().getFullYear(),
+                    enlace: pelicula.enlace || pelicula.url || pelicula.l || '#'
                 });
             }
         });
         
-        console.log(`Loaded ${this.moviesData.length} movies`);
+        console.log(`Procesadas ${this.moviesData.length} películas`);
     }
     
-    getDefaultPoster(title = '') {
-        // Generar poster por defecto
-        return `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(title || 'Movie')}`;
+    getDefaultPoster(title = 'Movie') {
+        return `https://via.placeholder.com/300x450/222/fff?text=${encodeURIComponent(title)}`;
     }
     
     updateStatus(text, type = 'connected') {
         this.statusText.textContent = text;
         this.statusIndicator.className = 'status-indicator';
-        
-        if (type === 'github') {
-            this.statusIndicator.classList.add('github');
-        } else {
-            this.statusIndicator.classList.add('connected');
-        }
+        this.statusIndicator.classList.add(type === 'github' ? 'github' : 'connected');
     }
     
-    // ========= SISTEMA DE CACHÉ =========
     getFromCache(key) {
         if (!GITHUB_CONFIG.USE_CACHE) return null;
         
@@ -913,7 +877,6 @@ class MoviesStreamingPlatform {
             
             return data.value;
         } catch (e) {
-            console.error('Error leyendo caché:', e);
             return null;
         }
     }
@@ -932,12 +895,9 @@ class MoviesStreamingPlatform {
         }
     }
     
-    // ========= TODO EL RESTO DEL CÓDIGO SE MANTIENE EXACTAMENTE IGUAL =========
-    
     organizeByYear() {
         this.moviesByYear = {};
         
-        // Agrupar películas por año
         this.moviesData.forEach(movie => {
             const year = movie.ano || 'Sin fecha';
             if (!this.moviesByYear[year]) {
@@ -946,7 +906,7 @@ class MoviesStreamingPlatform {
             this.moviesByYear[year].push(movie);
         });
         
-        // Ordenar cada grupo de películas alfabéticamente
+        // Ordenar alfabéticamente dentro de cada año
         Object.keys(this.moviesByYear).forEach(year => {
             this.moviesByYear[year].sort((a, b) => 
                 a.titulo.localeCompare(b.titulo)
@@ -955,7 +915,7 @@ class MoviesStreamingPlatform {
     }
     
     loadFallbackData() {
-        // Datos de ejemplo en caso de error
+        // Datos de ejemplo
         const fallbackData = {
             peliculas: [
                 {
@@ -988,10 +948,9 @@ class MoviesStreamingPlatform {
     renderCarousels() {
         this.mainContent.innerHTML = '';
         
-        // Obtener años ordenados de más reciente a más antiguo
+        // Ordenar años de más reciente a más antiguo
         const sortedYears = Object.keys(this.moviesByYear)
             .sort((a, b) => {
-                // Manejar "Sin fecha" al final
                 if (a === 'Sin fecha') return 1;
                 if (b === 'Sin fecha') return -1;
                 return parseInt(b) - parseInt(a);
@@ -1016,12 +975,10 @@ class MoviesStreamingPlatform {
         // Setup carousel navigation
         this.setupCarouselNavigation();
         
-        // Focus first card if exists
-        if (sortedYears.length > 0) {
-            const firstCard = this.mainContent.querySelector('.movie-card');
-            if (firstCard) {
-                this.focusCard(firstCard);
-            }
+        // Focus first card
+        const firstCard = this.mainContent.querySelector('.movie-card');
+        if (firstCard) {
+            this.focusCard(firstCard);
         }
     }
     
@@ -1030,38 +987,30 @@ class MoviesStreamingPlatform {
         section.className = 'year-section';
         section.dataset.year = year;
         
-        // Header
         const header = document.createElement('div');
         header.className = 'year-header';
-        header.innerHTML = `
-            <h2 class="year-title">${year}</h2>
-        `;
+        header.innerHTML = `<h2 class="year-title">${year}</h2>`;
         section.appendChild(header);
         
-        // Carousel container
         const container = document.createElement('div');
         container.className = 'carousel-container';
         
-        // Previous button
         const prevBtn = document.createElement('button');
         prevBtn.className = 'carousel-nav prev';
         prevBtn.innerHTML = '‹';
         prevBtn.dataset.year = year;
         container.appendChild(prevBtn);
         
-        // Next button
         const nextBtn = document.createElement('button');
         nextBtn.className = 'carousel-nav next';
         nextBtn.innerHTML = '›';
         nextBtn.dataset.year = year;
         container.appendChild(nextBtn);
         
-        // Carousel track
         const track = document.createElement('div');
         track.className = 'carousel-track';
         track.dataset.year = year;
         
-        // Add movie cards
         movies.forEach((movie, movieIndex) => {
             const card = this.createMovieCard(movie);
             card.dataset.yearIndex = index;
@@ -1081,7 +1030,6 @@ class MoviesStreamingPlatform {
         card.dataset.movieId = movie.id;
         card.tabIndex = -1;
         
-        // Image
         const img = document.createElement('img');
         img.src = movie.poster;
         img.alt = movie.titulo;
@@ -1091,26 +1039,22 @@ class MoviesStreamingPlatform {
         };
         card.appendChild(img);
         
-        // Play overlay
         const playOverlay = document.createElement('div');
         playOverlay.className = 'play-overlay';
         playOverlay.innerHTML = '<div class="play-icon"></div>';
         card.appendChild(playOverlay);
         
-        // Title
         const title = document.createElement('div');
         title.className = 'movie-card-title';
         title.textContent = movie.titulo;
         card.appendChild(title);
         
-        // Click event
         card.addEventListener('click', () => this.openMovieDetail(movie));
         
         return card;
     }
     
     setupCarouselNavigation() {
-        // Setup navigation for each carousel
         document.querySelectorAll('.carousel-container').forEach(container => {
             const track = container.querySelector('.carousel-track');
             const prevBtn = container.querySelector('.carousel-nav.prev');
@@ -1125,12 +1069,12 @@ class MoviesStreamingPlatform {
             };
             
             prevBtn.addEventListener('click', () => {
-                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12; // width + gap
+                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12;
                 track.scrollBy({ left: -cardWidth * 3, behavior: 'smooth' });
             });
             
             nextBtn.addEventListener('click', () => {
-                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12; // width + gap
+                const cardWidth = track.querySelector('.movie-card').offsetWidth + 12;
                 track.scrollBy({ left: cardWidth * 3, behavior: 'smooth' });
             });
             
@@ -1140,19 +1084,16 @@ class MoviesStreamingPlatform {
     }
     
     focusCard(card) {
-        // Remove previous focus
         if (this.focusedCard) {
             this.focusedCard.classList.remove('focused');
             this.focusedCard.tabIndex = -1;
         }
         
-        // Add new focus
         this.focusedCard = card;
         card.classList.add('focused');
         card.tabIndex = 0;
         card.scrollIntoView({ behavior: 'smooth', block: 'center', inline: 'center' });
         
-        // Update focused position
         this.focusedYear = parseInt(card.dataset.yearIndex);
         this.focusedIndex = parseInt(card.dataset.movieIndex);
     }
@@ -1165,7 +1106,6 @@ class MoviesStreamingPlatform {
         this.movieOverlay.style.display = 'block';
         this.backButton.classList.add('visible');
         
-        // Setup movie details
         this.movieTitle.textContent = movie.titulo;
         this.movieBannerBg.style.backgroundImage = `url('${movie.poster}')`;
         this.moviePoster.src = movie.poster;
@@ -1174,19 +1114,14 @@ class MoviesStreamingPlatform {
         this.movieCategory.textContent = 'Película';
         this.movieDescription.textContent = `Disfruta de "${movie.titulo}" en alta calidad desde nuestra plataforma de streaming.`;
         
-        // Play button
         this.playButton.onclick = () => this.playMovie(movie);
         
-        // Push state for browser back button
         history.pushState({ modal: true }, '', '#' + movie.id);
     }
     
     playMovie(movie) {
         if (movie.enlace && movie.enlace !== '#') {
-            // Save progress
             this.saveProgress(movie);
-            
-            // Try to play
             this.tryPlayback(movie.enlace);
         } else {
             this.showError('URL de reproducción no disponible');
@@ -1194,18 +1129,14 @@ class MoviesStreamingPlatform {
     }
     
     tryPlayback(url) {
-        // Check if URL is playable
         if (url.includes('.m3u8') || url.includes('.mp4') || url.includes('stream')) {
-            // For streaming URLs, open in new window/tab
             const win = window.open('', '_blank');
             if (win) {
                 win.location = url;
             } else {
-                // If popup blocked, redirect in same window
                 window.location.href = url;
             }
         } else {
-            // For other URLs, direct redirect
             window.location.href = url;
         }
     }
@@ -1226,7 +1157,6 @@ class MoviesStreamingPlatform {
         this.backButton.classList.remove('visible');
         this.mainContent.style.display = 'block';
         
-        // Find and focus the current movie card
         if (this.currentMovieId) {
             const card = document.querySelector(`[data-movie-id="${this.currentMovieId}"]`);
             if (card) {
@@ -1234,7 +1164,6 @@ class MoviesStreamingPlatform {
             }
         }
         
-        // Clear hash
         history.replaceState(null, '', ' ');
     }
     
@@ -1356,30 +1285,26 @@ class MoviesStreamingPlatform {
 let moviesPlatform = null;
 
 document.addEventListener('DOMContentLoaded', () => {
+    console.log('🎬 Iniciando Movies+ Platform');
     moviesPlatform = new MoviesStreamingPlatform();
     
     // Handle browser back button
     window.addEventListener('popstate', (event) => {
-        if (moviesPlatform.movieOverlay.style.display === 'block') {
+        if (moviesPlatform && moviesPlatform.movieOverlay.style.display === 'block') {
             moviesPlatform.closeModal();
         }
     });
     
-    // Expose platform instance for debugging
+    // Expose for debugging
     window.moviesPlatform = moviesPlatform;
-    
-    // Log configuration info
-    console.log('🎬 Movies+ Platform iniciado');
-    console.log('📝 Para usar GitHub, actualiza GITHUB_CONFIG con tus credenciales');
-    console.log('🎮 Para debugging usa: window.moviesPlatform');
 });
 
 // Handle page visibility
 document.addEventListener('visibilitychange', () => {
     if (document.hidden && moviesPlatform) {
-        console.log('Page hidden, pausing activities');
+        console.log('Page hidden');
     } else if (moviesPlatform) {
-        console.log('Page visible, resuming activities');
+        console.log('Page visible');
     }
 });
 </script>
