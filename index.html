@@ -3,85 +3,167 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Movies+ HD - Streaming Platform</title>
+<title>Fire TV Movies</title>
 <style>
-:root {
-    --primary-color: #e50914;
-    --background-dark: #141414;
-    --background-secondary: #000000;
-    --card: #181818;
-    --card-hover: #2a2a2a;
-    --text-light: #ffffff;
-    --text-muted: #999999;
-    --text-dim: #666666;
-    --radius: 4px;
-    --transition: 0.3s ease;
-}
-
-* { 
-    box-sizing: border-box; 
-    margin: 0; 
-    padding: 0; 
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Helvetica Neue', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-    background: var(--background-dark);
-    color: var(--text-light);
-    overflow-x: hidden;
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
+    background: #000;
+    color: #fff;
+    font-family: Arial, sans-serif;
+    overflow: hidden;
 }
 
-/* Custom Scrollbar */
-::-webkit-scrollbar {
-    width: 8px;
-    height: 8px;
+/* HEADER */
+.header {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    padding: 20px 40px;
+    background: linear-gradient(180deg, #000 0%, transparent 100%);
+    z-index: 100;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-::-webkit-scrollbar-track {
-    background: var(--background-secondary);
+.logo {
+    font-size: 28px;
+    font-weight: bold;
+    color: #e50914;
 }
 
-::-webkit-scrollbar-thumb {
-    background: var(--text-dim);
+.status {
+    font-size: 14px;
+    color: #999;
+}
+
+/* CONTENEDOR PRINCIPAL */
+.container {
+    padding: 100px 40px 40px;
+    height: 100vh;
+    overflow-y: auto;
+    scroll-behavior: smooth;
+}
+
+/* SECCIONES */
+.section {
+    margin-bottom: 40px;
+}
+
+.section-title {
+    font-size: 22px;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+/* GRID DE PELÍCULAS */
+.movies-row {
+    display: flex;
+    gap: 15px;
+    overflow-x: auto;
+    padding: 10px 0;
+    scrollbar-width: none;
+}
+
+.movies-row::-webkit-scrollbar {
+    display: none;
+}
+
+/* TARJETAS */
+.movie-card {
+    flex: 0 0 200px;
+    cursor: pointer;
+    transition: transform 0.2s;
+    position: relative;
+    background: #1a1a1a;
     border-radius: 4px;
+    overflow: hidden;
 }
 
-::-webkit-scrollbar-thumb:hover {
-    background: var(--text-muted);
+.movie-card:focus {
+    outline: 3px solid #e50914;
+    outline-offset: 2px;
+    transform: scale(1.1);
+    z-index: 10;
 }
 
-/* ============================================
-   LOADER
-   ============================================ */
-.loader-container {
+.movie-card:focus .movie-info {
+    opacity: 1;
+}
+
+.movie-poster {
+    width: 100%;
+    aspect-ratio: 2/3;
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    position: relative;
+}
+
+.movie-poster img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.quality {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: #e50914;
+    padding: 4px 8px;
+    border-radius: 3px;
+    font-size: 12px;
+    font-weight: bold;
+}
+
+/* INFO */
+.movie-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
+    opacity: 0;
+    transition: opacity 0.2s;
+}
+
+.movie-title {
+    font-size: 14px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.movie-meta {
+    font-size: 12px;
+    color: #999;
+}
+
+/* LOADER */
+.loader {
     position: fixed;
     inset: 0;
-    background: var(--background-dark);
+    background: #000;
     display: flex;
     align-items: center;
     justify-content: center;
-    z-index: 10000;
-    transition: opacity 0.5s ease;
+    z-index: 1000;
 }
 
-.loader-container.hidden {
-    opacity: 0;
-    pointer-events: none;
+.loader.hide {
+    display: none;
 }
 
-.loader-content {
-    text-align: center;
-}
-
-.loader-spinner {
-    width: 60px;
-    height: 60px;
-    border: 3px solid rgba(229, 9, 20, 0.2);
-    border-top-color: var(--primary-color);
+.spinner {
+    width: 50px;
+    height: 50px;
+    border: 3px solid #333;
+    border-top-color: #e50914;
     border-radius: 50%;
-    margin: 0 auto 1.5rem;
     animation: spin 1s linear infinite;
 }
 
@@ -89,778 +171,79 @@ body {
     to { transform: rotate(360deg); }
 }
 
-.loader-text {
-    color: var(--text-muted);
-    font-size: 1.1rem;
-    letter-spacing: 1px;
-}
-
-/* ============================================
-   HEADER - SIMPLIFIED
-   ============================================ */
-.header {
-    background: linear-gradient(to bottom, rgba(20,20,20,0.98) 0%, transparent 100%);
-    padding: 20px 4%;
+/* MENSAJE */
+.message {
     position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    z-index: 100;
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    transition: background 0.3s ease;
-}
-
-.header.scrolled {
-    background: rgba(20,20,20,0.98);
-    backdrop-filter: blur(20px);
-}
-
-.logo {
-    font-size: 2rem;
-    font-weight: bold;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    letter-spacing: 1px;
-    cursor: pointer;
-    transition: transform 0.3s ease;
-}
-
-.logo:hover {
-    transform: scale(1.05);
-}
-
-.header-info {
-    display: flex;
-    align-items: center;
-    gap: 30px;
-}
-
-.movie-counter {
-    background: rgba(255,255,255,0.1);
-    padding: 8px 20px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-    color: var(--text-light);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255,255,255,0.1);
-}
-
-.movie-counter span {
-    color: var(--primary-color);
-    font-weight: bold;
-}
-
-.github-status {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    padding: 8px 16px;
-    background: rgba(0,0,0,0.5);
-    border-radius: 20px;
-    font-size: 0.85rem;
-}
-
-.github-status.connected {
-    color: #46d369;
-}
-
-.github-status.error {
-    color: var(--primary-color);
-}
-
-.github-status-icon {
-    font-size: 1rem;
-}
-
-/* ============================================
-   MAIN CONTENT
-   ============================================ */
-.main-content {
-    margin-top: 80px;
-    padding-bottom: 50px;
-    min-height: 100vh;
-    position: relative;
-}
-
-/* ============================================
-   HERO SECTION - Featured Movie
-   ============================================ */
-.hero-section {
-    position: relative;
-    height: 70vh;
-    min-height: 500px;
-    margin-bottom: 30px;
-    overflow: hidden;
-    background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
-}
-
-.hero-backdrop {
-    position: absolute;
-    inset: 0;
-    z-index: 1;
-}
-
-.hero-backdrop img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    object-position: center;
-    filter: brightness(0.4);
-}
-
-.hero-gradient {
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 50%),
-                linear-gradient(to top, var(--background-dark) 0%, transparent 30%);
-    z-index: 2;
-}
-
-.hero-content {
-    position: absolute;
-    bottom: 15%;
-    left: 4%;
-    z-index: 3;
-    max-width: 600px;
-}
-
-.hero-title {
-    font-size: 3.5rem;
-    font-weight: 700;
-    margin-bottom: 20px;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
-    line-height: 1.1;
-}
-
-.hero-meta {
-    display: flex;
-    align-items: center;
-    gap: 15px;
-    margin-bottom: 20px;
-    font-size: 1rem;
-    color: rgba(255,255,255,0.9);
-}
-
-.hero-year {
-    color: #46d369;
-    font-weight: bold;
-}
-
-.hero-quality {
-    padding: 4px 10px;
-    background: var(--primary-color);
-    border-radius: 4px;
-    font-weight: bold;
-    font-size: 0.9rem;
-}
-
-.hero-buttons {
-    display: flex;
-    gap: 15px;
-    margin-top: 25px;
-}
-
-.btn-play {
-    padding: 12px 30px;
-    background: rgba(229, 9, 20, 0.95);
-    color: white;
-    border: none;
-    border-radius: 4px;
-    font-size: 1.1rem;
-    font-weight: 600;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    gap: 10px;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
-}
-
-.btn-play:hover {
-    background: var(--primary-color);
-    transform: scale(1.05);
-    box-shadow: 0 6px 25px rgba(229, 9, 20, 0.5);
-}
-
-.btn-play-icon {
-    font-size: 1.2rem;
-}
-
-/* ============================================
-   CAROUSEL SECTION
-   ============================================ */
-.carousel-section {
-    margin-bottom: 3rem;
-    position: relative;
-    opacity: 0;
-    animation: fadeInSection 0.6s ease forwards;
-}
-
-.carousel-section:nth-child(2) { animation-delay: 0.1s; }
-.carousel-section:nth-child(3) { animation-delay: 0.2s; }
-.carousel-section:nth-child(4) { animation-delay: 0.3s; }
-.carousel-section:nth-child(5) { animation-delay: 0.4s; }
-
-@keyframes fadeInSection {
-    to {
-        opacity: 1;
-    }
-}
-
-.carousel-header {
-    display: flex;
-    align-items: center;
-    padding: 0 4% 15px;
-}
-
-.carousel-title {
-    font-size: 1.6rem;
-    font-weight: 600;
-    color: var(--text-light);
-    position: relative;
-}
-
-.carousel-title::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: var(--primary-color);
-    transition: width 0.3s ease;
-}
-
-.carousel-section:hover .carousel-title::after {
-    width: 100%;
-}
-
-.movie-count {
-    margin-left: 15px;
-    padding: 5px 15px;
-    background: rgba(255, 255, 255, 0.1);
-    border-radius: 20px;
-    font-size: 0.85rem;
-    color: var(--text-muted);
-}
-
-/* ============================================
-   CAROUSEL CONTAINER
-   ============================================ */
-.carousel-container {
-    position: relative;
-    overflow: hidden;
-    padding: 0 4%;
-}
-
-.carousel-wrapper {
-    overflow-x: auto;
-    overflow-y: hidden;
-    scroll-behavior: smooth;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-    padding: 10px 0 20px;
-}
-
-.carousel-wrapper::-webkit-scrollbar {
-    display: none;
-}
-
-.carousel-track {
-    display: flex;
-    gap: 12px;
-}
-
-/* ============================================
-   MOVIE CARDS - DIRECT PLAY
-   ============================================ */
-.movie-card {
-    flex: 0 0 auto;
-    width: 200px;
-    cursor: pointer;
-    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
-    position: relative;
-    border-radius: var(--radius);
-    overflow: hidden;
-    background: var(--card);
-}
-
-/* Hover effect for desktop/TV */
-@media (hover: hover) {
-    .movie-card:hover {
-        transform: scale(1.15) translateY(-10px);
-        z-index: 10;
-        box-shadow: 0 10px 40px rgba(0,0,0,0.7);
-    }
-    
-    .movie-card:hover .movie-poster-overlay {
-        opacity: 1;
-    }
-    
-    .movie-card:hover .movie-info {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* Focus state for keyboard navigation */
-.movie-card.focused {
-    outline: 3px solid var(--primary-color);
-    outline-offset: 2px;
-    transform: scale(1.15) translateY(-10px);
-    z-index: 10;
-}
-
-.movie-card.focused .movie-poster-overlay {
-    opacity: 1;
-}
-
-.movie-poster {
-    position: relative;
-    width: 100%;
-    padding-bottom: 150%;
-    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-    overflow: hidden;
-}
-
-.movie-poster img {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.movie-card:hover .movie-poster img {
-    transform: scale(1.05);
-}
-
-/* Play Overlay */
-.movie-poster-overlay {
-    position: absolute;
-    inset: 0;
-    background: rgba(0,0,0,0.6);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    z-index: 2;
-}
-
-.play-button {
-    width: 70px;
-    height: 70px;
-    background: rgba(229, 9, 20, 0.95);
-    border-radius: 50%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 1.8rem;
-    color: white;
-    transition: all 0.3s ease;
-    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
-}
-
-.play-button:hover {
-    background: var(--primary-color);
-    transform: scale(1.1);
-    box-shadow: 0 8px 30px rgba(229, 9, 20, 0.5);
-}
-
-/* Movie Info */
-.movie-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px;
-    background: linear-gradient(to top,
-        rgba(0,0,0,0.95) 0%,
-        rgba(0,0,0,0.8) 60%,
-        transparent 100%);
-    opacity: 0;
-    transform: translateY(10px);
-    transition: all 0.3s ease;
-    z-index: 3;
-}
-
-.movie-title {
-    font-size: 1rem;
-    font-weight: 600;
-    margin-bottom: 8px;
-    line-height: 1.3;
-    display: -webkit-box;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden;
-    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
-}
-
-.movie-meta {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 0.85rem;
-}
-
-.movie-year {
-    color: #46d369;
-    font-weight: 600;
-}
-
-.movie-quality {
-    padding: 2px 8px;
-    background: var(--primary-color);
-    border-radius: 3px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    text-transform: uppercase;
-}
-
-.movie-genre {
-    color: var(--text-muted);
-    font-size: 0.8rem;
-}
-
-/* Quality badge on poster */
-.quality-badge {
-    position: absolute;
-    top: 8px;
-    right: 8px;
-    padding: 4px 10px;
-    background: var(--primary-color);
-    border-radius: 4px;
-    font-size: 0.75rem;
-    font-weight: bold;
-    z-index: 2;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
-}
-
-/* ============================================
-   NAVIGATION ARROWS
-   ============================================ */
-.carousel-nav {
-    position: absolute;
     top: 50%;
-    transform: translateY(-50%);
-    width: 50px;
-    height: 100px;
-    background: rgba(0,0,0,0.7);
-    border: none;
-    color: white;
-    font-size: 2rem;
-    cursor: pointer;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    opacity: 0;
-    transition: all 0.3s ease;
-    z-index: 5;
-    backdrop-filter: blur(5px);
-}
-
-.carousel-container:hover .carousel-nav {
-    opacity: 1;
-}
-
-.carousel-nav:hover {
-    background: rgba(0,0,0,0.9);
-}
-
-.carousel-nav.prev {
-    left: 0;
-    border-radius: 0 4px 4px 0;
-}
-
-.carousel-nav.next {
-    right: 0;
-    border-radius: 4px 0 0 4px;
-}
-
-.carousel-nav:disabled {
-    opacity: 0.3;
-    cursor: not-allowed;
-}
-
-/* ============================================
-   EMPTY STATE
-   ============================================ */
-.empty-state {
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background: rgba(229, 9, 20, 0.95);
+    padding: 20px 40px;
+    border-radius: 8px;
+    font-size: 18px;
+    z-index: 2000;
     display: none;
-    text-align: center;
-    padding: 150px 20px;
-    color: var(--text-muted);
 }
 
-.empty-state.show {
+.message.show {
     display: block;
 }
 
-.empty-icon {
-    font-size: 5rem;
-    margin-bottom: 2rem;
-    opacity: 0.5;
-}
-
-.empty-title {
-    font-size: 2rem;
-    margin-bottom: 1rem;
-    color: var(--text-light);
-}
-
-.empty-message {
-    font-size: 1.1rem;
-    max-width: 500px;
-    margin: 0 auto;
-}
-
-/* ============================================
-   NAVIGATION HELP
-   ============================================ */
-.nav-help {
+/* EMPTY */
+.empty {
     position: fixed;
-    bottom: 30px;
+    top: 50%;
     left: 50%;
-    transform: translateX(-50%);
-    background: rgba(0,0,0,0.9);
-    color: var(--text-light);
-    padding: 12px 25px;
-    border-radius: 25px;
-    font-size: 0.9rem;
-    opacity: 0;
-    transition: opacity 0.3s ease;
-    pointer-events: none;
-    z-index: 200;
-    backdrop-filter: blur(10px);
+    transform: translate(-50%, -50%);
+    text-align: center;
+    display: none;
 }
 
-.nav-help.show {
-    opacity: 1;
+.empty.show {
+    display: block;
 }
 
-/* ============================================
-   TV OPTIMIZATIONS
-   ============================================ */
+/* TV MODE */
 @media screen and (min-width: 1920px) {
-    .movie-card {
-        width: 240px;
-    }
-    
-    .hero-title {
-        font-size: 4rem;
-    }
-    
-    .carousel-title {
-        font-size: 1.8rem;
-    }
-}
-
-@media screen and (min-width: 2560px) {
-    .movie-card {
-        width: 280px;
-    }
-    
-    .hero-title {
-        font-size: 4.5rem;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    body {
-        zoom: 1.2;
-    }
-    
-    .movie-card {
-        width: 320px;
-    }
-}
-
-/* ============================================
-   MOBILE RESPONSIVE
-   ============================================ */
-@media (max-width: 768px) {
-    .header {
-        padding: 15px 3%;
-    }
-    
-    .logo {
-        font-size: 1.5rem;
-    }
-    
-    .header-info {
-        gap: 15px;
-    }
-    
-    .movie-counter {
-        display: none;
-    }
-    
-    .hero-section {
-        height: 50vh;
-        min-height: 400px;
-    }
-    
-    .hero-title {
-        font-size: 2rem;
-    }
-    
-    .hero-content {
-        max-width: 90%;
-    }
-    
-    .movie-card {
-        width: 140px;
-    }
-    
-    .carousel-track {
-        gap: 8px;
-    }
-    
-    .carousel-nav {
-        display: none;
-    }
-    
-    .carousel-title {
-        font-size: 1.3rem;
-    }
-}
-
-@media (max-width: 480px) {
-    .movie-card {
-        width: 120px;
-    }
-    
-    .hero-title {
-        font-size: 1.6rem;
-    }
-    
-    .hero-meta {
-        font-size: 0.9rem;
-    }
-    
-    .btn-play {
-        padding: 10px 20px;
-        font-size: 1rem;
-    }
-}
-
-/* ============================================
-   ANIMATIONS
-   ============================================ */
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(20px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-@keyframes slideInLeft {
-    from {
-        opacity: 0;
-        transform: translateX(-50px);
-    }
-    to {
-        opacity: 1;
-        transform: translateX(0);
-    }
-}
-
-/* Reduced motion */
-@media (prefers-reduced-motion: reduce) {
-    * {
-        animation-duration: 0.01ms !important;
-        animation-iteration-count: 1 !important;
-        transition-duration: 0.01ms !important;
-    }
+    .movie-card { flex: 0 0 240px; }
+    .header { padding: 25px 50px; }
+    .container { padding: 120px 50px 50px; }
 }
 </style>
 </head>
 <body>
 
 <!-- Loader -->
-<div class="loader-container" id="loader">
-    <div class="loader-content">
-        <div class="loader-spinner"></div>
-        <div class="loader-text">Cargando películas...</div>
-    </div>
+<div class="loader" id="loader">
+    <div class="spinner"></div>
 </div>
 
 <!-- Header -->
-<header class="header" id="header">
-    <div class="logo">MOVIES+ HD</div>
-    <div class="header-info">
-        <div class="movie-counter">
-            <span id="totalMovies">0</span> Películas
-        </div>
-        <div class="github-status" id="githubStatus">
-            <span class="github-status-icon">⚡</span>
-            <span>Conectando...</span>
-        </div>
-    </div>
+<header class="header">
+    <div class="logo">MOVIES+</div>
+    <div class="status" id="status">Cargando...</div>
 </header>
 
-<!-- Main Content -->
-<main class="main-content" id="mainContent">
-    <!-- Hero Section -->
-    <section class="hero-section" id="heroSection" style="display: none;">
-        <div class="hero-backdrop">
-            <img id="heroBackdrop" src="" alt="">
-        </div>
-        <div class="hero-gradient"></div>
-        <div class="hero-content">
-            <h1 class="hero-title" id="heroTitle"></h1>
-            <div class="hero-meta">
-                <span class="hero-year" id="heroYear"></span>
-                <span class="hero-quality" id="heroQuality">HD</span>
-                <span id="heroGenre"></span>
-            </div>
-            <div class="hero-buttons">
-                <button class="btn-play" id="heroPlayBtn">
-                    <span class="btn-play-icon">▶</span>
-                    <span>Reproducir</span>
-                </button>
-            </div>
-        </div>
-    </section>
-    
-    <!-- Carousels will be generated here -->
-    <div id="carouselsContainer"></div>
-</main>
+<!-- Container -->
+<div class="container" id="container"></div>
 
 <!-- Empty State -->
-<div class="empty-state" id="emptyState">
-    <div class="empty-icon">🎬</div>
-    <h2 class="empty-title">No hay películas disponibles</h2>
-    <p class="empty-message">
-        Verifica la configuración de GitHub
-    </p>
+<div class="empty" id="empty">
+    <h2>No hay películas</h2>
+    <p>Verifica la configuración</p>
 </div>
 
-<!-- Navigation Help -->
-<div class="nav-help" id="navHelp">
-    Usa las flechas ← → para navegar • Enter para reproducir
-</div>
+<!-- Message -->
+<div class="message" id="message"></div>
 
 <script>
-'use strict';
-
-// ============================================
-// CONFIGURACIÓN GITHUB
-// ============================================
+// ========================================
+// CONFIGURACIÓN
+// ========================================
 const CONFIG = {
-    // ACTUALIZA CON TU INFORMACIÓN DE GITHUB
-    GITHUB_USER: 'rancier0102-rgb',        // <-- CAMBIA ESTO
-    GITHUB_REPO: 'REPRODUCIBLE-1.0',           // <-- CAMBIA ESTO
-    GITHUB_BRANCH: 'main',               // <-- 'main' o 'master'
+    GITHUB_USER: 'rancier0102-rgb',
+    GITHUB_REPO: 'REPRODUCIBLE-1.0',
+    GITHUB_BRANCH: 'main',
     
     get BASE_URL() {
         return `https://raw.githubusercontent.com/${this.GITHUB_USER}/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}`;
@@ -868,82 +251,45 @@ const CONFIG = {
     
     get MANIFEST_URL() {
         return `${this.BASE_URL}/manifest.json`;
-    },
-    
-    // Configuración UI
-    SCROLL_AMOUNT: 4,
-    USE_CACHE: true,
-    CACHE_DURATION: 3600000, // 1 hora
-    FEATURED_MOVIE_INDEX: 0  // Primera película como destacada
+    }
 };
 
-// ============================================
-// APLICACIÓN PRINCIPAL
-// ============================================
-class MoviesStreamingApp {
+// ========================================
+// APP PRINCIPAL
+// ========================================
+class FireTVApp {
     constructor() {
         this.movies = [];
-        this.moviesByYear = {};
-        this.currentFocus = { section: 0, movie: 0 };
-        this.isKeyboardNav = false;
-        this.featuredMovie = null;
+        this.organized = {};
+        this.currentFocus = { row: 0, col: 0 };
+        this.rows = [];
         
         this.init();
     }
     
     async init() {
-        console.log('🎬 Iniciando Movies+ HD');
-        
         try {
-            // Cargar datos desde GitHub
-            await this.loadFromGitHub();
-            
-            // Organizar por año
-            this.organizeByYear();
-            
-            // Configurar película destacada
-            this.setupFeaturedMovie();
-            
-            // Renderizar carruseles
-            this.renderCarousels();
-            
-            // Configurar eventos
-            this.setupEventListeners();
-            
-            // Ocultar loader
+            await this.loadMovies();
+            this.organize();
+            this.render();
+            this.setupNavigation();
             this.hideLoader();
-            
-            // Mostrar ayuda de navegación
-            setTimeout(() => this.showNavHelp(), 2000);
-            
         } catch (error) {
-            console.error('❌ Error:', error);
-            this.showError();
+            console.error('Error:', error);
+            this.showEmpty();
         }
     }
     
-    async loadFromGitHub() {
-        // Intentar cargar desde caché
-        if (CONFIG.USE_CACHE) {
-            const cached = this.getFromCache('movies_data');
-            if (cached) {
-                console.log('📦 Datos desde caché');
-                this.movies = cached;
-                this.updateGitHubStatus('Caché', 'connected');
-                return;
-            }
-        }
-        
+    async loadMovies() {
         try {
-            // Cargar manifest
-            console.log('📥 Cargando desde GitHub...');
-            const manifestResponse = await fetch(CONFIG.MANIFEST_URL);
+            // Intentar cargar desde GitHub
+            const response = await fetch(CONFIG.MANIFEST_URL);
             
-            if (!manifestResponse.ok) {
-                throw new Error('No se pudo cargar el manifest');
+            if (!response.ok) {
+                throw new Error('No se pudo cargar manifest');
             }
             
-            const manifest = await manifestResponse.json();
+            const manifest = await response.json();
             
             // Cargar chunks
             for (const chunk of manifest.chunks || []) {
@@ -952,513 +298,284 @@ class MoviesStreamingApp {
                     const chunkResponse = await fetch(chunkUrl);
                     
                     if (chunkResponse.ok) {
-                        const chunkData = await chunkResponse.json();
-                        this.processChunk(chunkData);
+                        const data = await chunkResponse.json();
+                        this.processData(data);
                     }
-                } catch (error) {
-                    console.error(`Error cargando chunk ${chunk.id}:`, error);
+                } catch (e) {
+                    console.error('Error chunk:', e);
                 }
             }
             
-            // Guardar en caché
-            if (CONFIG.USE_CACHE && this.movies.length > 0) {
-                this.saveToCache('movies_data', this.movies);
-            }
-            
-            this.updateGitHubStatus('Conectado', 'connected');
+            this.updateStatus(`${this.movies.length} películas`);
             
         } catch (error) {
-            console.error('Error cargando desde GitHub:', error);
-            this.updateGitHubStatus('Error', 'error');
-            
-            // Cargar datos de demo
-            this.loadDemoData();
+            // Cargar demo si falla
+            this.loadDemo();
         }
     }
     
-    processChunk(chunkData) {
-        const items = chunkData.movies || chunkData.series || [];
+    processData(data) {
+        const items = data.movies || data.series || [];
         
         items.forEach(item => {
-            const movie = {
-                id: item.id || `movie_${Date.now()}_${Math.random()}`,
-                title: item.t || item.titulo || item.title || 'Sin título',
-                url: item.l || item.enlace || item.url || '#',
-                year: item.y || item.year || item.ano || 2024,
-                poster: item.p || item.poster || this.getDefaultPoster(),
-                genre: item.g || item.genero || 'Acción',
+            this.movies.push({
+                id: item.id || Date.now(),
+                title: item.t || item.title || 'Sin título',
+                url: item.l || item.url || '#',
+                year: item.y || item.year || 2024,
+                poster: item.p || item.poster || this.defaultPoster(),
                 quality: item.q || item.calidad || 'HD'
-            };
-            
-            this.movies.push(movie);
+            });
         });
     }
     
-    loadDemoData() {
-        console.log('📦 Cargando datos de demostración');
-        
-        // Generar películas de demo
-        const years = [2024, 2023, 2022, 2021, 2020];
-        const genres = ['Acción', 'Drama', 'Comedia', 'Thriller', 'Ciencia Ficción'];
-        const qualities = ['4K', 'FHD', 'HD'];
-        
-        years.forEach(year => {
-            for (let i = 0; i < 12; i++) {
+    loadDemo() {
+        // Generar películas demo
+        for (let year = 2024; year >= 2020; year--) {
+            for (let i = 1; i <= 10; i++) {
                 this.movies.push({
-                    id: `demo_${year}_${i}`,
-                    title: `Película ${i + 1} (${year})`,
+                    id: `${year}_${i}`,
+                    title: `Película ${i}`,
                     url: '#demo',
                     year: year,
-                    poster: this.getDefaultPoster(),
-                    genre: genres[Math.floor(Math.random() * genres.length)],
-                    quality: qualities[Math.floor(Math.random() * qualities.length)]
+                    poster: this.defaultPoster(),
+                    quality: 'HD'
                 });
             }
-        });
+        }
         
-        this.updateGitHubStatus('Demo', 'connected');
+        this.updateStatus('Modo Demo');
     }
     
-    organizeByYear() {
-        this.moviesByYear = {};
-        
+    organize() {
+        // Organizar por año
         this.movies.forEach(movie => {
             const year = movie.year;
-            if (!this.moviesByYear[year]) {
-                this.moviesByYear[year] = [];
+            if (!this.organized[year]) {
+                this.organized[year] = [];
             }
-            this.moviesByYear[year].push(movie);
+            this.organized[year].push(movie);
         });
-        
-        // Ordenar películas por título dentro de cada año
-        Object.keys(this.moviesByYear).forEach(year => {
-            this.moviesByYear[year].sort((a, b) => 
-                a.title.localeCompare(b.title, 'es')
-            );
-        });
-        
-        // Actualizar contador
-        document.getElementById('totalMovies').textContent = this.movies.length;
     }
     
-    setupFeaturedMovie() {
-        if (this.movies.length === 0) return;
+    render() {
+        const container = document.getElementById('container');
         
-        // Seleccionar película destacada (la más reciente o aleatoria)
-        const recentMovies = this.moviesByYear[Math.max(...Object.keys(this.moviesByYear))];
-        this.featuredMovie = recentMovies ? recentMovies[0] : this.movies[0];
-        
-        if (this.featuredMovie) {
-            const heroSection = document.getElementById('heroSection');
-            document.getElementById('heroBackdrop').src = this.featuredMovie.poster;
-            document.getElementById('heroTitle').textContent = this.featuredMovie.title;
-            document.getElementById('heroYear').textContent = this.featuredMovie.year;
-            document.getElementById('heroQuality').textContent = this.featuredMovie.quality;
-            document.getElementById('heroGenre').textContent = this.featuredMovie.genre;
-            
-            document.getElementById('heroPlayBtn').onclick = () => {
-                this.playMovie(this.featuredMovie.url);
-            };
-            
-            heroSection.style.display = 'block';
-        }
-    }
-    
-    renderCarousels() {
-        const container = document.getElementById('carouselsContainer');
-        
-        if (Object.keys(this.moviesByYear).length === 0) {
-            this.showEmptyState();
+        if (this.movies.length === 0) {
+            this.showEmpty();
             return;
         }
         
         container.innerHTML = '';
+        this.rows = [];
         
-        // Ordenar años de mayor a menor
-        const sortedYears = Object.keys(this.moviesByYear)
-            .sort((a, b) => b - a);
+        // Ordenar años
+        const years = Object.keys(this.organized).sort((a, b) => b - a);
         
-        // Crear carrusel para cada año
-        sortedYears.forEach((year, sectionIndex) => {
-            const movies = this.moviesByYear[year];
-            const section = this.createCarouselSection(year, movies, sectionIndex);
+        years.forEach(year => {
+            const section = document.createElement('div');
+            section.className = 'section';
+            
+            const title = document.createElement('h2');
+            title.className = 'section-title';
+            title.textContent = `Películas ${year}`;
+            
+            const row = document.createElement('div');
+            row.className = 'movies-row';
+            row.dataset.row = this.rows.length;
+            
+            this.organized[year].forEach((movie, index) => {
+                const card = this.createCard(movie, this.rows.length, index);
+                row.appendChild(card);
+            });
+            
+            section.appendChild(title);
+            section.appendChild(row);
             container.appendChild(section);
+            
+            this.rows.push(row);
         });
+        
+        // Focus inicial
+        if (this.rows.length > 0) {
+            const firstCard = this.rows[0].querySelector('.movie-card');
+            if (firstCard) firstCard.focus();
+        }
     }
     
-    createCarouselSection(year, movies, sectionIndex) {
-        const section = document.createElement('section');
-        section.className = 'carousel-section';
-        section.dataset.year = year;
-        section.dataset.section = sectionIndex;
+    createCard(movie, row, col) {
+        const card = document.createElement('div');
+        card.className = 'movie-card';
+        card.tabIndex = 0;
+        card.dataset.row = row;
+        card.dataset.col = col;
+        card.dataset.url = movie.url;
         
-        section.innerHTML = `
-            <div class="carousel-header">
-                <h2 class="carousel-title">Películas ${year}</h2>
-                <span class="movie-count">${movies.length}</span>
+        card.innerHTML = `
+            <div class="movie-poster">
+                <img src="${movie.poster}" alt="${movie.title}" 
+                     onerror="this.src='${this.defaultPoster()}'">
+                <span class="quality">${movie.quality}</span>
             </div>
-            <div class="carousel-container">
-                <button class="carousel-nav prev" data-year="${year}" data-direction="prev">‹</button>
-                <button class="carousel-nav next" data-year="${year}" data-direction="next">›</button>
-                <div class="carousel-wrapper" id="carousel-${year}">
-                    <div class="carousel-track">
-                        ${movies.map((movie, index) => this.createMovieCard(movie, sectionIndex, index)).join('')}
-                    </div>
-                </div>
+            <div class="movie-info">
+                <div class="movie-title">${movie.title}</div>
+                <div class="movie-meta">${movie.year}</div>
             </div>
         `;
         
-        return section;
+        return card;
     }
     
-    createMovieCard(movie, sectionIndex, movieIndex) {
-        return `
-            <article class="movie-card" 
-                     data-section="${sectionIndex}" 
-                     data-index="${movieIndex}"
-                     data-url="${movie.url}"
-                     tabindex="-1">
-                <div class="movie-poster">
-                    <span class="quality-badge">${movie.quality}</span>
-                    <img src="${movie.poster}" 
-                         alt="${movie.title}"
-                         loading="lazy"
-                         onerror="this.src='${this.getDefaultPoster()}'">
-                    <div class="movie-poster-overlay">
-                        <div class="play-button">▶</div>
-                    </div>
-                </div>
-                <div class="movie-info">
-                    <h3 class="movie-title">${movie.title}</h3>
-                    <div class="movie-meta">
-                        <span class="movie-year">${movie.year}</span>
-                        <span class="movie-genre">${movie.genre}</span>
-                    </div>
-                </div>
-            </article>
-        `;
-    }
-    
-    setupEventListeners() {
-        // Click en películas
+    setupNavigation() {
+        document.addEventListener('keydown', (e) => {
+            this.handleKeyPress(e);
+        });
+        
+        // Click para reproducir
         document.addEventListener('click', (e) => {
             const card = e.target.closest('.movie-card');
             if (card) {
-                const url = card.dataset.url;
-                this.playMovie(url);
+                this.play(card.dataset.url);
             }
-        });
-        
-        // Navegación con flechas del carrusel
-        document.querySelectorAll('.carousel-nav').forEach(btn => {
-            btn.addEventListener('click', (e) => {
-                e.stopPropagation();
-                const year = e.currentTarget.dataset.year;
-                const direction = e.currentTarget.dataset.direction;
-                this.scrollCarousel(year, direction);
-            });
-        });
-        
-        // Navegación con teclado
-        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
-        
-        // Scroll del header
-        window.addEventListener('scroll', () => {
-            const header = document.getElementById('header');
-            if (window.scrollY > 50) {
-                header.classList.add('scrolled');
-            } else {
-                header.classList.remove('scrolled');
-            }
-        });
-        
-        // Mouse wheel para scroll horizontal
-        document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
-            wrapper.addEventListener('wheel', (e) => {
-                if (e.deltaY !== 0) {
-                    e.preventDefault();
-                    wrapper.scrollLeft += e.deltaY * 2;
-                }
-            });
         });
     }
     
-    handleKeyboard(e) {
-        const cards = document.querySelectorAll('.movie-card');
-        if (cards.length === 0) return;
+    handleKeyPress(e) {
+        const key = e.key;
         
-        // Mostrar ayuda de navegación
-        if (!this.isKeyboardNav) {
-            this.isKeyboardNav = true;
-            this.showNavHelp();
-        }
-        
-        switch(e.key) {
+        switch(key) {
             case 'ArrowRight':
                 e.preventDefault();
-                this.navigateHorizontal(1);
+                this.navigate(0, 1);
                 break;
                 
             case 'ArrowLeft':
                 e.preventDefault();
-                this.navigateHorizontal(-1);
+                this.navigate(0, -1);
                 break;
                 
             case 'ArrowDown':
                 e.preventDefault();
-                this.navigateVertical(1);
+                this.navigate(1, 0);
                 break;
                 
             case 'ArrowUp':
                 e.preventDefault();
-                this.navigateVertical(-1);
+                this.navigate(-1, 0);
                 break;
                 
             case 'Enter':
                 e.preventDefault();
-                const focused = document.querySelector('.movie-card.focused');
-                if (focused) {
-                    this.playMovie(focused.dataset.url);
+                const focused = document.activeElement;
+                if (focused && focused.classList.contains('movie-card')) {
+                    this.play(focused.dataset.url);
+                }
+                break;
+                
+            case 'Escape':
+            case 'Backspace':
+                e.preventDefault();
+                if (confirm('¿Salir?')) {
+                    window.history.back();
                 }
                 break;
         }
     }
     
-    navigateHorizontal(direction) {
-        const sections = document.querySelectorAll('.carousel-section');
-        if (sections.length === 0) return;
+    navigate(rowDelta, colDelta) {
+        if (this.rows.length === 0) return;
         
-        const currentSection = sections[this.currentFocus.section];
-        const cards = currentSection.querySelectorAll('.movie-card');
+        // Calcular nueva posición
+        let newRow = this.currentFocus.row + rowDelta;
+        let newCol = this.currentFocus.col + colDelta;
         
-        // Calcular nuevo índice
-        this.currentFocus.movie += direction;
+        // Validar límites de filas
+        if (newRow < 0) newRow = 0;
+        if (newRow >= this.rows.length) newRow = this.rows.length - 1;
         
-        // Validar límites
-        if (this.currentFocus.movie < 0) {
-            this.currentFocus.movie = cards.length - 1;
-        } else if (this.currentFocus.movie >= cards.length) {
-            this.currentFocus.movie = 0;
-        }
+        const row = this.rows[newRow];
+        const cards = row.querySelectorAll('.movie-card');
         
-        this.updateFocus();
-        this.scrollToFocused();
-    }
-    
-    navigateVertical(direction) {
-        const sections = document.querySelectorAll('.carousel-section');
-        if (sections.length === 0) return;
+        // Validar límites de columnas
+        if (newCol < 0) newCol = 0;
+        if (newCol >= cards.length) newCol = cards.length - 1;
         
-        // Cambiar de sección
-        this.currentFocus.section += direction;
+        // Actualizar focus
+        this.currentFocus.row = newRow;
+        this.currentFocus.col = newCol;
         
-        // Validar límites
-        if (this.currentFocus.section < 0) {
-            this.currentFocus.section = sections.length - 1;
-        } else if (this.currentFocus.section >= sections.length) {
-            this.currentFocus.section = 0;
-        }
-        
-        // Resetear índice de película en nueva sección
-        const newSection = sections[this.currentFocus.section];
-        const cards = newSection.querySelectorAll('.movie-card');
-        if (this.currentFocus.movie >= cards.length) {
-            this.currentFocus.movie = 0;
-        }
-        
-        this.updateFocus();
-        this.scrollToFocused();
-    }
-    
-    updateFocus() {
-        // Quitar focus anterior
-        document.querySelectorAll('.movie-card').forEach(card => {
-            card.classList.remove('focused');
-        });
-        
-        // Aplicar nuevo focus
-        const sections = document.querySelectorAll('.carousel-section');
-        if (sections[this.currentFocus.section]) {
-            const cards = sections[this.currentFocus.section].querySelectorAll('.movie-card');
-            if (cards[this.currentFocus.movie]) {
-                cards[this.currentFocus.movie].classList.add('focused');
-            }
-        }
-    }
-    
-    scrollToFocused() {
-        const focused = document.querySelector('.movie-card.focused');
-        if (focused) {
-            // Scroll vertical para ver la sección
-            focused.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center',
-                inline: 'center'
-            });
+        // Aplicar focus
+        const target = cards[newCol];
+        if (target) {
+            target.focus();
             
-            // Scroll horizontal dentro del carrusel
-            const wrapper = focused.closest('.carousel-wrapper');
-            if (wrapper) {
-                const cardRect = focused.getBoundingClientRect();
-                const wrapperRect = wrapper.getBoundingClientRect();
-                
-                if (cardRect.left < wrapperRect.left) {
-                    wrapper.scrollLeft -= wrapperRect.left - cardRect.left + 50;
-                } else if (cardRect.right > wrapperRect.right) {
-                    wrapper.scrollLeft += cardRect.right - wrapperRect.right + 50;
-                }
+            // Scroll horizontal
+            const rowElement = row;
+            const cardRect = target.getBoundingClientRect();
+            const rowRect = rowElement.getBoundingClientRect();
+            
+            if (cardRect.left < rowRect.left) {
+                rowElement.scrollLeft -= rowRect.left - cardRect.left + 20;
+            } else if (cardRect.right > rowRect.right) {
+                rowElement.scrollLeft += cardRect.right - rowRect.right + 20;
             }
+            
+            // Scroll vertical
+            target.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center' 
+            });
         }
     }
     
-    scrollCarousel(year, direction) {
-        const carousel = document.getElementById(`carousel-${year}`);
-        if (!carousel) return;
-        
-        const scrollAmount = 220 * CONFIG.SCROLL_AMOUNT;
-        
-        if (direction === 'next') {
-            carousel.scrollLeft += scrollAmount;
-        } else {
-            carousel.scrollLeft -= scrollAmount;
-        }
-    }
-    
-    playMovie(url) {
-        console.log('▶️ Reproduciendo:', url);
-        
+    play(url) {
         if (!url || url === '#' || url === '#demo') {
-            // Mostrar mensaje para demos
-            this.showMessage('Esta es una película de demostración');
+            this.showMessage('Película de demostración');
             return;
         }
         
-        // Abrir en nueva pestaña o iframe según preferencia
-        window.open(url, '_blank', 'noopener,noreferrer');
+        // Abrir reproductor
+        window.open(url, '_blank');
     }
     
     showMessage(text) {
-        // Crear mensaje temporal
-        const msg = document.createElement('div');
-        msg.style.cssText = `
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(229, 9, 20, 0.95);
-            color: white;
-            padding: 20px 40px;
-            border-radius: 8px;
-            font-size: 1.1rem;
-            z-index: 10000;
-            animation: fadeIn 0.3s ease;
-        `;
+        const msg = document.getElementById('message');
         msg.textContent = text;
-        document.body.appendChild(msg);
+        msg.classList.add('show');
         
         setTimeout(() => {
-            msg.style.animation = 'fadeOut 0.3s ease';
-            setTimeout(() => msg.remove(), 300);
+            msg.classList.remove('show');
         }, 2000);
     }
     
-    hideLoader() {
-        const loader = document.getElementById('loader');
-        loader.classList.add('hidden');
-        setTimeout(() => {
-            loader.style.display = 'none';
-        }, 500);
+    updateStatus(text) {
+        document.getElementById('status').textContent = text;
     }
     
-    showEmptyState() {
-        document.getElementById('emptyState').classList.add('show');
-        document.getElementById('mainContent').style.display = 'none';
+    hideLoader() {
+        document.getElementById('loader').classList.add('hide');
+    }
+    
+    showEmpty() {
+        document.getElementById('empty').classList.add('show');
+        document.getElementById('container').style.display = 'none';
         this.hideLoader();
     }
     
-    showError() {
-        this.showEmptyState();
-        this.updateGitHubStatus('Error', 'error');
-    }
-    
-    showNavHelp() {
-        const help = document.getElementById('navHelp');
-        help.classList.add('show');
-        setTimeout(() => {
-            help.classList.remove('show');
-        }, 3000);
-    }
-    
-    updateGitHubStatus(text, status = '') {
-        const statusEl = document.getElementById('githubStatus');
-        statusEl.className = 'github-status';
-        
-        if (status === 'connected') {
-            statusEl.classList.add('connected');
-            statusEl.innerHTML = '<span class="github-status-icon">✓</span><span>' + text + '</span>';
-        } else if (status === 'error') {
-            statusEl.classList.add('error');
-            statusEl.innerHTML = '<span class="github-status-icon">✗</span><span>' + text + '</span>';
-        } else {
-            statusEl.innerHTML = '<span class="github-status-icon">⚡</span><span>' + text + '</span>';
-        }
-    }
-    
-    getDefaultPoster() {
+    defaultPoster() {
         return 'data:image/svg+xml,' + encodeURIComponent(`
-            <svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">
-                <rect width="300" height="450" fill="#181818"/>
-                <text x="150" y="225" font-family="Arial" font-size="60" fill="#333" text-anchor="middle">🎬</text>
+            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="300">
+                <rect width="200" height="300" fill="#1a1a1a"/>
+                <text x="100" y="150" font-size="48" fill="#333" text-anchor="middle">🎬</text>
             </svg>
         `);
     }
-    
-    // Sistema de caché
-    getFromCache(key) {
-        if (!CONFIG.USE_CACHE) return null;
-        
-        try {
-            const item = localStorage.getItem(key);
-            if (!item) return null;
-            
-            const data = JSON.parse(item);
-            if (Date.now() > data.expiry) {
-                localStorage.removeItem(key);
-                return null;
-            }
-            
-            return data.value;
-        } catch (e) {
-            return null;
-        }
-    }
-    
-    saveToCache(key, value) {
-        if (!CONFIG.USE_CACHE) return;
-        
-        try {
-            const data = {
-                value: value,
-                expiry: Date.now() + CONFIG.CACHE_DURATION
-            };
-            localStorage.setItem(key, JSON.stringify(data));
-        } catch (e) {
-            console.warn('Error guardando caché:', e);
-        }
-    }
 }
 
-// ============================================
-// INICIALIZACIÓN
-// ============================================
+// INICIAR
 window.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 Iniciando Movies+ HD Streaming Platform');
-    window.app = new MoviesStreamingApp();
+    new FireTVApp();
 });
-
-// Para debugging
-console.log('📝 Actualiza CONFIG con tus credenciales de GitHub');
-console.log('🎮 Para debug usa: window.app');
 </script>
 
 </body>
