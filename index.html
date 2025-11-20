@@ -1,26 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Series+ - Streaming Platform</title>
+<title>Movies+ HD - Streaming Platform</title>
 <style>
 :root {
     --primary-color: #e50914;
     --background-dark: #141414;
-    --background-card: #181818;
-    --background-secondary: #222;
-    --text-light: #fff;
-    --muted: #b3b3b3;
-    --radius: 8px;
-    --transition: 0.25s ease;
-    --focus-shadow: 0 0 25px rgba(229, 9, 20, 0.9);
+    --background-secondary: #000000;
+    --card: #181818;
+    --card-hover: #2a2a2a;
+    --text-light: #ffffff;
+    --text-muted: #999999;
+    --text-dim: #666666;
+    --radius: 4px;
+    --transition: 0.3s ease;
 }
 
-* { box-sizing: border-box; margin: 0; padding: 0; }
+* { 
+    box-sizing: border-box; 
+    margin: 0; 
+    padding: 0; 
+}
 
 body {
-    font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    font-family: 'Helvetica Neue', system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
     background: var(--background-dark);
     color: var(--text-light);
     overflow-x: hidden;
@@ -28,36 +33,55 @@ body {
     -moz-osx-font-smoothing: grayscale;
 }
 
-/* TV Optimization - Larger UI elements */
-@media screen and (min-width: 1920px) {
-    body {
-        zoom: 1.1;
-    }
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
 }
 
-@media screen and (min-width: 3840px) {
-    body {
-        zoom: 1.3;
-    }
+::-webkit-scrollbar-track {
+    background: var(--background-secondary);
 }
 
-/* Loader */
-.loader {
+::-webkit-scrollbar-thumb {
+    background: var(--text-dim);
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: var(--text-muted);
+}
+
+/* ============================================
+   LOADER
+   ============================================ */
+.loader-container {
     position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    z-index: 1000;
+    inset: 0;
+    background: var(--background-dark);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 10000;
+    transition: opacity 0.5s ease;
+}
+
+.loader-container.hidden {
+    opacity: 0;
+    pointer-events: none;
+}
+
+.loader-content {
     text-align: center;
 }
 
 .loader-spinner {
-    width: 50px;
-    height: 50px;
+    width: 60px;
+    height: 60px;
     border: 3px solid rgba(229, 9, 20, 0.2);
     border-top-color: var(--primary-color);
     border-radius: 50%;
-    margin: 0 auto 1rem;
+    margin: 0 auto 1.5rem;
     animation: spin 1s linear infinite;
 }
 
@@ -66,1057 +90,691 @@ body {
 }
 
 .loader-text {
-    color: var(--muted);
-    font-size: 1rem;
+    color: var(--text-muted);
+    font-size: 1.1rem;
     letter-spacing: 1px;
 }
 
-.loader.hidden {
-    display: none;
-}
-
-/* HEADER */
-header {
-    padding: 18px 30px;
-    background: linear-gradient(to bottom, rgba(20,20,20,0.98), rgba(20,20,20,0.95));
-    position: sticky;
-    top: 0;
-    display: flex;
-    gap: 25px;
-    align-items: center;
-    z-index: 10;
-    backdrop-filter: blur(20px);
-    box-shadow: 0 4px 20px rgba(0,0,0,0.5);
-    min-height: 70px;
-}
-
-.logo { 
-    font-weight: bold; 
-    font-size: 1.8rem;
-    color: var(--primary-color);
-    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
-    margin-right: 20px;
-}
-
-/* Professional Search Bar */
-.search-container {
-    flex: 1;
-    max-width: 500px;
-    position: relative;
-}
-
-.search-wrapper {
-    position: relative;
-    width: 100%;
-}
-
-.search-box {
-    width: 100%;
-    background: linear-gradient(135deg, rgba(255,255,255,0.08), rgba(255,255,255,0.05));
-    border: 1px solid rgba(255,255,255,0.08);
-    border-radius: 25px;
-    padding: 12px 50px 12px 20px;
-    color: white;
-    font-size: 14px;
-    font-weight: 400;
-    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-    backdrop-filter: blur(10px);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2);
-}
-
-.search-box::placeholder {
-    color: rgba(255,255,255,0.4);
-    font-weight: 300;
-    letter-spacing: 0.5px;
-}
-
-.search-box:hover {
-    background: linear-gradient(135deg, rgba(255,255,255,0.12), rgba(255,255,255,0.08));
-    border-color: rgba(255,255,255,0.15);
-    box-shadow: inset 0 2px 5px rgba(0,0,0,0.2), 0 0 20px rgba(255,255,255,0.05);
-}
-
-.search-box:focus {
-    outline: none;
-    background: linear-gradient(135deg, rgba(255,255,255,0.15), rgba(255,255,255,0.1));
-    border-color: rgba(229, 9, 20, 0.5);
-    box-shadow: inset 0 2px 8px rgba(0,0,0,0.3), 0 0 30px rgba(229, 9, 20, 0.2);
-    padding-left: 24px;
-}
-
-.search-box.focused {
-    transform: translateY(-1px);
-}
-
-.search-box.active-search {
-    border-color: var(--primary-color);
-    background: linear-gradient(135deg, rgba(229, 9, 20, 0.1), rgba(229, 9, 20, 0.05));
-}
-
-/* Search Icon */
-.search-icon {
-    position: absolute;
-    right: 18px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 20px;
-    height: 20px;
-    pointer-events: none;
-    opacity: 0.5;
-    transition: all 0.3s ease;
-}
-
-.search-icon svg {
-    width: 100%;
-    height: 100%;
-    fill: currentColor;
-}
-
-.search-box:focus ~ .search-icon {
-    opacity: 0.8;
-    right: 16px;
-}
-
-/* Search Clear Button */
-.search-clear {
-    position: absolute;
-    right: 45px;
-    top: 50%;
-    transform: translateY(-50%);
-    width: 18px;
-    height: 18px;
-    background: rgba(255,255,255,0.1);
-    border-radius: 50%;
-    display: none;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: all 0.2s ease;
-}
-
-.search-clear:hover {
-    background: rgba(255,255,255,0.2);
-    transform: translateY(-50%) scale(1.1);
-}
-
-.search-clear.visible {
-    display: flex;
-}
-
-/* Search Info Bar */
-.search-info {
-    display: none;
-    padding: 15px 30px;
-    background: linear-gradient(90deg, rgba(229, 9, 20, 0.1), transparent);
-    border-left: 3px solid var(--primary-color);
-    margin-bottom: 10px;
-    align-items: center;
-    justify-content: space-between;
-    animation: slideDown 0.3s ease;
-}
-
-.search-info.visible {
-    display: flex;
-}
-
-.search-info-text {
-    font-size: 1rem;
-    color: rgba(255,255,255,0.9);
-}
-
-.search-info-text strong {
-    color: var(--primary-color);
-}
-
-.search-info-count {
-    background: rgba(229, 9, 20, 0.2);
-    padding: 4px 12px;
-    border-radius: 20px;
-    font-size: 0.9rem;
-}
-
-.clear-search {
-    background: rgba(255,255,255,0.1);
-    border: 1px solid rgba(255,255,255,0.2);
-    color: white;
-    padding: 6px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-size: 0.85rem;
-    transition: all 0.2s ease;
-}
-
-.clear-search:hover {
-    background: rgba(255,255,255,0.2);
-    transform: scale(1.05);
-}
-
-@keyframes slideDown {
-    from {
-        opacity: 0;
-        transform: translateY(-10px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/* MAIN GRID - INCREASED POSTERS PER ROW */
-.main-content {
-    padding-top: 5px;
-}
-
-.all-series-header {
-    padding: 15px 30px 10px;
-    font-size: 1.4rem;
-    font-weight: 600;
-}
-
-.grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-    gap: 12px;
-    padding: 0 30px 30px;
-    animation: fadeIn 0.5s ease-out;
-}
-
-@keyframes fadeIn {
-    from { opacity: 0; transform: translateY(20px); }
-    to { opacity: 1; transform: translateY(0); }
-}
-
-.card {
-    background: transparent;
-    border-radius: 6px;
-    overflow: hidden;
-    cursor: pointer;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-    position: relative;
-    border: 2px solid transparent;
-    outline: none;
-}
-
-.card.hidden {
-    display: none;
-}
-
-.card.search-match {
-    animation: highlight 0.5s ease;
-    border-color: rgba(229, 9, 20, 0.3);
-    box-shadow: 0 0 15px rgba(229, 9, 20, 0.2);
-}
-
-@keyframes highlight {
-    0% {
-        transform: scale(0.95);
-        opacity: 0.5;
-    }
-    50% {
-        transform: scale(1.02);
-    }
-    100% {
-        transform: scale(1);
-        opacity: 1;
-    }
-}
-
-.card img { 
-    width: 100%; 
-    height: 210px; 
-    object-fit: cover;
-    transition: transform 0.3s ease;
-}
-
-.card-title { 
-    padding: 10px; 
-    font-size: 0.85rem; 
-    font-weight: 500;
-    background: linear-gradient(180deg, transparent, rgba(0,0,0,0.9));
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    color: white;
-}
-
-.card.focused {
-    border-color: var(--primary-color);
-    transform: scale(1.1);
-    box-shadow: var(--focus-shadow);
-    z-index: 5;
-}
-
-.card.focused img {
-    transform: scale(1.05);
-}
-
-/* No results message */
-.no-results-message {
-    display: none;
-    text-align: center;
-    padding: 60px 30px;
-    color: var(--muted);
-    font-size: 1.2rem;
-    grid-column: 1/-1;
-}
-
-.no-results-message.visible {
-    display: block;
-}
-
-.no-results-message strong {
-    color: var(--primary-color);
-    display: block;
-    margin-top: 10px;
-    font-size: 1rem;
-}
-
-/* BADGES */
-.badge {
-    position: absolute;
-    top: 6px;
-    left: 6px;
-    background: var(--primary-color);
-    padding: 4px 10px;
-    font-size: 0.7rem;
-    border-radius: 4px;
-    font-weight: bold;
-    z-index: 2;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.3);
-}
-
-.badge.dubbed { 
-    background: #46d369; 
-}
-
-.badge.premiere { 
-    background: #ff6b35;
-    animation: glow 2s ease-in-out infinite;
-}
-
-@keyframes glow {
-    0%, 100% { box-shadow: 0 0 5px currentColor; }
-    50% { box-shadow: 0 0 20px currentColor; }
-}
-
-/* SERIES OVERLAY */
-.series-overlay {
-    display: none;
+/* ============================================
+   HEADER - SIMPLIFIED
+   ============================================ */
+.header {
+    background: linear-gradient(to bottom, rgba(20,20,20,0.98) 0%, transparent 100%);
+    padding: 20px 4%;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
-    background: var(--background-dark);
+    right: 0;
     z-index: 100;
-    overflow-y: auto;
-    animation: slideIn 0.3s ease-out;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    transition: background 0.3s ease;
 }
 
-@keyframes slideIn {
-    from { transform: translateX(100%); }
-    to { transform: translateX(0); }
+.header.scrolled {
+    background: rgba(20,20,20,0.98);
+    backdrop-filter: blur(20px);
 }
 
-/* SERIES BANNER - OPTIMIZED SIZE */
-.series-banner {
+.logo {
+    font-size: 2rem;
+    font-weight: bold;
+    color: var(--primary-color);
+    text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+    letter-spacing: 1px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.header-info {
+    display: flex;
+    align-items: center;
+    gap: 30px;
+}
+
+.movie-counter {
+    background: rgba(255,255,255,0.1);
+    padding: 8px 20px;
+    border-radius: 20px;
+    font-size: 0.9rem;
+    color: var(--text-light);
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255,255,255,0.1);
+}
+
+.movie-counter span {
+    color: var(--primary-color);
+    font-weight: bold;
+}
+
+.github-status {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 16px;
+    background: rgba(0,0,0,0.5);
+    border-radius: 20px;
+    font-size: 0.85rem;
+}
+
+.github-status.connected {
+    color: #46d369;
+}
+
+.github-status.error {
+    color: var(--primary-color);
+}
+
+.github-status-icon {
+    font-size: 1rem;
+}
+
+/* ============================================
+   MAIN CONTENT
+   ============================================ */
+.main-content {
+    margin-top: 80px;
+    padding-bottom: 50px;
+    min-height: 100vh;
     position: relative;
-    width: 100%;
-    height: 250px;
+}
+
+/* ============================================
+   HERO SECTION - Featured Movie
+   ============================================ */
+.hero-section {
+    position: relative;
+    height: 70vh;
+    min-height: 500px;
+    margin-bottom: 30px;
     overflow: hidden;
     background: linear-gradient(135deg, #1a1a1a, #0a0a0a);
 }
 
-/* TV Responsive Banner Sizes */
-@media screen and (min-width: 1920px) {
-    .series-banner {
-        height: 280px;
-    }
+.hero-backdrop {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
 }
 
-@media screen and (min-width: 2560px) {
-    .series-banner {
-        height: 320px;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .series-banner {
-        height: 380px;
-    }
-}
-
-.series-banner-image {
+.hero-backdrop img {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    object-position: center 25%;
-    filter: brightness(0.6);
-    transform: scale(1.1);
+    object-position: center;
+    filter: brightness(0.4);
 }
 
-.series-banner-gradient {
+.hero-gradient {
     position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    height: 80%;
-    background: linear-gradient(to top, var(--background-dark) 0%, rgba(20,20,20,0.8) 30%, transparent 100%);
-    pointer-events: none;
-}
-
-.series-banner-info {
-    position: absolute;
-    bottom: 25px;
-    left: 30px;
-    right: 30px;
+    inset: 0;
+    background: linear-gradient(to right, rgba(0,0,0,0.8) 0%, transparent 50%),
+                linear-gradient(to top, var(--background-dark) 0%, transparent 30%);
     z-index: 2;
 }
 
-.series-banner-title {
-    font-size: 2.2rem;
+.hero-content {
+    position: absolute;
+    bottom: 15%;
+    left: 4%;
+    z-index: 3;
+    max-width: 600px;
+}
+
+.hero-title {
+    font-size: 3.5rem;
     font-weight: 700;
-    text-shadow: 2px 2px 8px rgba(0,0,0,0.9);
-    margin-bottom: 10px;
-    animation: fadeInUp 0.6s ease-out;
-    letter-spacing: 0.5px;
+    margin-bottom: 20px;
+    text-shadow: 2px 2px 8px rgba(0,0,0,0.8);
+    line-height: 1.1;
 }
 
-/* TV Font Sizes */
-@media screen and (min-width: 1920px) {
-    .series-banner-title {
-        font-size: 2.5rem;
-    }
+.hero-meta {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+    font-size: 1rem;
+    color: rgba(255,255,255,0.9);
 }
 
-@media screen and (min-width: 3840px) {
-    .series-banner-title {
-        font-size: 3rem;
-    }
+.hero-year {
+    color: #46d369;
+    font-weight: bold;
 }
 
-@keyframes fadeInUp {
-    from {
-        opacity: 0;
-        transform: translateY(30px);
-    }
+.hero-quality {
+    padding: 4px 10px;
+    background: var(--primary-color);
+    border-radius: 4px;
+    font-weight: bold;
+    font-size: 0.9rem;
+}
+
+.hero-buttons {
+    display: flex;
+    gap: 15px;
+    margin-top: 25px;
+}
+
+.btn-play {
+    padding: 12px 30px;
+    background: rgba(229, 9, 20, 0.95);
+    color: white;
+    border: none;
+    border-radius: 4px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 15px rgba(229, 9, 20, 0.3);
+}
+
+.btn-play:hover {
+    background: var(--primary-color);
+    transform: scale(1.05);
+    box-shadow: 0 6px 25px rgba(229, 9, 20, 0.5);
+}
+
+.btn-play-icon {
+    font-size: 1.2rem;
+}
+
+/* ============================================
+   CAROUSEL SECTION
+   ============================================ */
+.carousel-section {
+    margin-bottom: 3rem;
+    position: relative;
+    opacity: 0;
+    animation: fadeInSection 0.6s ease forwards;
+}
+
+.carousel-section:nth-child(2) { animation-delay: 0.1s; }
+.carousel-section:nth-child(3) { animation-delay: 0.2s; }
+.carousel-section:nth-child(4) { animation-delay: 0.3s; }
+.carousel-section:nth-child(5) { animation-delay: 0.4s; }
+
+@keyframes fadeInSection {
     to {
+        opacity: 1;
+    }
+}
+
+.carousel-header {
+    display: flex;
+    align-items: center;
+    padding: 0 4% 15px;
+}
+
+.carousel-title {
+    font-size: 1.6rem;
+    font-weight: 600;
+    color: var(--text-light);
+    position: relative;
+}
+
+.carousel-title::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--primary-color);
+    transition: width 0.3s ease;
+}
+
+.carousel-section:hover .carousel-title::after {
+    width: 100%;
+}
+
+.movie-count {
+    margin-left: 15px;
+    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 20px;
+    font-size: 0.85rem;
+    color: var(--text-muted);
+}
+
+/* ============================================
+   CAROUSEL CONTAINER
+   ============================================ */
+.carousel-container {
+    position: relative;
+    overflow: hidden;
+    padding: 0 4%;
+}
+
+.carousel-wrapper {
+    overflow-x: auto;
+    overflow-y: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    -ms-overflow-style: none;
+    padding: 10px 0 20px;
+}
+
+.carousel-wrapper::-webkit-scrollbar {
+    display: none;
+}
+
+.carousel-track {
+    display: flex;
+    gap: 12px;
+}
+
+/* ============================================
+   MOVIE CARDS - DIRECT PLAY
+   ============================================ */
+.movie-card {
+    flex: 0 0 auto;
+    width: 200px;
+    cursor: pointer;
+    transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    position: relative;
+    border-radius: var(--radius);
+    overflow: hidden;
+    background: var(--card);
+}
+
+/* Hover effect for desktop/TV */
+@media (hover: hover) {
+    .movie-card:hover {
+        transform: scale(1.15) translateY(-10px);
+        z-index: 10;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.7);
+    }
+    
+    .movie-card:hover .movie-poster-overlay {
+        opacity: 1;
+    }
+    
+    .movie-card:hover .movie-info {
         opacity: 1;
         transform: translateY(0);
     }
 }
 
-.series-banner-meta {
+/* Focus state for keyboard navigation */
+.movie-card.focused {
+    outline: 3px solid var(--primary-color);
+    outline-offset: 2px;
+    transform: scale(1.15) translateY(-10px);
+    z-index: 10;
+}
+
+.movie-card.focused .movie-poster-overlay {
+    opacity: 1;
+}
+
+.movie-poster {
+    position: relative;
+    width: 100%;
+    padding-bottom: 150%;
+    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
+    overflow: hidden;
+}
+
+.movie-poster img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.movie-card:hover .movie-poster img {
+    transform: scale(1.05);
+}
+
+/* Play Overlay */
+.movie-poster-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(0,0,0,0.6);
     display: flex;
     align-items: center;
-    gap: 15px;
-    font-size: 0.95rem;
-    color: rgba(255,255,255,0.8);
-    animation: fadeInUp 0.8s ease-out;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    z-index: 2;
 }
 
-.series-banner-badge {
-    display: inline-block;
-    padding: 4px 12px;
-    background: var(--primary-color);
-    border-radius: 4px;
-    font-size: 0.85rem;
-    font-weight: bold;
-}
-
-.series-banner-play {
-    position: absolute;
-    bottom: 25px;
-    right: 30px;
-    width: 60px;
-    height: 60px;
+.play-button {
+    width: 70px;
+    height: 70px;
     background: rgba(229, 9, 20, 0.95);
     border-radius: 50%;
-    display: none; 
+    display: flex;
     align-items: center;
     justify-content: center;
-    font-size: 1.5rem;
+    font-size: 1.8rem;
     color: white;
-    cursor: pointer;
     transition: all 0.3s ease;
-    box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-    animation: pulse 2s infinite;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.5);
 }
 
-/* TV Play Button Size */
-@media screen and (min-width: 1920px) {
-    .series-banner-play {
-        width: 70px;
-        height: 70px;
-        font-size: 1.8rem;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .series-banner-play {
-        width: 80px;
-        height: 80px;
-        font-size: 2rem;
-    }
-}
-
-@keyframes pulse {
-    0%, 100% {
-        transform: scale(1);
-    }
-    50% {
-        transform: scale(1.05);
-    }
-}
-
-.series-banner-play:hover {
+.play-button:hover {
     background: var(--primary-color);
     transform: scale(1.1);
     box-shadow: 0 8px 30px rgba(229, 9, 20, 0.5);
 }
 
-/* Season Bar with Banner */
-.season-bar {
-    display: flex;
-    gap: 15px;
-    padding: 15px 30px 20px;
-    overflow-x: auto;
-    scrollbar-width: none;
-    background: linear-gradient(to bottom, rgba(20,20,20,0.3), transparent);
-    margin-top: -10px;
-    position: relative;
+/* Movie Info */
+.movie-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 15px;
+    background: linear-gradient(to top,
+        rgba(0,0,0,0.95) 0%,
+        rgba(0,0,0,0.8) 60%,
+        transparent 100%);
+    opacity: 0;
+    transform: translateY(10px);
+    transition: all 0.3s ease;
     z-index: 3;
 }
 
-.season-bar::-webkit-scrollbar {
-    display: none;
-}
-
-.season {
-    background: rgba(24, 24, 24, 0.85);
-    border-radius: var(--radius);
-    padding: 10px 20px;
-    color: var(--muted);
-    border: 2px solid transparent;
-    transition: all var(--transition);
-    cursor: pointer;
-    font-weight: 500;
-    font-size: 0.95rem;
-    white-space: nowrap;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-    outline: none;
-    position: relative;
-    backdrop-filter: blur(10px);
-}
-
-.season::after {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    left: 50%;
-    width: 0;
-    height: 3px;
-    background: var(--primary-color);
-    transition: all 0.3s ease;
-    transform: translateX(-50%);
-}
-
-.season.focused {
-    border-color: var(--primary-color);
-    color: var(--text-light);
-    transform: scale(1.08);
-    background: rgba(24, 24, 24, 0.95);
-    box-shadow: 0 8px 16px rgba(0,0,0,0.5);
-}
-
-.season.active {
-    background: var(--primary-color);
-    color: #fff;
-    box-shadow: 0 6px 12px rgba(229, 9, 20, 0.4);
-}
-
-.season.active::after {
-    width: 100%;
-}
-
-/* Episodes - REDUCED SIZE */
-.episodes-container {
-    background: var(--background-dark);
-    padding-top: 15px;
-    min-height: 300px;
-}
-
-.episodes-row {
-    position: relative;
+.movie-title {
+    font-size: 1rem;
+    font-weight: 600;
+    margin-bottom: 8px;
+    line-height: 1.3;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
     overflow: hidden;
+    text-shadow: 1px 1px 2px rgba(0,0,0,0.8);
 }
 
-.episodes-track {
-    display: flex;
-    gap: 15px;
-    padding: 0 30px 30px;
-    transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-}
-
-.episode {
-    flex: 0 0 280px;
-    background: var(--background-card);
-    border-radius: 6px;
-    border: 2px solid transparent;
-    transition: all var(--transition);
-    display: flex;
-    flex-direction: column;
-    overflow: hidden;
-    box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-    cursor: pointer;
-    outline: none;
-    position: relative;
-}
-
-/* TV Episode Card Size */
-@media screen and (min-width: 1920px) {
-    .episode {
-        flex: 0 0 320px;
-    }
-}
-
-@media screen and (min-width: 3840px) {
-    .episode {
-        flex: 0 0 380px;
-    }
-}
-
-.episode::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: 0;
-    right: 0;
-    height: 3px;
-    background: linear-gradient(90deg, var(--primary-color), transparent);
-    opacity: 0;
-    transition: opacity 0.3s ease;
-}
-
-.episode.focused::before {
-    opacity: 1;
-}
-
-.thumb {
-    background: linear-gradient(135deg, #333, #1a1a1a);
-    height: 160px;
+.movie-meta {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: var(--muted);
-    font-size: 0.9rem;
-    position: relative;
-    overflow: hidden;
+    gap: 8px;
+    font-size: 0.85rem;
 }
 
-.thumb img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
+.movie-year {
+    color: #46d369;
+    font-weight: 600;
 }
 
-.ep-number {
+.movie-quality {
+    padding: 2px 8px;
+    background: var(--primary-color);
+    border-radius: 3px;
+    font-size: 0.75rem;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.movie-genre {
+    color: var(--text-muted);
+    font-size: 0.8rem;
+}
+
+/* Quality badge on poster */
+.quality-badge {
     position: absolute;
     top: 8px;
-    left: 8px;
-    background: rgba(0,0,0,0.85);
-    color: white;
-    padding: 4px 8px;
+    right: 8px;
+    padding: 4px 10px;
+    background: var(--primary-color);
     border-radius: 4px;
-    font-size: 0.8rem;
+    font-size: 0.75rem;
     font-weight: bold;
+    z-index: 2;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.3);
 }
 
-.episode.focused {
-    border-color: var(--primary-color);
-    transform: scale(1.08) translateY(-5px);
-    box-shadow: var(--focus-shadow);
-    z-index: 5;
-}
-
-.episode.locked {
-    opacity: 0.4;
-    cursor: not-allowed;
-    filter: grayscale(1);
-}
-
-.episode.locked::after {
-    content: "🔒";
+/* ============================================
+   NAVIGATION ARROWS
+   ============================================ */
+.carousel-nav {
     position: absolute;
     top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 2rem;
-    z-index: 10;
-}
-
-.ep-info {
-    padding: 12px;
-    background: linear-gradient(180deg, var(--background-card), rgba(0,0,0,0.5));
-}
-
-.ep-title {
-    font-size: 0.95rem;
-    font-weight: 600;
-    line-height: 1.3;
-}
-
-.play-icon {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translateY(-50%);
     width: 50px;
-    height: 50px;
-    background: rgba(229, 9, 20, 0.95);
-    border-radius: 50%;
+    height: 100px;
+    background: rgba(0,0,0,0.7);
+    border: none;
+    color: white;
+    font-size: 2rem;
+    cursor: pointer;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 0;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+    z-index: 5;
+    backdrop-filter: blur(5px);
 }
 
-.episode.focused .play-icon {
+.carousel-container:hover .carousel-nav {
     opacity: 1;
-    transform: translate(-50%, -50%) scale(1);
 }
 
-.episode:hover .play-icon {
-    opacity: 0.9;
+.carousel-nav:hover {
+    background: rgba(0,0,0,0.9);
 }
 
-.play-icon::after {
-    content: "▶";
-    color: white;
-    font-size: 1.2rem;
-    margin-left: 3px;
+.carousel-nav.prev {
+    left: 0;
+    border-radius: 0 4px 4px 0;
 }
 
-/* Navigation Help */
+.carousel-nav.next {
+    right: 0;
+    border-radius: 4px 0 0 4px;
+}
+
+.carousel-nav:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+/* ============================================
+   EMPTY STATE
+   ============================================ */
+.empty-state {
+    display: none;
+    text-align: center;
+    padding: 150px 20px;
+    color: var(--text-muted);
+}
+
+.empty-state.show {
+    display: block;
+}
+
+.empty-icon {
+    font-size: 5rem;
+    margin-bottom: 2rem;
+    opacity: 0.5;
+}
+
+.empty-title {
+    font-size: 2rem;
+    margin-bottom: 1rem;
+    color: var(--text-light);
+}
+
+.empty-message {
+    font-size: 1.1rem;
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+/* ============================================
+   NAVIGATION HELP
+   ============================================ */
 .nav-help {
     position: fixed;
-    bottom: 20px;
+    bottom: 30px;
     left: 50%;
     transform: translateX(-50%);
-    background: rgba(0,0,0,0.85);
-    color: white;
-    padding: 10px 20px;
-    border-radius: 20px;
+    background: rgba(0,0,0,0.9);
+    color: var(--text-light);
+    padding: 12px 25px;
+    border-radius: 25px;
     font-size: 0.9rem;
     opacity: 0;
     transition: opacity 0.3s ease;
     pointer-events: none;
     z-index: 200;
+    backdrop-filter: blur(10px);
 }
 
 .nav-help.show {
     opacity: 1;
 }
 
-/* BACK BUTTON */
-.back-button {
-    position: fixed;
-    top: 25px;
-    left: 25px;
-    background: rgba(34, 34, 34, 0.95);
-    color: var(--text-light);
-    border: 2px solid transparent;
-    padding: 10px 20px;
-    border-radius: 8px;
-    cursor: pointer;
-    font-size: 1rem;
-    display: none !important;
-    z-index: 201;
-    transition: all 0.3s ease;
-    backdrop-filter: blur(10px);
-}
-
-.back-button:hover,
-.back-button:focus {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
-    transform: scale(1.05);
-}
-
-.back-button.visible {
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    animation: slideInLeft 0.3s ease-out;
-}
-
-@keyframes slideInLeft {
-    from { transform: translateX(-100%); }
-    to { transform: translateX(0); }
-}
-
-.close {
-    position: fixed;
-    top: 25px;
-    right: 25px;
-    font-size: 2.5rem;
-    cursor: pointer;
-    color: white;
-    z-index: 201;
-    width: 40px;
-    height: 40px;
-    display: none; 
-    align-items: center;
-    justify-content: center;
-    background: rgba(0,0,0,0.6);
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.close:hover {
-    background: var(--primary-color);
-    transform: rotate(90deg);
-}
-
-/* Error message */
-.error-message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(229, 9, 20, 0.95);
-    color: white;
-    padding: 20px 30px;
-    border-radius: 10px;
-    z-index: 1000;
-    display: none;
-    animation: shake 0.5s ease-in-out;
-    font-size: 1rem;
-}
-
-@keyframes shake {
-    0%, 100% { transform: translate(-50%, -50%) rotate(0); }
-    25% { transform: translate(-52%, -50%) rotate(-2deg); }
-    75% { transform: translate(-48%, -50%) rotate(2deg); }
-}
-
-.error-message.show {
-    display: block;
-}
-
-/* GitHub Info Badge */
-.github-info {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: rgba(0,0,0,0.8);
-    color: var(--muted);
-    padding: 8px 15px;
-    border-radius: 20px;
-    font-size: 0.75rem;
-    z-index: 10;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.github-info.connected {
-    color: #46d369;
-}
-
-.github-info.error {
-    color: var(--primary-color);
-}
-
-/* TV Responsive Adjustments - MORE POSTERS PER ROW */
-@media screen and (min-width: 1280px) and (max-width: 1919px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-        gap: 14px;
+/* ============================================
+   TV OPTIMIZATIONS
+   ============================================ */
+@media screen and (min-width: 1920px) {
+    .movie-card {
+        width: 240px;
     }
     
-    .card img {
-        height: 225px;
+    .hero-title {
+        font-size: 4rem;
     }
     
-    .episode {
-        flex: 0 0 300px;
-    }
-    
-    .series-banner {
-        height: 240px;
+    .carousel-title {
+        font-size: 1.8rem;
     }
 }
 
-@media screen and (min-width: 1920px) and (max-width: 2559px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(170px, 1fr));
-        gap: 16px;
-        padding: 0 40px 40px;
+@media screen and (min-width: 2560px) {
+    .movie-card {
+        width: 280px;
     }
     
-    .card img {
-        height: 255px;
-    }
-    
-    .card-title {
-        font-size: 0.9rem;
-        padding: 11px;
-    }
-    
-    .episode {
-        flex: 0 0 320px;
-    }
-    
-    .thumb {
-        height: 170px;
-    }
-}
-
-@media screen and (min-width: 2560px) and (max-width: 3839px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(190px, 1fr));
-        gap: 18px;
-        padding: 0 50px 50px;
-    }
-    
-    .card img {
-        height: 285px;
-    }
-    
-    .card-title {
-        font-size: 0.95rem;
-        padding: 12px;
-    }
-    
-    .episode {
-        flex: 0 0 350px;
-    }
-    
-    .thumb {
-        height: 180px;
+    .hero-title {
+        font-size: 4.5rem;
     }
 }
 
 @media screen and (min-width: 3840px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-        gap: 20px;
-        padding: 0 60px 60px;
+    body {
+        zoom: 1.2;
     }
     
-    .card img {
-        height: 330px;
-    }
-    
-    .card-title {
-        font-size: 1rem;
-        padding: 14px;
-    }
-    
-    .episode {
-        flex: 0 0 380px;
-    }
-    
-    .thumb {
-        height: 190px;
-    }
-    
-    header {
-        padding: 20px 50px;
-        min-height: 80px;
-    }
-    
-    .logo {
-        font-size: 2.2rem;
+    .movie-card {
+        width: 320px;
     }
 }
 
-/* Mobile/Tablet Responsive */
+/* ============================================
+   MOBILE RESPONSIVE
+   ============================================ */
 @media (max-width: 768px) {
-    header, .grid, .season-bar, .episodes-track {
-        padding-left: 15px;
-        padding-right: 15px;
-    }
-    
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
-        gap: 8px;
-    }
-    
-    .card img {
-        height: 150px;
-    }
-    
-    .card-title {
-        font-size: 0.75rem;
-        padding: 6px;
-    }
-    
-    .series-banner {
-        height: 200px;
-    }
-    
-    .series-banner-title {
-        font-size: 1.6rem;
-    }
-    
-    .series-banner-info {
-        left: 15px;
-        right: 15px;
-        bottom: 15px;
-    }
-    
-    .series-banner-play {
-        width: 50px;
-        height: 50px;
-        font-size: 1.2rem;
-        right: 15px;
-        bottom: 15px;
+    .header {
+        padding: 15px 3%;
     }
     
     .logo {
+        font-size: 1.5rem;
+    }
+    
+    .header-info {
+        gap: 15px;
+    }
+    
+    .movie-counter {
+        display: none;
+    }
+    
+    .hero-section {
+        height: 50vh;
+        min-height: 400px;
+    }
+    
+    .hero-title {
+        font-size: 2rem;
+    }
+    
+    .hero-content {
+        max-width: 90%;
+    }
+    
+    .movie-card {
+        width: 140px;
+    }
+    
+    .carousel-track {
+        gap: 8px;
+    }
+    
+    .carousel-nav {
+        display: none;
+    }
+    
+    .carousel-title {
         font-size: 1.3rem;
-        margin-right: 10px;
-    }
-    
-    .search-container {
-        max-width: 100%;
-    }
-    
-    .episode {
-        flex: 0 0 240px;
-    }
-    
-    .thumb {
-        height: 135px;
-    }
-    
-    .card.focused {
-        transform: scale(1.06);
     }
 }
 
 @media (max-width: 480px) {
-    .grid {
-        grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
-        gap: 6px;
+    .movie-card {
+        width: 120px;
     }
     
-    .card img {
-        height: 120px;
+    .hero-title {
+        font-size: 1.6rem;
     }
     
-    .badge {
-        font-size: 0.6rem;
-        padding: 2px 6px;
+    .hero-meta {
+        font-size: 0.9rem;
+    }
+    
+    .btn-play {
+        padding: 10px 20px;
+        font-size: 1rem;
     }
 }
 
-/* Accessibility */
+/* ============================================
+   ANIMATIONS
+   ============================================ */
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes slideInLeft {
+    from {
+        opacity: 0;
+        transform: translateX(-50px);
+    }
+    to {
+        opacity: 1;
+        transform: translateX(0);
+    }
+}
+
+/* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     * {
         animation-duration: 0.01ms !important;
@@ -1124,120 +782,85 @@ header {
         transition-duration: 0.01ms !important;
     }
 }
-
-/* TV Focus States Enhancement */
-@media screen and (min-width: 1280px) {
-    .card.focused,
-    .episode.focused {
-        box-shadow: 0 0 0 3px var(--primary-color), var(--focus-shadow);
-    }
-    
-    .season.focused {
-        box-shadow: 0 0 0 2px var(--primary-color);
-    }
-}
 </style>
 </head>
 <body>
 
-<div class="loader" id="loader">
-    <div class="loader-spinner"></div>
-    <div class="loader-text">Loading content from GitHub...</div>
+<!-- Loader -->
+<div class="loader-container" id="loader">
+    <div class="loader-content">
+        <div class="loader-spinner"></div>
+        <div class="loader-text">Cargando películas...</div>
+    </div>
 </div>
 
-<header>
-    <div class="logo">SERIES+</div>
-    
-    <!-- Professional Search Bar -->
-    <div class="search-container">
-        <div class="search-wrapper">
-            <input type="text" class="search-box" id="searchBox" placeholder="Search series...">
-            <div class="search-clear" id="searchClear">×</div>
-            <div class="search-icon">
-                <svg viewBox="0 0 24 24">
-                    <path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"/>
-                </svg>
-            </div>
+<!-- Header -->
+<header class="header" id="header">
+    <div class="logo">MOVIES+ HD</div>
+    <div class="header-info">
+        <div class="movie-counter">
+            <span id="totalMovies">0</span> Películas
+        </div>
+        <div class="github-status" id="githubStatus">
+            <span class="github-status-icon">⚡</span>
+            <span>Conectando...</span>
         </div>
     </div>
 </header>
 
-<button class="back-button" id="backButton">
-    <span>←</span>
-    <span>Back</span>
-</button>
-
 <!-- Main Content -->
-<div class="main-content">
-    <div class="search-info" id="searchInfo">
-        <div class="search-info-text">
-            Results for: <strong id="searchQuery"></strong>
+<main class="main-content" id="mainContent">
+    <!-- Hero Section -->
+    <section class="hero-section" id="heroSection" style="display: none;">
+        <div class="hero-backdrop">
+            <img id="heroBackdrop" src="" alt="">
         </div>
-        <div class="search-info-count" id="searchCount"></div>
-        <button class="clear-search" id="clearSearchBtn">Clear search</button>
-    </div>
-    
-    <div class="all-series-header" id="gridHeader">All Series</div>
-    <section class="grid" id="mainGrid">
-        <div class="no-results-message" id="noResults">
-            No results found
-            <strong>Try different search terms</strong>
+        <div class="hero-gradient"></div>
+        <div class="hero-content">
+            <h1 class="hero-title" id="heroTitle"></h1>
+            <div class="hero-meta">
+                <span class="hero-year" id="heroYear"></span>
+                <span class="hero-quality" id="heroQuality">HD</span>
+                <span id="heroGenre"></span>
+            </div>
+            <div class="hero-buttons">
+                <button class="btn-play" id="heroPlayBtn">
+                    <span class="btn-play-icon">▶</span>
+                    <span>Reproducir</span>
+                </button>
+            </div>
         </div>
     </section>
-</div>
+    
+    <!-- Carousels will be generated here -->
+    <div id="carouselsContainer"></div>
+</main>
 
-<!-- SERIES OVERLAY -->
-<div id="seriesOverlay" class="series-overlay">
-    <span class="close" id="closeButton">×</span>
-    
-    <!-- Series Banner -->
-    <div class="series-banner" id="seriesBanner">
-        <img class="series-banner-image" id="seriesBannerImage" src="" alt="">
-        <div class="series-banner-gradient"></div>
-        <div class="series-banner-info">
-            <h1 class="series-banner-title" id="seriesBannerTitle"></h1>
-            <div class="series-banner-meta" id="seriesBannerMeta"></div>
-        </div>
-        <div class="series-banner-play" id="seriesBannerPlay">▶</div>
-    </div>
-    
-    <div class="season-bar" id="seasonBar"></div>
-    
-    <div class="episodes-container">
-        <div class="episodes-row">
-            <div class="episodes-track" id="episodesTrack"></div>
-        </div>
-    </div>
+<!-- Empty State -->
+<div class="empty-state" id="emptyState">
+    <div class="empty-icon">🎬</div>
+    <h2 class="empty-title">No hay películas disponibles</h2>
+    <p class="empty-message">
+        Verifica la configuración de GitHub
+    </p>
 </div>
 
 <!-- Navigation Help -->
 <div class="nav-help" id="navHelp">
-    Press ↑ to search
-</div>
-
-<!-- GitHub Connection Status -->
-<div class="github-info" id="githubInfo">
-    <span class="github-status">⚡</span>
-    <span class="github-text">Connecting to GitHub...</span>
-</div>
-
-<!-- Error message -->
-<div class="error-message" id="errorMessage">
-    Error loading content
+    Usa las flechas ← → para navegar • Enter para reproducir
 </div>
 
 <script>
-/* ========================================
-   GITHUB STREAMING PLATFORM
-   Combines design from Code 1 with GitHub data from Code 2
-   ======================================== */
+'use strict';
 
-// Configuration for GitHub connection
+// ============================================
+// CONFIGURACIÓN GITHUB
+// ============================================
 const CONFIG = {
-    // UPDATE THESE WITH YOUR GITHUB INFO
-    GITHUB_USER: 'rancier0102-rgb',        // <-- CHANGE THIS
-    GITHUB_REPO: 'REPRODUCIBLE-1.0',      // <-- CHANGE THIS
-    GITHUB_BRANCH: 'main',               // <-- 'main' or 'master'
+    // ACTUALIZA CON TU INFORMACIÓN DE GITHUB
+    GITHUB_USER: 'rancier0102-rgb',        // <-- CAMBIA ESTO
+    GITHUB_REPO: 'REPRODUCIBLE-1.0',           // <-- CAMBIA ESTO
+    GITHUB_BRANCH: 'main',               // <-- 'main' o 'master'
     
     get BASE_URL() {
         return `https://raw.githubusercontent.com/${this.GITHUB_USER}/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}`;
@@ -1247,679 +870,540 @@ const CONFIG = {
         return `${this.BASE_URL}/manifest.json`;
     },
     
+    // Configuración UI
+    SCROLL_AMOUNT: 4,
     USE_CACHE: true,
-    CACHE_DURATION: 3600000 // 1 hour
+    CACHE_DURATION: 3600000, // 1 hora
+    FEATURED_MOVIE_INDEX: 0  // Primera película como destacada
 };
 
-class StreamingPlatform {
+// ============================================
+// APLICACIÓN PRINCIPAL
+// ============================================
+class MoviesStreamingApp {
     constructor() {
-        // Core data - simple and clear
-        this.data = {};
-        this.filteredData = {};
-        this.cards = [];
-        this.currentIndex = 0;
-        this.mode = 'grid'; // grid, search, series, season, episode
-        this.searchQuery = '';
-        
-        // Series viewer state
-        this.selectedSeries = null;
-        this.selectedSeriesId = null;
-        this.seasonIndex = 0;
-        this.episodeIndex = 0;
-        
-        // GitHub connection
-        this.manifest = null;
-        this.chunks = [];
+        this.movies = [];
+        this.moviesByYear = {};
+        this.currentFocus = { section: 0, movie: 0 };
+        this.isKeyboardNav = false;
+        this.featuredMovie = null;
         
         this.init();
     }
     
-    // Simple initialization spell
     async init() {
-        this.cacheElements();
-        this.bindEvents();
-        await this.loadDataFromGitHub();
-    }
-    
-    // Cache DOM elements once - unbreakable reference
-    cacheElements() {
-        this.elements = {
-            loader: document.getElementById('loader'),
-            grid: document.getElementById('mainGrid'),
-            overlay: document.getElementById('seriesOverlay'),
-            searchBox: document.getElementById('searchBox'),
-            searchClear: document.getElementById('searchClear'),
-            searchInfo: document.getElementById('searchInfo'),
-            searchQuery: document.getElementById('searchQuery'),
-            searchCount: document.getElementById('searchCount'),
-            clearBtn: document.getElementById('clearSearchBtn'),
-            header: document.getElementById('gridHeader'),
-            noResults: document.getElementById('noResults'),
-            backBtn: document.getElementById('backButton'),
-            closeBtn: document.getElementById('closeButton'),
-            seasonBar: document.getElementById('seasonBar'),
-            episodesTrack: document.getElementById('episodesTrack'),
-            errorMsg: document.getElementById('errorMessage'),
-            navHelp: document.getElementById('navHelp'),
-            githubInfo: document.getElementById('githubInfo'),
-            banner: {
-                image: document.getElementById('seriesBannerImage'),
-                title: document.getElementById('seriesBannerTitle'),
-                meta: document.getElementById('seriesBannerMeta'),
-                play: document.getElementById('seriesBannerPlay')
-            }
-        };
-    }
-    
-    // Simple event binding - one place, easy to track
-    bindEvents() {
-        // Search events
-        this.elements.searchBox.addEventListener('input', (e) => this.search(e.target.value));
-        this.elements.searchBox.addEventListener('focus', () => this.setMode('search'));
-        this.elements.searchBox.addEventListener('blur', () => setTimeout(() => this.setMode('grid'), 200));
+        console.log('🎬 Iniciando Movies+ HD');
         
-        // Clear buttons
-        this.elements.searchClear.addEventListener('click', () => this.clearSearch());
-        this.elements.clearBtn.addEventListener('click', () => this.clearSearch());
-        
-        // Navigation
-        this.elements.backBtn.addEventListener('click', () => this.closeSeries());
-        this.elements.closeBtn.addEventListener('click', () => this.closeSeries());
-        this.elements.banner.play.addEventListener('click', () => this.playFirstEpisode());
-        
-        // Keyboard - the most powerful spell
-        document.addEventListener('keydown', (e) => this.handleKey(e));
-        
-        // Browser back button
-        window.addEventListener('popstate', () => {
-            if (this.elements.overlay.style.display === 'block') {
-                this.closeSeries();
-            }
-        });
-    }
-    
-    // Load data from GitHub
-    async loadDataFromGitHub() {
         try {
-            this.showLoader(true);
-            this.updateGitHubStatus('Connecting to GitHub...');
+            // Cargar datos desde GitHub
+            await this.loadFromGitHub();
             
-            // Load manifest
-            await this.loadManifest();
+            // Organizar por año
+            this.organizeByYear();
             
-            // Load chunks
-            await this.loadChunks();
+            // Configurar película destacada
+            this.setupFeaturedMovie();
             
-            // Process and render
-            this.filteredData = {...this.data};
-            this.render();
+            // Renderizar carruseles
+            this.renderCarousels();
             
-            this.updateGitHubStatus('Connected', 'connected');
-            console.log(`✅ ${Object.keys(this.data).length} series loaded from GitHub`);
+            // Configurar eventos
+            this.setupEventListeners();
+            
+            // Ocultar loader
+            this.hideLoader();
+            
+            // Mostrar ayuda de navegación
+            setTimeout(() => this.showNavHelp(), 2000);
             
         } catch (error) {
-            console.error('❌ GitHub Error:', error);
-            this.updateGitHubStatus('Connection failed', 'error');
-            
-            // Fallback to demo data
-            this.loadDemoData();
-        } finally {
-            this.showLoader(false);
+            console.error('❌ Error:', error);
+            this.showError();
         }
     }
     
-    async loadManifest() {
-        // Try cache first
+    async loadFromGitHub() {
+        // Intentar cargar desde caché
         if (CONFIG.USE_CACHE) {
-            const cached = this.getFromCache('manifest');
+            const cached = this.getFromCache('movies_data');
             if (cached) {
-                console.log('📦 Manifest from cache');
-                this.manifest = cached;
+                console.log('📦 Datos desde caché');
+                this.movies = cached;
+                this.updateGitHubStatus('Caché', 'connected');
                 return;
             }
         }
         
-        // Load from GitHub
-        console.log('📥 Loading manifest from:', CONFIG.MANIFEST_URL);
-        const response = await fetch(CONFIG.MANIFEST_URL);
-        
-        if (!response.ok) {
-            throw new Error('Could not load manifest');
-        }
-        
-        this.manifest = await response.json();
-        
-        // Save to cache
-        if (CONFIG.USE_CACHE) {
-            this.saveToCache('manifest', this.manifest);
-        }
-    }
-    
-    async loadChunks() {
-        if (!this.manifest?.chunks) {
-            throw new Error('No chunks available');
-        }
-        
-        console.log(`📦 Loading ${this.manifest.chunks.length} chunks...`);
-        
-        for (const chunkInfo of this.manifest.chunks) {
-            try {
-                const chunkUrl = `${CONFIG.BASE_URL}/${chunkInfo.file}`;
-                
-                // Try cache
-                if (CONFIG.USE_CACHE) {
-                    const cached = this.getFromCache(`chunk_${chunkInfo.id}`);
-                    if (cached) {
-                        console.log(`⚡ Chunk ${chunkInfo.id} from cache`);
-                        this.processChunk(cached);
-                        continue;
-                    }
-                }
-                
-                // Load from GitHub
-                console.log(`📥 Loading chunk: ${chunkInfo.id}`);
-                const response = await fetch(chunkUrl);
-                
-                if (!response.ok) {
-                    console.error(`❌ Error loading chunk ${chunkInfo.id}`);
-                    continue;
-                }
-                
-                const chunkData = await response.json();
-                
-                // Save to cache
-                if (CONFIG.USE_CACHE) {
-                    this.saveToCache(`chunk_${chunkInfo.id}`, chunkData);
-                }
-                
-                this.processChunk(chunkData);
-                
-            } catch (error) {
-                console.error(`Error loading chunk ${chunkInfo.id}:`, error);
+        try {
+            // Cargar manifest
+            console.log('📥 Cargando desde GitHub...');
+            const manifestResponse = await fetch(CONFIG.MANIFEST_URL);
+            
+            if (!manifestResponse.ok) {
+                throw new Error('No se pudo cargar el manifest');
             }
+            
+            const manifest = await manifestResponse.json();
+            
+            // Cargar chunks
+            for (const chunk of manifest.chunks || []) {
+                try {
+                    const chunkUrl = `${CONFIG.BASE_URL}/${chunk.file}`;
+                    const chunkResponse = await fetch(chunkUrl);
+                    
+                    if (chunkResponse.ok) {
+                        const chunkData = await chunkResponse.json();
+                        this.processChunk(chunkData);
+                    }
+                } catch (error) {
+                    console.error(`Error cargando chunk ${chunk.id}:`, error);
+                }
+            }
+            
+            // Guardar en caché
+            if (CONFIG.USE_CACHE && this.movies.length > 0) {
+                this.saveToCache('movies_data', this.movies);
+            }
+            
+            this.updateGitHubStatus('Conectado', 'connected');
+            
+        } catch (error) {
+            console.error('Error cargando desde GitHub:', error);
+            this.updateGitHubStatus('Error', 'error');
+            
+            // Cargar datos de demo
+            this.loadDemoData();
         }
     }
     
     processChunk(chunkData) {
-        const items = chunkData.series || chunkData.movies || [];
+        const items = chunkData.movies || chunkData.series || [];
         
         items.forEach(item => {
-            // Adapt the data structure to match our series format
-            const id = item.id || `item_${Date.now()}_${Math.random()}`;
-            
-            this.data[id] = {
-                id: id,
-                title: item.t || item.titulo || item.title || 'Untitled',
-                displayTitle: item.t || item.titulo || item.title || 'Untitled',
-                poster: item.p || item.poster || this.getDefaultPoster(),
-                badge: item.badge || (item.y ? `${item.y}` : ''),
-                badgeType: item.badgeType || '',
-                year: item.y || item.year || new Date().getFullYear(),
-                quality: item.q || item.calidad || 'HD',
-                genre: item.g || item.genero || '',
+            const movie = {
+                id: item.id || `movie_${Date.now()}_${Math.random()}`,
+                title: item.t || item.titulo || item.title || 'Sin título',
                 url: item.l || item.enlace || item.url || '#',
-                seasons: this.generateSeasons(item)
+                year: item.y || item.year || item.ano || 2024,
+                poster: item.p || item.poster || this.getDefaultPoster(),
+                genre: item.g || item.genero || 'Acción',
+                quality: item.q || item.calidad || 'HD'
             };
+            
+            this.movies.push(movie);
         });
-    }
-    
-    generateSeasons(item) {
-        // Generate mock seasons/episodes structure from movie data
-        // This adapts movie data to series format
-        const seasons = {};
-        
-        if (item.seasons) {
-            // If already has seasons structure
-            return item.seasons;
-        }
-        
-        // Create a single "season" with the movie as an episode
-        seasons['Full Movie'] = [{
-            title: item.t || item.titulo || 'Watch Now',
-            url: item.l || item.enlace || item.url || '#',
-            thumbnail: item.p || item.poster,
-            locked: false
-        }];
-        
-        return seasons;
     }
     
     loadDemoData() {
-        // Fallback demo data
-        this.data = {
-            'demo1': {
-                id: 'demo1',
-                title: 'Demo Series',
-                displayTitle: 'Demo Series',
-                poster: this.getDefaultPoster(),
-                badge: 'DEMO',
-                badgeType: 'premiere',
-                year: 2024,
-                seasons: { 
-                    'Season 1': [
-                        { title: 'Episode 1', url: '#' },
-                        { title: 'Episode 2', url: '#' }
-                    ] 
-                }
-            }
-        };
-        this.filteredData = {...this.data};
-        this.render();
-    }
-    
-    // Simple search - no complex algorithms
-    search(query) {
-        this.searchQuery = query.trim().toLowerCase();
+        console.log('📦 Cargando datos de demostración');
         
-        // Toggle clear button
-        this.elements.searchClear.classList.toggle('visible', !!this.searchQuery);
+        // Generar películas de demo
+        const years = [2024, 2023, 2022, 2021, 2020];
+        const genres = ['Acción', 'Drama', 'Comedia', 'Thriller', 'Ciencia Ficción'];
+        const qualities = ['4K', 'FHD', 'HD'];
         
-        if (!this.searchQuery) {
-            this.clearSearch();
-            return;
-        }
-        
-        // Simple filter - title includes query
-        this.filteredData = {};
-        Object.entries(this.data).forEach(([id, series]) => {
-            const title = (series.displayTitle || series.title).toLowerCase();
-            if (title.includes(this.searchQuery)) {
-                this.filteredData[id] = series;
+        years.forEach(year => {
+            for (let i = 0; i < 12; i++) {
+                this.movies.push({
+                    id: `demo_${year}_${i}`,
+                    title: `Película ${i + 1} (${year})`,
+                    url: '#demo',
+                    year: year,
+                    poster: this.getDefaultPoster(),
+                    genre: genres[Math.floor(Math.random() * genres.length)],
+                    quality: qualities[Math.floor(Math.random() * qualities.length)]
+                });
             }
         });
         
-        // Update UI
-        this.elements.searchInfo.classList.add('visible');
-        this.elements.searchQuery.textContent = query;
-        this.elements.searchCount.textContent = `${Object.keys(this.filteredData).length} result(s)`;
-        this.elements.header.textContent = Object.keys(this.filteredData).length ? 'Search Results' : 'No Results';
-        this.elements.searchBox.classList.add('active-search');
-        
-        this.render();
+        this.updateGitHubStatus('Demo', 'connected');
     }
     
-    // Clear search - simple reset
-    clearSearch() {
-        this.searchQuery = '';
-        this.elements.searchBox.value = '';
-        this.elements.searchClear.classList.remove('visible');
-        this.elements.searchInfo.classList.remove('visible');
-        this.elements.searchBox.classList.remove('active-search');
-        this.elements.header.textContent = 'All Series';
-        this.filteredData = {...this.data};
-        this.render();
-    }
-    
-    // Simple render - one function, clear purpose
-    render() {
-        this.elements.grid.innerHTML = '';
-        this.cards = [];
+    organizeByYear() {
+        this.moviesByYear = {};
         
-        const entries = Object.entries(this.filteredData);
-        
-        if (entries.length === 0) {
-            this.elements.noResults.classList.add('visible');
-            this.elements.grid.appendChild(this.elements.noResults);
-            return;
-        }
-        
-        this.elements.noResults.classList.remove('visible');
-        
-        entries.forEach(([id, series], index) => {
-            const card = this.createCard(series);
-            if (this.searchQuery) card.classList.add('search-match');
-            card.style.animationDelay = `${index * 0.03}s`;
-            this.elements.grid.appendChild(card);
-            this.cards.push(card);
+        this.movies.forEach(movie => {
+            const year = movie.year;
+            if (!this.moviesByYear[year]) {
+                this.moviesByYear[year] = [];
+            }
+            this.moviesByYear[year].push(movie);
         });
         
-        this.currentIndex = 0;
-        if (this.mode === 'grid') this.focusCard();
+        // Ordenar películas por título dentro de cada año
+        Object.keys(this.moviesByYear).forEach(year => {
+            this.moviesByYear[year].sort((a, b) => 
+                a.title.localeCompare(b.title, 'es')
+            );
+        });
+        
+        // Actualizar contador
+        document.getElementById('totalMovies').textContent = this.movies.length;
     }
     
-    // Simple card creation
-    createCard(series) {
-        const card = document.createElement('article');
-        card.className = 'card';
-        card.dataset.id = series.id;
+    setupFeaturedMovie() {
+        if (this.movies.length === 0) return;
         
-        if (series.badge) {
-            const badge = document.createElement('span');
-            badge.className = `badge ${series.badgeType === 'doblado' ? 'dubbed' : series.badgeType === 'estreno' ? 'premiere' : ''}`;
-            badge.textContent = series.badge;
-            card.appendChild(badge);
+        // Seleccionar película destacada (la más reciente o aleatoria)
+        const recentMovies = this.moviesByYear[Math.max(...Object.keys(this.moviesByYear))];
+        this.featuredMovie = recentMovies ? recentMovies[0] : this.movies[0];
+        
+        if (this.featuredMovie) {
+            const heroSection = document.getElementById('heroSection');
+            document.getElementById('heroBackdrop').src = this.featuredMovie.poster;
+            document.getElementById('heroTitle').textContent = this.featuredMovie.title;
+            document.getElementById('heroYear').textContent = this.featuredMovie.year;
+            document.getElementById('heroQuality').textContent = this.featuredMovie.quality;
+            document.getElementById('heroGenre').textContent = this.featuredMovie.genre;
+            
+            document.getElementById('heroPlayBtn').onclick = () => {
+                this.playMovie(this.featuredMovie.url);
+            };
+            
+            heroSection.style.display = 'block';
         }
-        
-        const img = document.createElement('img');
-        img.src = series.poster || this.getDefaultPoster();
-        img.alt = series.displayTitle;
-        img.loading = 'lazy';
-        img.onerror = () => { img.src = this.getDefaultPoster(); };
-        card.appendChild(img);
-        
-        const title = document.createElement('div');
-        title.className = 'card-title';
-        title.textContent = series.displayTitle;
-        card.appendChild(title);
-        
-        card.addEventListener('click', () => this.openSeries(series.id));
-        
-        return card;
     }
     
-    // Simple series opening
-    openSeries(id) {
-        this.selectedSeries = this.data[id] || this.filteredData[id];
-        if (!this.selectedSeries) return;
+    renderCarousels() {
+        const container = document.getElementById('carouselsContainer');
         
-        this.selectedSeriesId = id;
-        this.seasonIndex = 0;
-        this.episodeIndex = 0;
-        
-        // Update banner
-        this.elements.banner.image.src = this.selectedSeries.poster;
-        this.elements.banner.title.textContent = this.selectedSeries.displayTitle;
-        
-        // Meta info
-        this.elements.banner.meta.innerHTML = '';
-        if (this.selectedSeries.badge) {
-            const badge = document.createElement('span');
-            badge.className = 'series-banner-badge';
-            badge.textContent = this.selectedSeries.badge;
-            this.elements.banner.meta.appendChild(badge);
-        }
-        
-        if (this.selectedSeries.quality) {
-            const quality = document.createElement('span');
-            quality.className = 'series-banner-badge';
-            quality.style.background = '#46d369';
-            quality.textContent = this.selectedSeries.quality;
-            this.elements.banner.meta.appendChild(quality);
-        }
-        
-        const seasonCount = Object.keys(this.selectedSeries.seasons || {}).length;
-        if (seasonCount) {
-            const info = document.createElement('span');
-            info.textContent = `${seasonCount} Season${seasonCount > 1 ? 's' : ''}`;
-            this.elements.banner.meta.appendChild(info);
-        }
-        
-        // Show overlay
-        this.elements.grid.parentElement.style.display = 'none';
-        this.elements.overlay.style.display = 'block';
-        this.elements.backBtn.classList.add('visible');
-        
-        this.renderSeasons();
-        this.renderEpisodes();
-        this.setMode('season');
-        
-        history.pushState({ modal: true }, '', '#' + id);
-    }
-    
-    // Simple seasons render
-    renderSeasons() {
-        this.elements.seasonBar.innerHTML = '';
-        const seasons = Object.keys(this.selectedSeries.seasons || {});
-        
-        if (!seasons.length) {
-            this.elements.seasonBar.innerHTML = '<div class="season active">No seasons available</div>';
+        if (Object.keys(this.moviesByYear).length === 0) {
+            this.showEmptyState();
             return;
         }
         
-        seasons.forEach((name, i) => {
-            const btn = document.createElement('div');
-            btn.className = 'season';
-            btn.textContent = name;
-            if (i === this.seasonIndex) btn.classList.add('active');
-            btn.addEventListener('click', () => {
-                this.seasonIndex = i;
-                this.episodeIndex = 0;
-                this.renderSeasons();
-                this.renderEpisodes();
+        container.innerHTML = '';
+        
+        // Ordenar años de mayor a menor
+        const sortedYears = Object.keys(this.moviesByYear)
+            .sort((a, b) => b - a);
+        
+        // Crear carrusel para cada año
+        sortedYears.forEach((year, sectionIndex) => {
+            const movies = this.moviesByYear[year];
+            const section = this.createCarouselSection(year, movies, sectionIndex);
+            container.appendChild(section);
+        });
+    }
+    
+    createCarouselSection(year, movies, sectionIndex) {
+        const section = document.createElement('section');
+        section.className = 'carousel-section';
+        section.dataset.year = year;
+        section.dataset.section = sectionIndex;
+        
+        section.innerHTML = `
+            <div class="carousel-header">
+                <h2 class="carousel-title">Películas ${year}</h2>
+                <span class="movie-count">${movies.length}</span>
+            </div>
+            <div class="carousel-container">
+                <button class="carousel-nav prev" data-year="${year}" data-direction="prev">‹</button>
+                <button class="carousel-nav next" data-year="${year}" data-direction="next">›</button>
+                <div class="carousel-wrapper" id="carousel-${year}">
+                    <div class="carousel-track">
+                        ${movies.map((movie, index) => this.createMovieCard(movie, sectionIndex, index)).join('')}
+                    </div>
+                </div>
+            </div>
+        `;
+        
+        return section;
+    }
+    
+    createMovieCard(movie, sectionIndex, movieIndex) {
+        return `
+            <article class="movie-card" 
+                     data-section="${sectionIndex}" 
+                     data-index="${movieIndex}"
+                     data-url="${movie.url}"
+                     tabindex="-1">
+                <div class="movie-poster">
+                    <span class="quality-badge">${movie.quality}</span>
+                    <img src="${movie.poster}" 
+                         alt="${movie.title}"
+                         loading="lazy"
+                         onerror="this.src='${this.getDefaultPoster()}'">
+                    <div class="movie-poster-overlay">
+                        <div class="play-button">▶</div>
+                    </div>
+                </div>
+                <div class="movie-info">
+                    <h3 class="movie-title">${movie.title}</h3>
+                    <div class="movie-meta">
+                        <span class="movie-year">${movie.year}</span>
+                        <span class="movie-genre">${movie.genre}</span>
+                    </div>
+                </div>
+            </article>
+        `;
+    }
+    
+    setupEventListeners() {
+        // Click en películas
+        document.addEventListener('click', (e) => {
+            const card = e.target.closest('.movie-card');
+            if (card) {
+                const url = card.dataset.url;
+                this.playMovie(url);
+            }
+        });
+        
+        // Navegación con flechas del carrusel
+        document.querySelectorAll('.carousel-nav').forEach(btn => {
+            btn.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const year = e.currentTarget.dataset.year;
+                const direction = e.currentTarget.dataset.direction;
+                this.scrollCarousel(year, direction);
             });
-            this.elements.seasonBar.appendChild(btn);
         });
         
-        this.updateFocus();
-    }
-    
-    // Simple episodes render
-    renderEpisodes() {
-        this.elements.episodesTrack.innerHTML = '';
+        // Navegación con teclado
+        document.addEventListener('keydown', (e) => this.handleKeyboard(e));
         
-        const seasons = Object.values(this.selectedSeries.seasons || {});
-        const episodes = seasons[this.seasonIndex] || [];
-        
-        if (!episodes.length) {
-            this.elements.episodesTrack.innerHTML = '<div style="padding:30px;color:#999">No episodes available</div>';
-            return;
-        }
-        
-        episodes.forEach((ep, i) => {
-            const card = document.createElement('div');
-            card.className = 'episode';
-            if (ep.locked) card.classList.add('locked');
-            
-            const thumb = document.createElement('div');
-            thumb.className = 'thumb';
-            thumb.innerHTML = `
-                <div class="ep-number">${i + 1}</div>
-                ${ep.thumbnail ? `<img src="${ep.thumbnail}" alt="${ep.title}">` : `<span>${ep.title}</span>`}
-                <div class="play-icon"></div>
-            `;
-            
-            const info = document.createElement('div');
-            info.className = 'ep-info';
-            info.innerHTML = `<div class="ep-title">${ep.title}</div>`;
-            
-            card.appendChild(thumb);
-            card.appendChild(info);
-            
-            if (!ep.locked && ep.url) {
-                card.addEventListener('click', () => this.play(ep.url));
-            }
-            
-            this.elements.episodesTrack.appendChild(card);
-        });
-        
-        this.updateFocus();
-    }
-    
-    // Simple close series
-    closeSeries() {
-        this.elements.overlay.style.display = 'none';
-        this.elements.backBtn.classList.remove('visible');
-        this.elements.grid.parentElement.style.display = 'block';
-        this.setMode('grid');
-        history.replaceState(null, '', ' ');
-    }
-    
-    // Simple play
-    play(url) {
-        if (url && url !== '#') {
-            window.open(url, '_blank', 'noopener,noreferrer');
-        } else {
-            this.showError('Episode not available');
-        }
-    }
-    
-    // Simple play first available
-    playFirstEpisode() {
-        const seasons = Object.values(this.selectedSeries.seasons || {});
-        for (let episodes of seasons) {
-            for (let ep of episodes || []) {
-                if (!ep.locked && ep.url) {
-                    this.play(ep.url);
-                    return;
-                }
-            }
-        }
-        this.showError('No episodes available');
-    }
-    
-    // Simple keyboard handler - the magic spell
-    handleKey(e) {
-        const isOverlay = this.elements.overlay.style.display === 'block';
-        
-        // Escape - universal back
-        if (e.key === 'Escape') {
-            e.preventDefault();
-            if (this.searchQuery) {
-                this.clearSearch();
-            } else if (isOverlay) {
-                this.closeSeries();
-            }
-            return;
-        }
-        
-        // Enter - universal select
-        if (e.key === 'Enter') {
-            e.preventDefault();
-            if (!isOverlay && this.cards[this.currentIndex]) {
-                this.cards[this.currentIndex].click();
-            }
-            return;
-        }
-        
-        // Arrow navigation
-        if (e.key.startsWith('Arrow')) {
-            e.preventDefault();
-            
-            if (!isOverlay) {
-                // Grid navigation
-                const width = this.getGridWidth();
-                switch(e.key) {
-                    case 'ArrowRight':
-                        this.currentIndex = (this.currentIndex + 1) % this.cards.length;
-                        break;
-                    case 'ArrowLeft':
-                        this.currentIndex = (this.currentIndex - 1 + this.cards.length) % this.cards.length;
-                        break;
-                    case 'ArrowDown':
-                        this.currentIndex = Math.min(this.currentIndex + width, this.cards.length - 1);
-                        break;
-                    case 'ArrowUp':
-                        if (this.currentIndex < width) {
-                            this.elements.searchBox.focus();
-                            return;
-                        }
-                        this.currentIndex = Math.max(this.currentIndex - width, 0);
-                        break;
-                }
-                this.focusCard();
+        // Scroll del header
+        window.addEventListener('scroll', () => {
+            const header = document.getElementById('header');
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
             } else {
-                // Series navigation - simple mode switching
-                this.navigateSeries(e.key);
+                header.classList.remove('scrolled');
             }
+        });
+        
+        // Mouse wheel para scroll horizontal
+        document.querySelectorAll('.carousel-wrapper').forEach(wrapper => {
+            wrapper.addEventListener('wheel', (e) => {
+                if (e.deltaY !== 0) {
+                    e.preventDefault();
+                    wrapper.scrollLeft += e.deltaY * 2;
+                }
+            });
+        });
+    }
+    
+    handleKeyboard(e) {
+        const cards = document.querySelectorAll('.movie-card');
+        if (cards.length === 0) return;
+        
+        // Mostrar ayuda de navegación
+        if (!this.isKeyboardNav) {
+            this.isKeyboardNav = true;
+            this.showNavHelp();
+        }
+        
+        switch(e.key) {
+            case 'ArrowRight':
+                e.preventDefault();
+                this.navigateHorizontal(1);
+                break;
+                
+            case 'ArrowLeft':
+                e.preventDefault();
+                this.navigateHorizontal(-1);
+                break;
+                
+            case 'ArrowDown':
+                e.preventDefault();
+                this.navigateVertical(1);
+                break;
+                
+            case 'ArrowUp':
+                e.preventDefault();
+                this.navigateVertical(-1);
+                break;
+                
+            case 'Enter':
+                e.preventDefault();
+                const focused = document.querySelector('.movie-card.focused');
+                if (focused) {
+                    this.playMovie(focused.dataset.url);
+                }
+                break;
         }
     }
     
-    // Simple series navigation
-    navigateSeries(key) {
-        const seasons = this.elements.seasonBar.querySelectorAll('.season');
-        const episodes = this.elements.episodesTrack.querySelectorAll('.episode');
+    navigateHorizontal(direction) {
+        const sections = document.querySelectorAll('.carousel-section');
+        if (sections.length === 0) return;
         
-        if (this.mode === 'season') {
-            switch(key) {
-                case 'ArrowRight':
-                    this.seasonIndex = Math.min(this.seasonIndex + 1, seasons.length - 1);
-                    break;
-                case 'ArrowLeft':
-                    this.seasonIndex = Math.max(this.seasonIndex - 1, 0);
-                    break;
-                case 'ArrowDown':
-                    this.setMode('episode');
-                    break;
-            }
-        } else if (this.mode === 'episode') {
-            switch(key) {
-                case 'ArrowRight':
-                    this.episodeIndex = Math.min(this.episodeIndex + 1, episodes.length - 1);
-                    break;
-                case 'ArrowLeft':
-                    this.episodeIndex = Math.max(this.episodeIndex - 1, 0);
-                    break;
-                case 'ArrowUp':
-                    this.setMode('season');
-                    break;
-            }
+        const currentSection = sections[this.currentFocus.section];
+        const cards = currentSection.querySelectorAll('.movie-card');
+        
+        // Calcular nuevo índice
+        this.currentFocus.movie += direction;
+        
+        // Validar límites
+        if (this.currentFocus.movie < 0) {
+            this.currentFocus.movie = cards.length - 1;
+        } else if (this.currentFocus.movie >= cards.length) {
+            this.currentFocus.movie = 0;
         }
         
         this.updateFocus();
+        this.scrollToFocused();
     }
     
-    // Simple focus update
-    updateFocus() {
-        if (this.mode === 'season') {
-            this.elements.seasonBar.querySelectorAll('.season').forEach((s, i) => {
-                s.classList.toggle('focused', i === this.seasonIndex);
-            });
-        } else if (this.mode === 'episode') {
-            this.elements.episodesTrack.querySelectorAll('.episode').forEach((e, i) => {
-                e.classList.toggle('focused', i === this.episodeIndex);
-            });
-        }
-    }
-    
-    // Simple card focus
-    focusCard() {
-        this.cards.forEach((c, i) => {
-            c.classList.toggle('focused', i === this.currentIndex);
-        });
-        if (this.cards[this.currentIndex]) {
-            this.cards[this.currentIndex].scrollIntoView({ behavior: 'smooth', block: 'center' });
-        }
-    }
-    
-    // Simple mode setter
-    setMode(mode) {
-        this.mode = mode;
-        if (mode === 'search') {
-            this.elements.searchBox.classList.add('focused');
-        } else {
-            this.elements.searchBox.classList.remove('focused');
-        }
-    }
-    
-    // Simple grid width calculator
-    getGridWidth() {
-        if (!this.cards.length) return 1;
-        return Math.floor(this.elements.grid.offsetWidth / (this.cards[0]?.offsetWidth || 160));
-    }
-    
-    // Simple loader
-    showLoader(show) {
-        this.elements.loader.classList.toggle('hidden', !show);
-    }
-    
-    // Simple error
-    showError(msg) {
-        this.elements.errorMsg.textContent = msg;
-        this.elements.errorMsg.classList.add('show');
-        setTimeout(() => this.elements.errorMsg.classList.remove('show'), 3000);
-    }
-    
-    // GitHub status indicator
-    updateGitHubStatus(text, status = '') {
-        const info = this.elements.githubInfo;
-        const textEl = info.querySelector('.github-text');
-        const statusEl = info.querySelector('.github-status');
+    navigateVertical(direction) {
+        const sections = document.querySelectorAll('.carousel-section');
+        if (sections.length === 0) return;
         
-        textEl.textContent = text;
-        info.className = 'github-info';
+        // Cambiar de sección
+        this.currentFocus.section += direction;
+        
+        // Validar límites
+        if (this.currentFocus.section < 0) {
+            this.currentFocus.section = sections.length - 1;
+        } else if (this.currentFocus.section >= sections.length) {
+            this.currentFocus.section = 0;
+        }
+        
+        // Resetear índice de película en nueva sección
+        const newSection = sections[this.currentFocus.section];
+        const cards = newSection.querySelectorAll('.movie-card');
+        if (this.currentFocus.movie >= cards.length) {
+            this.currentFocus.movie = 0;
+        }
+        
+        this.updateFocus();
+        this.scrollToFocused();
+    }
+    
+    updateFocus() {
+        // Quitar focus anterior
+        document.querySelectorAll('.movie-card').forEach(card => {
+            card.classList.remove('focused');
+        });
+        
+        // Aplicar nuevo focus
+        const sections = document.querySelectorAll('.carousel-section');
+        if (sections[this.currentFocus.section]) {
+            const cards = sections[this.currentFocus.section].querySelectorAll('.movie-card');
+            if (cards[this.currentFocus.movie]) {
+                cards[this.currentFocus.movie].classList.add('focused');
+            }
+        }
+    }
+    
+    scrollToFocused() {
+        const focused = document.querySelector('.movie-card.focused');
+        if (focused) {
+            // Scroll vertical para ver la sección
+            focused.scrollIntoView({ 
+                behavior: 'smooth', 
+                block: 'center',
+                inline: 'center'
+            });
+            
+            // Scroll horizontal dentro del carrusel
+            const wrapper = focused.closest('.carousel-wrapper');
+            if (wrapper) {
+                const cardRect = focused.getBoundingClientRect();
+                const wrapperRect = wrapper.getBoundingClientRect();
+                
+                if (cardRect.left < wrapperRect.left) {
+                    wrapper.scrollLeft -= wrapperRect.left - cardRect.left + 50;
+                } else if (cardRect.right > wrapperRect.right) {
+                    wrapper.scrollLeft += cardRect.right - wrapperRect.right + 50;
+                }
+            }
+        }
+    }
+    
+    scrollCarousel(year, direction) {
+        const carousel = document.getElementById(`carousel-${year}`);
+        if (!carousel) return;
+        
+        const scrollAmount = 220 * CONFIG.SCROLL_AMOUNT;
+        
+        if (direction === 'next') {
+            carousel.scrollLeft += scrollAmount;
+        } else {
+            carousel.scrollLeft -= scrollAmount;
+        }
+    }
+    
+    playMovie(url) {
+        console.log('▶️ Reproduciendo:', url);
+        
+        if (!url || url === '#' || url === '#demo') {
+            // Mostrar mensaje para demos
+            this.showMessage('Esta es una película de demostración');
+            return;
+        }
+        
+        // Abrir en nueva pestaña o iframe según preferencia
+        window.open(url, '_blank', 'noopener,noreferrer');
+    }
+    
+    showMessage(text) {
+        // Crear mensaje temporal
+        const msg = document.createElement('div');
+        msg.style.cssText = `
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(229, 9, 20, 0.95);
+            color: white;
+            padding: 20px 40px;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            z-index: 10000;
+            animation: fadeIn 0.3s ease;
+        `;
+        msg.textContent = text;
+        document.body.appendChild(msg);
+        
+        setTimeout(() => {
+            msg.style.animation = 'fadeOut 0.3s ease';
+            setTimeout(() => msg.remove(), 300);
+        }, 2000);
+    }
+    
+    hideLoader() {
+        const loader = document.getElementById('loader');
+        loader.classList.add('hidden');
+        setTimeout(() => {
+            loader.style.display = 'none';
+        }, 500);
+    }
+    
+    showEmptyState() {
+        document.getElementById('emptyState').classList.add('show');
+        document.getElementById('mainContent').style.display = 'none';
+        this.hideLoader();
+    }
+    
+    showError() {
+        this.showEmptyState();
+        this.updateGitHubStatus('Error', 'error');
+    }
+    
+    showNavHelp() {
+        const help = document.getElementById('navHelp');
+        help.classList.add('show');
+        setTimeout(() => {
+            help.classList.remove('show');
+        }, 3000);
+    }
+    
+    updateGitHubStatus(text, status = '') {
+        const statusEl = document.getElementById('githubStatus');
+        statusEl.className = 'github-status';
         
         if (status === 'connected') {
-            info.classList.add('connected');
-            statusEl.textContent = '✓';
+            statusEl.classList.add('connected');
+            statusEl.innerHTML = '<span class="github-status-icon">✓</span><span>' + text + '</span>';
         } else if (status === 'error') {
-            info.classList.add('error');
-            statusEl.textContent = '✗';
+            statusEl.classList.add('error');
+            statusEl.innerHTML = '<span class="github-status-icon">✗</span><span>' + text + '</span>';
         } else {
-            statusEl.textContent = '⚡';
+            statusEl.innerHTML = '<span class="github-status-icon">⚡</span><span>' + text + '</span>';
         }
     }
     
-    // Default poster
     getDefaultPoster() {
         return 'data:image/svg+xml,' + encodeURIComponent(`
             <svg xmlns="http://www.w3.org/2000/svg" width="300" height="450" viewBox="0 0 300 450">
@@ -1929,7 +1413,7 @@ class StreamingPlatform {
         `);
     }
     
-    // Cache system
+    // Sistema de caché
     getFromCache(key) {
         if (!CONFIG.USE_CACHE) return null;
         
@@ -1959,17 +1443,22 @@ class StreamingPlatform {
             };
             localStorage.setItem(key, JSON.stringify(data));
         } catch (e) {
-            console.warn('Cache error:', e);
+            console.warn('Error guardando caché:', e);
         }
     }
 }
 
-// Initialize platform with GitHub connection
-document.addEventListener('DOMContentLoaded', () => {
-    window.platform = new StreamingPlatform();
-    console.log('✨ Series+ Platform initialized with GitHub connection');
-    console.log('📝 Update CONFIG object with your GitHub credentials');
+// ============================================
+// INICIALIZACIÓN
+// ============================================
+window.addEventListener('DOMContentLoaded', () => {
+    console.log('🚀 Iniciando Movies+ HD Streaming Platform');
+    window.app = new MoviesStreamingApp();
 });
+
+// Para debugging
+console.log('📝 Actualiza CONFIG con tus credenciales de GitHub');
+console.log('🎮 Para debug usa: window.app');
 </script>
 
 </body>
