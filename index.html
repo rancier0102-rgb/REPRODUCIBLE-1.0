@@ -306,7 +306,7 @@ class FireTVApp {
                 }
             }
             
-            this.updateStatus(`${this.movies.length} películas`);
+            this.updateStatus('Conectado');
             
         } catch (error) {
             // Cargar demo si falla
@@ -378,7 +378,7 @@ class FireTVApp {
             
             const title = document.createElement('h2');
             title.className = 'section-title';
-            title.textContent = `Películas ${year}`;
+            title.textContent = year;
             
             const row = document.createElement('div');
             row.className = 'movies-row';
