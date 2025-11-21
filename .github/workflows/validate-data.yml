@@ -1,1 +1,120 @@
 
+# .github/workflows/validate-data.yml
+# =====================================
+# VALIDA TODOS LOS JSON ANTES DE DEPLOY
+# =====================================
+
+name: ✅ Validate Data Files
+
+on:
+  pull_request:
+    paths:
+      - 'data/**/*.json'
+  
+  push:
+    paths:
+      - 'data/**/*.json'
+  
+  workflow_dispatch:
+
+jobs:
+  validate:
+    name: ✅ Validate JSON Files
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 📦 Install validators
+        run: |
+          npm install -g jsonlint ajv-cli
+      
+      - name: ✅ Validate JSON syntax
+        run: |
+          echo "🔍 Validating JSON syntax..."
+          
+          # Encontrar todos los JSON
+          find data -name "*.json" -type f | while read file; do
+            echo "Checking: $file"
+            jsonlint -q "$file" || exit 1
+          done
+          
+          echo "✅ All JSON files have valid syntax!"
+      
+      - name: 📋 Validate data structure
+        run: |
+          # Crear esquema de validación
+          cat > movie-schema.json << 'EOF'
+          {
+            "$schema": "http://json-schema.org/draft-07/schema#",
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": ["id", "title"],
+              "properties": {
+                "id": { "type": "string" },
+                "title": { "type": "string" },
+                "year": { "type": "number" },
+                "thumbnail": { "type": "string" },
+                "streamUrl": { "type": "string" },
+                "rating": { "type": "number", "minimum": 0, "maximum": 10 }
+              }
+            }
+          }
+          EOF
+          
+          # Validar contra esquema
+          if [ -f "data/peliculas.json" ]; then
+            echo "Validating movies data..."
+            ajv validate -s movie-schema.json -d data/peliculas.json || exit 1
+          fi
+          
+          echo "✅ Data structure is valid!"
+      
+      - name: 🔍 Check for duplicates
+        run: |
+          node -e "
+          const fs = require('fs');
+          
+          // Leer archivo de películas
+          if (fs.existsSync('data/peliculas.json')) {
+            const movies = JSON.parse(fs.readFileSync('data/peliculas.json'));
+            
+            // Buscar IDs duplicados
+            const ids = movies.map(m => m.id);
+            const duplicates = ids.filter((id, index) => ids.indexOf(id) !== index);
+            
+            if (duplicates.length > 0) {
+              console.error('❌ Found duplicate IDs:', duplicates);
+              process.exit(1);
+            }
+            
+            console.log('✅ No duplicate IDs found!');
+            console.log('📊 Total movies:', movies.length);
+          }
+          "
+      
+      - name: 📊 Generate report
+        if: always()
+        run: |
+          echo "📊 Data Validation Report"
+          echo "========================="
+          echo "Total JSON files: $(find data -name "*.json" | wc -l)"
+          
+          # Tamaño de archivos
+          echo ""
+          echo "📦 File sizes:"
+          find data -name "*.json" -exec ls -lh {} \; | awk '{print $9 ": " $5}'
+          
+          # Contar items
+          if [ -f "data/peliculas.json" ]; then
+            MOVIE_COUNT=$(jq '. | length' data/peliculas.json)
+            echo ""
+            echo "🎬 Total movies: ${MOVIE_COUNT}"
+          fi
