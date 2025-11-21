@@ -1,0 +1,99 @@
+# .github/workflows/optimize-media.yml
+# =====================================
+# OPTIMIZA IMÁGENES AUTOMÁTICAMENTE
+# =====================================
+
+name: 🖼️ Optimize Media Files
+
+on:
+  push:
+    paths:
+      - 'data/images/**'
+  
+  workflow_dispatch:
+    inputs:
+      quality:
+        description: 'Image quality (1-100)'
+        required: false
+        default: '85'
+
+jobs:
+  optimize:
+    name: 🖼️ Optimize Images
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Install image tools
+        run: |
+          # Instalar herramientas de optimización
+          sudo apt-get update
+          sudo apt-get install -y imagemagick webp jpegoptim optipng
+          
+          # Instalar Node tools
+          npm install -g sharp-cli imagemin-cli
+      
+      - name: 🖼️ Optimize JPG/JPEG
+        run: |
+          echo "🔄 Optimizing JPEG images..."
+          find data/images -name "*.jpg" -o -name "*.jpeg" | while read img; do
+            echo "Optimizing: $img"
+            jpegoptim --max=${{ github.event.inputs.quality || '85' }} "$img"
+          done
+      
+      - name: 🖼️ Optimize PNG
+        run: |
+          echo "🔄 Optimizing PNG images..."
+          find data/images -name "*.png" | while read img; do
+            echo "Optimizing: $img"
+            optipng -o2 "$img"
+          done
+      
+      - name: 🖼️ Generate WebP versions
+        run: |
+          echo "🔄 Generating WebP versions..."
+          find data/images -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" | while read img; do
+            output="${img%.*}.webp"
+            echo "Converting to WebP: $output"
+            cwebp -q ${{ github.event.inputs.quality || '85' }} "$img" -o "$output"
+          done
+      
+      - name: 🖼️ Generate thumbnails
+        run: |
+          echo "🔄 Generating thumbnails..."
+          mkdir -p data/images/thumbnails
+          
+          find data/images -maxdepth 1 -name "*.jpg" -o -name "*.jpeg" -o -name "*.png" | while read img; do
+            filename=$(basename "$img")
+            echo "Creating thumbnail: $filename"
+            convert "$img" -resize 300x450^ -gravity center -crop 300x450+0+0 "data/images/thumbnails/$filename"
+          done
+      
+      - name: 📊 Show optimization results
+        run: |
+          echo "📊 Optimization Results:"
+          echo "========================"
+          
+          # Tamaño antes y después
+          BEFORE=$(git diff --stat | tail -1)
+          echo "Changes: $BEFORE"
+          
+          # Listar archivos optimizados
+          echo ""
+          echo "📦 Optimized files:"
+          find data/images -type f -newer /tmp -exec ls -lh {} \;
+      
+      - name: 💾 Commit optimized images
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add data/images/
+          git diff --staged --quiet || git commit -m "🖼️ Auto-optimize images [skip ci]"
+      
+      - name: 📤 Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
