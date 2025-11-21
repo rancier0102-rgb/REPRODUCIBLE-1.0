@@ -1,0 +1,69 @@
+# .github/workflows/generate-chunks.yml
+# =====================================
+# GENERA CHUNKS CUANDO CAMBIAS LOS DATOS
+# =====================================
+
+name: 📊 Generate Data Chunks
+
+on:
+  # Cuando cambias archivos de datos
+  push:
+    paths:
+      - 'data/**/*.json'
+      - 'scripts/generate-chunks.js'
+  
+  # Manual
+  workflow_dispatch:
+    inputs:
+      chunkSize:
+        description: 'Items per chunk'
+        required: false
+        default: '50'
+
+jobs:
+  generate:
+    name: 📊 Generate Chunks
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+      
+      - name: 🔧 Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 📊 Generate chunks
+        run: |
+          CHUNK_SIZE=${{ github.event.inputs.chunkSize || '50' }}
+          echo "Generating chunks with size: ${CHUNK_SIZE}"
+          node scripts/generate-chunks.js --size ${CHUNK_SIZE}
+      
+      - name: 📊 Show statistics
+        run: |
+          echo "📊 Chunk Statistics:"
+          echo "Total chunks: $(ls -1 chunks/*.json | wc -l)"
+          echo "Total size: $(du -sh chunks | cut -f1)"
+          
+          # Mostrar primeros 5 chunks
+          echo "📦 First 5 chunks:"
+          ls -la chunks/*.json | head -5
+      
+      - name: 💾 Commit changes
+        run: |
+          git config --local user.email "action@github.com"
+          git config --local user.name "GitHub Action"
+          git add chunks/
+          git diff --staged --quiet || git commit -m "🔄 Auto-generate chunks [skip ci]"
+      
+      - name: 📤 Push changes
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          branch: ${{ github.ref }}
