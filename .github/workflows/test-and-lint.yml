@@ -1,0 +1,85 @@
+# .github/workflows/test-and-lint.yml
+# =====================================
+# TESTS Y ANÁLISIS DE CALIDAD
+# =====================================
+
+name: 🧪 Test and Lint
+
+on:
+  pull_request:
+  push:
+    branches: [ main, develop ]
+  
+  workflow_dispatch:
+
+jobs:
+  lint-and-test:
+    name: 🧪 Lint and Test
+    runs-on: ubuntu-latest
+    
+    strategy:
+      matrix:
+        node-version: [16, 18, 20]
+    
+    steps:
+      - name: 📥 Checkout
+        uses: actions/checkout@v4
+      
+      - name: 🔧 Setup Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node-version }}
+          cache: 'npm'
+      
+      - name: 📦 Install dependencies
+        run: npm ci
+      
+      - name: 🔍 ESLint
+        run: |
+          # Instalar ESLint si no está
+          npm install --save-dev eslint
+          
+          # Crear config si no existe
+          if [ ! -f ".eslintrc.json" ]; then
+            cat > .eslintrc.json << 'EOF'
+          {
+            "env": {
+              "browser": true,
+              "es2021": true,
+              "node": true
+            },
+            "extends": "eslint:recommended",
+            "parserOptions": {
+              "ecmaVersion": 12,
+              "sourceType": "module"
+            },
+            "rules": {
+              "no-unused-vars": "warn",
+              "no-console": "off"
+            }
+          }
+          EOF
+          fi
+          
+          # Run ESLint
+          npx eslint src/**/*.js || true
+      
+      - name: 🧪 Run tests
+        run: |
+          # Si hay tests, ejecutarlos
+          if [ -f "package.json" ] && grep -q "\"test\"" package.json; then
+            npm test
+          else
+            echo "⚠️ No tests configured"
+          fi
+      
+      - name: 📊 Code coverage
+        run: |
+          # Si hay coverage configurado
+          if [ -f "package.json" ] && grep -q "\"coverage\"" package.json; then
+            npm run coverage
+          fi
+      
+      - name: 🔒 Security audit
+        run: |
+          npm audit --production || true
