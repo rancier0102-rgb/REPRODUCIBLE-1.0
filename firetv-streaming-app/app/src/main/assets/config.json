@@ -1,9 +1,9 @@
 {
-    "cloudflare_token": "YOUR_CLOUDFLARE_TOKEN_HERE",
-    "cloudflare_zone": "YOUR_ZONE_ID",
+    "cloudflare_token": "CF_API_TOKEN",
+    "cloudflare_zone": "CF_ZONE_ID",
     "discord_webhook": "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN",
-    "discord_bot_token": "YOUR_BOT_TOKEN",
-    "github_repo": "yourusername/yourrepo",
+    "discord_bot_token": "DISCORD_WEBHOOK",
+    "github_repo": "rancier0102-rgb/REPRODUCIBLE-1.0",
     "content_branch": "main",
     "cache_duration": 3600,
     "debug_mode": true,
