@@ -1,0 +1,99 @@
+{
+  "id": "trending",
+  "name": "Tendencias",
+  "description": "Las películas más populares del momento",
+  "lastUpdate": "2024-01-15T09:00:00Z",
+  "updateFrequency": "hourly",
+  "items": [
+    {
+      "rank": 1,
+      "previousRank": 2,
+      "weeksOnList": 3,
+      "peakRank": 1,
+      "movieId": "movie_001",
+      "score": 98.5,
+      "trend": "up"
+    },
+    {
+      "rank": 2,
+      "previousRank": 1,
+      "weeksOnList": 5,
+      "peakRank": 1,
+      "movieId": "movie_045",
+      "score": 96.2,
+      "trend": "down"
+    },
+    {
+      "rank": 3,
+      "previousRank": 4,
+      "weeksOnList": 2,
+      "peakRank": 3,
+      "movieId": "movie_002",
+      "score": 94.8,
+      "trend": "up"
+    },
+    {
+      "rank": 4,
+      "previousRank": 3,
+      "weeksOnList": 4,
+      "peakRank": 2,
+      "movieId": "movie_123",
+      "score": 92.1,
+      "trend": "down"
+    },
+    {
+      "rank": 5,
+      "previousRank": 8,
+      "weeksOnList": 1,
+      "peakRank": 5,
+      "movieId": "movie_089",
+      "score": 89.5,
+      "trend": "up"
+    },
+    {
+      "rank": 6,
+      "previousRank": 5,
+      "weeksOnList": 6,
+      "peakRank": 3,
+      "movieId": "movie_234",
+      "score": 87.3,
+      "trend": "down"
+    },
+    {
+      "rank": 7,
+      "previousRank": 10,
+      "weeksOnList": 1,
+      "peakRank": 7,
+      "movieId": "movie_456",
+      "score": 85.2,
+      "trend": "up"
+    },
+    {
+      "rank": 8,
+      "previousRank": 6,
+      "weeksOnList": 3,
+      "peakRank": 4,
+      "movieId": "movie_567",
+      "score": 83.8,
+      "trend": "down"
+    },
+    {
+      "rank": 9,
+      "previousRank": null,
+      "weeksOnList": 1,
+      "peakRank": 9,
+      "movieId": "movie_003",
+      "score": 82.5,
+      "trend": "new"
+    },
+    {
+      "rank": 10,
+      "previousRank": 7,
+      "weeksOnList": 8,
+      "peakRank": 1,
+      "movieId": "movie_678",
+      "score": 80.1,
+      "trend": "down"
+    }
+  ]
+}
