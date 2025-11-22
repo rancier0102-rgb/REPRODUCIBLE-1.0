@@ -1,0 +1,50 @@
+{
+  "version": "1.0.0",
+  "lastUpdate": "2024-01-15T10:00:00Z",
+  "totalTerms": 15000,
+  "totalMovies": 2500,
+  "indices": {
+    "titles": {
+      "url": "/data/movies/search/titles.json",
+      "count": 2500,
+      "size": 125000
+    },
+    "actors": {
+      "url": "/data/movies/search/actors.json",
+      "count": 5000,
+      "size": 85000
+    },
+    "directors": {
+      "url": "/data/movies/search/directors.json",
+      "count": 800,
+      "size": 25000
+    },
+    "keywords": {
+      "url": "/data/movies/search/keywords.json",
+      "count": 10000,
+      "size": 45000
+    }
+  },
+  "suggestions": {
+    "popular": [
+      "acción",
+      "comedia",
+      "drama",
+      "thriller",
+      "2024",
+      "oscar",
+      "marvel",
+      "netflix"
+    ],
+    "recent": [
+      "la gran aventura",
+      "código quantum",
+      "el último verano"
+    ]
+  },
+  "autocomplete": {
+    "minChars": 2,
+    "maxResults": 10,
+    "debounce": 300
+  }
+}
