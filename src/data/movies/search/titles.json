@@ -1,0 +1,47 @@
+{
+  "index": {
+    "a": [
+      {
+        "id": "movie_234",
+        "title": "Apocalipsis Now Redux",
+        "year": 2023,
+        "searchTerms": ["apocalipsis", "now", "redux", "guerra", "vietnam"]
+      },
+      {
+        "id": "movie_567",
+        "title": "Amor en Tiempos de Guerra",
+        "year": 2024,
+        "searchTerms": ["amor", "tiempos", "guerra", "romance", "drama"]
+      }
+    ],
+    "c": [
+      {
+        "id": "movie_002",
+        "title": "Código Quantum",
+        "year": 2024,
+        "searchTerms": ["codigo", "quantum", "ciencia", "ficcion", "ia"]
+      }
+    ],
+    "e": [
+      {
+        "id": "movie_003",
+        "title": "El Último Verano",
+        "year": 2024,
+        "searchTerms": ["ultimo", "verano", "summer", "juventud", "amistad"]
+      }
+    ],
+    "l": [
+      {
+        "id": "movie_001",
+        "title": "La Gran Aventura",
+        "year": 2024,
+        "searchTerms": ["gran", "aventura", "adventure", "tesoro", "accion"]
+      }
+    ]
+  },
+  "phonetic": {
+    "kodigo": ["movie_002"],
+    "kuantum": ["movie_002"],
+    "berano": ["movie_003"]
+  }
+}
