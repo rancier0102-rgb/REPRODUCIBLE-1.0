@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">FireTV Streaming</string>
+    <string name="loading">Cargando contenido...</string>
+    <string name="error_auth">Error de autenticación</string>
+    <string name="error_network">Error de red</string>
+    <string name="retry">Reintentar</string>
+    <string name="exit">Salir</string>
+</resources>
