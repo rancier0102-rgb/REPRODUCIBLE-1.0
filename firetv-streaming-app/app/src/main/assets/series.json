@@ -1,0 +1,38 @@
+{
+    "chunkId": "series_001",
+    "items": [
+        {
+            "id": "ser_001",
+            "title": "Breaking Bad",
+            "description": "A chemistry teacher becomes a meth manufacturer",
+            "thumbnail": "https://via.placeholder.com/300x450/FFA500/000000?text=Breaking+Bad",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerEscapes.mp4",
+            "type": "series",
+            "duration": "62 episodes",
+            "year": 2008,
+            "rating": 9.5
+        },
+        {
+            "id": "ser_002",
+            "title": "Stranger Things",
+            "description": "Kids face supernatural forces in the 80s",
+            "thumbnail": "https://via.placeholder.com/300x450/FF0000/FFFFFF?text=Stranger+Things",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerFun.mp4",
+            "type": "series",
+            "duration": "42 episodes",
+            "year": 2016,
+            "rating": 8.7
+        },
+        {
+            "id": "ser_003",
+            "title": "The Crown",
+            "description": "The reign of Queen Elizabeth II",
+            "thumbnail": "https://via.placeholder.com/300x450/800080/FFFFFF?text=The+Crown",
+            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ForBiggerJoyrides.mp4",
+            "type": "series",
+            "duration": "60 episodes",
+            "year": 2016,
+            "rating": 8.6
+        }
+    ]
+}
