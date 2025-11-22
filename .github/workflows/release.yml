@@ -5,27 +5,18 @@ on:
     tags:
       - 'v*'
   workflow_dispatch:
-    inputs:
-      version:
-        description: 'Version (sin v, ej: 1.0.0)'
-        required: false
-        default: '1.0.0'
 
 permissions:
   contents: write
-  packages: write
 
 jobs:
   release:
-    name: Create Release
     runs-on: ubuntu-latest
     
     steps:
     # Checkout
     - name: 📥 Checkout Repository
       uses: actions/checkout@v4
-      with:
-        fetch-depth: 0
     
     # Setup Java
     - name: ☕ Setup JDK 11
@@ -34,184 +25,86 @@ jobs:
         java-version: '11'
         distribution: 'temurin'
     
+    # Setup Gradle (sin gradlew)
+    - name: 📦 Setup Gradle
+      uses: gradle/gradle-build-action@v2
+      with:
+        gradle-version: 8.0
+    
     # Create local.properties
-    - name: 📝 Create local.properties
+    - name: 📝 Setup Android SDK
       run: |
         echo "sdk.dir=$ANDROID_HOME" > local.properties
-        echo "Local properties created"
-    
-    # Create assets directory
-    - name: 📂 Create Assets Directory
-      run: |
         mkdir -p app/src/main/assets
-        echo "Assets directory created"
     
     # Setup config files
     - name: 🔧 Setup Config Files
       run: |
-        # Config básico si no hay secrets
-        if [ -z "${{ secrets.CLOUDFLARE_TOKEN }}" ]; then
-          echo '{"cloudflare_token":"default","discord_webhook":"default"}' > app/src/main/assets/config.json
-        else
-          cat > app/src/main/assets/config.json << EOF
+        cat > app/src/main/assets/config.json << EOF
         {
-          "cloudflare_token": "${{ secrets.CLOUDFLARE_TOKEN }}",
-          "discord_webhook": "${{ secrets.DISCORD_WEBHOOK }}",
-          "github_repo": "${{ github.repository }}",
+          "cloudflare_token": "default",
+          "discord_webhook": "default",
           "debug_mode": false
         }
         EOF
-        fi
         
-        # Movies.json básico
-        cat > app/src/main/assets/movies.json << 'EOF'
+        cat > app/src/main/assets/movies.json << EOF
         {
           "chunkId": "movies_001",
-          "items": [{
-            "id": "demo_001",
-            "title": "Demo Movie",
-            "description": "Demo content",
-            "thumbnail": "https://via.placeholder.com/300x450",
-            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/BigBuckBunny.mp4",
-            "type": "movie",
-            "duration": "1:00:00",
-            "year": 2024,
-            "rating": 8.0
-          }]
+          "items": []
         }
         EOF
         
-        # Series.json básico
-        cat > app/src/main/assets/series.json << 'EOF'
+        cat > app/src/main/assets/series.json << EOF
         {
           "chunkId": "series_001",
-          "items": [{
-            "id": "demo_002",
-            "title": "Demo Series",
-            "description": "Demo series",
-            "thumbnail": "https://via.placeholder.com/300x450",
-            "url": "https://commondatastorage.googleapis.com/gtv-videos-bucket/sample/ElephantsDream.mp4",
-            "type": "series",
-            "duration": "10 episodes",
-            "year": 2024,
-            "rating": 7.5
-          }]
+          "items": []
         }
         EOF
-        
-        echo "Config files created successfully"
     
-    # Make gradlew executable
-    - name: 🔧 Make gradlew executable
+    # Build usando gradle directamente (sin wrapper)
+    - name: 🔨 Build APK
       run: |
-        chmod +x gradlew
-        ls -la gradlew
-    
-    # Build APK
-    - name: 🔨 Build Release APK
-      run: |
-        echo "Starting build..."
-        ./gradlew clean assembleRelease --no-daemon --stacktrace || ./gradlew clean assembleDebug --no-daemon --stacktrace
-        echo "Build completed"
+        gradle clean assembleDebug --no-daemon
         
-        # Listar APKs generados
-        echo "Generated APKs:"
-        find app/build/outputs/apk -name "*.apk" -type f
+        # Verificar que se creó el APK
+        ls -la app/build/outputs/apk/debug/
     
     # Get version
     - name: 🏷️ Get Version
       id: version
       run: |
-        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
-          VERSION="v${{ github.event.inputs.version || '1.0.0' }}"
-        elif [ ! -z "${{ github.ref_name }}" ]; then
-          VERSION="${{ github.ref_name }}"
-        else
-          VERSION="v1.0.0"
-        fi
-        
+        VERSION="${GITHUB_REF_NAME:-v1.0.0}"
         echo "version=$VERSION" >> $GITHUB_OUTPUT
-        echo "Version set to: $VERSION"
     
-    # Prepare release files
+    # Prepare files
     - name: 📦 Prepare Release Files
-      id: prepare
       run: |
         VERSION="${{ steps.version.outputs.version }}"
-        echo "Preparing files for version: $VERSION"
         
-        # Buscar el APK
-        APK_PATH=""
-        if [ -f "app/build/outputs/apk/release/app-release-unsigned.apk" ]; then
-          APK_PATH="app/build/outputs/apk/release/app-release-unsigned.apk"
-        elif [ -f "app/build/outputs/apk/release/app-release.apk" ]; then
-          APK_PATH="app/build/outputs/apk/release/app-release.apk"
-        elif [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
-          APK_PATH="app/build/outputs/apk/debug/app-debug.apk"
+        # Buscar APK
+        if [ -f "app/build/outputs/apk/debug/app-debug.apk" ]; then
+          cp app/build/outputs/apk/debug/app-debug.apk "FireTV-Streaming-${VERSION}.apk"
+          echo "✅ APK ready"
         else
-          echo "❌ No APK found!"
+          echo "❌ APK not found"
           exit 1
         fi
-        
-        echo "Found APK at: $APK_PATH"
-        
-        # Copiar y renombrar
-        cp "$APK_PATH" "FireTV-Streaming-${VERSION}.apk"
-        
-        # Verificar que existe
-        if [ -f "FireTV-Streaming-${VERSION}.apk" ]; then
-          echo "✅ APK ready: FireTV-Streaming-${VERSION}.apk"
-          echo "apk_name=FireTV-Streaming-${VERSION}.apk" >> $GITHUB_OUTPUT
-        else
-          echo "❌ Failed to prepare APK"
-          exit 1
-        fi
-        
-        # Crear README de instalación
-        cat > INSTALL.md << EOF
-        # Installation Instructions
-        
-        ## Fire TV Installation
-        
-        1. Enable Developer Options on Fire TV
-        2. Enable ADB Debugging
-        3. Connect via ADB:
-           \`\`\`
-           adb connect YOUR_FIRETV_IP:5555
-           adb install FireTV-Streaming-${VERSION}.apk
-           \`\`\`
-        
-        ## Version: ${VERSION}
-        EOF
-        
-        echo "Files prepared successfully"
     
-    # Create GitHub Release
+    # Create Release
     - name: 🚀 Create GitHub Release
       uses: softprops/action-gh-release@v1
       with:
         tag_name: ${{ steps.version.outputs.version }}
         name: FireTV Streaming ${{ steps.version.outputs.version }}
         body: |
-          ## 🚀 FireTV Streaming App Release
+          ## FireTV Streaming Release
           
           ### Installation
-          1. Download the APK below
-          2. Enable ADB on your Fire TV
-          3. Install using: `adb install ${{ steps.prepare.outputs.apk_name }}`
-          
-          ### What's New
-          - Initial release
-          - Cloudflare + Discord authentication
-          - Streaming support for movies and series
-          
-          ---
-          **Full Changelog**: https://github.com/${{ github.repository }}/commits/${{ steps.version.outputs.version }}
-        draft: false
-        prerelease: false
-        files: |
-          FireTV-Streaming-*.apk
-          INSTALL.md
+          ```bash
+          adb install FireTV-Streaming-${{ steps.version.outputs.version }}.apk
+          ```
+        files: FireTV-Streaming-*.apk
         fail_on_unmatched_files: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
