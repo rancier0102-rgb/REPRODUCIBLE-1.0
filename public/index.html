@@ -1,582 +1,433 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Fire TV Movies</title>
-<style>
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-}
-
-body {
-    background: #000;
-    color: #fff;
-    font-family: Arial, sans-serif;
-    overflow: hidden;
-}
-
-/* HEADER */
-.header {
-    position: fixed;
-    top: 0;
-    width: 100%;
-    padding: 20px 40px;
-    background: linear-gradient(180deg, #000 0%, transparent 100%);
-    z-index: 100;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-}
-
-.logo {
-    font-size: 28px;
-    font-weight: bold;
-    color: #e50914;
-}
-
-.status {
-    font-size: 14px;
-    color: #999;
-}
-
-/* CONTENEDOR PRINCIPAL */
-.container {
-    padding: 100px 40px 40px;
-    height: 100vh;
-    overflow-y: auto;
-    scroll-behavior: smooth;
-}
-
-/* SECCIONES */
-.section {
-    margin-bottom: 40px;
-}
-
-.section-title {
-    font-size: 22px;
-    margin-bottom: 20px;
-    color: #fff;
-}
-
-/* GRID DE PELÍCULAS */
-.movies-row {
-    display: flex;
-    gap: 15px;
-    overflow-x: auto;
-    padding: 10px 0;
-    scrollbar-width: none;
-}
-
-.movies-row::-webkit-scrollbar {
-    display: none;
-}
-
-/* TARJETAS */
-.movie-card {
-    flex: 0 0 200px;
-    cursor: pointer;
-    transition: transform 0.2s;
-    position: relative;
-    background: #1a1a1a;
-    border-radius: 4px;
-    overflow: hidden;
-}
-
-.movie-card:focus {
-    outline: 3px solid #e50914;
-    outline-offset: 2px;
-    transform: scale(1.1);
-    z-index: 10;
-}
-
-.movie-card:focus .movie-info {
-    opacity: 1;
-}
-
-.movie-poster {
-    width: 100%;
-    aspect-ratio: 2/3;
-    background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-    position: relative;
-}
-
-.movie-poster img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.quality {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: #e50914;
-    padding: 4px 8px;
-    border-radius: 3px;
-    font-size: 12px;
-    font-weight: bold;
-}
-
-/* INFO */
-.movie-info {
-    position: absolute;
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding: 15px;
-    background: linear-gradient(to top, rgba(0,0,0,0.95), transparent);
-    opacity: 0;
-    transition: opacity 0.2s;
-}
-
-.movie-title {
-    font-size: 14px;
-    font-weight: bold;
-    margin-bottom: 5px;
-}
-
-.movie-meta {
-    font-size: 12px;
-    color: #999;
-}
-
-/* LOADER */
-.loader {
-    position: fixed;
-    inset: 0;
-    background: #000;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 1000;
-}
-
-.loader.hide {
-    display: none;
-}
-
-.spinner {
-    width: 50px;
-    height: 50px;
-    border: 3px solid #333;
-    border-top-color: #e50914;
-    border-radius: 50%;
-    animation: spin 1s linear infinite;
-}
-
-@keyframes spin {
-    to { transform: rotate(360deg); }
-}
-
-/* MENSAJE */
-.message {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    background: rgba(229, 9, 20, 0.95);
-    padding: 20px 40px;
-    border-radius: 8px;
-    font-size: 18px;
-    z-index: 2000;
-    display: none;
-}
-
-.message.show {
-    display: block;
-}
-
-/* EMPTY */
-.empty {
-    position: fixed;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    text-align: center;
-    display: none;
-}
-
-.empty.show {
-    display: block;
-}
-
-/* TV MODE */
-@media screen and (min-width: 1920px) {
-    .movie-card { flex: 0 0 240px; }
-    .header { padding: 25px 50px; }
-    .container { padding: 120px 50px 50px; }
-}
-</style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    
+    <!-- Metadatos básicos -->
+    <title>TV Cinema - Tu cine en casa</title>
+    <meta name="description" content="Disfruta del mejor contenido de películas y series en tu Smart TV. Streaming en 4K, catálogo actualizado y experiencia optimizada para televisión.">
+    <meta name="keywords" content="streaming, películas, series, smart tv, 4k, hdr, cine, entretenimiento">
+    <meta name="author" content="TV Cinema">
+    <meta name="robots" content="index, follow">
+    
+    <!-- PWA & Mobile -->
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TV Cinema">
+    <meta name="application-name" content="TV Cinema">
+    <meta name="theme-color" content="#0a0a0a">
+    <meta name="color-scheme" content="dark light">
+    
+    <!-- TV Specific Meta -->
+    <meta name="tv-app" content="yes">
+    <meta name="tv-input" content="remote">
+    <meta name="tv-resolution" content="1080p, 4k">
+    <meta name="screen-orientation" content="landscape">
+    
+    <!-- Manifest -->
+    <link rel="manifest" href="/manifest.json">
+    
+    <!-- Icons -->
+    <link rel="icon" type="image/x-icon" href="/images/favicon.ico">
+    <link rel="icon" type="image/png" sizes="16x16" href="/images/icons/icon-16x16.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="/images/icons/icon-32x32.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="/images/icons/icon-192x192.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/images/icons/apple-touch-icon.png">
+    
+    <!-- Splash Screens for iOS -->
+    <link rel="apple-touch-startup-image" href="/images/splash/splash-2048x2732.png" 
+          media="(device-width: 1024px) and (device-height: 1366px) and (-webkit-device-pixel-ratio: 2)">
+    <link rel="apple-touch-startup-image" href="/images/splash/splash-1668x2388.png" 
+          media="(device-width: 834px) and (device-height: 1194px) and (-webkit-device-pixel-ratio: 2)">
+    
+    <!-- TV Platform Specific -->
+    <!-- WebOS -->
+    <meta name="webos-theme-color" content="#0a0a0a">
+    
+    <!-- Tizen -->
+    <meta name="tizen-application-id" content="TVCinema">
+    <meta name="tizen-setting-context-menu" content="disable">
+    
+    <!-- Android TV -->
+    <meta name="google-site-verification" content="your-verification-code">
+    
+    <!-- Preconnect to optimize loading -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="dns-prefetch" href="//cdn.tvcinema.com">
+    
+    <!-- Critical CSS (inline for performance) -->
+    <style>
+        :root {
+            --tv-safe-zone-x: 60px;
+            --tv-safe-zone-y: 40px;
+            --color-background: #0a0a0a;
+            --color-text: #ffffff;
+            --color-primary: #00a8ff;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        html, body {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background: var(--color-background);
+            color: var(--color-text);
+            font-family: -apple-system, system-ui, sans-serif;
+        }
+        
+        #loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: var(--color-background);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 9999;
+            transition: opacity 0.3s ease;
+        }
+        
+        #loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            width: 200px;
+            height: 200px;
+            margin-bottom: 40px;
+            animation: pulse 2s ease-in-out infinite;
+        }
+        
+        .loading-spinner {
+            width: 60px;
+            height: 60px;
+            border: 4px solid rgba(255, 255, 255, 0.1);
+            border-top-color: var(--color-primary);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+        }
+        
+        .loading-text {
+            margin-top: 20px;
+            font-size: 24px;
+            opacity: 0.8;
+        }
+        
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+        
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(0.95); opacity: 0.8; }
+        }
+        
+        .tv-container {
+            position: absolute;
+            top: var(--tv-safe-zone-y);
+            right: var(--tv-safe-zone-x);
+            bottom: var(--tv-safe-zone-y);
+            left: var(--tv-safe-zone-x);
+            opacity: 0;
+            transition: opacity 0.5s ease;
+        }
+        
+        .tv-container.ready {
+            opacity: 1;
+        }
+        
+        /* No JS fallback */
+        .no-js {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            text-align: center;
+            padding: 40px;
+        }
+        
+        .no-js-message {
+            font-size: 32px;
+            line-height: 1.5;
+        }
+    </style>
+    
+    <!-- Stylesheets (loaded asynchronously) -->
+    <link rel="preload" href="/css/tv-layout.css" as="style">
+    <link rel="preload" href="/css/animations.css" as="style">
+    <link rel="stylesheet" href="/css/tv-layout.css">
+    <link rel="stylesheet" href="/css/animations.css">
+    
+    <!-- Theme CSS -->
+    <link rel="stylesheet" href="/css/themes/dark.css" media="(prefers-color-scheme: dark)">
+    <link rel="stylesheet" href="/css/themes/light.css" media="(prefers-color-scheme: light)">
+    
+    <!-- Fonts -->
+    <link rel="preload" href="/fonts/main.woff2" as="font" type="font/woff2" crossorigin>
+    
+    <!-- JavaScript Modules -->
+    <link rel="modulepreload" href="/js/app.js">
+    <link rel="modulepreload" href="/js/player.js">
+    <link rel="modulepreload" href="/js/navigation.js">
 </head>
 <body>
-
-<!-- Loader -->
-<div class="loader" id="loader">
-    <div class="spinner"></div>
-</div>
-
-<!-- Header -->
-<header class="header">
-    <div class="logo">MOVIES+</div>
-    <div class="status" id="status">Cargando...</div>
-</header>
-
-<!-- Container -->
-<div class="container" id="container"></div>
-
-<!-- Empty State -->
-<div class="empty" id="empty">
-    <h2>No hay películas</h2>
-    <p>Verifica la configuración</p>
-</div>
-
-<!-- Message -->
-<div class="message" id="message"></div>
-
-<script>
-// ========================================
-// CONFIGURACIÓN
-// ========================================
-const CONFIG = {
-    GITHUB_USER: 'rancier0102-rgb',
-    GITHUB_REPO: 'REPRODUCIBLE-1.0',
-    GITHUB_BRANCH: 'main',
+    <!-- Loading Screen -->
+    <div id="loading-screen">
+        <img src="/images/logo.svg" alt="TV Cinema" class="loading-logo">
+        <div class="loading-spinner"></div>
+        <div class="loading-text">Cargando...</div>
+    </div>
     
-    get BASE_URL() {
-        return `https://raw.githubusercontent.com/${this.GITHUB_USER}/${this.GITHUB_REPO}/${this.GITHUB_BRANCH}`;
-    },
+    <!-- No JavaScript Fallback -->
+    <noscript>
+        <div class="no-js">
+            <div class="no-js-message">
+                <h1>JavaScript Requerido</h1>
+                <p>TV Cinema requiere JavaScript para funcionar correctamente.</p>
+                <p>Por favor, habilita JavaScript en tu navegador o Smart TV.</p>
+            </div>
+        </div>
+    </noscript>
     
-    get MANIFEST_URL() {
-        return `${this.BASE_URL}/manifest.json`;
-    }
-};
-
-// ========================================
-// APP PRINCIPAL
-// ========================================
-class FireTVApp {
-    constructor() {
-        this.movies = [];
-        this.organized = {};
-        this.currentFocus = { row: 0, col: 0 };
-        this.rows = [];
-        
-        this.init();
-    }
-    
-    async init() {
-        try {
-            await this.loadMovies();
-            this.organize();
-            this.render();
-            this.setupNavigation();
-            this.hideLoader();
-        } catch (error) {
-            console.error('Error:', error);
-            this.showEmpty();
-        }
-    }
-    
-    async loadMovies() {
-        try {
-            // Intentar cargar desde GitHub
-            const response = await fetch(CONFIG.MANIFEST_URL);
+    <!-- Main TV Container -->
+    <div class="tv-container" id="app-container">
+        <!-- TV Layout -->
+        <div class="tv-layout" id="tv-layout">
             
-            if (!response.ok) {
-                throw new Error('No se pudo cargar manifest');
-            }
-            
-            const manifest = await response.json();
-            
-            // Cargar chunks
-            for (const chunk of manifest.chunks || []) {
-                try {
-                    const chunkUrl = `${CONFIG.BASE_URL}/${chunk.file}`;
-                    const chunkResponse = await fetch(chunkUrl);
+            <!-- Sidebar Navigation -->
+            <aside class="tv-sidebar" id="tv-sidebar" role="navigation" aria-label="Navegación principal">
+                <div class="tv-sidebar-logo">
+                    <img src="/images/logo.svg" alt="TV Cinema" width="160" height="60">
+                </div>
+                
+                <nav class="tv-nav">
+                    <ul class="tv-nav-section" role="menubar">
+                        <li class="tv-nav-item" role="none">
+                            <a href="#home" class="tv-nav-link active" role="menuitem" 
+                               data-focusable="true" data-nav-id="home" tabindex="0">
+                                <span class="tv-nav-icon">🏠</span>
+                                <span>Inicio</span>
+                            </a>
+                        </li>
+                        <li class="tv-nav-item" role="none">
+                            <a href="#movies" class="tv-nav-link" role="menuitem" 
+                               data-focusable="true" data-nav-id="movies" tabindex="-1">
+                                <span class="tv-nav-icon">🎬</span>
+                                <span>Películas</span>
+                            </a>
+                        </li>
+                        <li class="tv-nav-item" role="none">
+                            <a href="#series" class="tv-nav-link" role="menuitem" 
+                               data-focusable="true" data-nav-id="series" tabindex="-1">
+                                <span class="tv-nav-icon">📺</span>
+                                <span>Series</span>
+                            </a>
+                        </li>
+                        <li class="tv-nav-item" role="none">
+                            <a href="#categories" class="tv-nav-link" role="menuitem" 
+                               data-focusable="true" data-nav-id="categories" tabindex="-1">
+                                <span class="tv-nav-icon">📁</span>
+                                <span>Categorías</span>
+                            </a>
+                        </li>
+                    </ul>
                     
-                    if (chunkResponse.ok) {
-                        const data = await chunkResponse.json();
-                        this.processData(data);
-                    }
-                } catch (e) {
-                    console.error('Error chunk:', e);
-                }
-            }
+                    <div class="tv-nav-title">Personal</div>
+                    <ul class="tv-nav-section" role="menubar">
+                        <li class="tv-nav-item" role="none">
+                            <a href="#mylist" class="tv-nav-link" role="menuitem" 
+                               data-focusable="true" data-nav-id="mylist" tabindex="-1">
+                                <span class="tv-nav-icon">❤️</span>
+                                <span>Mi Lista</span>
+                            </a>
+                        </li>
+                        <li class="tv-nav-item" role="none">
+                            <a href="#continue" class="tv-nav-link" role="menuitem" 
+                               data-focusable="true" data-nav-id="continue" tabindex="-1">
+                                <span class="tv-nav-icon">▶️</span>
+                                <span>Continuar</span>
+                            </a>
+                        </li>
+                        <li class="tv-nav-item" role="none">
+                            <a href="#settings" class="tv-nav-link" role="menuitem" 
+                               data-focusable="true" data-nav-id="settings" tabindex="-1">
+                                <span class="tv-nav-icon">⚙️</span>
+                                <span>Ajustes</span>
+                            </a>
+                        </li>
+                    </ul>
+                </nav>
+            </aside>
             
-            this.updateStatus('Conectado');
+            <!-- Header -->
+            <header class="tv-header" id="tv-header">
+                <div class="tv-search" role="search">
+                    <span class="tv-search-icon">🔍</span>
+                    <input type="search" 
+                           class="tv-search-input" 
+                           placeholder="Buscar películas, series, actores..." 
+                           aria-label="Buscar contenido"
+                           data-focusable="true"
+                           tabindex="-1">
+                </div>
+                
+                <div class="tv-header-actions">
+                    <button class="tv-header-button" 
+                            data-focusable="true" 
+                            tabindex="-1" 
+                            aria-label="Notificaciones">
+                        <span>🔔</span>
+                    </button>
+                    <button class="tv-header-button" 
+                            data-focusable="true" 
+                            tabindex="-1" 
+                            aria-label="Perfil">
+                        <span>👤</span>
+                    </button>
+                </div>
+            </header>
             
-        } catch (error) {
-            // Cargar demo si falla
-            this.loadDemo();
-        }
-    }
-    
-    processData(data) {
-        const items = data.movies || data.series || [];
-        
-        items.forEach(item => {
-            this.movies.push({
-                id: item.id || Date.now(),
-                title: item.t || item.title || 'Sin título',
-                url: item.l || item.url || '#',
-                year: item.y || item.year || 2024,
-                poster: item.p || item.poster || this.defaultPoster(),
-                quality: item.q || item.calidad || 'HD'
-            });
-        });
-    }
-    
-    loadDemo() {
-        // Generar películas demo
-        for (let year = 2024; year >= 2020; year--) {
-            for (let i = 1; i <= 10; i++) {
-                this.movies.push({
-                    id: `${year}_${i}`,
-                    title: `Película ${i}`,
-                    url: '#demo',
-                    year: year,
-                    poster: this.defaultPoster(),
-                    quality: 'HD'
-                });
-            }
-        }
-        
-        this.updateStatus('Modo Demo');
-    }
-    
-    organize() {
-        // Organizar por año
-        this.movies.forEach(movie => {
-            const year = movie.year;
-            if (!this.organized[year]) {
-                this.organized[year] = [];
-            }
-            this.organized[year].push(movie);
-        });
-    }
-    
-    render() {
-        const container = document.getElementById('container');
-        
-        if (this.movies.length === 0) {
-            this.showEmpty();
-            return;
-        }
-        
-        container.innerHTML = '';
-        this.rows = [];
-        
-        // Ordenar años
-        const years = Object.keys(this.organized).sort((a, b) => b - a);
-        
-        years.forEach(year => {
-            const section = document.createElement('div');
-            section.className = 'section';
+            <!-- Main Content Area -->
+            <main class="tv-main" id="tv-main" role="main">
+                <div class="tv-content" id="tv-content" data-virtual-scroll="true">
+                    <!-- Dynamic content will be loaded here -->
+                </div>
+            </main>
             
-            const title = document.createElement('h2');
-            title.className = 'section-title';
-            title.textContent = year;
-            
-            const row = document.createElement('div');
-            row.className = 'movies-row';
-            row.dataset.row = this.rows.length;
-            
-            this.organized[year].forEach((movie, index) => {
-                const card = this.createCard(movie, this.rows.length, index);
-                row.appendChild(card);
-            });
-            
-            section.appendChild(title);
-            section.appendChild(row);
-            container.appendChild(section);
-            
-            this.rows.push(row);
-        });
-        
-        // Focus inicial
-        if (this.rows.length > 0) {
-            const firstCard = this.rows[0].querySelector('.movie-card');
-            if (firstCard) firstCard.focus();
-        }
-    }
-    
-    createCard(movie, row, col) {
-        const card = document.createElement('div');
-        card.className = 'movie-card';
-        card.tabIndex = 0;
-        card.dataset.row = row;
-        card.dataset.col = col;
-        card.dataset.url = movie.url;
-        
-        card.innerHTML = `
-            <div class="movie-poster">
-                <img src="${movie.poster}" alt="${movie.title}" 
-                     onerror="this.src='${this.defaultPoster()}'">
-                <span class="quality">${movie.quality}</span>
+            <!-- Player Bar (initially hidden) -->
+            <div class="tv-player hidden" id="tv-player" role="complementary" aria-label="Reproductor">
+                <div class="tv-player-track">
+                    <div class="tv-player-cover">
+                        <img src="/images/placeholder.jpg" alt="" id="player-cover">
+                    </div>
+                    <div class="tv-player-info">
+                        <div class="tv-player-title" id="player-title">—</div>
+                        <div class="tv-player-artist" id="player-artist">—</div>
+                    </div>
+                </div>
+                
+                <div class="tv-player-controls">
+                    <div class="tv-player-buttons">
+                        <button class="tv-player-button" 
+                                data-focusable="true" 
+                                data-action="previous" 
+                                aria-label="Anterior">
+                            <span>⏮️</span>
+                        </button>
+                        <button class="tv-player-button primary" 
+                                data-focusable="true" 
+                                data-action="play" 
+                                aria-label="Reproducir">
+                            <span>▶️</span>
+                        </button>
+                        <button class="tv-player-button" 
+                                data-focusable="true" 
+                                data-action="next" 
+                                aria-label="Siguiente">
+                            <span>⏭️</span>
+                        </button>
+                    </div>
+                    
+                    <div class="tv-player-progress">
+                        <span class="tv-player-time" id="player-current">0:00</span>
+                        <div class="tv-progress-bar">
+                            <div class="tv-progress-bar-buffered" id="player-buffered"></div>
+                            <div class="tv-progress-bar-fill" id="player-progress"></div>
+                        </div>
+                        <span class="tv-player-time" id="player-duration">0:00</span>
+                    </div>
+                </div>
+                
+                <div class="tv-player-volume">
+                    <button class="tv-player-button" 
+                            data-focusable="true" 
+                            data-action="mute" 
+                            aria-label="Silenciar">
+                        <span>🔊</span>
+                    </button>
+                    <div class="tv-volume-slider">
+                        <div class="tv-volume-fill" id="player-volume"></div>
+                    </div>
+                </div>
             </div>
-            <div class="movie-info">
-                <div class="movie-title">${movie.title}</div>
-                <div class="movie-meta">${movie.year}</div>
+        </div>
+    </div>
+    
+    <!-- Hidden Elements -->
+    <!-- Error Modal -->
+    <div class="tv-modal" id="error-modal" role="alertdialog" aria-hidden="true">
+        <div class="tv-modal-content">
+            <div class="tv-modal-header">
+                <h2 class="tv-modal-title">Error</h2>
+                <button class="tv-modal-close" data-focusable="true" aria-label="Cerrar">✕</button>
             </div>
-        `;
-        
-        return card;
-    }
+            <div class="tv-modal-body">
+                <p class="error-message"></p>
+            </div>
+        </div>
+    </div>
     
-    setupNavigation() {
-        document.addEventListener('keydown', (e) => {
-            this.handleKeyPress(e);
-        });
-        
-        // Click para reproducir
-        document.addEventListener('click', (e) => {
-            const card = e.target.closest('.movie-card');
-            if (card) {
-                this.play(card.dataset.url);
-            }
-        });
-    }
+    <!-- Notification Container -->
+    <div id="notification-container" aria-live="polite" aria-atomic="true"></div>
     
-    handleKeyPress(e) {
-        const key = e.key;
-        
-        switch(key) {
-            case 'ArrowRight':
-                e.preventDefault();
-                this.navigate(0, 1);
-                break;
-                
-            case 'ArrowLeft':
-                e.preventDefault();
-                this.navigate(0, -1);
-                break;
-                
-            case 'ArrowDown':
-                e.preventDefault();
-                this.navigate(1, 0);
-                break;
-                
-            case 'ArrowUp':
-                e.preventDefault();
-                this.navigate(-1, 0);
-                break;
-                
-            case 'Enter':
-                e.preventDefault();
-                const focused = document.activeElement;
-                if (focused && focused.classList.contains('movie-card')) {
-                    this.play(focused.dataset.url);
-                }
-                break;
-                
-            case 'Escape':
-            case 'Backspace':
-                e.preventDefault();
-                if (confirm('¿Salir?')) {
-                    window.history.back();
-                }
-                break;
-        }
-    }
-    
-    navigate(rowDelta, colDelta) {
-        if (this.rows.length === 0) return;
-        
-        // Calcular nueva posición
-        let newRow = this.currentFocus.row + rowDelta;
-        let newCol = this.currentFocus.col + colDelta;
-        
-        // Validar límites de filas
-        if (newRow < 0) newRow = 0;
-        if (newRow >= this.rows.length) newRow = this.rows.length - 1;
-        
-        const row = this.rows[newRow];
-        const cards = row.querySelectorAll('.movie-card');
-        
-        // Validar límites de columnas
-        if (newCol < 0) newCol = 0;
-        if (newCol >= cards.length) newCol = cards.length - 1;
-        
-        // Actualizar focus
-        this.currentFocus.row = newRow;
-        this.currentFocus.col = newCol;
-        
-        // Aplicar focus
-        const target = cards[newCol];
-        if (target) {
-            target.focus();
-            
-            // Scroll horizontal
-            const rowElement = row;
-            const cardRect = target.getBoundingClientRect();
-            const rowRect = rowElement.getBoundingClientRect();
-            
-            if (cardRect.left < rowRect.left) {
-                rowElement.scrollLeft -= rowRect.left - cardRect.left + 20;
-            } else if (cardRect.right > rowRect.right) {
-                rowElement.scrollLeft += cardRect.right - rowRect.right + 20;
-            }
-            
-            // Scroll vertical
-            target.scrollIntoView({ 
-                behavior: 'smooth', 
-                block: 'center' 
+    <!-- Service Worker Registration -->
+    <script>
+        // Register service worker immediately
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('/workers/service-worker.js')
+                    .then(reg => console.log('Service Worker registered:', reg))
+                    .catch(err => console.error('Service Worker registration failed:', err));
             });
         }
-    }
-    
-    play(url) {
-        if (!url || url === '#' || url === '#demo') {
-            this.showMessage('Película de demostración');
-            return;
-        }
         
-        // Abrir reproductor
-        window.open(url, '_blank');
-    }
-    
-    showMessage(text) {
-        const msg = document.getElementById('message');
-        msg.textContent = text;
-        msg.classList.add('show');
+        // Detect TV platform
+        const detectTVPlatform = () => {
+            const ua = navigator.userAgent.toLowerCase();
+            if (ua.includes('webos')) return 'webos';
+            if (ua.includes('tizen')) return 'tizen';
+            if (ua.includes('androidtv')) return 'androidtv';
+            if (ua.includes('appletv')) return 'appletv';
+            if (ua.includes('roku')) return 'roku';
+            return 'generic';
+        };
         
-        setTimeout(() => {
-            msg.classList.remove('show');
-        }, 2000);
-    }
+        // Set platform class
+        document.documentElement.setAttribute('data-platform', detectTVPlatform());
+        
+        // Handle theme
+        const theme = localStorage.getItem('theme') || 'dark';
+        document.documentElement.setAttribute('data-theme', theme);
+        
+        // Prevent right-click on TV
+        document.addEventListener('contextmenu', e => e.preventDefault());
+    </script>
     
-    updateStatus(text) {
-        document.getElementById('status').textContent = text;
-    }
+    <!-- Main Application Scripts -->
+    <script type="module" src="/js/app.js"></script>
     
-    hideLoader() {
-        document.getElementById('loader').classList.add('hide');
-    }
-    
-    showEmpty() {
-        document.getElementById('empty').classList.add('show');
-        document.getElementById('container').style.display = 'none';
-        this.hideLoader();
-    }
-    
-    defaultPoster() {
-        return 'data:image/svg+xml,' + encodeURIComponent(`
-            <svg xmlns="http://www.w3.org/2000/svg" width="200" height="300">
-                <rect width="200" height="300" fill="#1a1a1a"/>
-                <text x="100" y="150" font-size="48" fill="#333" text-anchor="middle">🎬</text>
-            </svg>
-        `);
-    }
-}
-
-// INICIAR
-window.addEventListener('DOMContentLoaded', () => {
-    new FireTVApp();
-});
-</script>
-
+    <!-- Performance Monitoring -->
+    <script>
+        // Basic performance monitoring
+        window.addEventListener('load', () => {
+            const perfData = performance.getEntriesByType('navigation')[0];
+            if (perfData) {
+                console.log('Page Load Time:', perfData.loadEventEnd - perfData.fetchStart, 'ms');
+            }
+        });
+    </script>
 </body>
 </html>
