@@ -1,0 +1,236 @@
+name: 🚀 Release FireTV App
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version to release (e.g., 1.0.0)'
+        required: true
+        type: string
+
+permissions:
+  contents: write
+  discussions: write
+
+jobs:
+  release:
+    name: Create Release
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        fetch-depth: 0
+    
+    # Setup Java
+    - name: ☕ Setup JDK 11
+      uses: actions/setup-java@v4
+      with:
+        java-version: '11'
+        distribution: 'temurin'
+        cache: 'gradle'
+    
+    # Create local.properties
+    - name: 📝 Create local.properties
+      run: echo "sdk.dir=$ANDROID_HOME" > local.properties
+    
+    # Setup assets
+    - name: 📂 Setup Assets
+      env:
+        CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        DISCORD_WEBHOOK: ${{ secrets.DISCORD_WEBHOOK }}
+      run: |
+        mkdir -p app/src/main/assets
+        
+        # Config con tokens de producción
+        cat > app/src/main/assets/config.json << EOF
+        {
+          "cloudflare_token": "${CLOUDFLARE_TOKEN}",
+          "discord_webhook": "${DISCORD_WEBHOOK}",
+          "github_repo": "${{ github.repository }}",
+          "debug_mode": false
+        }
+        EOF
+        
+        # Copiar JSONs de contenido
+        cp content/*.json app/src/main/assets/ 2>/dev/null || true
+    
+    # Build APKs
+    - name: 🔨 Build Release APK
+      run: |
+        chmod +x gradlew
+        ./gradlew clean assembleRelease --no-daemon
+    
+    # Sign APK (Opcional)
+    - name: 🔐 Sign APK
+      if: env.KEYSTORE_BASE64 != ''
+      env:
+        KEYSTORE_BASE64: ${{ secrets.KEYSTORE_BASE64 }}
+        KEYSTORE_PASSWORD: ${{ secrets.KEYSTORE_PASSWORD }}
+        KEY_ALIAS: ${{ secrets.KEY_ALIAS }}
+        KEY_PASSWORD: ${{ secrets.KEY_PASSWORD }}
+      run: |
+        echo $KEYSTORE_BASE64 | base64 -d > keystore.jks
+        
+        # Usar apksigner para firmar
+        $ANDROID_HOME/build-tools/34.0.0/apksigner sign \
+          --ks keystore.jks \
+          --ks-pass pass:$KEYSTORE_PASSWORD \
+          --ks-key-alias $KEY_ALIAS \
+          --key-pass pass:$KEY_PASSWORD \
+          --out app/build/outputs/apk/release/app-release-signed.apk \
+          app/build/outputs/apk/release/app-release-unsigned.apk
+        
+        rm keystore.jks
+    
+    # Get version
+    - name: 🏷️ Get Version
+      id: version
+      run: |
+        if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          VERSION="v${{ github.event.inputs.version }}"
+        else
+          VERSION=${GITHUB_REF#refs/tags/}
+        fi
+        echo "version=$VERSION" >> $GITHUB_OUTPUT
+        echo "Version: $VERSION"
+    
+    # Generate changelog
+    - name: 📝 Generate Changelog
+      id: changelog
+      run: |
+        PREVIOUS_TAG=$(git describe --tags --abbrev=0 HEAD^ 2>/dev/null || echo "")
+        if [ -z "$PREVIOUS_TAG" ]; then
+          CHANGELOG="Initial Release"
+        else
+          CHANGELOG=$(git log ${PREVIOUS_TAG}..HEAD --pretty=format:"- %s" --no-merges)
+        fi
+        
+        # Guardar en archivo
+        cat > CHANGELOG.md << EOF
+        ## What's Changed
+        
+        $CHANGELOG
+        
+        ## Installation
+        
+        1. Enable Developer Mode on Fire TV
+        2. Enable ADB Debugging
+        3. Install using ADB:
+        \`\`\`bash
+        adb connect YOUR_FIRETV_IP:5555
+        adb install FireTV-Streaming-${{ steps.version.outputs.version }}.apk
+        \`\`\`
+        
+        ## Features
+        - 🔐 Cloudflare + Discord Authentication
+        - 📺 Optimized for Fire TV Remote
+        - 🎬 Stream Movies and Series
+        - 🔄 Auto-update Content from GitHub
+        EOF
+        
+        echo "changelog<<EOF" >> $GITHUB_OUTPUT
+        cat CHANGELOG.md >> $GITHUB_OUTPUT
+        echo "EOF" >> $GITHUB_OUTPUT
+    
+    # Rename APK
+    - name: 📦 Prepare Release Files
+      run: |
+        VERSION=${{ steps.version.outputs.version }}
+        
+        if [ -f app/build/outputs/apk/release/app-release-signed.apk ]; then
+          mv app/build/outputs/apk/release/app-release-signed.apk \
+             FireTV-Streaming-${VERSION}.apk
+        else
+          mv app/build/outputs/apk/release/app-release-unsigned.apk \
+             FireTV-Streaming-${VERSION}.apk
+        fi
+        
+        # Create installation script
+        cat > install.sh << 'EOF'
+        #!/bin/bash
+        echo "FireTV Streaming App Installer"
+        echo "=============================="
+        read -p "Enter Fire TV IP address: " FIRETV_IP
+        echo "Connecting to Fire TV..."
+        adb connect ${FIRETV_IP}:5555
+        echo "Installing app..."
+        adb install -r FireTV-Streaming-*.apk
+        echo "Installation complete!"
+        echo "Starting app..."
+        adb shell am start -n com.streaming.firetv/.MainActivity
+        EOF
+        chmod +x install.sh
+        
+        # Create install.bat for Windows
+        cat > install.bat << 'EOF'
+        @echo off
+        echo FireTV Streaming App Installer
+        echo ==============================
+        set /p FIRETV_IP="Enter Fire TV IP address: "
+        echo Connecting to Fire TV...
+        adb connect %FIRETV_IP%:5555
+        echo Installing app...
+        adb install -r FireTV-Streaming-*.apk
+        echo Installation complete!
+        echo Starting app...
+        adb shell am start -n com.streaming.firetv/.MainActivity
+        pause
+        EOF
+    
+    # Create Release
+    - name: 🚀 Create GitHub Release
+      uses: softprops/action-gh-release@v1
+      with:
+        tag_name: ${{ steps.version.outputs.version }}
+        name: FireTV Streaming ${{ steps.version.outputs.version }}
+        body: ${{ steps.changelog.outputs.changelog }}
+        draft: false
+        prerelease: false
+        files: |
+          FireTV-Streaming-*.apk
+          install.sh
+          install.bat
+          CHANGELOG.md
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    
+    # Discord Notification
+    - name: 📢 Discord Notification
+      if: env.DISCORD_RELEASE_WEBHOOK != ''
+      env:
+        DISCORD_RELEASE_WEBHOOK: ${{ secrets.DISCORD_RELEASE_WEBHOOK }}
+      run: |
+        VERSION=${{ steps.version.outputs.version }}
+        DOWNLOAD_URL="https://github.com/${{ github.repository }}/releases/download/${VERSION}/FireTV-Streaming-${VERSION}.apk"
+        
+        curl -X POST $DISCORD_RELEASE_WEBHOOK \
+        -H "Content-Type: application/json" \
+        -d '{
+          "embeds": [{
+            "title": "🚀 New FireTV App Release!",
+            "description": "Version '"${VERSION}"' is now available",
+            "color": 5814783,
+            "fields": [
+              {
+                "name": "Download",
+                "value": "[FireTV-Streaming-'"${VERSION}"'.apk]('"${DOWNLOAD_URL}"')",
+                "inline": false
+              },
+              {
+                "name": "Installation",
+                "value": "```adb install FireTV-Streaming-'"${VERSION}"'.apk```",
+                "inline": false
+              }
+            ],
+            "footer": {
+              "text": "FireTV Streaming App"
+            },
+            "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%S.000Z)'"
+          }]
+        }'
