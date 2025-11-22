@@ -1,0 +1,181 @@
+name: 🔄 Update Content
+
+on:
+  schedule:
+    # Ejecutar diariamente a las 00:00 UTC
+    - cron: '0 0 * * *'
+  workflow_dispatch:
+    inputs:
+      content_type:
+        description: 'Content to update'
+        required: true
+        default: 'all'
+        type: choice
+        options:
+          - all
+          - movies
+          - series
+  push:
+    paths:
+      - 'content/*.json'
+      - 'content/manifest.json'
+
+jobs:
+  update-content:
+    name: Update Content Files
+    runs-on: ubuntu-latest
+    
+    steps:
+    # Checkout
+    - name: 📥 Checkout Repository
+      uses: actions/checkout@v4
+      with:
+        token: ${{ secrets.GITHUB_TOKEN }}
+    
+    # Validate JSON files
+    - name: ✅ Validate JSON Files
+      run: |
+        echo "Validating JSON files..."
+        for file in content/*.json; do
+          if [ -f "$file" ]; then
+            echo "Checking $file..."
+            python -m json.tool "$file" > /dev/null || exit 1
+            echo "✅ $file is valid"
+          fi
+        done
+    
+    # Update manifest
+    - name: 📝 Update Manifest
+      run: |
+        cd content
+        
+        # Count total items
+        MOVIE_COUNT=$(grep -c '"id"' movies.json 2>/dev/null || echo 0)
+        SERIES_COUNT=$(grep -c '"id"' series.json 2>/dev/null || echo 0)
+        TOTAL_ITEMS=$((MOVIE_COUNT + SERIES_COUNT))
+        
+        # Update manifest.json
+        cat > manifest.json << EOF
+        {
+          "version": "1.0.${{ github.run_number }}",
+          "chunks": [
+            "movies.json",
+            "series.json"
+          ],
+          "totalItems": $TOTAL_ITEMS,
+          "lastUpdate": "$(date -u +%Y-%m-%d)",
+          "categories": [
+            {
+              "id": "movies",
+              "title": "Movies",
+              "count": $MOVIE_COUNT
+            },
+            {
+              "id": "series", 
+              "title": "TV Series",
+              "count": $SERIES_COUNT
+            }
+          ]
+        }
+        EOF
+        
+        echo "Manifest updated with $TOTAL_ITEMS total items"
+    
+    # Optimize images
+    - name: 🖼️ Optimize Thumbnail URLs
+      run: |
+        # Verificar que las URLs de thumbnails sean válidas
+        for file in content/*.json; do
+          if [ -f "$file" ]; then
+            # Extraer y validar URLs
+            grep -o '"thumbnail"[[:space:]]*:[[:space:]]*"[^"]*"' "$file" | \
+            cut -d'"' -f4 | while read url; do
+              if [[ ! "$url" =~ ^https?:// ]]; then
+                echo "⚠️ Invalid URL in $file: $url"
+              fi
+            done
+          fi
+        done
+    
+    # Create CDN cache purge list
+    - name: 🔄 Prepare CDN Purge
+      id: cdn_purge
+      run: |
+        echo "Files to purge from CDN:"
+        echo "- /content/manifest.json"
+        echo "- /content/movies.json"
+        echo "- /content/series.json"
+        
+        # Si usas Cloudflare
+        if [ ! -z "${{ secrets.CLOUDFLARE_TOKEN }}" ]; then
+          echo "purge_needed=true" >> $GITHUB_OUTPUT
+        fi
+    
+    # Purge Cloudflare Cache (opcional)
+    - name: 🧹 Purge Cloudflare Cache
+      if: steps.cdn_purge.outputs.purge_needed == 'true'
+      env:
+        CLOUDFLARE_TOKEN: ${{ secrets.CLOUDFLARE_TOKEN }}
+        CLOUDFLARE_ZONE: ${{ secrets.CLOUDFLARE_ZONE }}
+      run: |
+        curl -X POST "https://api.cloudflare.com/client/v4/zones/${CLOUDFLARE_ZONE}/purge_cache" \
+          -H "Authorization: Bearer ${CLOUDFLARE_TOKEN}" \
+          -H "Content-Type: application/json" \
+          --data '{
+            "files": [
+              "https://raw.githubusercontent.com/${{ github.repository }}/main/content/manifest.json",
+              "https://raw.githubusercontent.com/${{ github.repository }}/main/content/movies.json",
+              "https://raw.githubusercontent.com/${{ github.repository }}/main/content/series.json"
+            ]
+          }'
+    
+    # Commit changes if any
+    - name: 💾 Commit Changes
+      run: |
+        git config --local user.email "action@github.com"
+        git config --local user.name "GitHub Action"
+        
+        if [ -n "$(git status --porcelain)" ]; then
+          git add content/*.json
+          git commit -m "🔄 Auto-update content files [skip ci]"
+          git push
+        else
+          echo "No changes to commit"
+        fi
+    
+    # Discord notification
+    - name: 📢 Discord Notification
+      if: env.DISCORD_CONTENT_WEBHOOK != ''
+      env:
+        DISCORD_CONTENT_WEBHOOK: ${{ secrets.DISCORD_CONTENT_WEBHOOK }}
+      run: |
+        curl -X POST $DISCORD_CONTENT_WEBHOOK \
+        -H "Content-Type: application/json" \
+        -d '{
+          "embeds": [{
+            "title": "📺 Content Updated",
+            "description": "FireTV app content has been updated",
+            "color": 65280,
+            "fields": [
+              {
+                "name": "Version",
+                "value": "1.0.${{ github.run_number }}",
+                "inline": true
+              },
+              {
+                "name": "Type",
+                "value": "${{ github.event.inputs.content_type || 'auto' }}",
+                "inline": true
+              }
+            ],
+            "timestamp": "'$(date -u +%Y-%m-%dT%H:%M:%S.000Z)'"
+          }]
+        }'
+    
+    # Summary
+    - name: 📊 Update Summary
+      run: |
+        echo "## Content Update Summary" >> $GITHUB_STEP_SUMMARY
+        echo "- **Version:** 1.0.${{ github.run_number }}" >> $GITHUB_STEP_SUMMARY
+        echo "- **Updated:** $(date -u +%Y-%m-%d)" >> $GITHUB_STEP_SUMMARY
+        echo "- **Status:** ✅ Success" >> $GITHUB_STEP_SUMMARY
