@@ -1,0 +1,35 @@
+{
+  "name": "tv-cinema-app",
+  "version": "1.0.0",
+  "description": "Smart TV Cinema Application",
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev-server.js",
+    "build": "NODE_ENV=production node scripts/build.js",
+    "build:dev": "NODE_ENV=development node scripts/build.js",
+    "chunks": "node scripts/generate-chunks.js",
+    "images": "node scripts/optimize-images.js",
+    "analyze": "NODE_ENV=production ANALYZE=true node scripts/build.js",
+    "clean": "rm -rf dist",
+    "serve": "npx serve dist -p 3000",
+    "test": "jest",
+    "lint": "eslint js/**/*.js",
+    "format": "prettier --write ."
+  },
+  "dependencies": {
+    "sharp": "^0.32.0",
+    "esbuild": "^0.19.0",
+    "clean-css": "^5.3.0",
+    "html-minifier-terser": "^7.2.0"
+  },
+  "devDependencies": {
+    "chalk": "^5.3.0",
+    "ora": "^7.0.0",
+    "p-limit": "^5.0.0",
+    "imagemin": "^8.0.0",
+    "imagemin-webp": "^8.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.0",
+    "blurhash": "^2.0.0"
+  }
+}
