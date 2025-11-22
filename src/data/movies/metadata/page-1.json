@@ -1,1 +1,351 @@
-
+{
+  "page": 1,
+  "totalPages": 50,
+  "itemsPerPage": 50,
+  "totalItems": 2500,
+  "generatedAt": "2024-01-15T10:00:00Z",
+  "items": [
+    {
+      "id": "movie_001",
+      "title": "La Gran Aventura",
+      "originalTitle": "The Great Adventure",
+      "slug": "la-gran-aventura-2024",
+      "year": 2024,
+      "duration": 148,
+      "rating": 8.5,
+      "votes": 125430,
+      "popularity": 95.8,
+      "releaseDate": "2024-01-12",
+      "synopsis": "Una épica aventura que sigue a un grupo de exploradores en su búsqueda del tesoro perdido más grande de la historia.",
+      "tagline": "El destino los unió, la aventura los hizo leyenda",
+      "categories": ["action", "adventure", "thriller"],
+      "director": {
+        "id": "dir_001",
+        "name": "Christopher Anderson",
+        "photo": "/data/people/directors/christopher-anderson.jpg"
+      },
+      "cast": [
+        {
+          "id": "act_001",
+          "name": "John Smith",
+          "character": "Jack Hunter",
+          "order": 1,
+          "photo": "/data/people/actors/john-smith.jpg"
+        },
+        {
+          "id": "act_002",
+          "name": "Emma Watson",
+          "character": "Sarah Connor",
+          "order": 2,
+          "photo": "/data/people/actors/emma-watson.jpg"
+        },
+        {
+          "id": "act_003",
+          "name": "Michael Johnson",
+          "character": "Dr. Roberts",
+          "order": 3,
+          "photo": "/data/people/actors/michael-johnson.jpg"
+        }
+      ],
+      "images": {
+        "thumbnail": {
+          "webp": "/thumbnails/movie_001_300x450.webp",
+          "jpg": "/thumbnails/movie_001_300x450.jpg",
+          "blurhash": "L6PZfSi_.AyE_3t7t7R**0o#DgR4"
+        },
+        "poster": {
+          "webp": "/posters/movie_001_600x900.webp",
+          "jpg": "/posters/movie_001_600x900.jpg",
+          "blurhash": "L6PZfSi_.AyE_3t7t7R**0o#DgR4"
+        },
+        "backdrop": {
+          "webp": "/backdrops/movie_001_1920x1080.webp",
+          "jpg": "/backdrops/movie_001_1920x1080.jpg",
+          "blurhash": "L6PZfSi_.AyE_3t7t7R**0o#DgR4"
+        },
+        "hero": {
+          "webp": "/heroes/movie_001_3840x2160.webp",
+          "jpg": "/heroes/movie_001_3840x2160.jpg",
+          "blurhash": "L6PZfSi_.AyE_3t7t7R**0o#DgR4"
+        }
+      },
+      "videos": {
+        "trailer": {
+          "id": "trailer_001",
+          "url": "/api/video/trailer_001",
+          "duration": 150,
+          "thumbnail": "/thumbnails/trailer_001.jpg"
+        },
+        "teaser": {
+          "id": "teaser_001",
+          "url": "/api/video/teaser_001",
+          "duration": 30,
+          "thumbnail": "/thumbnails/teaser_001.jpg"
+        }
+      },
+      "streaming": {
+        "available": true,
+        "url": "/api/stream/movie_001",
+        "qualities": ["4k", "1080p", "720p", "480p"],
+        "subtitles": [
+          {
+            "language": "es",
+            "label": "Español",
+            "url": "/subtitles/movie_001_es.vtt"
+          },
+          {
+            "language": "en",
+            "label": "English",
+            "url": "/subtitles/movie_001_en.vtt"
+          }
+        ],
+        "audio": [
+          {
+            "language": "es",
+            "label": "Español",
+            "type": "5.1"
+          },
+          {
+            "language": "en",
+            "label": "English",
+            "type": "5.1"
+          }
+        ]
+      },
+      "metadata": {
+        "contentRating": "PG-13",
+        "country": "USA",
+        "language": "en",
+        "studio": "Universal Pictures",
+        "budget": 150000000,
+        "revenue": 450000000,
+        "keywords": ["adventure", "treasure", "action", "jungle", "mystery"],
+        "awards": [
+          {
+            "name": "Oscar",
+            "category": "Best Visual Effects",
+            "year": 2024,
+            "won": true
+          }
+        ]
+      },
+      "social": {
+        "imdbId": "tt1234567",
+        "tmdbId": 123456,
+        "website": "https://thegreatadventure.movie",
+        "facebook": "thegreatadventure",
+        "twitter": "greatadventure",
+        "instagram": "thegreatadventuremovie"
+      },
+      "userInteraction": {
+        "watchlist": false,
+        "favorite": false,
+        "watched": false,
+        "rating": null,
+        "progress": 0
+      }
+    },
+    {
+      "id": "movie_002",
+      "title": "Código Quantum",
+      "originalTitle": "Quantum Code",
+      "slug": "codigo-quantum-2024",
+      "year": 2024,
+      "duration": 135,
+      "rating": 7.9,
+      "votes": 98234,
+      "popularity": 88.2,
+      "releaseDate": "2024-01-05",
+      "synopsis": "Un thriller de ciencia ficción sobre un programador que descubre una conspiración global mientras desarrolla una IA revolucionaria.",
+      "tagline": "El futuro está en el código",
+      "categories": ["scifi", "thriller", "drama"],
+      "director": {
+        "id": "dir_002",
+        "name": "Sofia Martinez",
+        "photo": "/data/people/directors/sofia-martinez.jpg"
+      },
+      "cast": [
+        {
+          "id": "act_004",
+          "name": "Ryan Gosling",
+          "character": "Alex Chen",
+          "order": 1,
+          "photo": "/data/people/actors/ryan-gosling.jpg"
+        },
+        {
+          "id": "act_005",
+          "name": "Zoe Saldana",
+          "character": "Dr. Maya Patel",
+          "order": 2,
+          "photo": "/data/people/actors/zoe-saldana.jpg"
+        }
+      ],
+      "images": {
+        "thumbnail": {
+          "webp": "/thumbnails/movie_002_300x450.webp",
+          "jpg": "/thumbnails/movie_002_300x450.jpg",
+          "blurhash": "L4S~x4xZ4mR$_NxZ9aoe_Nt6IpR*"
+        },
+        "poster": {
+          "webp": "/posters/movie_002_600x900.webp",
+          "jpg": "/posters/movie_002_600x900.jpg",
+          "blurhash": "L4S~x4xZ4mR$_NxZ9aoe_Nt6IpR*"
+        },
+        "backdrop": {
+          "webp": "/backdrops/movie_002_1920x1080.webp",
+          "jpg": "/backdrops/movie_002_1920x1080.jpg",
+          "blurhash": "L4S~x4xZ4mR$_NxZ9aoe_Nt6IpR*"
+        }
+      },
+      "videos": {
+        "trailer": {
+          "id": "trailer_002",
+          "url": "/api/video/trailer_002",
+          "duration": 140,
+          "thumbnail": "/thumbnails/trailer_002.jpg"
+        }
+      },
+      "streaming": {
+        "available": true,
+        "url": "/api/stream/movie_002",
+        "qualities": ["1080p", "720p", "480p"],
+        "subtitles": [
+          {
+            "language": "es",
+            "label": "Español",
+            "url": "/subtitles/movie_002_es.vtt"
+          }
+        ],
+        "audio": [
+          {
+            "language": "es",
+            "label": "Español",
+            "type": "5.1"
+          }
+        ]
+      },
+      "metadata": {
+        "contentRating": "PG-13",
+        "country": "USA",
+        "language": "en",
+        "studio": "Warner Bros",
+        "budget": 100000000,
+        "revenue": 280000000,
+        "keywords": ["ai", "technology", "conspiracy", "future", "programming"]
+      },
+      "social": {
+        "imdbId": "tt2234568",
+        "tmdbId": 234567
+      },
+      "userInteraction": {
+        "watchlist": true,
+        "favorite": false,
+        "watched": false,
+        "rating": null,
+        "progress": 0
+      }
+    },
+    {
+      "id": "movie_003",
+      "title": "El Último Verano",
+      "originalTitle": "The Last Summer",
+      "slug": "el-ultimo-verano-2024",
+      "year": 2024,
+      "duration": 112,
+      "rating": 8.2,
+      "votes": 76543,
+      "popularity": 82.5,
+      "releaseDate": "2023-12-28",
+      "synopsis": "Una conmovedora historia sobre un grupo de amigos que se reúnen para un último verano antes de tomar caminos separados.",
+      "tagline": "Algunos veranos cambian tu vida para siempre",
+      "categories": ["drama", "romance", "comedy"],
+      "director": {
+        "id": "dir_003",
+        "name": "Laura Chen",
+        "photo": "/data/people/directors/laura-chen.jpg"
+      },
+      "cast": [
+        {
+          "id": "act_006",
+          "name": "Timothée Chalamet",
+          "character": "Daniel",
+          "order": 1,
+          "photo": "/data/people/actors/timothee-chalamet.jpg"
+        },
+        {
+          "id": "act_007",
+          "name": "Anya Taylor-Joy",
+          "character": "Sophie",
+          "order": 2,
+          "photo": "/data/people/actors/anya-taylor-joy.jpg"
+        }
+      ],
+      "images": {
+        "thumbnail": {
+          "webp": "/thumbnails/movie_003_300x450.webp",
+          "jpg": "/thumbnails/movie_003_300x450.jpg",
+          "blurhash": "LKO2:N%2Tw=w]~RBVZRi};RPxuwH"
+        },
+        "poster": {
+          "webp": "/posters/movie_003_600x900.webp",
+          "jpg": "/posters/movie_003_600x900.jpg",
+          "blurhash": "LKO2:N%2Tw=w]~RBVZRi};RPxuwH"
+        },
+        "backdrop": {
+          "webp": "/backdrops/movie_003_1920x1080.webp",
+          "jpg": "/backdrops/movie_003_1920x1080.jpg",
+          "blurhash": "LKO2:N%2Tw=w]~RBVZRi};RPxuwH"
+        }
+      },
+      "videos": {
+        "trailer": {
+          "id": "trailer_003",
+          "url": "/api/video/trailer_003",
+          "duration": 120,
+          "thumbnail": "/thumbnails/trailer_003.jpg"
+        }
+      },
+      "streaming": {
+        "available": true,
+        "url": "/api/stream/movie_003",
+        "qualities": ["1080p", "720p", "480p"],
+        "subtitles": [
+          {
+            "language": "es",
+            "label": "Español",
+            "url": "/subtitles/movie_003_es.vtt"
+          }
+        ],
+        "audio": [
+          {
+            "language": "es",
+            "label": "Español",
+            "type": "stereo"
+          }
+        ]
+      },
+      "metadata": {
+        "contentRating": "PG",
+        "country": "USA",
+        "language": "en",
+        "studio": "A24",
+        "budget": 25000000,
+        "revenue": 120000000,
+        "keywords": ["summer", "friendship", "coming-of-age", "nostalgia", "youth"]
+      },
+      "social": {
+        "imdbId": "tt3234569",
+        "tmdbId": 345678
+      },
+      "userInteraction": {
+        "watchlist": false,
+        "favorite": true,
+        "watched": true,
+        "rating": 4.5,
+        "progress": 100
+      }
+    }
+  ],
+  "nextPage": "/data/movies/metadata/page-2.json",
+  "prevPage": null
+}
