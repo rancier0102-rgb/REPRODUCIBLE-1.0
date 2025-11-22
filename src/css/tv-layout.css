@@ -1,1 +1,999 @@
+/**
+ * TV Layout CSS
+ * Diseño optimizado para pantallas de televisión
+ * Distancias de visualización: 2-4 metros
+ */
 
+/* ========================================
+   Variables y configuración base
+   ======================================== */
+
+:root {
+    /* Dimensiones TV */
+    --tv-safe-zone-x: 60px;
+    --tv-safe-zone-y: 40px;
+    --tv-viewport-width: calc(100vw - (var(--tv-safe-zone-x) * 2));
+    --tv-viewport-height: calc(100vh - (var(--tv-safe-zone-y) * 2));
+    
+    /* Tamaños base para TV (legibilidad a distancia) */
+    --tv-font-size-xs: 18px;
+    --tv-font-size-sm: 22px;
+    --tv-font-size-md: 28px;
+    --tv-font-size-lg: 36px;
+    --tv-font-size-xl: 48px;
+    --tv-font-size-xxl: 64px;
+    
+    /* Espaciado */
+    --tv-spacing-xs: 8px;
+    --tv-spacing-sm: 16px;
+    --tv-spacing-md: 24px;
+    --tv-spacing-lg: 40px;
+    --tv-spacing-xl: 60px;
+    
+    /* Grid y columnas */
+    --tv-columns: 12;
+    --tv-column-gap: 24px;
+    --tv-row-gap: 32px;
+    
+    /* Focus y navegación */
+    --tv-focus-size: 4px;
+    --tv-focus-offset: 8px;
+    --tv-focus-color: #00a8ff;
+    --tv-focus-shadow: 0 0 0 var(--tv-focus-size) var(--tv-focus-color);
+    
+    /* Border radius */
+    --tv-radius-sm: 8px;
+    --tv-radius-md: 12px;
+    --tv-radius-lg: 20px;
+    --tv-radius-xl: 32px;
+    
+    /* Z-index layers */
+    --tv-z-background: 1;
+    --tv-z-content: 10;
+    --tv-z-navigation: 100;
+    --tv-z-overlay: 200;
+    --tv-z-modal: 300;
+    --tv-z-notification: 400;
+    --tv-z-focus: 500;
+}
+
+/* ========================================
+   Reset y base
+   ======================================== */
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+html {
+    font-size: 16px;
+    overflow: hidden; /* Prevenir scroll en TV */
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Helvetica', 'Arial', sans-serif;
+    font-size: var(--tv-font-size-md);
+    line-height: 1.5;
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    background: var(--color-background);
+    color: var(--color-text);
+}
+
+/* ========================================
+   TV Safe Zone
+   ======================================== */
+
+.tv-container {
+    position: absolute;
+    top: var(--tv-safe-zone-y);
+    right: var(--tv-safe-zone-x);
+    bottom: var(--tv-safe-zone-y);
+    left: var(--tv-safe-zone-x);
+    width: var(--tv-viewport-width);
+    height: var(--tv-viewport-height);
+    overflow: hidden;
+}
+
+/* Debug mode para ver safe zones */
+.tv-container.debug::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--tv-safe-zone-y) * -1);
+    right: calc(var(--tv-safe-zone-x) * -1);
+    bottom: calc(var(--tv-safe-zone-y) * -1);
+    left: calc(var(--tv-safe-zone-x) * -1);
+    border: 2px dashed rgba(255, 0, 0, 0.3);
+    pointer-events: none;
+    z-index: var(--tv-z-notification);
+}
+
+/* ========================================
+   Layout principal
+   ======================================== */
+
+.tv-layout {
+    display: grid;
+    grid-template-areas:
+        "sidebar header"
+        "sidebar main"
+        "player player";
+    grid-template-columns: 320px 1fr;
+    grid-template-rows: 100px 1fr auto;
+    height: 100%;
+    width: 100%;
+}
+
+/* Layout sin sidebar */
+.tv-layout.no-sidebar {
+    grid-template-areas:
+        "header"
+        "main"
+        "player";
+    grid-template-columns: 1fr;
+}
+
+/* Layout fullscreen (player) */
+.tv-layout.fullscreen {
+    grid-template-areas: "main";
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+}
+
+/* ========================================
+   Sidebar de navegación
+   ======================================== */
+
+.tv-sidebar {
+    grid-area: sidebar;
+    background: var(--color-surface);
+    padding: var(--tv-spacing-lg);
+    overflow-y: auto;
+    overflow-x: hidden;
+    border-right: 1px solid var(--color-border);
+}
+
+.tv-sidebar-logo {
+    display: flex;
+    align-items: center;
+    margin-bottom: var(--tv-spacing-xl);
+    height: 80px;
+}
+
+.tv-sidebar-logo img {
+    max-height: 60px;
+    width: auto;
+}
+
+.tv-nav {
+    list-style: none;
+}
+
+.tv-nav-section {
+    margin-bottom: var(--tv-spacing-lg);
+}
+
+.tv-nav-title {
+    font-size: var(--tv-font-size-sm);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    opacity: 0.6;
+    margin-bottom: var(--tv-spacing-sm);
+    padding: 0 var(--tv-spacing-md);
+}
+
+.tv-nav-item {
+    position: relative;
+    margin-bottom: var(--tv-spacing-xs);
+}
+
+.tv-nav-link {
+    display: flex;
+    align-items: center;
+    padding: var(--tv-spacing-md);
+    border-radius: var(--tv-radius-md);
+    text-decoration: none;
+    color: var(--color-text);
+    font-size: var(--tv-font-size-md);
+    font-weight: 500;
+    transition: all 0.2s ease;
+    position: relative;
+}
+
+.tv-nav-link:hover {
+    background: var(--color-surface-hover);
+}
+
+.tv-nav-link.active {
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+}
+
+.tv-nav-icon {
+    width: 32px;
+    height: 32px;
+    margin-right: var(--tv-spacing-md);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* ========================================
+   Header
+   ======================================== */
+
+.tv-header {
+    grid-area: header;
+    background: var(--color-surface);
+    padding: var(--tv-spacing-md) var(--tv-spacing-lg);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--color-border);
+}
+
+.tv-search {
+    flex: 1;
+    max-width: 600px;
+    margin: 0 var(--tv-spacing-lg);
+}
+
+.tv-search-input {
+    width: 100%;
+    padding: var(--tv-spacing-sm) var(--tv-spacing-md);
+    padding-left: 56px;
+    background: var(--color-background);
+    border: 2px solid var(--color-border);
+    border-radius: var(--tv-radius-xl);
+    font-size: var(--tv-font-size-md);
+    color: var(--color-text);
+    transition: all 0.2s ease;
+}
+
+.tv-search-input:focus {
+    outline: none;
+    border-color: var(--tv-focus-color);
+}
+
+.tv-search-icon {
+    position: absolute;
+    left: var(--tv-spacing-md);
+    top: 50%;
+    transform: translateY(-50%);
+    width: 24px;
+    height: 24px;
+    opacity: 0.5;
+}
+
+.tv-header-actions {
+    display: flex;
+    align-items: center;
+    gap: var(--tv-spacing-md);
+}
+
+/* ========================================
+   Área de contenido principal
+   ======================================== */
+
+.tv-main {
+    grid-area: main;
+    overflow: hidden;
+    position: relative;
+    background: var(--color-background);
+}
+
+.tv-content {
+    height: 100%;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: var(--tv-spacing-lg);
+    scroll-behavior: smooth;
+}
+
+/* Ocultar scrollbar pero mantener funcionalidad */
+.tv-content::-webkit-scrollbar {
+    width: 0;
+    height: 0;
+}
+
+.tv-content.show-scrollbar::-webkit-scrollbar {
+    width: 8px;
+}
+
+.tv-content.show-scrollbar::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.tv-content.show-scrollbar::-webkit-scrollbar-thumb {
+    background: var(--color-scrollbar);
+    border-radius: 4px;
+}
+
+/* ========================================
+   Grid de contenido
+   ======================================== */
+
+.tv-grid {
+    display: grid;
+    gap: var(--tv-row-gap) var(--tv-column-gap);
+}
+
+.tv-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
+}
+
+.tv-grid-3 {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.tv-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+}
+
+.tv-grid-5 {
+    grid-template-columns: repeat(5, 1fr);
+}
+
+.tv-grid-6 {
+    grid-template-columns: repeat(6, 1fr);
+}
+
+/* Responsive grid */
+.tv-grid-auto {
+    grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+}
+
+/* ========================================
+   Carrusel horizontal
+   ======================================== */
+
+.tv-carousel {
+    position: relative;
+    margin-bottom: var(--tv-spacing-xl);
+}
+
+.tv-carousel-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--tv-spacing-md);
+}
+
+.tv-carousel-title {
+    font-size: var(--tv-font-size-lg);
+    font-weight: 600;
+}
+
+.tv-carousel-controls {
+    display: flex;
+    gap: var(--tv-spacing-sm);
+}
+
+.tv-carousel-viewport {
+    overflow: hidden;
+    position: relative;
+}
+
+.tv-carousel-container {
+    display: flex;
+    gap: var(--tv-column-gap);
+    transition: transform 0.4s ease;
+}
+
+.tv-carousel-item {
+    flex: 0 0 auto;
+    width: 280px;
+}
+
+/* ========================================
+   Cards
+   ======================================== */
+
+.tv-card {
+    position: relative;
+    background: var(--color-surface);
+    border-radius: var(--tv-radius-lg);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    cursor: pointer;
+}
+
+.tv-card-media {
+    position: relative;
+    width: 100%;
+    padding-bottom: 100%; /* Aspect ratio 1:1 */
+    overflow: hidden;
+    background: var(--color-surface-alt);
+}
+
+.tv-card-media.aspect-16-9 {
+    padding-bottom: 56.25%; /* 16:9 */
+}
+
+.tv-card-media.aspect-4-3 {
+    padding-bottom: 75%; /* 4:3 */
+}
+
+.tv-card-image {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.tv-card:hover .tv-card-image {
+    transform: scale(1.05);
+}
+
+.tv-card-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: linear-gradient(to bottom, transparent 0%, rgba(0,0,0,0.8) 100%);
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.tv-card:hover .tv-card-overlay {
+    opacity: 1;
+}
+
+.tv-card-play {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0);
+    width: 80px;
+    height: 80px;
+    background: var(--color-primary);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease;
+}
+
+.tv-card:hover .tv-card-play {
+    transform: translate(-50%, -50%) scale(1);
+}
+
+.tv-card-content {
+    padding: var(--tv-spacing-md);
+}
+
+.tv-card-title {
+    font-size: var(--tv-font-size-md);
+    font-weight: 600;
+    margin-bottom: var(--tv-spacing-xs);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tv-card-subtitle {
+    font-size: var(--tv-font-size-sm);
+    opacity: 0.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+/* ========================================
+   Player bar
+   ======================================== */
+
+.tv-player {
+    grid-area: player;
+    background: var(--color-surface);
+    border-top: 1px solid var(--color-border);
+    padding: var(--tv-spacing-md) var(--tv-spacing-lg);
+    display: flex;
+    align-items: center;
+    gap: var(--tv-spacing-lg);
+    min-height: 120px;
+    z-index: var(--tv-z-navigation);
+}
+
+.tv-player-track {
+    display: flex;
+    align-items: center;
+    gap: var(--tv-spacing-md);
+    flex: 0 0 auto;
+    min-width: 300px;
+}
+
+.tv-player-cover {
+    width: 80px;
+    height: 80px;
+    border-radius: var(--tv-radius-md);
+    overflow: hidden;
+    background: var(--color-surface-alt);
+}
+
+.tv-player-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tv-player-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.tv-player-title {
+    font-size: var(--tv-font-size-md);
+    font-weight: 600;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tv-player-artist {
+    font-size: var(--tv-font-size-sm);
+    opacity: 0.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tv-player-controls {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: var(--tv-spacing-sm);
+}
+
+.tv-player-buttons {
+    display: flex;
+    align-items: center;
+    gap: var(--tv-spacing-md);
+}
+
+.tv-player-button {
+    width: 56px;
+    height: 56px;
+    border-radius: 50%;
+    background: var(--color-surface-alt);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+    color: var(--color-text);
+}
+
+.tv-player-button:hover {
+    background: var(--color-surface-hover);
+    transform: scale(1.1);
+}
+
+.tv-player-button.primary {
+    width: 72px;
+    height: 72px;
+    background: var(--color-primary);
+    color: var(--color-primary-text);
+}
+
+.tv-player-progress {
+    width: 100%;
+    max-width: 600px;
+    display: flex;
+    align-items: center;
+    gap: var(--tv-spacing-md);
+}
+
+.tv-player-time {
+    font-size: var(--tv-font-size-sm);
+    opacity: 0.7;
+    min-width: 60px;
+}
+
+.tv-progress-bar {
+    flex: 1;
+    height: 8px;
+    background: var(--color-surface-alt);
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+}
+
+.tv-progress-bar-fill {
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 4px;
+    transition: width 0.1s linear;
+}
+
+.tv-progress-bar-buffered {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 100%;
+    background: var(--color-surface-hover);
+    opacity: 0.5;
+}
+
+.tv-player-volume {
+    display: flex;
+    align-items: center;
+    gap: var(--tv-spacing-md);
+    flex: 0 0 auto;
+}
+
+.tv-volume-slider {
+    width: 120px;
+    height: 8px;
+    background: var(--color-surface-alt);
+    border-radius: 4px;
+    position: relative;
+}
+
+.tv-volume-fill {
+    height: 100%;
+    background: var(--color-primary);
+    border-radius: 4px;
+}
+
+/* ========================================
+   Listas
+   ======================================== */
+
+.tv-list {
+    list-style: none;
+}
+
+.tv-list-item {
+    display: flex;
+    align-items: center;
+    padding: var(--tv-spacing-md) var(--tv-spacing-lg);
+    border-radius: var(--tv-radius-md);
+    transition: all 0.2s ease;
+    cursor: pointer;
+    position: relative;
+}
+
+.tv-list-item:hover {
+    background: var(--color-surface-hover);
+}
+
+.tv-list-item-number {
+    flex: 0 0 auto;
+    width: 40px;
+    font-size: var(--tv-font-size-md);
+    font-weight: 600;
+    opacity: 0.5;
+}
+
+.tv-list-item-media {
+    flex: 0 0 auto;
+    width: 64px;
+    height: 64px;
+    margin-right: var(--tv-spacing-md);
+    border-radius: var(--tv-radius-sm);
+    overflow: hidden;
+    background: var(--color-surface-alt);
+}
+
+.tv-list-item-media img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.tv-list-item-content {
+    flex: 1;
+    min-width: 0;
+}
+
+.tv-list-item-title {
+    font-size: var(--tv-font-size-md);
+    font-weight: 500;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tv-list-item-subtitle {
+    font-size: var(--tv-font-size-sm);
+    opacity: 0.7;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tv-list-item-actions {
+    flex: 0 0 auto;
+    display: flex;
+    gap: var(--tv-spacing-sm);
+    opacity: 0;
+    transition: opacity 0.2s ease;
+}
+
+.tv-list-item:hover .tv-list-item-actions {
+    opacity: 1;
+}
+
+/* ========================================
+   Modales y overlays
+   ======================================== */
+
+.tv-modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: var(--tv-z-modal);
+    padding: var(--tv-safe-zone-y) var(--tv-safe-zone-x);
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.tv-modal.active {
+    opacity: 1;
+    visibility: visible;
+}
+
+.tv-modal-content {
+    background: var(--color-surface);
+    border-radius: var(--tv-radius-xl);
+    max-width: 800px;
+    width: 100%;
+    max-height: 80vh;
+    overflow-y: auto;
+    padding: var(--tv-spacing-xl);
+    transform: scale(0.9);
+    transition: transform 0.3s ease;
+}
+
+.tv-modal.active .tv-modal-content {
+    transform: scale(1);
+}
+
+.tv-modal-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: var(--tv-spacing-lg);
+}
+
+.tv-modal-title {
+    font-size: var(--tv-font-size-xl);
+    font-weight: 600;
+}
+
+.tv-modal-close {
+    width: 48px;
+    height: 48px;
+    border-radius: 50%;
+    background: var(--color-surface-alt);
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.2s ease;
+}
+
+.tv-modal-close:hover {
+    background: var(--color-surface-hover);
+    transform: scale(1.1);
+}
+
+/* ========================================
+   Focus states para navegación
+   ======================================== */
+
+[data-focusable="true"] {
+    position: relative;
+    outline: none;
+}
+
+[data-focusable="true"]::before {
+    content: '';
+    position: absolute;
+    top: calc(var(--tv-focus-offset) * -1);
+    right: calc(var(--tv-focus-offset) * -1);
+    bottom: calc(var(--tv-focus-offset) * -1);
+    left: calc(var(--tv-focus-offset) * -1);
+    border: var(--tv-focus-size) solid transparent;
+    border-radius: calc(var(--tv-radius-md) + var(--tv-focus-offset));
+    pointer-events: none;
+    transition: all 0.2s ease;
+    z-index: var(--tv-z-focus);
+}
+
+[data-focusable="true"].focused::before,
+[data-focusable="true"]:focus::before {
+    border-color: var(--tv-focus-color);
+    box-shadow: var(--tv-focus-shadow);
+}
+
+/* Focus especial para botones circulares */
+.tv-player-button[data-focusable="true"]::before {
+    border-radius: 50%;
+}
+
+/* ========================================
+   Loading states
+   ======================================== */
+
+.tv-loading {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--tv-spacing-xl);
+}
+
+.tv-spinner {
+    width: 64px;
+    height: 64px;
+    border: 4px solid var(--color-surface-alt);
+    border-top-color: var(--color-primary);
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+}
+
+.tv-skeleton {
+    background: linear-gradient(90deg, 
+        var(--color-surface-alt) 25%, 
+        var(--color-surface-hover) 50%, 
+        var(--color-surface-alt) 75%);
+    background-size: 200% 100%;
+    animation: loading 1.5s infinite;
+    border-radius: var(--tv-radius-md);
+}
+
+/* ========================================
+   Notificaciones
+   ======================================== */
+
+.tv-notification {
+    position: fixed;
+    top: calc(var(--tv-safe-zone-y) + var(--tv-spacing-lg));
+    right: calc(var(--tv-safe-zone-x) + var(--tv-spacing-lg));
+    background: var(--color-surface);
+    border-radius: var(--tv-radius-lg);
+    padding: var(--tv-spacing-md) var(--tv-spacing-lg);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    z-index: var(--tv-z-notification);
+    transform: translateX(calc(100% + var(--tv-spacing-lg)));
+    transition: transform 0.3s ease;
+    max-width: 400px;
+}
+
+.tv-notification.show {
+    transform: translateX(0);
+}
+
+.tv-notification-title {
+    font-size: var(--tv-font-size-md);
+    font-weight: 600;
+    margin-bottom: var(--tv-spacing-xs);
+}
+
+.tv-notification-message {
+    font-size: var(--tv-font-size-sm);
+    opacity: 0.8;
+}
+
+/* ========================================
+   Utilidades
+   ======================================== */
+
+.tv-hidden {
+    display: none !important;
+}
+
+.tv-invisible {
+    visibility: hidden !important;
+}
+
+.tv-text-center {
+    text-align: center;
+}
+
+.tv-text-truncate {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+.tv-mt-sm { margin-top: var(--tv-spacing-sm); }
+.tv-mt-md { margin-top: var(--tv-spacing-md); }
+.tv-mt-lg { margin-top: var(--tv-spacing-lg); }
+.tv-mt-xl { margin-top: var(--tv-spacing-xl); }
+
+.tv-mb-sm { margin-bottom: var(--tv-spacing-sm); }
+.tv-mb-md { margin-bottom: var(--tv-spacing-md); }
+.tv-mb-lg { margin-bottom: var(--tv-spacing-lg); }
+.tv-mb-xl { margin-bottom: var(--tv-spacing-xl); }
+
+/* ========================================
+   Responsive para diferentes TVs
+   ======================================== */
+
+/* HD Ready (1280x720) */
+@media (max-width: 1280px) {
+    :root {
+        --tv-font-size-md: 24px;
+        --tv-font-size-lg: 32px;
+        --tv-font-size-xl: 42px;
+    }
+    
+    .tv-layout {
+        grid-template-columns: 280px 1fr;
+    }
+    
+    .tv-grid-6 {
+        grid-template-columns: repeat(4, 1fr);
+    }
+}
+
+/* Full HD (1920x1080) - Default */
+
+/* 4K Ultra HD (3840x2160) */
+@media (min-width: 3840px) {
+    :root {
+        --tv-font-size-md: 36px;
+        --tv-font-size-lg: 48px;
+        --tv-font-size-xl: 64px;
+        --tv-safe-zone-x: 120px;
+        --tv-safe-zone-y: 80px;
+    }
+    
+    .tv-layout {
+        grid-template-columns: 480px 1fr;
+    }
+    
+    .tv-grid-6 {
+        grid-template-columns: repeat(8, 1fr);
+    }
+}
+
+/* ========================================
+   Performance optimizations
+   ======================================== */
+
+/* Usar GPU para elementos que se animan frecuentemente */
+.tv-carousel-container,
+.tv-card-image,
+.tv-modal,
+.tv-notification {
+    will-change: transform;
+    transform: translateZ(0);
+}
+
+/* Optimizar scroll */
+.tv-content {
+    -webkit-overflow-scrolling: touch;
+}
+
+/* Reducir repaints en hover */
+.tv-card,
+.tv-list-item,
+.tv-nav-link {
+    transform: translateZ(0);
+    backface-visibility: hidden;
+}
