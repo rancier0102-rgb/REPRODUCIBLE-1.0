@@ -320,4 +320,206 @@ class ImageOptimizer {
                     format,
                     path: outputPath.replace(this.config.OUTPUT_DIR, ''),
                     width: info.width,
-                    
+                    height: info.height,
+                    size: info.size
+                });
+                
+            } catch (error) {
+                console.error(chalk.red(`Error generando ${outputFilename}:`, error.message));
+            }
+        }
+    }
+
+    /**
+     * Generar Blurhash
+     */
+    async generateBlurhash(inputPath) {
+        try {
+            // Importar dinámicamente blurhash
+            const { encode } = await import('blurhash');
+            
+            // Redimensionar imagen a tamaño pequeño para blurhash
+            const { data, info } = await sharp(inputPath)
+                .resize(32, 32, { fit: 'inside' })
+                .ensureAlpha()
+                .raw()
+                .toBuffer({ resolveWithObject: true });
+            
+            // Generar blurhash
+            const blurhash = encode(
+                new Uint8ClampedArray(data),
+                info.width,
+                info.height,
+                4,
+                4
+            );
+            
+            return blurhash;
+            
+        } catch (error) {
+            console.warn('No se pudo generar blurhash:', error.message);
+            return null;
+        }
+    }
+
+    /**
+     * Generar LQIP (Low Quality Image Placeholder)
+     */
+    async generateLQIP(inputPath, basename) {
+        const outputPath = path.join(
+            this.config.OUTPUT_DIR,
+            'placeholders',
+            `${basename}_lqip.jpg`
+        );
+        
+        try {
+            await sharp(inputPath)
+                .resize(40, 60, { fit: 'inside' })
+                .blur(5)
+                .jpeg({ quality: 20 })
+                .toFile(outputPath);
+                
+            const { size } = await fs.stat(outputPath);
+            
+            this.addToManifest(basename, 'lqip', {
+                path: outputPath.replace(this.config.OUTPUT_DIR, ''),
+                size
+            });
+            
+        } catch (error) {
+            console.warn('No se pudo generar LQIP:', error.message);
+        }
+    }
+
+    /**
+     * Generar sprites para preview de video
+     */
+    async generateSprites() {
+        // Aquí se generarían sprites para preview de hover
+        // Por ahora, crear un sprite de ejemplo
+        
+        const spriteWidth = 160;
+        const spriteHeight = 90;
+        const cols = 10;
+        const rows = 10;
+        
+        const sprite = await sharp({
+            create: {
+                width: spriteWidth * cols,
+                height: spriteHeight * rows,
+                channels: 3,
+                background: '#333333'
+            }
+        })
+        .jpeg({ quality: 70 })
+        .toFile(path.join(this.config.OUTPUT_DIR, 'sprites', 'preview-sprite.jpg'));
+        
+        console.log(chalk.blue('→ Sprite de preview generado'));
+    }
+
+    /**
+     * Agregar al manifiesto
+     */
+    addToManifest(basename, type, data) {
+        let image = this.manifest.images.find(img => img.id === basename);
+        
+        if (!image) {
+            image = { id: basename };
+            this.manifest.images.push(image);
+        }
+        
+        if (!image[type]) {
+            image[type] = data;
+        } else if (Array.isArray(image[type])) {
+            image[type].push(data);
+        } else {
+            image[type] = [image[type], data];
+        }
+    }
+
+    /**
+     * Generar manifiesto
+     */
+    async generateManifest() {
+        const manifestPath = path.join(this.config.OUTPUT_DIR, 'manifest.json');
+        
+        this.manifest.stats = {
+            totalImages: stats.totalImages,
+            processedImages: stats.processedImages,
+            totalSizeBefore: stats.totalSizeBefore,
+            totalSizeAfter: stats.totalSizeAfter,
+            compressionRatio: ((1 - stats.totalSizeAfter / stats.totalSizeBefore) * 100).toFixed(2),
+            errors: stats.errors.length
+        };
+        
+        await fs.writeFile(
+            manifestPath,
+            JSON.stringify(this.manifest, null, 2),
+            'utf8'
+        );
+        
+        console.log(chalk.blue(`→ Manifiesto guardado en ${manifestPath}`));
+    }
+
+    /**
+     * Imprimir reporte
+     */
+    printReport() {
+        const duration = ((stats.endTime - stats.startTime) / 1000).toFixed(2);
+        const compressionRatio = ((1 - stats.totalSizeAfter / stats.totalSizeBefore) * 100).toFixed(2);
+        
+        console.log('\n' + chalk.cyan('═'.repeat(60)));
+        console.log(chalk.cyan.bold('🖼️  REPORTE DE OPTIMIZACIÓN DE IMÁGENES'));
+        console.log(chalk.cyan('═'.repeat(60)));
+        
+        console.log(chalk.white(`
+  ${chalk.bold('Imágenes procesadas:')}  ${chalk.green(stats.processedImages + '/' + stats.totalImages)}
+  ${chalk.bold('Tamaño original:')}      ${chalk.yellow(this.formatBytes(stats.totalSizeBefore))}
+  ${chalk.bold('Tamaño optimizado:')}    ${chalk.green(this.formatBytes(stats.totalSizeAfter))}
+  ${chalk.bold('Reducción:')}            ${chalk.green(compressionRatio + '%')}
+  ${chalk.bold('Tiempo de proceso:')}    ${chalk.blue(duration + 's')}
+  ${chalk.bold('Errores:')}              ${stats.errors.length > 0 ? chalk.red(stats.errors.length) : chalk.green('0')}
+        `));
+        
+        if (stats.errors.length > 0) {
+            console.log(chalk.red('\n  Errores:'));
+            stats.errors.forEach(err => {
+                console.log(chalk.red(`    - ${err.file}: ${err.error}`));
+            });
+        }
+        
+        console.log(chalk.cyan('═'.repeat(60)) + '\n');
+    }
+
+    /**
+     * Formatear bytes
+     */
+    formatBytes(bytes) {
+        if (bytes === 0) return '0 Bytes';
+        const k = 1024;
+        const sizes = ['Bytes', 'KB', 'MB', 'GB'];
+        const i = Math.floor(Math.log(bytes) / Math.log(k));
+        return parseFloat((bytes / Math.pow(k, i)).toFixed(2)) + ' ' + sizes[i];
+    }
+}
+
+// Función principal
+async function main() {
+    console.log(chalk.cyan.bold('\n🖼️  TV Cinema - Optimizador de Imágenes\n'));
+    
+    const optimizer = new ImageOptimizer(CONFIG);
+    await optimizer.run();
+}
+
+// Manejo de errores
+process.on('unhandledRejection', (error) => {
+    console.error(chalk.red('Error no manejado:'), error);
+    process.exit(1);
+});
+
+// Ejecutar si es el módulo principal
+if (import.meta.url === `file://${process.argv[1]}`) {
+    main();
+}
+
+export default ImageOptimizer;
