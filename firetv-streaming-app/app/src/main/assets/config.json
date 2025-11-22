@@ -1,0 +1,12 @@
+{
+    "cloudflare_token": "YOUR_CLOUDFLARE_TOKEN_HERE",
+    "cloudflare_zone": "YOUR_ZONE_ID",
+    "discord_webhook": "https://discord.com/api/webhooks/YOUR_WEBHOOK_ID/YOUR_WEBHOOK_TOKEN",
+    "discord_bot_token": "YOUR_BOT_TOKEN",
+    "github_repo": "yourusername/yourrepo",
+    "content_branch": "main",
+    "cache_duration": 3600,
+    "debug_mode": true,
+    "auto_play": false,
+    "grid_columns": 4
+}
