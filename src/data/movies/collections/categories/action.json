@@ -1,0 +1,79 @@
+{
+  "id": "action",
+  "name": "Acción",
+  "description": "Películas llenas de adrenalina, aventuras y emociones fuertes",
+  "totalMovies": 450,
+  "lastUpdate": "2024-01-15T08:00:00Z",
+  "featured": [
+    {
+      "movieId": "movie_001",
+      "featuredUntil": "2024-01-31",
+      "reason": "Nueva estreno blockbuster"
+    },
+    {
+      "movieId": "movie_089",
+      "featuredUntil": "2024-01-25",
+      "reason": "Ganadora de premios"
+    }
+  ],
+  "subcategories": [
+    {
+      "id": "action_adventure",
+      "name": "Acción y Aventura",
+      "count": 150
+    },
+    {
+      "id": "action_martial_arts",
+      "name": "Artes Marciales",
+      "count": 80
+    },
+    {
+      "id": "action_superhero",
+      "name": "Superhéroes",
+      "count": 120
+    },
+    {
+      "id": "action_war",
+      "name": "Bélicas",
+      "count": 100
+    }
+  ],
+  "filters": {
+    "years": [2024, 2023, 2022, 2021, 2020],
+    "ratings": ["G", "PG", "PG-13", "R"],
+    "duration": {
+      "min": 80,
+      "max": 180
+    },
+    "score": {
+      "min": 5.0,
+      "max": 10.0
+    }
+  },
+  "sortOptions": [
+    {
+      "id": "popularity",
+      "label": "Más populares",
+      "default": true
+    },
+    {
+      "id": "rating",
+      "label": "Mejor valoradas"
+    },
+    {
+      "id": "newest",
+      "label": "Más recientes"
+    },
+    {
+      "id": "title",
+      "label": "Alfabético"
+    }
+  ],
+  "movies": [
+    "movie_001",
+    "movie_045",
+    "movie_089",
+    "movie_234",
+    "movie_456"
+  ]
+}
