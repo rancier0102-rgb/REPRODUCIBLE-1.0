@@ -1,1 +1,33 @@
-
+<?xml version="1.0" encoding="UTF-8"?>
+<sitemapindex xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+    <!-- Sitemap Index for TV Cinema -->
+    <sitemap>
+        <loc>https://tvcinema.com/sitemap-main.xml</loc>
+        <lastmod>2024-01-15T10:00:00+00:00</lastmod>
+    </sitemap>
+    
+    <sitemap>
+        <loc>https://tvcinema.com/sitemap-movies.xml</loc>
+        <lastmod>2024-01-15T10:00:00+00:00</lastmod>
+    </sitemap>
+    
+    <sitemap>
+        <loc>https://tvcinema.com/sitemap-series.xml</loc>
+        <lastmod>2024-01-15T10:00:00+00:00</lastmod>
+    </sitemap>
+    
+    <sitemap>
+        <loc>https://tvcinema.com/sitemap-categories.xml</loc>
+        <lastmod>2024-01-15T08:00:00+00:00</lastmod>
+    </sitemap>
+    
+    <sitemap>
+        <loc>https://tvcinema.com/sitemap-images.xml</loc>
+        <lastmod>2024-01-14T10:00:00+00:00</lastmod>
+    </sitemap>
+    
+    <sitemap>
+        <loc>https://tvcinema.com/sitemap-videos.xml</loc>
+        <lastmod>2024-01-14T10:00:00+00:00</lastmod>
+    </sitemap>
+</sitemapindex>
