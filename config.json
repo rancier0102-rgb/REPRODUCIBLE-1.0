@@ -1,0 +1,11 @@
+{
+  "servers": [
+    {
+      "name": "Server1",
+      "host": "http://1tv41.icu:8080",
+      "username": "tandphunt1@gmail.com",
+      "password": "AAn4BJhH7f"
+    }
+  ],
+  "output": "output/playlist.m3u"
+}
