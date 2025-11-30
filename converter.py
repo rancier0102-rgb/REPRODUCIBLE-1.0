@@ -18,6 +18,11 @@ with open('output/playlist.m3u', 'w') as f:
             parts = line.split(',', 1)
             name = parts[0]
             url = parts[1]
+            
+            # Agregar .m3u8 si no tiene extension
+            if not url.endswith('.m3u8') and not url.endswith('.ts'):
+                url = url + '.m3u8'
+            
             f.write(f'#EXTINF:-1,{name}\n')
             f.write(f'{url}\n')
             print(f'+ {name}')
