@@ -1,48 +1,25 @@
-import json
 import os
 from datetime import datetime
 
 print("Iniciando...")
 
-# Crear carpeta
-if not os.path.exists('output'):
-    os.makedirs('output')
-    print("Carpeta output creada")
+os.makedirs('output', exist_ok=True)
 
-# Leer config
-print("Leyendo config.json...")
-f = open('config.json', 'r')
-data = f.read()
-f.close()
-print("Config leido")
+with open('channels.txt', 'r') as f:
+    lines = f.readlines()
 
-config = json.loads(data)
-channels = config.get('channels', [])
-print(f"Canales: {len(channels)}")
-
-# Escribir M3U
-output_file = 'output/playlist.m3u'
-print(f"Escribiendo: {output_file}")
-
-f = open(output_file, 'w')
-f.write('#EXTM3U\n')
-f.write(f'# Generado: {datetime.now()}\n')
-f.write(f'# Total: {len(channels)} canales\n\n')
-
-for ch in channels:
-    title = ch.get('title', 'Sin nombre')
-    logo = ch.get('logo', '')
-    url = ch.get('url', '')
+with open('output/playlist.m3u', 'w') as f:
+    f.write('#EXTM3U\n')
+    f.write(f'# Generado: {datetime.now()}\n\n')
     
-    line = '#EXTINF:-1'
-    if logo:
-        line = line + f' tvg-logo="{logo}"'
-    line = line + f',{title}\n'
-    
-    f.write(line)
-    f.write(url + '\n')
-    print(f"Agregado: {title}")
-
-f.close()
+    for line in lines:
+        line = line.strip()
+        if line and ',' in line:
+            parts = line.split(',', 1)
+            name = parts[0]
+            url = parts[1]
+            f.write(f'#EXTINF:-1,{name}\n')
+            f.write(f'{url}\n')
+            print(f'+ {name}')
 
 print("Completado!")
