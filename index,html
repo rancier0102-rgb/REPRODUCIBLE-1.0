@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IPTV Player</title>
+    <script src="https://cdn.jsdelivr.net/npm/hls.js@latest"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a2e;
+            color: white;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #00d4ff;
+        }
+        .player-container {
+            background: #000;
+            border-radius: 10px;
+            overflow: hidden;
+            margin-bottom: 20px;
+        }
+        video {
+            width: 100%;
+            max-height: 500px;
+        }
+        .now-playing {
+            background: #16213e;
+            padding: 15px;
+            text-align: center;
+            font-size: 18px;
+        }
+        .channels {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+        }
+        .channel {
+            background: #16213e;
+            padding: 20px;
+            border-radius: 10px;
+            cursor: pointer;
+            text-align: center;
+            transition: all 0.3s;
+        }
+        .channel:hover {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
+        .channel.active {
+            background: #00d4ff;
+            color: #1a1a2e;
+        }
+        .channel-name {
+            font-weight: bold;
+            font-size: 16px;
+        }
+        .status {
+            margin-top: 10px;
+            padding: 10px;
+            border-radius: 5px;
+            text-align: center;
+        }
+        .status.loading {
+            background: #f39c12;
+        }
+        .status.error {
+            background: #e74c3c;
+        }
+        .status.playing {
+            background: #27ae60;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📺 IPTV Player</h1>
+        
+        <div class="player-container">
+            <video id="video" controls autoplay></video>
+            <div class="now-playing" id="nowPlaying">Selecciona un canal</div>
+        </div>
+        
+        <div id="status" class="status" style="display:none;"></div>
+        
+        <h2 style="margin-bottom:15px;">📡 Canales</h2>
+        <div class="channels" id="channelList"></div>
+    </div>
+
+    <script>
+        // Lista de canales
+        const channels = [
+            {
+                name: "PO GS",
+                url: "http://1tv41.icu:8080/live/tandphunt1@gmail.com/AAn4BJhH7f/159953.m3u8"
+            },
+            {
+                name: "POR",
+                url: "http://1tv41.icu:8080/live/tandphunt1@gmail.com/AAn4BJhH7f/159954.m3u8"
+            },
+            {
+                name: "PO X",
+                url: "http://1tv41.icu:8080/live/tandphunt1@gmail.com/AAn4BJhH7f/159955.m3u8"
+            },
+            {
+                name: "PO",
+                url: "http://1tv41.icu:8080/live/tandphunt1@gmail.com/AAn4BJhH7f/159956.m3u8"
+            },
+            {
+                name: "P",
+                url: "http://1tv41.icu:8080/live/tandphunt1@gmail.com/AAn4BJhH7f/159957.m3u8"
+            }
+        ];
+
+        const video = document.getElementById('video');
+        const channelList = document.getElementById('channelList');
+        const nowPlaying = document.getElementById('nowPlaying');
+        const status = document.getElementById('status');
+        let hls = null;
+
+        // Crear botones de canales
+        channels.forEach((channel, index) => {
+            const btn = document.createElement('div');
+            btn.className = 'channel';
+            btn.innerHTML = `<div class="channel-name">${channel.name}</div>`;
+            btn.onclick = () => playChannel(index);
+            channelList.appendChild(btn);
+        });
+
+        function showStatus(message, type) {
+            status.style.display = 'block';
+            status.textContent = message;
+            status.className = 'status ' + type;
+        }
+
+        function playChannel(index) {
+            const channel = channels[index];
+            
+            // Marcar canal activo
+            document.querySelectorAll('.channel').forEach((el, i) => {
+                el.classList.toggle('active', i === index);
+            });
+            
+            nowPlaying.textContent = '▶ ' + channel.name;
+            showStatus('Cargando...', 'loading');
+
+            // Destruir instancia anterior
+            if (hls) {
+                hls.destroy();
+            }
+
+            // Intentar reproducir
+            if (Hls.isSupported()) {
+                hls = new Hls({
+                    debug: false,
+                    enableWorker: true,
+                    lowLatencyMode: true
+                });
+                
+                hls.loadSource(channel.url);
+                hls.attachMedia(video);
+                
+                hls.on(Hls.Events.MANIFEST_PARSED, () => {
+                    video.play();
+                    showStatus('Reproduciendo', 'playing');
+                });
+                
+                hls.on(Hls.Events.ERROR, (event, data) => {
+                    console.log('Error HLS:', data);
+                    if (data.fatal) {
+                        showStatus('Error: ' + data.type, 'error');
+                        // Intentar con .ts
+                        tryTsFormat(channel, index);
+                    }
+                });
+            } else if (video.canPlayType('application/vnd.apple.mpegurl')) {
+                video.src = channel.url;
+                video.play();
+            }
+        }
+
+        function tryTsFormat(channel, index) {
+            // Cambiar de .m3u8 a .ts
+            const tsUrl = channel.url.replace('.m3u8', '.ts');
+            showStatus('Intentando formato .ts...', 'loading');
+            
+            video.src = tsUrl;
+            video.play().then(() => {
+                showStatus('Reproduciendo (.ts)', 'playing');
+            }).catch(err => {
+                showStatus('No se pudo reproducir', 'error');
+            });
+        }
+
+        // Reproducir primer canal al cargar
+        if (channels.length > 0) {
+            playChannel(0);
+        }
+    </script>
+</body>
+</html>
