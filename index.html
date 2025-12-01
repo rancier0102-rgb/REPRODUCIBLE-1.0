@@ -22,17 +22,14 @@
             display: flex;
         }
 
-        /* Clase especial para modo fullscreen */
         body.fullscreen-active {
             cursor: none;
         }
 
-        /* Scrollbar minimalista */
         ::-webkit-scrollbar { width: 3px; height: 3px; }
         ::-webkit-scrollbar-track { background: transparent; }
         ::-webkit-scrollbar-thumb { background: #444; }
 
-        /* Panel lateral izquierdo - Lista de canales */
         .sidebar {
             width: 320px;
             background: rgba(20, 20, 20, 0.95);
@@ -49,23 +46,6 @@
             height: 100vh;
         }
 
-        /* Header del sidebar */
-        .sidebar-header {
-            padding: 20px;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .app-title {
-            font-size: 20px;
-            font-weight: 600;
-            letter-spacing: -0.5px;
-        }
-
-        /* Barra de búsqueda */
         .search-container {
             padding: 12px 16px;
             background: rgba(30, 30, 30, 0.95);
@@ -143,7 +123,6 @@
             fill: #fff;
         }
 
-        /* Mensaje sin resultados */
         .no-results {
             text-align: center;
             padding: 40px 20px;
@@ -158,7 +137,6 @@
             margin-bottom: 12px;
         }
 
-        /* Lista de canales */
         .channel-list {
             flex: 1;
             overflow-y: auto;
@@ -209,7 +187,6 @@
             background: rgba(102, 126, 234, 0.2);
         }
 
-        /* Logo del canal */
         .channel-logo {
             min-width: 48px;
             height: 48px;
@@ -229,7 +206,6 @@
             padding: 4px;
         }
 
-        /* Fallback cuando no hay logo */
         .channel-logo-fallback {
             width: 100%;
             height: 100%;
@@ -276,7 +252,6 @@
             border-radius: 50%;
         }
 
-        /* Área del reproductor */
         .player-area {
             flex: 1;
             position: relative;
@@ -286,7 +261,6 @@
             transition: none;
         }
 
-        /* Cuando el sidebar está oculto, pantalla completa */
         .player-area.fullscreen {
             position: fixed;
             top: 0;
@@ -296,7 +270,6 @@
             z-index: 5;
         }
 
-        /* Video container */
         .video-container {
             flex: 1;
             position: relative;
@@ -316,7 +289,6 @@
             outline: none;
         }
 
-        /* Overlay minimalista */
         .video-overlay {
             position: absolute;
             top: 0;
@@ -332,7 +304,6 @@
             pointer-events: none;
         }
 
-        /* Ocultar overlay en fullscreen */
         body.fullscreen-active .video-overlay {
             display: none !important;
         }
@@ -348,7 +319,6 @@
             gap: 12px;
         }
 
-        /* Logo en el overlay */
         .now-playing-logo {
             width: 40px;
             height: 40px;
@@ -383,7 +353,6 @@
             color: #aaa;
         }
 
-        /* BOTÓN TRANSPARENTE SIN AZUL */
         .toggle-sidebar {
             position: absolute;
             left: 0.1px;
@@ -391,7 +360,6 @@
             transform: translateY(-50%);
             width: 0.1px;
             height: 0.1px;
-            /* Fondo transparente */
             background: rgba(0, 0, 0, 0.3);
             border: 0.1px solid rgba(255, 255, 255, 0);
             border-radius: 50%;
@@ -403,20 +371,17 @@
             transition: none;
         }
 
-        /* Ocultar toggle en fullscreen */
         body.fullscreen-active .toggle-sidebar {
             display: none !important;
         }
 
         .toggle-sidebar:hover {
-            /* Hover sutil sin azul */
             background: rgba(255, 255, 255, 0);
             border: 0.1px solid rgba(255, 255, 255, 0);
         }
 
         .toggle-sidebar.sidebar-hidden {
             left: 10px;
-            /* Sin color azul cuando está oculto */
             background: rgba(0, 0, 0, 0);
             border: 0.1px solid rgba(255, 255, 255, 0);
         }
@@ -437,7 +402,6 @@
             transform: rotate(180deg);
         }
 
-        /* Loading spinner simplificado */
         .spinner {
             position: absolute;
             top: 50%;
@@ -460,7 +424,6 @@
             to { transform: translate(-50%, -50%) rotate(360deg); }
         }
 
-        /* Estado vacío */
         .empty-state {
             position: absolute;
             top: 50%;
@@ -482,7 +445,6 @@
             color: #666;
         }
 
-        /* Mensaje de error */
         .error-toast {
             position: absolute;
             bottom: 20px;
@@ -501,12 +463,10 @@
             display: block;
         }
 
-        /* Ocultar toast en fullscreen */
         body.fullscreen-active .error-toast {
             display: none !important;
         }
 
-        /* Controles rápidos */
         .quick-controls {
             position: absolute;
             bottom: 20px;
@@ -518,7 +478,6 @@
             z-index: 15;
         }
 
-        /* Ocultar controles en fullscreen */
         body.fullscreen-active .quick-controls {
             display: none !important;
         }
@@ -550,7 +509,6 @@
             fill: white;
         }
 
-        /* Info de atajo de teclado */
         .keyboard-hint {
             position: absolute;
             bottom: 60px;
@@ -564,7 +522,6 @@
             transition: none;
         }
 
-        /* Ocultar hint en fullscreen */
         body.fullscreen-active .keyboard-hint {
             display: none !important;
         }
@@ -573,14 +530,12 @@
             opacity: 1;
         }
 
-        /* Ajustar video en fullscreen */
         body.fullscreen-active video {
             width: 100vw !important;
             height: 100vh !important;
             object-fit: contain !important;
         }
 
-        /* Ocultar TODOS los controles del video en fullscreen */
         body.fullscreen-active video::-webkit-media-controls {
             display: none !important;
         }
@@ -597,7 +552,6 @@
             display: none !important;
         }
 
-        /* Loading status */
         .loading-status {
             text-align: center;
             padding: 40px 20px;
@@ -614,7 +568,6 @@
             margin: 0 auto 15px;
         }
 
-        /* Responsive */
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
@@ -627,10 +580,6 @@
 <body>
 
 <div class="sidebar" id="sidebar">
-    <div class="sidebar-header">
-        <div class="app-title">LIVE TV</div>
-    </div>
-    
     <div class="search-container">
         <div class="search-wrapper">
             <svg class="search-icon" viewBox="0 0 24 24">
@@ -714,7 +663,6 @@
 </div>
 
 <script>
-// URLs de playlist (con proxies CORS como respaldo)
 const PLAYLIST_URLS = [
     "https://raw.githubusercontent.com/Miguel179-spe/tvlion/refs/heads/peliculas/prueva.m3u",
     "https://corsproxy.io/?https://raw.githubusercontent.com/Miguel179-spe/tvlion/refs/heads/peliculas/prueva.m3u",
@@ -722,7 +670,6 @@ const PLAYLIST_URLS = [
     "https://raw.githubusercontent.com/Miguel179-spe/tvlion/peliculas/prueva.m3u"
 ];
 
-// Estado de la aplicación
 let channels = [];
 let currentChannel = null;
 let hlsInstance = null;
@@ -731,11 +678,9 @@ let focusedIndex = -1;
 let sidebarVisible = true;
 let isInFullscreen = false;
 
-// Detectar dispositivo
 const isFireTV = /AFT|Silk/i.test(navigator.userAgent);
 const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
 
-// Configuración HLS optimizada
 const HLS_CONFIG = {
     debug: false,
     enableWorker: !isFireTV,
@@ -751,16 +696,11 @@ const HLS_CONFIG = {
     enableSoftwareAES: true,
 };
 
-// Función para obtener el logo del canal
 function getChannelLogo(channel) {
-    if (channel.logo) {
-        return channel.logo;
-    }
+    if (channel.logo) return channel.logo;
     
     const logoBase = {
         'HBO': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/de/HBO_logo.svg/200px-HBO_logo.svg.png',
-        'HBO 2': 'https://upload.wikimedia.org/wikipedia/commons/3/3b/HBO2_logo.png',
-        'HBO Plus': 'https://upload.wikimedia.org/wikipedia/commons/3/3d/HBO_Plus.png',
         'ESPN': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2f/ESPN_wordmark.svg/200px-ESPN_wordmark.svg.png',
         'FOX': 'https://upload.wikimedia.org/wikipedia/commons/thumb/c/c0/Fox_Broadcasting_Company_logo_%282019%29.svg/200px-Fox_Broadcasting_Company_logo.svg.png',
         'CNN': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b1/CNN.svg/200px-CNN.svg.png',
@@ -771,24 +711,17 @@ function getChannelLogo(channel) {
     };
     
     for (let [key, url] of Object.entries(logoBase)) {
-        if (channel.name.toUpperCase().includes(key.toUpperCase())) {
-            return url;
-        }
+        if (channel.name.toUpperCase().includes(key.toUpperCase())) return url;
     }
-    
     return null;
 }
 
-// Función para generar iniciales del canal
 function getChannelInitials(channelName) {
     const words = channelName.split(' ').filter(word => word.length > 0);
-    if (words.length === 1) {
-        return words[0].substring(0, 2).toUpperCase();
-    }
+    if (words.length === 1) return words[0].substring(0, 2).toUpperCase();
     return words.slice(0, 2).map(word => word[0]).join('').toUpperCase();
 }
 
-// Función para crear elemento de logo
 function createLogoElement(channel, container) {
     const logo = getChannelLogo(channel);
     
@@ -812,7 +745,6 @@ function createLogoElement(channel, container) {
     }
 }
 
-// Funciones de UI
 function toggleSidebar() {
     const sidebar = document.getElementById('sidebar');
     const toggle = document.getElementById('toggleSidebar');
@@ -823,9 +755,7 @@ function toggleSidebar() {
     toggle.classList.toggle('sidebar-hidden', !sidebarVisible);
     playerArea.classList.toggle('fullscreen', !sidebarVisible);
     
-    if (!sidebarVisible) {
-        document.getElementById('videoPlayer').focus();
-    }
+    if (!sidebarVisible) document.getElementById('videoPlayer').focus();
 }
 
 function showSpinner(show) {
@@ -862,7 +792,6 @@ function updateLoadingStatus(message, isError = false) {
     }
 }
 
-// Navegación corregida
 function getChannelByIndex(index) {
     const items = Array.from(document.querySelectorAll('.channel-item'));
     if (items[index]) {
@@ -875,104 +804,64 @@ function getChannelByIndex(index) {
 function getCurrentChannelIndex() {
     const items = Array.from(document.querySelectorAll('.channel-item'));
     for (let i = 0; i < items.length; i++) {
-        if (parseInt(items[i].dataset.id) === currentIndex) {
-            return i;
-        }
+        if (parseInt(items[i].dataset.id) === currentIndex) return i;
     }
     return -1;
 }
 
-// Navegación de canales
 function channelUp() {
     if (channels.length === 0) return;
-    
     const items = Array.from(document.querySelectorAll('.channel-item'));
     if (items.length === 0) return;
     
     let newIndex = getCurrentChannelIndex();
-    
-    if (newIndex <= 0) {
-        newIndex = items.length - 1;
-    } else {
-        newIndex--;
-    }
+    newIndex = (newIndex <= 0) ? items.length - 1 : newIndex - 1;
     
     const channel = getChannelByIndex(newIndex);
-    if (channel) {
-        playChannel(channel);
-    }
+    if (channel) playChannel(channel);
 }
 
 function channelDown() {
     if (channels.length === 0) return;
-    
     const items = Array.from(document.querySelectorAll('.channel-item'));
     if (items.length === 0) return;
     
     let newIndex = getCurrentChannelIndex();
-    
-    if (newIndex === -1 || newIndex >= items.length - 1) {
-        newIndex = 0;
-    } else {
-        newIndex++;
-    }
+    newIndex = (newIndex === -1 || newIndex >= items.length - 1) ? 0 : newIndex + 1;
     
     const channel = getChannelByIndex(newIndex);
-    if (channel) {
-        playChannel(channel);
-    }
+    if (channel) playChannel(channel);
 }
 
-// Cargar playlist con múltiples intentos
 async function loadPlaylist() {
     let lastError = null;
     
     for (let i = 0; i < PLAYLIST_URLS.length; i++) {
         const url = PLAYLIST_URLS[i];
-        console.log(`Intentando cargar playlist desde: ${url}`);
         updateLoadingStatus(`Cargando canales... (intento ${i + 1}/${PLAYLIST_URLS.length})`);
         
         try {
-            const response = await fetch(url, {
-                method: 'GET',
-                headers: {
-                    'Accept': 'text/plain, */*'
-                }
-            });
-            
-            if (!response.ok) {
-                throw new Error(`HTTP ${response.status}`);
-            }
+            const response = await fetch(url, { method: 'GET', headers: { 'Accept': 'text/plain, */*' } });
+            if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
             const text = await response.text();
-            
-            if (!text || text.length < 10) {
-                throw new Error('Contenido vacío');
-            }
-            
-            console.log('Playlist cargada exitosamente, tamaño:', text.length);
-            console.log('Primeros 500 caracteres:', text.substring(0, 500));
+            if (!text || text.length < 10) throw new Error('Contenido vacío');
             
             parseM3U(text);
             
             if (channels.length > 0) {
-                console.log(`Se encontraron ${channels.length} canales`);
                 renderChannels();
-                return; // Éxito!
+                return;
             } else {
-                throw new Error('No se encontraron canales en la playlist');
+                throw new Error('No se encontraron canales');
             }
-            
         } catch (error) {
-            console.error(`Error con URL ${i + 1}:`, error);
             lastError = error;
             updateLoadingStatus(`Error: ${error.message}`, true);
-            await new Promise(r => setTimeout(r, 1000)); // Esperar 1 segundo antes de reintentar
+            await new Promise(r => setTimeout(r, 1000));
         }
     }
     
-    // Si llegamos aquí, todas las URLs fallaron
-    console.error('Todas las URLs fallaron');
     const container = document.getElementById('channelList');
     container.innerHTML = `
         <div class="no-results">
@@ -980,24 +869,12 @@ async function loadPlaylist() {
                 <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-2h2v2zm0-4h-2V7h2v6z"/>
             </svg>
             <div style="color: #f44336; font-weight: bold;">Error al cargar canales</div>
-            <div style="font-size: 12px; margin-top: 8px; color: #888;">
-                ${lastError ? lastError.message : 'Error desconocido'}
-            </div>
-            <button onclick="loadPlaylist()" style="
-                margin-top: 15px;
-                padding: 10px 20px;
-                background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-                border: none;
-                border-radius: 8px;
-                color: white;
-                cursor: pointer;
-                font-size: 14px;
-            ">🔄 Reintentar</button>
+            <div style="font-size: 12px; margin-top: 8px; color: #888;">${lastError ? lastError.message : 'Error desconocido'}</div>
+            <button onclick="loadPlaylist()" style="margin-top: 15px; padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 8px; color: white; cursor: pointer; font-size: 14px;">🔄 Reintentar</button>
         </div>
     `;
 }
 
-// Parser M3U mejorado
 function parseM3U(text) {
     const lines = text.split('\n');
     let currentGroup = 'General';
@@ -1006,21 +883,16 @@ function parseM3U(text) {
     
     channels = [];
     
-    console.log('Parseando M3U, líneas:', lines.length);
-    
     for (let i = 0; i < lines.length; i++) {
         const line = lines[i].trim();
         
         if (line.startsWith('#EXTINF:')) {
-            // Extraer grupo
             const groupMatch = line.match(/group-title="([^"]+)"/i);
             if (groupMatch) currentGroup = groupMatch[1];
             
-            // Extraer nombre (después de la última coma)
             const nameMatch = line.match(/,(.+)$/);
             if (nameMatch) currentName = nameMatch[1].trim();
             
-            // Extraer logo
             const logoMatch = line.match(/tvg-logo="([^"]+)"/i);
             if (logoMatch) currentLogo = logoMatch[1];
             
@@ -1033,37 +905,24 @@ function parseM3U(text) {
                     logo: currentLogo,
                     id: channels.length
                 });
-                console.log('Canal añadido:', currentName || `Canal ${channels.length}`);
             }
-            // Reset para el siguiente canal
             currentName = '';
             currentLogo = '';
         }
     }
     
-    console.log('Total canales parseados:', channels.length);
-    
-    // Ordenar por grupo y nombre
     channels.sort((a, b) => {
         if (a.group !== b.group) return a.group.localeCompare(b.group);
         return a.name.localeCompare(b.name);
     });
 }
 
-// Renderizar canales
 function renderChannels() {
     const container = document.getElementById('channelList');
     container.innerHTML = '';
     
     if (channels.length === 0) {
-        container.innerHTML = `
-            <div class="no-results">
-                <svg viewBox="0 0 24 24">
-                    <path d="M18 8h-1V6c0-2.76-2.24-5-5-5S7 3.24 7 6v2H6c-1.1 0-2 .9-2 2v10c0 1.1.9 2 2 2h12c1.1 0 2-.9 2-2V10c0-1.1-.9-2-2-2z"/>
-                </svg>
-                <div>No hay canales disponibles</div>
-            </div>
-        `;
+        container.innerHTML = `<div class="no-results"><div>No hay canales disponibles</div></div>`;
         return;
     }
     
@@ -1103,22 +962,16 @@ function renderChannels() {
             
             channelDiv.appendChild(logoDiv);
             channelDiv.appendChild(infoDiv);
-            
             channelDiv.onclick = () => playChannel(channel);
             groupDiv.appendChild(channelDiv);
         });
         
         container.appendChild(groupDiv);
     });
-    
-    console.log('Canales renderizados:', channels.length);
 }
 
-// Reproducir canal
 async function playChannel(channel) {
     if (!channel) return;
-    
-    console.log('Playing:', channel.name, channel.url);
     
     currentChannel = channel;
     currentIndex = channel.id;
@@ -1138,9 +991,7 @@ async function playChannel(channel) {
     document.querySelectorAll('.channel-item').forEach(item => {
         const itemId = parseInt(item.dataset.id);
         item.classList.remove('active', 'focused');
-        if (itemId === channel.id) {
-            item.classList.add('active');
-        }
+        if (itemId === channel.id) item.classList.add('active');
     });
     
     const activeItem = document.querySelector('.channel-item.active');
@@ -1175,7 +1026,6 @@ async function playChannel(channel) {
     }
 }
 
-// Reproducir HLS
 function playHLS(url, video) {
     if (Hls.isSupported()) {
         hlsInstance = new Hls(HLS_CONFIG);
@@ -1186,25 +1036,16 @@ function playHLS(url, video) {
             video.volume = 1.0;
             
             video.play().catch(e => {
-                console.log('Autoplay with sound failed, trying muted:', e);
                 video.muted = true;
                 video.play().then(() => {
-                    setTimeout(() => {
-                        video.muted = false;
-                        video.volume = 1.0;
-                    }, 1000);
-                }).catch(err => {
-                    console.error('Failed to play:', err);
-                    showError('No se pudo reproducir el canal');
-                });
+                    setTimeout(() => { video.muted = false; video.volume = 1.0; }, 1000);
+                }).catch(err => showError('No se pudo reproducir el canal'));
             });
         });
         
         hlsInstance.on(Hls.Events.ERROR, (event, data) => {
             if (data.fatal) {
-                console.error('Fatal error:', data);
                 showSpinner(false);
-                
                 if (data.type === Hls.ErrorTypes.NETWORK_ERROR) {
                     showError('Error de red - Reintentando...');
                     setTimeout(() => hlsInstance.startLoad(), 2000);
@@ -1225,14 +1066,10 @@ function playHLS(url, video) {
             showSpinner(false);
             video.muted = false;
             video.volume = 1.0;
-            
             video.play().catch(() => {
                 video.muted = true;
                 video.play().then(() => {
-                    setTimeout(() => {
-                        video.muted = false;
-                        video.volume = 1.0;
-                    }, 1000);
+                    setTimeout(() => { video.muted = false; video.volume = 1.0; }, 1000);
                 });
             });
         }, { once: true });
@@ -1244,7 +1081,6 @@ function playHLS(url, video) {
     }
 }
 
-// Reproducir directo
 function playDirect(url, video) {
     video.src = url;
     
@@ -1252,14 +1088,10 @@ function playDirect(url, video) {
         showSpinner(false);
         video.muted = false;
         video.volume = 1.0;
-        
         video.play().catch(() => {
             video.muted = true;
             video.play().then(() => {
-                setTimeout(() => {
-                    video.muted = false;
-                    video.volume = 1.0;
-                }, 1000);
+                setTimeout(() => { video.muted = false; video.volume = 1.0; }, 1000);
             });
         });
     }, { once: true });
@@ -1270,12 +1102,8 @@ function playDirect(url, video) {
     }, { once: true });
 }
 
-// Control de teclado
 document.addEventListener('keydown', (e) => {
-    // Ignorar si estamos escribiendo en el buscador
-    if (e.target.id === 'searchInput') {
-        return;
-    }
+    if (e.target.id === 'searchInput') return;
     
     const items = Array.from(document.querySelectorAll('.channel-item'));
     const video = document.getElementById('videoPlayer');
@@ -1284,118 +1112,72 @@ document.addEventListener('keydown', (e) => {
         case 'ArrowUp':
             e.preventDefault();
             if (sidebarVisible && items.length > 0 && !isInFullscreen) {
-                if (focusedIndex === -1) {
-                    focusedIndex = 0;
-                } else {
-                    focusedIndex = Math.max(0, focusedIndex - 1);
-                }
+                focusedIndex = (focusedIndex === -1) ? 0 : Math.max(0, focusedIndex - 1);
                 updateFocus(items);
-            } else {
-                channelUp();
-            }
+            } else { channelUp(); }
             break;
-            
         case 'ArrowDown':
             e.preventDefault();
             if (sidebarVisible && items.length > 0 && !isInFullscreen) {
-                if (focusedIndex === -1) {
-                    focusedIndex = 0;
-                } else {
-                    focusedIndex = Math.min(items.length - 1, focusedIndex + 1);
-                }
+                focusedIndex = (focusedIndex === -1) ? 0 : Math.min(items.length - 1, focusedIndex + 1);
                 updateFocus(items);
-            } else {
-                channelDown();
-            }
+            } else { channelDown(); }
             break;
-            
         case 'Enter':
         case 'OK':
             e.preventDefault();
             if (sidebarVisible && focusedIndex >= 0 && items[focusedIndex] && !isInFullscreen) {
                 const id = parseInt(items[focusedIndex].dataset.id);
                 const channel = channels.find(ch => ch.id === id);
-                if (channel) {
-                    playChannel(channel);
-                }
+                if (channel) playChannel(channel);
             }
             break;
-            
         case 'ArrowLeft':
         case 'Back':
             e.preventDefault();
-            if (!sidebarVisible && !isInFullscreen) {
-                toggleSidebar();
-            }
+            if (!sidebarVisible && !isInFullscreen) toggleSidebar();
             break;
-            
         case 'ArrowRight':
             e.preventDefault();
-            if (sidebarVisible && !isInFullscreen) {
-                toggleSidebar();
-            }
+            if (sidebarVisible && !isInFullscreen) toggleSidebar();
             break;
-            
         case 'Escape':
             e.preventDefault();
-            if (isInFullscreen) {
-                exitFullscreen();
-            } else if (sidebarVisible) {
-                toggleSidebar();
-            }
+            if (isInFullscreen) exitFullscreen();
+            else if (sidebarVisible) toggleSidebar();
             break;
-            
         case ' ':
             e.preventDefault();
-            if (video.paused) {
-                video.play();
-            } else {
-                video.pause();
-            }
+            video.paused ? video.play() : video.pause();
             break;
-            
-        case 'f':
-        case 'F':
+        case 'f': case 'F':
             e.preventDefault();
             toggleFullscreen();
             break;
-            
-        case 'm':
-        case 'M':
+        case 'm': case 'M':
             e.preventDefault();
             video.muted = !video.muted;
             break;
-            
-        case '+':
-        case '=':
+        case '+': case '=':
             e.preventDefault();
             video.volume = Math.min(1, video.volume + 0.1);
             break;
-            
-        case '-':
-        case '_':
+        case '-': case '_':
             e.preventDefault();
             video.volume = Math.max(0, video.volume - 0.1);
             break;
     }
 });
 
-// Actualizar focus visual
 function updateFocus(items) {
     items.forEach((item, index) => {
         item.classList.toggle('focused', index === focusedIndex);
-        if (index === focusedIndex) {
-            item.scrollIntoView({ block: 'center', behavior: 'instant' });
-        }
+        if (index === focusedIndex) item.scrollIntoView({ block: 'center', behavior: 'instant' });
     });
 }
 
-// Funciones fullscreen
 function toggleFullscreen() {
-    if (!document.fullscreenElement && 
-        !document.webkitFullscreenElement && 
-        !document.mozFullScreenElement &&
-        !document.msFullscreenElement) {
+    if (!document.fullscreenElement && !document.webkitFullscreenElement && !document.mozFullScreenElement && !document.msFullscreenElement) {
         enterFullscreen();
     } else {
         exitFullscreen();
@@ -1404,49 +1186,28 @@ function toggleFullscreen() {
 
 function enterFullscreen() {
     const elem = document.documentElement;
-    
-    if (elem.requestFullscreen) {
-        elem.requestFullscreen();
-    } else if (elem.webkitRequestFullscreen) {
-        elem.webkitRequestFullscreen();
-    } else if (elem.mozRequestFullScreen) {
-        elem.mozRequestFullScreen();
-    } else if (elem.msRequestFullscreen) {
-        elem.msRequestFullscreen();
-    }
+    if (elem.requestFullscreen) elem.requestFullscreen();
+    else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+    else if (elem.mozRequestFullScreen) elem.mozRequestFullScreen();
+    else if (elem.msRequestFullscreen) elem.msRequestFullscreen();
 }
 
 function exitFullscreen() {
-    if (document.exitFullscreen) {
-        document.exitFullscreen();
-    } else if (document.webkitExitFullscreen) {
-        document.webkitExitFullscreen();
-    } else if (document.mozCancelFullScreen) {
-        document.mozCancelFullScreen();
-    } else if (document.msExitFullscreen) {
-        document.msExitFullscreen();
-    }
+    if (document.exitFullscreen) document.exitFullscreen();
+    else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+    else if (document.mozCancelFullScreen) document.mozCancelFullScreen();
+    else if (document.msExitFullscreen) document.msExitFullscreen();
 }
 
-// Manejar cambios de fullscreen
 function handleFullscreenChange() {
     const video = document.getElementById('videoPlayer');
     
-    if (document.fullscreenElement || 
-        document.webkitFullscreenElement || 
-        document.mozFullScreenElement ||
-        document.msFullscreenElement) {
-        
+    if (document.fullscreenElement || document.webkitFullscreenElement || document.mozFullScreenElement || document.msFullscreenElement) {
         isInFullscreen = true;
         document.body.classList.add('fullscreen-active');
-        
-        if (sidebarVisible) {
-            toggleSidebar();
-        }
-        
+        if (sidebarVisible) toggleSidebar();
         video.removeAttribute('controls');
         video.focus();
-        
     } else {
         isInFullscreen = false;
         document.body.classList.remove('fullscreen-active');
@@ -1454,91 +1215,47 @@ function handleFullscreenChange() {
     }
 }
 
-// Event listeners para fullscreen
 document.addEventListener('fullscreenchange', handleFullscreenChange);
 document.addEventListener('webkitfullscreenchange', handleFullscreenChange);
 document.addEventListener('mozfullscreenchange', handleFullscreenChange);
 document.addEventListener('MSFullscreenChange', handleFullscreenChange);
 
-// Video events
 const video = document.getElementById('videoPlayer');
-
 video.setAttribute('controls', '');
 
 video.addEventListener('waiting', () => showSpinner(true));
 video.addEventListener('playing', () => {
     showSpinner(false);
-    if (video.muted && video.currentTime > 0) {
-        video.muted = false;
-        video.volume = 1.0;
-    }
+    if (video.muted && video.currentTime > 0) { video.muted = false; video.volume = 1.0; }
 });
 video.addEventListener('pause', () => showSpinner(false));
-
 video.addEventListener('click', () => {
-    if (video.muted) {
-        video.muted = false;
-        video.volume = 1.0;
-        showError('Audio habilitado');
-    }
+    if (video.muted) { video.muted = false; video.volume = 1.0; showError('Audio habilitado'); }
 });
+video.addEventListener('dblclick', (e) => { e.preventDefault(); toggleFullscreen(); });
+video.addEventListener('contextmenu', (e) => { e.preventDefault(); return false; });
 
-// Doble click para fullscreen
-video.addEventListener('dblclick', (e) => {
-    e.preventDefault();
-    toggleFullscreen();
-});
+window.addEventListener('load', () => loadPlaylist());
 
-// Inicializar
-window.addEventListener('load', () => {
-    console.log('App loaded');
-    console.log('User Agent:', navigator.userAgent);
-    console.log('Is Fire TV:', isFireTV);
-    loadPlaylist();
-});
-
-// Auto-ocultar sidebar después de seleccionar canal
 document.addEventListener('click', (e) => {
     if (e.target.closest('.channel-item') && !isMobile && !isInFullscreen) {
-        setTimeout(() => {
-            if (sidebarVisible) toggleSidebar();
-        }, 500);
+        setTimeout(() => { if (sidebarVisible) toggleSidebar(); }, 500);
     }
 });
 
-// Prevenir que el video se pause cuando pierde el foco
 document.addEventListener('visibilitychange', () => {
-    if (!document.hidden && video.paused && video.src) {
-        video.play().catch(() => {});
-    }
-});
-
-// Mostrar hint inicial
-let hintShown = false;
-setTimeout(() => {
-    if (!isMobile && sidebarVisible && !hintShown && channels.length > 0) {
-        showError('Usa → para ocultar lista | F para pantalla completa');
-        hintShown = true;
-    }
-}, 3000);
-
-// Prevenir menú contextual
-video.addEventListener('contextmenu', (e) => {
-    e.preventDefault();
-    return false;
+    if (!document.hidden && video.paused && video.src) video.play().catch(() => {});
 });
 
 // ==================== BÚSQUEDA ====================
 const searchInput = document.getElementById('searchInput');
 const searchClear = document.getElementById('searchClear');
 
-// Función de búsqueda
 function filterChannels(query) {
     const normalizedQuery = query.toLowerCase().trim();
     const container = document.getElementById('channelList');
     
     if (!normalizedQuery) {
-        // Si no hay búsqueda, mostrar todos
         renderChannels();
         searchClear.classList.remove('visible');
         return;
@@ -1546,13 +1263,11 @@ function filterChannels(query) {
     
     searchClear.classList.add('visible');
     
-    // Filtrar canales
     const filtered = channels.filter(channel => 
         channel.name.toLowerCase().includes(normalizedQuery) ||
         channel.group.toLowerCase().includes(normalizedQuery)
     );
     
-    // Renderizar resultados
     container.innerHTML = '';
     
     if (filtered.length === 0) {
@@ -1568,7 +1283,6 @@ function filterChannels(query) {
         return;
     }
     
-    // Agrupar resultados filtrados
     const groups = {};
     filtered.forEach(channel => {
         if (!groups[channel.group]) groups[channel.group] = [];
@@ -1589,9 +1303,7 @@ function filterChannels(query) {
             channelDiv.className = 'channel-item';
             channelDiv.dataset.id = channel.id;
             
-            if (currentChannel && channel.id === currentChannel.id) {
-                channelDiv.classList.add('active');
-            }
+            if (currentChannel && channel.id === currentChannel.id) channelDiv.classList.add('active');
             
             const logoDiv = document.createElement('div');
             logoDiv.className = 'channel-logo';
@@ -1609,7 +1321,6 @@ function filterChannels(query) {
             
             channelDiv.appendChild(logoDiv);
             channelDiv.appendChild(infoDiv);
-            
             channelDiv.onclick = () => playChannel(channel);
             groupDiv.appendChild(channelDiv);
         });
@@ -1618,10 +1329,7 @@ function filterChannels(query) {
     });
 }
 
-// Event listeners para búsqueda
-searchInput.addEventListener('input', (e) => {
-    filterChannels(e.target.value);
-});
+searchInput.addEventListener('input', (e) => filterChannels(e.target.value));
 
 searchClear.addEventListener('click', () => {
     searchInput.value = '';
@@ -1629,19 +1337,15 @@ searchClear.addEventListener('click', () => {
     searchInput.focus();
 });
 
-// Atajo de teclado para búsqueda (Ctrl+F o Cmd+F)
 document.addEventListener('keydown', (e) => {
     if ((e.ctrlKey || e.metaKey) && e.key === 'f') {
         e.preventDefault();
-        if (!sidebarVisible) {
-            toggleSidebar();
-        }
+        if (!sidebarVisible) toggleSidebar();
         searchInput.focus();
         searchInput.select();
     }
 });
 
-// Limpiar búsqueda con Escape cuando el input está enfocado
 searchInput.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
         if (searchInput.value) {
