@@ -663,11 +663,21 @@
 </div>
 
 <script>
+// =============================================
+// ✅ URLs CORREGIDAS - Usando raw.githubusercontent.com
+// =============================================
 const PLAYLIST_URLS = [
-    "https://github.com/Miguel179-spe/tvlion/blob/f84c689e252abb2a746a8569935cbe2bac3134d5/LiveTV.m3u",
-    "https://corsproxy.io/?https://github.com/Miguel179-spe/tvlion/blob/f84c689e252abb2a746a8569935cbe2bac3134d5/LiveTV.m3u",
-    "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://github.com/Miguel179-spe/tvlion/blob/f84c689e252abb2a746a8569935cbe2bac3134d5/LiveTV.m3u"),
-    "https://raw.githubusercontent.com/Miguel179-spe/tvlion/blob/f84c689e252abb2a746a8569935cbe2bac3134d5/LiveTV.m3u"
+    // URL principal - rama main (siempre actualizada)
+    "https://raw.githubusercontent.com/Miguel179-spe/tvlion/main/LiveTV.m3u",
+    
+    // URL con commit específico (backup)
+    "https://raw.githubusercontent.com/Miguel179-spe/tvlion/f84c689e252abb2a746a8569935cbe2bac3134d5/LiveTV.m3u",
+    
+    // Con proxy CORS (si hay problemas de CORS)
+    "https://corsproxy.io/?https://raw.githubusercontent.com/Miguel179-spe/tvlion/main/LiveTV.m3u",
+    
+    // Otro proxy CORS (backup adicional)
+    "https://api.allorigins.win/raw?url=" + encodeURIComponent("https://raw.githubusercontent.com/Miguel179-spe/tvlion/main/LiveTV.m3u")
 ];
 
 let channels = [];
@@ -841,24 +851,37 @@ async function loadPlaylist() {
         updateLoadingStatus(`Cargando canales... (intento ${i + 1}/${PLAYLIST_URLS.length})`);
         
         try {
-            const response = await fetch(url, { method: 'GET', headers: { 'Accept': 'text/plain, */*' } });
+            console.log(`Intentando cargar desde: ${url}`);
+            const response = await fetch(url, { 
+                method: 'GET', 
+                headers: { 'Accept': 'text/plain, */*' },
+                cache: 'no-cache'
+            });
+            
             if (!response.ok) throw new Error(`HTTP ${response.status}`);
             
             const text = await response.text();
+            console.log(`Contenido recibido: ${text.length} caracteres`);
+            
             if (!text || text.length < 10) throw new Error('Contenido vacío');
+            if (!text.includes('#EXTM3U') && !text.includes('#EXTINF')) {
+                throw new Error('No es un archivo M3U válido');
+            }
             
             parseM3U(text);
             
             if (channels.length > 0) {
+                console.log(`✅ Cargados ${channels.length} canales exitosamente`);
                 renderChannels();
                 return;
             } else {
                 throw new Error('No se encontraron canales');
             }
         } catch (error) {
+            console.error(`Error con URL ${i + 1}:`, error.message);
             lastError = error;
             updateLoadingStatus(`Error: ${error.message}`, true);
-            await new Promise(r => setTimeout(r, 1000));
+            await new Promise(r => setTimeout(r, 1500));
         }
     }
     
@@ -870,6 +893,7 @@ async function loadPlaylist() {
             </svg>
             <div style="color: #f44336; font-weight: bold;">Error al cargar canales</div>
             <div style="font-size: 12px; margin-top: 8px; color: #888;">${lastError ? lastError.message : 'Error desconocido'}</div>
+            <div style="font-size: 11px; margin-top: 8px; color: #666;">Verifica que el repositorio sea público</div>
             <button onclick="loadPlaylist()" style="margin-top: 15px; padding: 10px 20px; background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border: none; border-radius: 8px; color: white; cursor: pointer; font-size: 14px;">🔄 Reintentar</button>
         </div>
     `;
@@ -915,6 +939,8 @@ function parseM3U(text) {
         if (a.group !== b.group) return a.group.localeCompare(b.group);
         return a.name.localeCompare(b.name);
     });
+    
+    console.log(`Parseados ${channels.length} canales`);
 }
 
 function renderChannels() {
@@ -1018,6 +1044,8 @@ async function playChannel(channel) {
     video.load();
     
     await new Promise(resolve => setTimeout(resolve, 50));
+    
+    console.log(`Reproduciendo: ${channel.name} - ${channel.url}`);
     
     if (channel.url.includes('.m3u8')) {
         playHLS(channel.url, video);
