@@ -1,5 +1,1 @@
-PO GS,http://1tv41.icu:8080/tandphunt1@gmail.com/AAn4BJhH7f/159953
-POR,http://1tv41.icu:8080/tandphunt1@gmail.com/AAn4BJhH7f/159954
-PO X,http://1tv41.icu:8080/tandphunt1@gmail.com/AAn4BJhH7f/159955
-PO,http://1tv41.icu:8080/tandphunt1@gmail.com/AAn4BJhH7f/159956
-P,http://1tv41.icu:8080/tandphunt1@gmail.com/AAn4BJhH7f/159957
+
