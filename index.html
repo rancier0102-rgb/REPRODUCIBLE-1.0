@@ -679,8 +679,8 @@
     <div id="app">
         <div class="header">
             <div class="logo">ReelDrama</div>
-            <input type="search" id="search" placeholder="Buscar Reels...">
-            <div class="header-stats" id="stats"><strong>0</strong> Reels</div>
+            <input type="search" id="search" placeholder="Buscar series...">
+            <div class="header-stats" id="stats"><strong>0</strong> series</div>
             <button class="btn-icon" id="btn-reload" title="Recargar datos">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                     <path d="M23 4v6h-6M1 20v-6h6"/>
@@ -692,9 +692,9 @@
         <div class="pull-indicator" id="pull-indicator">Suelta para mezclar</div>
         
         <div class="content" id="content">
-            <div class="section-title">Nuevos Lanzamientos</div>
+            <div class="section-title">Series Populares</div>
             <div class="grid" id="grid">
-                <div class="loading">Cargando Reels...</div>
+                <div class="loading">Cargando series...</div>
             </div>
         </div>
         
@@ -752,14 +752,14 @@
         
         const state = {
             rawData: [],
-            ReelsList: [],
-            ReelsIndex: {},
+            seriesList: [],
+            seriesIndex: {},
             totalEpisodes: 0,
             page: 0,
             hasMore: true,
             loading: false,
             search: '',
-            currentReels: null,
+            currentSeries: null,
             currentSeason: null,
             currentView: 'home'
         };
@@ -839,7 +839,7 @@
         }
         
         function showLoading() {
-            el.grid.innerHTML = '<div class="loading">Cargando Reels...</div>';
+            el.grid.innerHTML = '<div class="loading">Cargando series...</div>';
         }
         
         function showError(message) {
@@ -905,7 +905,7 @@
             const map = {};
             
             data.forEach(item => {
-                const name = item.Reels || item.name || 'Sin nombre';
+                const name = item.series || item.name || 'Sin nombre';
                 const season = String(item.season || '1');
                 
                 if (!map[name]) {
@@ -929,27 +929,27 @@
                 map[name].count++;
             });
             
-            Object.values(map).forEach(Reels => {
-                Object.keys(Reels.seasons).forEach(season => {
-                    Reels.seasons[season].sort((a, b) => a.ep - b.ep);
+            Object.values(map).forEach(series => {
+                Object.keys(series.seasons).forEach(season => {
+                    series.seasons[season].sort((a, b) => a.ep - b.ep);
                 });
             });
             
-            state.ReelsIndex = map;
-            state.ReelsList = Object.values(map)
+            state.seriesIndex = map;
+            state.seriesList = Object.values(map)
                 .map(s => ({ name: s.name, poster: s.poster, seasons: Object.keys(s.seasons).length, count: s.count }))
                 .sort((a, b) => a.name.localeCompare(b.name));
             
             updateStats();
-            loadReels(false, true);
+            loadSeries(false, true);
         }
         
         function updateStats() {
-            el.stats.innerHTML = '<strong>' + state.ReelsList.length + '</strong> Reels';
+            el.stats.innerHTML = '<strong>' + state.seriesList.length + '</strong> series';
         }
         
         // ===== RENDERIZADO =====
-        function loadReels(append, random) {
+        function loadSeries(append, random) {
             if (state.loading || (append && !state.hasMore)) return;
             
             state.loading = true;
@@ -960,7 +960,7 @@
                 state.hasMore = true;
             }
             
-            let list = [...state.ReelsList];
+            let list = [...state.seriesList];
             
             if (state.search) {
                 const q = state.search.toLowerCase();
@@ -1017,6 +1017,7 @@
             
             card.innerHTML = 
                 '<img class="card-poster" data-src="' + esc(s.poster) + '" alt="">' +
+                '<div class="card-badge">' + s.count + '</div>' +
                 '<div class="card-overlay"><div class="card-overlay-title">' + esc(s.name) + '</div></div>';
             
             imageObserver.observe(card.querySelector('.card-poster'));
@@ -1048,22 +1049,22 @@
         
         // ===== DETALLE =====
         function openDetail(name) {
-            const Reels = state.ReelsIndex[name];
-            if (!Reels) return;
+            const series = state.seriesIndex[name];
+            if (!series) return;
             
             state.currentView = 'detail';
-            state.currentReels = Reels;
+            state.currentSeries = series;
             history.pushState({ view: 'detail' }, '', '#detail');
             
             el.detailTitle.textContent = name;
             el.detailName.textContent = name;
-            el.detailHeroBg.style.backgroundImage = 'url(' + Reels.poster + ')';
-            el.detailPoster.src = Reels.poster || '';
+            el.detailHeroBg.style.backgroundImage = 'url(' + series.poster + ')';
+            el.detailPoster.src = series.poster || '';
             
-            const seasonCount = Object.keys(Reels.seasons).length;
-            el.detailMeta.innerHTML = '<span>' + seasonCount + ' temp.</span><span>' + Reels.count + ' eps.</span>';
+            const seasonCount = Object.keys(series.seasons).length;
+            el.detailMeta.innerHTML = '<span>' + seasonCount + ' temp.</span><span>' + series.count + ' eps.</span>';
             
-            const keys = Object.keys(Reels.seasons).sort((a, b) => +a - +b);
+            const keys = Object.keys(series.seasons).sort((a, b) => +a - +b);
             state.currentSeason = keys[0];
             
             renderSeasons(keys);
@@ -1088,7 +1089,7 @@
         }
         
         function renderEpisodes() {
-            const eps = state.currentReels?.seasons[state.currentSeason];
+            const eps = state.currentSeries?.seasons[state.currentSeason];
             
             if (!eps?.length) {
                 el.episodes.innerHTML = '<div class="empty">Sin episodios</div>';
@@ -1123,7 +1124,7 @@
         
         function closeDetail() {
             el.detail.classList.remove('active');
-            state.currentReels = null;
+            state.currentSeries = null;
             state.currentSeason = null;
             state.currentView = 'home';
         }
@@ -1152,7 +1153,7 @@
                 clearTimeout(t);
                 t = setTimeout(() => { 
                     state.search = e.target.value.trim(); 
-                    loadReels(false, !state.search); 
+                    loadSeries(false, !state.search); 
                 }, 300);
             });
             
@@ -1160,7 +1161,7 @@
             el.content.addEventListener('scroll', () => {
                 if (state.loading || !state.hasMore) return;
                 const { scrollTop, scrollHeight, clientHeight } = el.content;
-                if (scrollTop + clientHeight >= scrollHeight - 300) loadReels(true, false);
+                if (scrollTop + clientHeight >= scrollHeight - 300) loadSeries(true, false);
             });
             
             document.addEventListener('keydown', e => { if (e.key === 'Escape') handleBack(); });
@@ -1184,7 +1185,7 @@
                     el.pullIndicator.textContent = 'Mezclando...';
                     el.pullIndicator.classList.add('loading');
                     setTimeout(() => {
-                        loadReels(false, true);
+                        loadSeries(false, true);
                         el.pullIndicator.classList.remove('visible', 'loading');
                         el.pullIndicator.textContent = 'Suelta para mezclar';
                     }, 400);
@@ -1210,6 +1211,3 @@
     </script>
 </body>
 </html>
-
-
-
