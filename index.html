@@ -49,7 +49,6 @@
             flex-direction:column
         }
         
-        /* ===== HEADER ===== */
         .header{
             padding:10px 12px;
             padding-top:calc(10px + var(--safe-top));
@@ -138,7 +137,6 @@
             background:var(--surface-light)
         }
         
-        /* ===== PULL TO REFRESH ===== */
         .pull-indicator{
             text-align:center;
             padding:12px;
@@ -163,7 +161,6 @@
             vertical-align:middle
         }
         
-        /* ===== CONTENT ===== */
         .content{
             flex:1;
             padding:8px;
@@ -194,7 +191,6 @@
             flex-shrink:0
         }
         
-        /* ===== GRID RESPONSIVE ===== */
         .grid{
             display:grid;
             grid-template-columns:repeat(3, 1fr);
@@ -237,7 +233,6 @@
             .grid{grid-template-columns:repeat(8, 1fr)}
         }
         
-        /* ===== CARDS ===== */
         .card{
             aspect-ratio:2/3;
             border-radius:8px;
@@ -319,7 +314,6 @@
             }
         }
         
-        /* ===== DETAIL VIEW ===== */
         .detail,.player{
             position:fixed;
             inset:0;
@@ -396,7 +390,6 @@
             background:var(--surface-hover)
         }
         
-        /* ===== DETAIL HERO ===== */
         .detail-hero{
             position:relative;
             min-height:140px;
@@ -496,7 +489,6 @@
             white-space:nowrap
         }
         
-        /* ===== SEASONS ===== */
         .seasons{
             padding:10px 12px;
             padding-left:calc(12px + var(--safe-left));
@@ -538,7 +530,6 @@
             color:#fff
         }
         
-        /* ===== EPISODES ===== */
         .episodes{
             flex:1;
             overflow-y:auto;
@@ -611,7 +602,6 @@
             opacity:0.6
         }
         
-        /* ===== VIDEO PLAYER ===== */
         .video-container{
             flex:1;
             display:flex;
@@ -627,7 +617,6 @@
             max-height:100dvh
         }
         
-        /* ===== STATES ===== */
         .loading,.empty,.error{
             text-align:center;
             padding:40px 16px;
@@ -655,188 +644,26 @@
             color:var(--primary)
         }
         
-        @keyframes spin{to{transform:rotate(360deg)}}
-        
-        /* ===== MODAL ===== */
-        .modal{
-            position:fixed;
-            inset:0;
-            background:rgba(13,6,9,0.95);
-            backdrop-filter:blur(10px);
-            -webkit-backdrop-filter:blur(10px);
-            z-index:3000;
-            display:none;
-            align-items:flex-end;
-            justify-content:center;
-            padding:0
-        }
-        
-        @media(min-width:600px){
-            .modal{
-                align-items:center;
-                padding:20px
-            }
-        }
-        
-        .modal.active{display:flex}
-        
-        .modal-content{
-            background:var(--surface);
-            border:1px solid var(--border);
-            border-bottom:none;
-            border-radius:20px 20px 0 0;
-            padding:20px;
-            padding-bottom:calc(20px + var(--safe-bottom));
-            width:100%;
-            max-height:90vh;
-            max-height:90dvh;
-            overflow:auto;
-            -webkit-overflow-scrolling:touch
-        }
-        
-        @media(min-width:600px){
-            .modal-content{
-                max-width:450px;
-                border-radius:16px;
-                border-bottom:1px solid var(--border);
-                padding-bottom:20px;
-                max-height:85vh
-            }
-        }
-        
-        .modal-handle{
-            width:36px;
-            height:4px;
-            background:var(--border);
-            border-radius:2px;
-            margin:0 auto 16px
-        }
-        
-        @media(min-width:600px){
-            .modal-handle{display:none}
-        }
-        
-        .modal-title{
-            font-size:18px;
-            font-weight:700;
-            margin-bottom:6px;
-            color:var(--primary-light)
-        }
-        
-        .modal-subtitle{
-            font-size:12px;
-            color:var(--text2);
-            margin-bottom:16px;
-            line-height:1.4
-        }
-        
-        .file-drop{
-            display:block;
-            background:var(--bg);
-            border:2px dashed var(--border);
-            color:var(--text2);
-            padding:24px 16px;
-            border-radius:12px;
-            cursor:pointer;
-            text-align:center;
-            margin-bottom:12px;
-            transition:all 0.2s ease
-        }
-        
-        .file-drop:active{
-            border-color:var(--primary);
-            background:var(--surface-light)
-        }
-        
-        .file-drop-icon{
-            font-size:28px;
-            margin-bottom:8px;
-            display:block;
-            color:var(--primary)
-        }
-        
-        .file-drop-text{
-            font-size:12px
-        }
-        
-        .divider{
-            display:flex;
-            align-items:center;
-            gap:12px;
-            margin:16px 0;
-            color:var(--text3);
-            font-size:11px
-        }
-        
-        .divider::before,.divider::after{
-            content:'';
-            flex:1;
-            height:1px;
-            background:var(--border)
-        }
-        
-        .modal textarea{
-            width:100%;
-            height:120px;
-            background:var(--bg);
-            border:1px solid var(--border);
-            border-radius:10px;
-            color:var(--text);
-            padding:12px;
-            font-size:11px;
-            font-family:'SF Mono',Monaco,'Courier New',monospace;
-            resize:none;
-            transition:all 0.2s ease
-        }
-        
-        .modal textarea::placeholder{color:var(--text3)}
-        
-        .modal textarea:focus{
-            outline:none;
-            border-color:var(--primary)
-        }
-        
-        .modal-buttons{
-            display:flex;
-            gap:10px;
-            margin-top:16px
-        }
-        
-        .modal-buttons button{
-            flex:1;
-            padding:12px;
+        .retry-btn{
+            margin-top:16px;
+            padding:10px 24px;
+            background:var(--primary);
             border:none;
-            border-radius:10px;
+            border-radius:20px;
+            color:#fff;
             font-size:13px;
             font-weight:600;
-            cursor:pointer;
-            transition:all 0.2s ease
+            cursor:pointer
         }
         
-        .btn-cancel{
-            background:var(--surface-light);
-            color:var(--text);
-            border:1px solid var(--border)
-        }
+        .retry-btn:active{opacity:0.8}
         
-        .btn-cancel:active{background:var(--surface-hover)}
+        @keyframes spin{to{transform:rotate(360deg)}}
         
-        .btn-confirm{
-            background:linear-gradient(135deg, var(--primary) 0%, var(--accent) 100%);
-            color:#fff
-        }
-        
-        .btn-confirm:active{
-            transform:scale(0.98);
-            opacity:0.9
-        }
-        
-        /* ===== SCROLLBAR ===== */
         ::-webkit-scrollbar{width:3px;height:3px}
         ::-webkit-scrollbar-track{background:transparent}
         ::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
         
-        /* ===== ANIMATIONS ===== */
         @keyframes fadeIn{
             from{opacity:0;transform:scale(0.95)}
             to{opacity:1;transform:scale(1)}
@@ -854,9 +681,10 @@
             <div class="logo">ReelDrama</div>
             <input type="search" id="search" placeholder="Buscar series...">
             <div class="header-stats" id="stats"><strong>0</strong> series</div>
-            <button class="btn-icon" id="btn-load-data" title="Cargar datos">
+            <button class="btn-icon" id="btn-reload" title="Recargar datos">
                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4M7 10l5 5 5-5M12 15V3"/>
+                    <path d="M23 4v6h-6M1 20v-6h6"/>
+                    <path d="M3.51 9a9 9 0 0114.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0020.49 15"/>
                 </svg>
             </button>
         </div>
@@ -866,15 +694,7 @@
         <div class="content" id="content">
             <div class="section-title">Series Populares</div>
             <div class="grid" id="grid">
-                <div class="empty">
-                    <div class="empty-icon">
-                        <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <rect x="2" y="7" width="20" height="15" rx="2" ry="2"/>
-                            <polyline points="17 2 12 7 7 2"/>
-                        </svg>
-                    </div>
-                    <div>Carga un archivo JSON para comenzar</div>
-                </div>
+                <div class="loading">Cargando series...</div>
             </div>
         </div>
         
@@ -915,41 +735,20 @@
                 <video id="video" controls playsinline></video>
             </div>
         </div>
-        
-        <div class="modal" id="modal-load">
-            <div class="modal-content">
-                <div class="modal-handle"></div>
-                <div class="modal-title">Cargar Series</div>
-                <div class="modal-subtitle">Importa tu colección desde un archivo JSON</div>
-                
-                <label class="file-drop" id="file-drop">
-                    <input type="file" id="file-input" accept=".json" style="display:none">
-                    <span class="file-drop-icon">
-                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
-                            <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/>
-                            <polyline points="14 2 14 8 20 8"/>
-                            <line x1="12" y1="18" x2="12" y2="12"/>
-                            <line x1="9" y1="15" x2="15" y2="15"/>
-                        </svg>
-                    </span>
-                    <span class="file-drop-text">Toca para seleccionar archivo</span>
-                </label>
-                
-                <div class="divider">o pega el JSON</div>
-                
-                <textarea id="json-input" placeholder='[{"logo serie":"https://...","series":"Nombre","season":1,"ep":1,"title":"Titulo","url":"https://..."}]'></textarea>
-                
-                <div class="modal-buttons">
-                    <button class="btn-cancel" id="btn-cancel">Cancelar</button>
-                    <button class="btn-confirm" id="btn-confirm">Cargar</button>
-                </div>
-            </div>
-        </div>
     </div>
 
     <script>
     (function() {
         'use strict';
+        
+        // ===== CONFIGURACIÓN =====
+        const CONFIG = {
+            DATA_FILE: 'data.json',
+            CACHE_KEY: 'reeldrama_data',
+            CACHE_TIME_KEY: 'reeldrama_cache_time',
+            CACHE_DURATION: 5 * 60 * 1000, // 5 minutos
+            ITEMS_PER_PAGE: 50
+        };
         
         const state = {
             rawData: [],
@@ -965,7 +764,6 @@
             currentView: 'home'
         };
         
-        const ITEMS_PER_PAGE = 50;
         let el = {};
         
         document.addEventListener('DOMContentLoaded', init);
@@ -990,25 +788,117 @@
                 playerBack: document.getElementById('player-back'),
                 playerTitle: document.getElementById('player-title'),
                 video: document.getElementById('video'),
-                modal: document.getElementById('modal-load'),
-                btnLoadData: document.getElementById('btn-load-data'),
-                fileInput: document.getElementById('file-input'),
-                fileDrop: document.getElementById('file-drop'),
-                jsonInput: document.getElementById('json-input'),
-                btnCancel: document.getElementById('btn-cancel'),
-                btnConfirm: document.getElementById('btn-confirm')
+                btnReload: document.getElementById('btn-reload')
             };
             
             setupEvents();
             setupPullRefresh();
             setupBackButton();
-            setupModal();
-            loadFromLocalStorage();
+            
+            // Cargar datos automáticamente
+            loadDataFromFile();
         }
         
-        function processData(data) {
-            if (!Array.isArray(data)) throw new Error('El JSON debe ser un array');
+        // ===== CARGA DE DATOS =====
+        async function loadDataFromFile(forceReload = false) {
+            // Intentar usar caché primero
+            if (!forceReload) {
+                const cached = loadFromCache();
+                if (cached) {
+                    processData(cached);
+                    return;
+                }
+            }
             
+            showLoading();
+            
+            try {
+                // Añadir timestamp para evitar caché del navegador
+                const url = CONFIG.DATA_FILE + '?t=' + Date.now();
+                const response = await fetch(url);
+                
+                if (!response.ok) {
+                    throw new Error('No se pudo cargar el archivo');
+                }
+                
+                const data = await response.json();
+                
+                if (!Array.isArray(data) || data.length === 0) {
+                    throw new Error('El archivo está vacío o no es válido');
+                }
+                
+                // Guardar en caché
+                saveToCache(data);
+                
+                processData(data);
+                
+            } catch (error) {
+                console.error('Error cargando datos:', error);
+                showError(error.message);
+            }
+        }
+        
+        function showLoading() {
+            el.grid.innerHTML = '<div class="loading">Cargando series...</div>';
+        }
+        
+        function showError(message) {
+            el.grid.innerHTML = 
+                '<div class="error">' +
+                    '<div class="empty-icon">' +
+                        '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' +
+                            '<circle cx="12" cy="12" r="10"/>' +
+                            '<line x1="12" y1="8" x2="12" y2="12"/>' +
+                            '<line x1="12" y1="16" x2="12.01" y2="16"/>' +
+                        '</svg>' +
+                    '</div>' +
+                    '<div>' + esc(message) + '</div>' +
+                    '<button class="retry-btn" onclick="location.reload()">Reintentar</button>' +
+                '</div>';
+        }
+        
+        // ===== CACHÉ =====
+        function saveToCache(data) {
+            try {
+                localStorage.setItem(CONFIG.CACHE_KEY, JSON.stringify(data));
+                localStorage.setItem(CONFIG.CACHE_TIME_KEY, Date.now().toString());
+            } catch(e) {
+                console.warn('No se pudo guardar en caché:', e);
+            }
+        }
+        
+        function loadFromCache() {
+            try {
+                const cacheTime = localStorage.getItem(CONFIG.CACHE_TIME_KEY);
+                if (!cacheTime) return null;
+                
+                // Verificar si el caché expiró
+                if (Date.now() - parseInt(cacheTime) > CONFIG.CACHE_DURATION) {
+                    return null;
+                }
+                
+                const cached = localStorage.getItem(CONFIG.CACHE_KEY);
+                if (!cached) return null;
+                
+                const data = JSON.parse(cached);
+                if (Array.isArray(data) && data.length > 0) {
+                    return data;
+                }
+            } catch(e) {
+                console.warn('Error leyendo caché:', e);
+            }
+            return null;
+        }
+        
+        function clearCache() {
+            try {
+                localStorage.removeItem(CONFIG.CACHE_KEY);
+                localStorage.removeItem(CONFIG.CACHE_TIME_KEY);
+            } catch(e) {}
+        }
+        
+        // ===== PROCESAMIENTO =====
+        function processData(data) {
             state.rawData = data;
             state.totalEpisodes = data.length;
             
@@ -1050,31 +940,15 @@
                 .map(s => ({ name: s.name, poster: s.poster, seasons: Object.keys(s.seasons).length, count: s.count }))
                 .sort((a, b) => a.name.localeCompare(b.name));
             
-            saveToLocalStorage();
             updateStats();
             loadSeries(false, true);
-            closeModal();
         }
         
         function updateStats() {
             el.stats.innerHTML = '<strong>' + state.seriesList.length + '</strong> series';
         }
         
-        function saveToLocalStorage() {
-            try { localStorage.setItem('reeldrama_data', JSON.stringify(state.rawData)); } catch(e) {}
-        }
-        
-        function loadFromLocalStorage() {
-            try {
-                const saved = localStorage.getItem('reeldrama_data');
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    if (data && data.length) { processData(data); return true; }
-                }
-            } catch(e) {}
-            return false;
-        }
-        
+        // ===== RENDERIZADO =====
         function loadSeries(append, random) {
             if (state.loading || (append && !state.hasMore)) return;
             
@@ -1101,15 +975,24 @@
             }
             
             const total = list.length;
-            const start = state.page * ITEMS_PER_PAGE;
-            const end = start + ITEMS_PER_PAGE;
+            const start = state.page * CONFIG.ITEMS_PER_PAGE;
+            const end = start + CONFIG.ITEMS_PER_PAGE;
             const pageData = list.slice(start, end);
             
             requestAnimationFrame(() => {
                 if (!append) el.grid.innerHTML = '';
                 
                 if (!pageData.length && !append) {
-                    el.grid.innerHTML = '<div class="empty"><div class="empty-icon"><svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg></div><div>Sin resultados</div></div>';
+                    el.grid.innerHTML = 
+                        '<div class="empty">' +
+                            '<div class="empty-icon">' +
+                                '<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">' +
+                                    '<circle cx="11" cy="11" r="8"/>' +
+                                    '<path d="M21 21l-4.35-4.35"/>' +
+                                '</svg>' +
+                            '</div>' +
+                            '<div>Sin resultados</div>' +
+                        '</div>';
                     state.loading = false;
                     return;
                 }
@@ -1164,6 +1047,7 @@
             });
         }, { rootMargin: '150px' });
         
+        // ===== DETALLE =====
         function openDetail(name) {
             const series = state.seriesIndex[name];
             if (!series) return;
@@ -1227,6 +1111,7 @@
             });
         }
         
+        // ===== REPRODUCTOR =====
         function playVideo(ep) {
             state.currentView = 'player';
             history.pushState({ view: 'player' }, '', '#player');
@@ -1251,49 +1136,28 @@
             state.currentView = 'detail';
         }
         
-        function setupModal() {
-            el.btnLoadData.addEventListener('click', openModal);
-            el.btnCancel.addEventListener('click', closeModal);
-            el.fileInput.addEventListener('change', e => { if (e.target.files[0]) readFile(e.target.files[0]); });
-            
-            el.fileDrop.addEventListener('dragover', e => { e.preventDefault(); el.fileDrop.style.borderColor = 'var(--primary)'; });
-            el.fileDrop.addEventListener('dragleave', () => { el.fileDrop.style.borderColor = 'var(--border)'; });
-            el.fileDrop.addEventListener('drop', e => {
-                e.preventDefault();
-                el.fileDrop.style.borderColor = 'var(--border)';
-                if (e.dataTransfer.files[0]) readFile(e.dataTransfer.files[0]);
-            });
-            
-            el.btnConfirm.addEventListener('click', handleConfirm);
-            el.modal.addEventListener('click', e => { if (e.target === el.modal) closeModal(); });
-        }
-        
-        function openModal() { el.modal.classList.add('active'); el.jsonInput.value = ''; }
-        function closeModal() { el.modal.classList.remove('active'); }
-        
-        function readFile(file) {
-            if (!file.name.endsWith('.json')) return alert('Selecciona un archivo JSON');
-            const reader = new FileReader();
-            reader.onload = e => { el.jsonInput.value = e.target.result; };
-            reader.readAsText(file);
-        }
-        
-        function handleConfirm() {
-            const text = el.jsonInput.value.trim();
-            if (!text) return alert('Ingresa datos JSON');
-            try { processData(JSON.parse(text)); } catch(e) { alert('Error: ' + e.message); }
-        }
-        
+        // ===== EVENTOS =====
         function setupEvents() {
             el.detailBack.addEventListener('click', closeDetail);
             el.playerBack.addEventListener('click', closePlayer);
             
+            // Botón recargar
+            el.btnReload.addEventListener('click', () => {
+                clearCache();
+                loadDataFromFile(true);
+            });
+            
+            // Búsqueda
             let t;
             el.search.addEventListener('input', e => {
                 clearTimeout(t);
-                t = setTimeout(() => { state.search = e.target.value.trim(); loadSeries(false, !state.search); }, 300);
+                t = setTimeout(() => { 
+                    state.search = e.target.value.trim(); 
+                    loadSeries(false, !state.search); 
+                }, 300);
             });
             
+            // Scroll infinito
             el.content.addEventListener('scroll', () => {
                 if (state.loading || !state.hasMore) return;
                 const { scrollTop, scrollHeight, clientHeight } = el.content;
@@ -1303,6 +1167,7 @@
             document.addEventListener('keydown', e => { if (e.key === 'Escape') handleBack(); });
         }
         
+        // ===== PULL TO REFRESH =====
         function setupPullRefresh() {
             let startY = 0, pulling = false;
             
@@ -1329,15 +1194,18 @@
             }, { passive: true });
         }
         
+        // ===== NAVEGACIÓN =====
         function setupBackButton() { window.addEventListener('popstate', handleBack); }
         
         function handleBack() {
             if (state.currentView === 'player') closePlayer();
             else if (state.currentView === 'detail') closeDetail();
-            else if (el.modal.classList.contains('active')) closeModal();
         }
         
-        function esc(s) { return s ? String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]) : ''; }
+        // ===== UTILIDADES =====
+        function esc(s) { 
+            return s ? String(s).replace(/[&<>"']/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c]) : ''; 
+        }
         
     })();
     </script>
