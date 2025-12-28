@@ -1,5 +1,2189 @@
 [
   {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5c65ba390a67a781.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 1,
+    "title": "Episodio 1 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0d50daace5971f0a7802680f9ea0102/4de09a2752c54ddaad7f6d5ba1b708e1-aa8ab2a523b5ad343e413a46ca6f09ca-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f781740c1188191b.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 2,
+    "title": "Episodio 2 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50c262acce5971f0903a87c7371d0102/6a851880c90d41c083596aa6b83ed391-a7e2c82205728901b6cd51de2e6747ec-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5b0e23c35c5fbed1.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 3,
+    "title": "Episodio 3 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70890b9fce5971f0bff83108f4850102/8d0df68b4b024a2b870aed609187804f-deb949d8fd10c4d9b27e8dd2eb8c4931-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/81315992775eb664.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 4,
+    "title": "Episodio 4 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30c787a7ce5971f0bc654077c0c30102/b46be2bdfcc2459899a7b3426bb14c73-0480d4d4cb933644e599798ee47d98c7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/70cba81c1eafd84e.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 5,
+    "title": "Episodio 5 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b09bc399ce5971f083443108f4940102/75281f29176e4b309aa930f3417ea1f9-d70331dd5a0a8b6c055340679067a92d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/55c5b5e7604a10c8.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 6,
+    "title": "Episodio 6 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b0f8699bce5971f0bffb4077c0c20102/f277b1c581d34f2da4d133ca0d822522-3baf3f0eeef4b3329fb1ef9e7130755c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e21b12877767f686.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 7,
+    "title": "Episodio 7 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/0078d592ce5971f083443108f4940102/784a6d14d8804fe5b0240a783239bc35-e310417a18e72bef26742f691db61c31-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c2a4823d20d75a25.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 8,
+    "title": "Episodio 8 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60f9c5a2ce5971f09d535114c0db0102/dcb8bf63f6644225ac43e618d92a172e-3893e5c19bf38c1c15f7a3bdc3e72acf-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/08fa69ef6de2ded4.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 9,
+    "title": "Episodio 9 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0e95297ce5971f0bf913108f4840102/82b0a4b4b2304c06bce0945130aba1b9-4920607d0bae0de60edc5a4275da3d54-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6f528abc8d7a527a.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 10,
+    "title": "Episodio 10 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50528da1ce5971f0bfd45014c1ca0102/7f920a28e1fd45609f0df49b406d8848-21120814ca48cc553f447a3a9a9f98d9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5a94069731b06177.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 11,
+    "title": "Episodio 11 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/701e73a2ce5971f0a7802680f9ea0102/898362d6ddbc4319b64ea04d368e0d8f-2ffa0f73fcec95a5137c875733545b8e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/eabf60c9616e2b41.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 12,
+    "title": "Episodio 12 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a0611ca4ce5971f0bff83108f4850102/a1de1fdebb1e468f9cec01638aef0b97-dfad892932449593c927cae033e1c08f-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/dd7d5cf9ae05067b.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 13,
+    "title": "Episodio 13 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d065e597ce5971f0a7802680f9ea0102/4c900b2b855946dd8b5f9d3006ee9f9d-4f98e8ce26304ebff1dc565e61565c9b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/85e0298e2d652402.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 14,
+    "title": "Episodio 14 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70a7b397ce5971f0bf384177d1c00102/fdfb68e74d03445cab694b5584c0ddf8-4ea1c55bb06f84cc6bc2a025ad37058f-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/be3546ca85f50e2d.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 15,
+    "title": "Episodio 15 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/004586abce5971f0a7802680f9ea0102/9c692750378f4b858e7421aafdc267b8-81050f0d618f1bed0f58eb4d2c6ed362-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/149853e029b95e6a.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 16,
+    "title": "Episodio 16 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e0baada6ce5971f0bc654077c0c30102/ffd84704dac84fffb1851792870d95f8-45703111b6e3e8d1896f8845c96a9bb8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7cfb14dc5948acad.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 17,
+    "title": "Episodio 17 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50683ca0ce5971f0bc654077c0c30102/5e6cc5b805f94654a107845e5c95f642-b2ba2b4a480576d09c19bf2bc6208244-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4ca14d5927c6eb27.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 18,
+    "title": "Episodio 18 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30d8db9cce5971f0a3565114c1ca0102/cde29c91693e4862b9a32e47141e7728-678cf2cb715af18258d4aec46ea9e06a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/8f3a589c453e0341.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 19,
+    "title": "Episodio 19 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/806bd89ece5971f09d535114c0db0102/147563575cb34258868e0124eb5d4307-53d48b12702c347f85a7205cd8e4dcea-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/472421614332cadc.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 20,
+    "title": "Episodio 20 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e085dd9cce5971f0bc654077c0c30102/3fb3a9a6f5754515b162d1fc3d69cf80-d89e82aee48fd29867ca3301e672cefe-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/37b0abfa645a30ff.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 21,
+    "title": "Episodio 21 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/8010f69fce5971f0bfbd4076d1d30102/97e2668701834fa2b40fb99e1264e461-f756c38a6a0b446a0a3a35e2df45b0d8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f191c8ad22fd40e2.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 22,
+    "title": "Episodio 22 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/002ced9ece5971f0824597c6360c0102/070fe019ed8046fca577789ed0224ee9-4ad355888af62aa7d72c9d5d28090019-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/02508e40259d9094.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 23,
+    "title": "Episodio 23 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0a21f9ece5971f0835d36a5e8aa0102/5e846be582dd4cd189491047b8fb9bea-7bc46d6dd888118333a5b23425bb8ff7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/af1d745fdb3979e0.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 24,
+    "title": "Episodio 24 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/6072c19cce5971f0bff83108f4850102/574081b2ed664639887dcb9d89ff505d-60d7360b48c1f45395109dd5434fb37b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/45f82cdc6c4bd5cd.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 25,
+    "title": "Episodio 25 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/005d539ece5971f0bfbd4076d1d30102/7b6bb4dcd9b249688480479c1bc482ae-c785c9fbfbdc6b18ba43f217ecf9478d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c9a31958fe4d161f.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 26,
+    "title": "Episodio 26 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/7027b0a2ce5971f0bffb4077c0c20102/1628ded4c13b4966816e9168019d6d59-32d4d7a118f958bbbb25374a23119f59-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/75764deddefc7df8.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 27,
+    "title": "Episodio 27 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/501d4c95ce5971f09d535114c0db0102/d3548f6ffe074b89ad497bbc7455034c-b26f9e11d3cbbec697995c03994bcce9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/3905c17199880b11.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 28,
+    "title": "Episodio 28 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d01da3a4ce5971f0984d87c7361c0102/595d0499e83f406aa9f493b01574eaa2-ffb7cbdcce1bcd85258b45437d2072af-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/03b5158e665a8a1d.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 29,
+    "title": "Episodio 29 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/6056199dce5971f0bf913108f4840102/39817464c9d74b9d91365a86395b587a-d7af660b7f7a2d474bdafd4b93d9bce5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/17fc6bf097669bac.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 30,
+    "title": "Episodio 30 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/209e8e98ce5971f0a3565114c1ca0102/53e27ada5fb74c8099805d4dd8e1c3f7-bb46114a221d1b7a9113eb1a0021c333-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b42104fb8370f4b0.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 31,
+    "title": "Episodio 31 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/501a5b9dce5971f09d535114c0db0102/c037e073e880477a8558af4c65c4349f-470863d9cccb9e8bb2828c68dfeca2a9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f1e7f5afa6833f10.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 32,
+    "title": "Episodio 32 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/209ec3a4ce5971f09d535114c0db0102/b6f96bbd6ef944779e01500b7697f83c-dbcca56ae1fddb65521898c5cc068bf9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/283a5098fb94427f.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 33,
+    "title": "Episodio 33 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70f649a3ce5971f083443108f4940102/cf56ff0135634cc8bf01f75a5ac8845c-dee20e6f8ff484bfe11e5b7a15504d66-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b4bc71b4d6aca169.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 34,
+    "title": "Episodio 34 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70ed5faace5971f0a3565114c1ca0102/89f07382bc5e4cbb852e7f137960af0b-f07e3028bffc4a26b276055b1c636102-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/cb11c9b9c3ccbfd9.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 35,
+    "title": "Episodio 35 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90683ea4ce5971f0a3565114c1ca0102/f0295ac956354a5b92fbf0e0234ef3a4-559f3b2f25e8e32966f7d66f527901c5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/bef59b903b8385a8.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 36,
+    "title": "Episodio 36 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f092889dce5971f0a3565114c1ca0102/61aa234d37094a0fb57dc35ddadb2517-7c3a68bf694fb9407a7bf64aaa0f308b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7ce5d0488e6d7daa.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 37,
+    "title": "Episodio 37 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50ca089fce5971f0bff83108f4850102/1914445bc703480da3ff3d5fce99e413-356322938f039d99b69ec7ec812be609-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1ca1022ab55fb2cc.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 38,
+    "title": "Episodio 38 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60a8a0a0ce5971f0903a87c7371d0102/2515b57cf7e04799a4b89e1a8c8915c8-cc0a212b7c63b002af977e89a860832a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/becc96a4fb35c45e.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 39,
+    "title": "Episodio 39 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a038af9ece5971f0bff83108f4850102/5998f465dee947ad96ef4f7b67f750ea-2349796c81b07b0ef0371d31c713241e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/744c5c61d75d9617.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 40,
+    "title": "Episodio 40 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0c378a2ce5971f0bf384177d1c00102/d79edd9767f548bbbac16f1862c39451-b237e4a47c2c0daf2af610f0f6ea937a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/156b6fa2f0b258d0.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 41,
+    "title": "Episodio 41 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90187ba3ce5971f0bffb4077c0c20102/b7047bc781df4ae684477701673fa12f-d8fb95a235a3f750302948d56439ffa0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ca9a2eefa24cd8ce.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 42,
+    "title": "Episodio 42 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0e8b5a1ce5971f0824597c6360c0102/246432602c174480a7d8db8ea8eae939-9ab478f991656e28f1666acbe41fbea1-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6e7982c6d2aaf2dc.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 43,
+    "title": "Episodio 43 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/6057eca0ce5971f0903a87c7371d0102/42439056b6234df7bff4f7083708a201-616d7299298e56afc40f7c8947dc1377-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/3e9551adcab9c1f2.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 44,
+    "title": "Episodio 44 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00c7dca0ce5971f0a0064177d0d10102/c14f37d7587543ea9aa3b12bde2ce4ae-962f1bc05ec820f161a172171c1a7078-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0b14e039a597ae41.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 45,
+    "title": "Episodio 45 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30e9b7a5ce5971f0903a87c7371d0102/22399b5e7ecd4cb2ba8f24c19fa36f42-53ed6fb9a59b6a95d272e202df89c046-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d47229605175d367.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 46,
+    "title": "Episodio 46 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90eaabaace5971f0bfd45014c1ca0102/eab3d6ed1a29497590bd31624942ce0e-78bab785192fec691f2e816b9d8d4eea-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/76a452312d204c22.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 47,
+    "title": "Episodio 47 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30f1e5abce5971f0bffb4077c0c20102/77dacbcf0d54453d93cd2bf4cc318a31-dd2bd3ae5a344ca224c1dce3dee86671-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ee81fd20576c1ea2.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 48,
+    "title": "Episodio 48 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a0435d9ace5971f083443108f4940102/fc2e0150a39f4328af5d6af488e5f682-6f83273a580d376fdf2babd28bcdd45e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a8f71129dfc0d007.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 49,
+    "title": "Episodio 49 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e04e60a1ce5971f0bfbd4076d1d30102/b3164051ae5a4b88a565a70479814dd6-0e408b36dfcfc84d9adf082ca774aa51-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/06f957ee90e1999a.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 50,
+    "title": "Episodio 50 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40d9e7a2ce5971f0b6265014c1da0102/8027a50cf0b540dd907d337ca004e937-dda0664d1b4b89baa13ed374a0987e60-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/9d57b4c3888f35d2.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 51,
+    "title": "Episodio 51 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10476c9fce5971f0b6265014c1da0102/2fdd0a1f4d22426cae9b4119e05f157d-09f8e79215c7a05d1d9b319660f021a4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e7d10e9494cf8a6b.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 52,
+    "title": "Episodio 52 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60dad9a3ce5971f0bfbd4076d1d30102/9c74533ffc384d39a4608b07f4ef2e13-d7c979644936f0369da20872a9db56a4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/abd31378e9f73f6e.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 53,
+    "title": "Episodio 53 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/807233a1ce5971f0a7802680f9ea0102/888e26480e1749ee872d6280e92447bc-46609cd03d61a9d2de29107ddbe9e5fe-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/82d7a6ffad86152f.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 54,
+    "title": "Episodio 54 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b04af19ece5971f0bfbd4076d1d30102/53bcdd1807be410c8dabbff3b197c462-8fc2d71ef32c85b209fe338a8082f5c4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5134e1fbfde6265e.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 55,
+    "title": "Episodio 55 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90514b9fce5971f0bfbd4076d1d30102/178d7d0faacd455db83ae0f5d963f69c-2f8716af7010a47c2a3850b7cada0b55-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/861c63700897b4b6.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 56,
+    "title": "Episodio 56 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40c85ea1ce5971f0903a87c7371d0102/7822eeb8a2ba49be88c39ed6a5e30948-b1c61d5eec337e8d18ed40046b336fad-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/98b472861cc7cf54.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 57,
+    "title": "Episodio 57 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50fb1b97ce5971f0903a87c7371d0102/00570d66ec7b43678eb7279d2f570330-0f3348d018f18c217c014d90f47b4e52-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ef32ecc0393a115c.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 58,
+    "title": "Episodio 58 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20099897ce5971f0835d36a5e8aa0102/9224ada13b594a71adca4eacc719a4d3-8bf54e331791c9783e99bc9b3ea9c2a8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/8cb1f1d58dbde753.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 59,
+    "title": "Episodio 59 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20c519a0ce5971f0bfbd4076d1d30102/508fe39878a345f7a08bf99082bd0286-a0f30c9f86119e1051cf9106da6d4d25-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Ffc6ef020-cf44-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/85fdce470fe76763.jpg",
+    "series": "Cómo conquistar a una estrella de cine",
+    "ep": 60,
+    "title": "Episodio 60 - Cómo conquistar a una estrella de cine",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0fc82a2ce5971f0b6265014c1da0102/2b956fa508954bcb9994552fefb05cb6-4426d736761606c1a1d81ae227086c5d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0416c79e270b4b7d.jpg",
+    "series": "El precio de amarte",
+    "ep": 1,
+    "title": "Episodio 1 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00d0a900ce5b71f0bc4b4177d1c10102/deb478b07ea44ed4beb0eb6a267ff56e-3d97949935bf7c65eb0eb61662efb846-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f4ecce3fb84361d6.jpg",
+    "series": "El precio de amarte",
+    "ep": 2,
+    "title": "Episodio 2 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/500dea00ce5b71f0bff83108f4850102/cc9be56e951749ce904800f0f2b489ac-beb1fd9af048ed2bbbdacf88eaebbac0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0c0c9fb506c7f03e.jpg",
+    "series": "El precio de amarte",
+    "ep": 3,
+    "title": "Episodio 3 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/909177ffce5a71f0bff83108f4850102/c04b3b53b3b040a08063023328d85985-b77235e17cf53cc3391dd16988eec74d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/dfe8b4f32a86e53d.jpg",
+    "series": "El precio de amarte",
+    "ep": 4,
+    "title": "Episodio 4 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70b244face5a71f0835d36a5e8aa0102/40a2cc179d8e43f28547688e19d8ee7f-38a0cd3973b6308af66755de7518d86e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/94d16dca99b16f60.jpg",
+    "series": "El precio de amarte",
+    "ep": 5,
+    "title": "Episodio 5 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/8038affece5a71f0824597c6360c0102/2c89bfe7235e45d69a42f31bfed20385-f77a060f8237ade8c8ac893fbea3c9c1-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5fba0be1d5e5197f.jpg",
+    "series": "El precio de amarte",
+    "ep": 6,
+    "title": "Episodio 6 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a00a8e00ce5b71f0bff83108f4850102/e0535bff0ebc4cfba3c1e6b97f066590-0884322d4df66979c4f264a29ad7ed83-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/43f7950c3009137f.jpg",
+    "series": "El precio de amarte",
+    "ep": 7,
+    "title": "Episodio 7 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/6061c8face5a71f09d535114c0db0102/d0eed031ef7846d0a0c2894af9d51459-a06d3ef51fce256db819ddf1e416cb8a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e06b3ba20fcb80ed.jpg",
+    "series": "El precio de amarte",
+    "ep": 8,
+    "title": "Episodio 8 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20c7fcffce5a71f0bf384177d1c00102/3df85aff62154c3a9c662b838ff2ae4d-d2ef823f681700dcb9be9ae83578da02-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/bf7940aea50bc144.jpg",
+    "series": "El precio de amarte",
+    "ep": 9,
+    "title": "Episodio 9 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10212600ce5b71f0bfbe4076d1d30102/08fcfc2ecd4c4d969f21800c0a50a776-bb3d98f0b8f5d2d4f97d9d51ac83eff3-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b9bd64a4b5b3d03a.jpg",
+    "series": "El precio de amarte",
+    "ep": 10,
+    "title": "Episodio 10 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00848c00ce5b71f09d535114c0db0102/75fe4a3b393c4b74bfa6b1928abe0bf3-fb0bded7c0f555fc1f7f3cb55a9ee82d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5efbec545df03a00.jpg",
+    "series": "El precio de amarte",
+    "ep": 11,
+    "title": "Episodio 11 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10383700ce5b71f0a3565114c1ca0102/948d7cb27148453db7ae92a40d8e0df3-60ff0001ad9ed9bfe7746ce89b6025cf-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f719e42dc7bfe358.jpg",
+    "series": "El precio de amarte",
+    "ep": 12,
+    "title": "Episodio 12 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50fa7e01ce5b71f0a0064177d0d10102/7e901301a04749469ff522ed893992dd-3fa6805236cb32bb6803a740debce548-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f9d1e53cdb6e0ee1.jpg",
+    "series": "El precio de amarte",
+    "ep": 13,
+    "title": "Episodio 13 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50d70afdce5a71f0984d87c7361c0102/3c037e28ceb84ea8b84c42de661772e7-dc06f5c91cd8c68063b5b0f07e713d46-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/dd84360d8fccfb32.jpg",
+    "series": "El precio de amarte",
+    "ep": 14,
+    "title": "Episodio 14 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0a5f3fcce5a71f0903a87c7371d0102/2f841c00f82a4f36b0905e57d76e1775-dba991325afc6d5a09a9ab2eeeec4f42-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b673c9f24297f10b.jpg",
+    "series": "El precio de amarte",
+    "ep": 15,
+    "title": "Episodio 15 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0bb1400ce5b71f0bfd45014c1ca0102/23964218b650412da405e1c71d10dbc3-ac94a170339985f1d3918f1d6ad3f9bb-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/40d48f2c6c32da5c.jpg",
+    "series": "El precio de amarte",
+    "ep": 16,
+    "title": "Episodio 16 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d019abfece5a71f0a0064177d0d10102/9c4c2738e3e54e8dbd931fbc8324418a-1efeadc00e9c07f185a7485bfb8197fc-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1a657e09c0ef2ec4.jpg",
+    "series": "El precio de amarte",
+    "ep": 17,
+    "title": "Episodio 17 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40d1bafece5a71f083443108f4940102/43e74905e05c48fda322a4ab537dbff3-4481965aa2f5ad195cd03967997819cc-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/597d0969ac86d329.jpg",
+    "series": "El precio de amarte",
+    "ep": 18,
+    "title": "Episodio 18 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10d9ae00ce5b71f0bf913108f4840102/27e04d787a6b481b99713441979c439a-d4a30676b690710ea973af8e6c1838e9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/bc2ad3f34d973c5c.jpg",
+    "series": "El precio de amarte",
+    "ep": 19,
+    "title": "Episodio 19 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/008b05fece5a71f0bc654077c0c30102/a261156b029f48bcbb660f968ab3bc1f-becf5ae3bf1e2036db9976e91fe8bd75-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b47e17553c2b57c9.jpg",
+    "series": "El precio de amarte",
+    "ep": 20,
+    "title": "Episodio 20 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/209bbcfdce5a71f0b6265014c1da0102/90fcbf484c944e308fbe8558ca147007-6bd3fe1eeb3d0f4ccf79280161c5d7a5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1fcd56c4cda98855.jpg",
+    "series": "El precio de amarte",
+    "ep": 21,
+    "title": "Episodio 21 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30683c00ce5b71f0bc654077c0c30102/813fda4a227e45f68067fdffaa290943-0aaa7710ccda72c7387eefc5ba184cbb-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1734651a412ef6af.jpg",
+    "series": "El precio de amarte",
+    "ep": 22,
+    "title": "Episodio 22 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90ab5bfcce5a71f0a3565114c1ca0102/3521460410a5494b85a2826196e249e3-41d4882222f10ae435d3477be660dd10-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/944e958c23f666a6.jpg",
+    "series": "El precio de amarte",
+    "ep": 23,
+    "title": "Episodio 23 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/600beefdce5a71f0bffb4077c0c20102/a6478d5a93c74ef29af716118cb1578f-2c198a5ab99440cbb6918b2c5a2ba48e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0fc9e4fb65a81737.jpg",
+    "series": "El precio de amarte",
+    "ep": 24,
+    "title": "Episodio 24 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b07be7fdce5a71f0bc654077c0c30102/0196038a323e463781907d78a066c477-51af9a2cd1e4ce0a01d66554239302a3-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/3702ac851a0c4425.jpg",
+    "series": "El precio de amarte",
+    "ep": 25,
+    "title": "Episodio 25 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/9032efffce5a71f09d535114c0db0102/1325ae7caf9a4e1caa91510ea71a3cf2-3e270c45f59587b23e3aeb1b702160f5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2ee9634b57934893.jpg",
+    "series": "El precio de amarte",
+    "ep": 26,
+    "title": "Episodio 26 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10d6f9fece5a71f0bff83108f4850102/aeb4b145131d41c2af83a43c820db633-1512db93cbed7802422290d13c038fb0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/97a0879f8f391bb9.jpg",
+    "series": "El precio de amarte",
+    "ep": 27,
+    "title": "Episodio 27 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60ae47fcce5a71f0bc4b4177d1c10102/4bae3bc606264c32bad23005ced17026-837971c2a5b2e1e20b3be7c4530d02c9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b4b5b6bd0c6688fb.jpg",
+    "series": "El precio de amarte",
+    "ep": 28,
+    "title": "Episodio 28 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/7056e2fece5a71f0a3565114c1ca0102/a2d4d99f84944554a0ded9352a0ffc22-62c2365caeda1cf3b61ef7d96ac23fce-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2200e884d3afd628.jpg",
+    "series": "El precio de amarte",
+    "ep": 29,
+    "title": "Episodio 29 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40791cffce5a71f0835d36a5e8aa0102/e3a6d7ba324a4df8b7cdfa8443650455-ea4cf39028e7c3f3258ff5a62a08a9cd-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/802a140223c9fe3c.jpg",
+    "series": "El precio de amarte",
+    "ep": 30,
+    "title": "Episodio 30 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c05cc3fece5a71f0bf9787c6371c0102/82cc1f3c7c3f48219c2ed4a92621053e-84410e350b46f0d7225773b821925d7c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f1df18e638817218.jpg",
+    "series": "El precio de amarte",
+    "ep": 31,
+    "title": "Episodio 31 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/80ae48fece5a71f0b6265014c1da0102/154f78f0256e40a69414415ad932b022-8f1b6342a90aca129f9080b919820f99-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/40950e377991843e.jpg",
+    "series": "El precio de amarte",
+    "ep": 32,
+    "title": "Episodio 32 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00918dfcce5a71f0bf913108f4840102/d0a61472698f497ebab0a70d553f34ab-3ef996c80fb5dad467c714e277a96ef5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/30f6d96c3fa38386.jpg",
+    "series": "El precio de amarte",
+    "ep": 33,
+    "title": "Episodio 33 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60e608fece5a71f0bf913108f4840102/efa0fd13bb3b4621acb957469f507e38-a73224aa0914ecdd4a66e17f92da0df8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4fbcad85b1b01297.jpg",
+    "series": "El precio de amarte",
+    "ep": 34,
+    "title": "Episodio 34 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/907daafece5a71f0bffb4077c0c20102/863660b5ac524531a4af354d75e324d9-2f43064e524f4b058c11f0116ed76d7a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1b6e3a71fcb07424.jpg",
+    "series": "El precio de amarte",
+    "ep": 35,
+    "title": "Episodio 35 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20ae0902ce5b71f0bffb4077c0c20102/6aba558994624c52a8a52e784ed0f8f2-e526046f5c2f81997fce4d121f26a02c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7ab3def0fbe9b2f5.jpg",
+    "series": "El precio de amarte",
+    "ep": 36,
+    "title": "Episodio 36 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f06467ffce5a71f0bfd45014c1ca0102/9146ce2617fe4f8192ff051b3ead0dff-fe8a5e168891b6064c53f40450a96478-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e90f6ff17361b66d.jpg",
+    "series": "El precio de amarte",
+    "ep": 37,
+    "title": "Episodio 37 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0f77a00ce5b71f0bfbe4076d1d30102/015bdb626763474f945144819b9a8c66-e40b5937a9204012fa76ee684d7dc649-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/8eeb615d5149e0d3.jpg",
+    "series": "El precio de amarte",
+    "ep": 38,
+    "title": "Episodio 38 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b028e0fdce5a71f0984d87c7361c0102/1bfd749e44b24b92bb0237768229035a-254645e66b54bc92221bcc39177b0b14-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a582ca363c6ae949.jpg",
+    "series": "El precio de amarte",
+    "ep": 39,
+    "title": "Episodio 39 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/008166fcce5a71f0984d87c7361c0102/4464682d62e645c59e87861b89ffdffe-05e0efeb435767d0ba55b88b5a3e1eab-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/cc233997979a22f5.jpg",
+    "series": "El precio de amarte",
+    "ep": 40,
+    "title": "Episodio 40 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0fa85fdce5a71f0a3565114c1ca0102/7ad9cec2965d49bf818c8a4eebfa0a52-8d5d8812e3431f67ddc2122ac816c432-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0f2b50d6895c0172.jpg",
+    "series": "El precio de amarte",
+    "ep": 41,
+    "title": "Episodio 41 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0c6a400ce5b71f0a3565114c1ca0102/7c9aa9e455fe4cd098c042f914af73e3-b1b34274480c56df16431ff1eeff85ee-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e1579d33e79552cb.jpg",
+    "series": "El precio de amarte",
+    "ep": 42,
+    "title": "Episodio 42 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a0c143fdce5a71f0bff83108f4850102/a77b709be55f4e9cbc255608b6549afd-192865658ba7b3f5b45fe9d2c56952e3-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0f8d2071c0e5987f.jpg",
+    "series": "El precio de amarte",
+    "ep": 43,
+    "title": "Episodio 43 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f09a64fece5a71f0bc4b4177d1c10102/ba51fba52e3141c592b524a2d1ee606b-f9820dc586e77e123ec0ded8ff2792b8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a7716b9b26f6b8ee.jpg",
+    "series": "El precio de amarte",
+    "ep": 44,
+    "title": "Episodio 44 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0eda2fcce5a71f0bfd45014c1ca0102/4acf80a1dc8c41dfb54b9b87122cb02b-c482fc3ba81c47dc64a06066cb7a8757-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ed329483d13ce239.jpg",
+    "series": "El precio de amarte",
+    "ep": 45,
+    "title": "Episodio 45 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b098f1fece5a71f0bfbe4076d1d30102/949d951f41e84c5ab7d667c6099df9ab-4272ac5e0afb37dee2415ab769c585ff-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/bf6d75e632a73995.jpg",
+    "series": "El precio de amarte",
+    "ep": 46,
+    "title": "Episodio 46 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/80a3b8fdce5a71f0bfd45014c1ca0102/fb13b83ee92847e6bbf5d1d1e40e92f2-f2814cdf0b0dd54befcb363f8d15390f-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1726385428510039.jpg",
+    "series": "El precio de amarte",
+    "ep": 47,
+    "title": "Episodio 47 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/203ae1fdce5a71f0bff83108f4850102/74cddb5e3f2c4c309dacdb7d1c9c52a2-08ce14d88feff18a51499504a6075bad-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/73d8bec86d8def2f.jpg",
+    "series": "El precio de amarte",
+    "ep": 48,
+    "title": "Episodio 48 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0deddfdce5a71f083443108f4940102/d123222377404c35af70d06bbb669fb1-c56c29ae92e3bc84b7582d277310022e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c87c4d2739a779d3.jpg",
+    "series": "El precio de amarte",
+    "ep": 49,
+    "title": "Episodio 49 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d09972fdce5a71f0835d36a5e8aa0102/05260c331f474bf7bb87e3d55f8c5174-cdc6067101cc2225a9493468742b1b77-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/678dcc6e9fb3c030.jpg",
+    "series": "El precio de amarte",
+    "ep": 50,
+    "title": "Episodio 50 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/3033bffdce5a71f0b6265014c1da0102/6d237ffc1c384c01b2f90a2bd079baf8-217a4467c770cb536252da780f669734-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d74548dfcb148158.jpg",
+    "series": "El precio de amarte",
+    "ep": 51,
+    "title": "Episodio 51 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0534f00ce5b71f0bc4b4177d1c10102/7c510b2df5d7416fbb026e396e7f13c2-fb73e3bd572186675301d8e42ced4de8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4067364990694d53.jpg",
+    "series": "El precio de amarte",
+    "ep": 52,
+    "title": "Episodio 52 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50e3fcfece5a71f0bc654077c0c30102/48daeb84ccfb4fd3abd2f5a662408e68-fa4db6ca9b5d95d195b61727fb9ac3eb-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/57bd2c3e366afa31.jpg",
+    "series": "El precio de amarte",
+    "ep": 53,
+    "title": "Episodio 53 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e0b988fdce5a71f0bfd45014c1ca0102/5cc1e3ea3a9a4a04a5513f6f907b21ea-ed129e67a4185db744f118dd5fb830a1-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e02ea92c1ae4bbb7.jpg",
+    "series": "El precio de amarte",
+    "ep": 54,
+    "title": "Episodio 54 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/809737fece5a71f0984d87c7361c0102/cc3cfbc63561442fb89afad2feaa4d4d-499083bba71ec710682e4629f6d874ed-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a3826c6276695f17.jpg",
+    "series": "El precio de amarte",
+    "ep": 55,
+    "title": "Episodio 55 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0f5b6fdce5a71f0a0064177d0d10102/09c200f682494f14b0cc1a2b84159a03-668e69a01d14f482176148052beb8d15-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/dc649db752e58144.jpg",
+    "series": "El precio de amarte",
+    "ep": 56,
+    "title": "Episodio 56 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00909cfdce5a71f0bc654077c0c30102/c4f1df132fe24a179f944370a56cb34d-2887dde5006dfdaaf770c70a6688629b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e1acdc8755aacdbe.jpg",
+    "series": "El precio de amarte",
+    "ep": 57,
+    "title": "Episodio 57 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0894bfdce5a71f09d535114c0db0102/efb1978c10f34a8e9808c494de89edf3-3d9f95ce394862f8c69277100a5e67a6-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/9051b8e7c5fa3c55.jpg",
+    "series": "El precio de amarte",
+    "ep": 58,
+    "title": "Episodio 58 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/100b7701ce5b71f0bf384177d1c00102/dbade9f798fb4897b47bc982d9bfa369-2bd1d5879227a31ea6a54f9daf805896-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5c93ba0ceb94fefe.jpg",
+    "series": "El precio de amarte",
+    "ep": 59,
+    "title": "Episodio 59 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/105cbafece5a71f0bf9787c6371c0102/6762b0598b4f4c93883b5ab55e7d70de-64b2e3f6a353b27b13c4f37342ef3316-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f5f53b20458a9b87.jpg",
+    "series": "El precio de amarte",
+    "ep": 60,
+    "title": "Episodio 60 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/903624fece5a71f083443108f4940102/38feb0f1ddcc486d8c5ce5ada0edbc9e-aea9a70850f2fdaebbe1d52bb92216ea-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ab174b91f8332f81.jpg",
+    "series": "El precio de amarte",
+    "ep": 61,
+    "title": "Episodio 61 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0fdc9fcce5a71f0a7802680f9ea0102/13534af536e94ba992208d8bcf672f5f-6454db0a63ea98156ea41c34a15270d4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ef49a232024ec280.jpg",
+    "series": "El precio de amarte",
+    "ep": 62,
+    "title": "Episodio 62 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40fe7afdce5a71f0824597c6360c0102/2a41f6c4191442558edf2a2dab1e2eb7-baac7c899a3cc4fbb6132c48f7977b3a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c7e50b8cbfd97cb9.jpg",
+    "series": "El precio de amarte",
+    "ep": 63,
+    "title": "Episodio 63 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/008e49fdce5a71f0bf9787c6371c0102/6f530a5affc9434f9fe95b0cced77ce4-9c197613a8f9d032f4128ff7d8d2cd5b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5e56216cfe5cfedc.jpg",
+    "series": "El precio de amarte",
+    "ep": 64,
+    "title": "Episodio 64 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f053defdce5a71f0bf384177d1c00102/970eeb9c39c547ddbfda195840a3d21b-cc865188443066529095b33829266319-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7780f613db0154d7.jpg",
+    "series": "El precio de amarte",
+    "ep": 65,
+    "title": "Episodio 65 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e0d8e5fece5a71f0bc654077c0c30102/36edf384f8824716af32a9d06ee70b37-d4c1a97d9a5cf05930d439f00e26f7b5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/78d966aceec273d4.jpg",
+    "series": "El precio de amarte",
+    "ep": 66,
+    "title": "Episodio 66 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/9033e0fece5a71f0bf384177d1c00102/3be72363848a4840b1e631a448183a9d-ba5b4e849cb51b3a314bc41a01af5ac8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/9ab067f2c126e3c2.jpg",
+    "series": "El precio de amarte",
+    "ep": 67,
+    "title": "Episodio 67 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50dabffece5a71f0b6265014c1da0102/3c0555152f9449bb9645efbe5445806b-3c1403fb8545a187c7c9f6c6b189dcd4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2ad4d3e7b08f132d.jpg",
+    "series": "El precio de amarte",
+    "ep": 68,
+    "title": "Episodio 68 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e010a700ce5b71f0bf913108f4840102/9068469d72964e23a66b296a99e5c22c-0fcdde172347ce0dc18f65402029b553-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4545a1a652c9ede0.jpg",
+    "series": "El precio de amarte",
+    "ep": 69,
+    "title": "Episodio 69 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/6017e0ffce5a71f0984d87c7361c0102/e68ba8a91f64424386881550d443a9f3-be443eb8b83369dc81dc305c1e3317ec-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d6032644cd121751.jpg",
+    "series": "El precio de amarte",
+    "ep": 70,
+    "title": "Episodio 70 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/80414cdfcf2d71f0bff65014c1ca0102/bc9367fa02464e19b182e1f94970da8c-f34631cefcccbe7e75391e3d05680b81-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F38c434e0-cf63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5747d95878d3f088.jpg",
+    "series": "El precio de amarte",
+    "ep": 71,
+    "title": "Episodio 71 - El precio de amarte",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b05d5d00ce5b71f0a3565114c1ca0102/b12233a2dd2b44c5a64f2ad80b0168c8-4b907919c75e5a3ad661804401679565-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c87b94c58e25c2e9.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 1,
+    "title": "Episodio 1 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/501115a6cfee71f0a0114177d1c00102/e158d0b7fc3c41dcbeddc7161b6de508-605ab160d22583cf5f124411bd8b1bf0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/24c2bcbcfb06b8f0.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 2,
+    "title": "Episodio 2 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f088e0a4cfee71f0bfcf3108f4940102/9edaef7eb0b94dcca478ffa4a3daa2f3-aebd097a5f0896b3f82ff46667e8db35-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/004a3edf0ed62cea.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 3,
+    "title": "Episodio 3 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/3060e6a5cfee71f0bfdb97c6360c0102/21b883ae4c034d6fbc027c37e0355e80-88ee635dbfad274bb48e88d27e32c36b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/84837722051bc575.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 4,
+    "title": "Episodio 4 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/000ff8a1cfee71f0bfaf87c7361c0102/6058f2efedeb4b588137606c89ceed9e-05c75afcd0510b2be3faad244d69f61c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4023a1012a342653.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 5,
+    "title": "Episodio 5 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/405700a3cfee71f0bfcf3108f4940102/f4f2c242492f49f6b6a291450b5d02e9-941ef7a93f8440d7553fb124f6e94ea8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/868eb05facb9c689.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 6,
+    "title": "Episodio 6 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/606473a3cfee71f0ad3a5014c1da0102/6c3ff8c38e68443c84902ae9ebe8cfec-4005d6f5251393b55cb1422644e29074-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c6120670f92bd8bd.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 7,
+    "title": "Episodio 7 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b01911a6cfee71f0ad3a5014c1da0102/b0cf51f52698422c9ce4516aa37fad52-ae6790e01708f68483a6537957cdb0fb-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e2e81fd9eac28d9f.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 8,
+    "title": "Episodio 8 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e021d3a1cfee71f08c814077c0c30102/d49b38fdf25f41cd947fc2cb584737d9-cf78f06398f22495c72d63b0a0ad6378-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/936ccb64e9a09d46.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 9,
+    "title": "Episodio 9 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d06c37a3cfee71f08b155114c0db0102/253f2379563c4e53aac531c604f21a13-7e01ee2a5337e8f837ccfcd953ee7d0c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/89114864e4d54a33.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 10,
+    "title": "Episodio 10 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/705576a4cfee71f0a22987c6371c0102/da45bf1548fe472888461886d56d4155-316b3bcb86e4110f00579fc7c1b0fc2c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/41a10275b42c223c.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 11,
+    "title": "Episodio 11 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/906ef9a1cfee71f0a9274177d1c10102/2103d5942256455097b3263c9ecda407-b73934ce1a78892949ee75a06e1b62a9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/011640b7ee15e59d.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 12,
+    "title": "Episodio 12 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/603651a3cfee71f0bfdb97c6360c0102/13837adc45184329919769be69160aff-b647fb8067a6efa3696ef59a7b996c22-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f630c5c676c96ae2.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 13,
+    "title": "Episodio 13 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40d829a3cfee71f0bffa5014c1ca0102/16cfab74e4c64685afea1cc1e27698bd-685dea8e8178a955c7b7cc4e41f5a498-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/fac6f3da8e2456bb.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 14,
+    "title": "Episodio 14 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0176da2cfee71f0a0114177d1c00102/786f593768994998bbb8c58280581a50-80de362b849b436c2b54b2c6ab0ca00b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/abfe911dc18ad7de.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 15,
+    "title": "Episodio 15 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e06677a4cfee71f0800487c7371d0102/e2a207dc61104d6ebd4a09b4c279d04a-0afdb27418deb98481c466a7d557b45d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6586964ba49ed240.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 16,
+    "title": "Episodio 16 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/3081b4a2cfee71f0bfaa3108f4840102/d94e8b1309cb4ce19eb45c5a8193665d-7d7f2a8c1e4b6602a61fc61523c001af-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/41a98d7c08784332.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 17,
+    "title": "Episodio 17 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a04df3a4cfee71f0bfcf3108f4940102/09d00e83c587475ea4e6d905cb731970-41c5c5ce47577594d6841ab38ab7a974-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b063079378dad64c.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 18,
+    "title": "Episodio 18 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/604c00a2cfee71f0bfe15114c1ca0102/c14b2fb07c3841fda280b2f96e2d24f8-366c2f63804e96927e2db070eea3ed62-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7ac99f7cde554d64.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 19,
+    "title": "Episodio 19 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/904985a4cfee71f0be6d3108f4850102/5d7ecf3b1d66423084eb43ef648936ad-e30fb393af7b2f2adade82fa4634a663-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/9f767c4466587cbd.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 20,
+    "title": "Episodio 20 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e04a5ea2cfee71f0bfcf3108f4940102/c5b562c3158a466a9ac31d91ead95bc6-7b7d413169e0f1a4d9f37b824e6166ed-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ced6d2f08d68b0b2.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 21,
+    "title": "Episodio 21 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90e312a5cfee71f0ad3a5014c1da0102/30068cadcec748af9e296cbb0b8645c7-0c41dc09f2013a8963164be4063b43eb-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b712af0811d864be.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 22,
+    "title": "Episodio 22 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20a733a4cfee71f0bfaa3108f4840102/be31df3560e342fea7c15b9c4c344f6b-0ed04cac865e45dbd9d2a7b1bb2f1542-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f97f8a4c720ec59d.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 23,
+    "title": "Episodio 23 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70bbe8a3cfee71f0bfe34077c0c20102/7cad8449f41645518517f8cc12dd9e78-f679083bc2ee0bd072ba88e4175bf3f7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/09eb61f644a8adbf.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 24,
+    "title": "Episodio 24 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a09b63a5cfee71f0800487c7371d0102/f03d53dc02de428d9cf6745d530bf711-01e3f253800972f793096b2ba4346d41-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/bb91ee416243240e.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 25,
+    "title": "Episodio 25 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/904139a3cfee71f08c814077c0c30102/0761ca0c96594a0782ee86bda5fb4d0a-fabfff7bee8ba187accd41ae8ae68e99-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/02f67d58fc2c39cc.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 26,
+    "title": "Episodio 26 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/4018c6a3cfee71f08c814077c0c30102/0f0db4978a0b4cc99754a061664ec16c-d07458b69fe6f66f92b974e1aef355c1-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b4eb0d8b78ea586d.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 27,
+    "title": "Episodio 27 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a098aea3cfee71f08c814077c0c30102/486c5f5b1bb1453b9b22470ba2e3a8ea-ebbeb041eef4ead275967a626a5931b3-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ffd0c169b87826b8.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 28,
+    "title": "Episodio 28 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/1039ada3cfee71f0800487c7371d0102/6f31b4c357e24f2e8a065f646d987ccf-462f8e9f33f436e5d5982f5b3f6abb2a-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d70613bad574eec5.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 29,
+    "title": "Episodio 29 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/004b5fa4cfee71f0800487c7371d0102/74f52e2ef47c4393bc3a8a0482b54562-9ef3f3bd211d6527b8cf1aaf26c11d9e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2bd3780e2f6770c5.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 30,
+    "title": "Episodio 30 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20567fa4cfee71f0bfe15114c1ca0102/f301d4abd55c46e6bde5f798d3eee951-5e54d23ae1289b238c50004ab58cad55-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5b287fc78aba1a20.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 31,
+    "title": "Episodio 31 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/609d25a4cfee71f0bfe15114c1ca0102/a0be93e75cd7400992f8c4a98202a5c6-a4a06f882ef7a81b4d67157318bb4a98-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0d731d0cacd0cce1.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 32,
+    "title": "Episodio 32 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/908c65a4cfee71f0bfcf3108f4940102/27e7de4144bd49e3aee3ec94f9710c6d-c707a8a902f83b9b667e89b70a9084a4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e47fc68ef50080e0.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 33,
+    "title": "Episodio 33 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/303f36a4cfee71f08b155114c0db0102/1aa61986484e4b958e93ab246f577981-8993830fcb929e4c6467b4167106a94b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/23b30da41ce22c10.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 34,
+    "title": "Episodio 34 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50240fa3cfee71f08b155114c0db0102/e5ee111a7e9e4cd6b50e94a32ffccb7e-0fa18bd7c97a43e5fd085b825958c712-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a6d399e11f3f3696.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 35,
+    "title": "Episodio 35 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e05af6a4cfee71f0bfdb97c6360c0102/a6bc0d5dc62f4dc4b33549e7fa77e2a9-d104d4073abb97d10f06cd380dce2ac5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a37c798bb9057962.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 36,
+    "title": "Episodio 36 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/502dbda5cfee71f0bfe34077c0c20102/65a8894fd0fb4dc78d9f139c4e31698a-9282473a690f06aaa2140af9ce3bc4be-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b49e9bcabba1b6ab.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 37,
+    "title": "Episodio 37 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90c171a4cfee71f0bfe34077c0c20102/3a1b621ec9f5408e94dcc56adb445a60-84331e2c589a635c3291824ab6489172-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d2605dfcbf5de5c8.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 38,
+    "title": "Episodio 38 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f04a97a4cfee71f0bfaa3108f4840102/05ba672208264a568484384070fefe3f-64bdd5376e331c62509d961c1d91dfd7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c1c8cf7bd9d57cd4.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 39,
+    "title": "Episodio 39 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10ae55a4cfee71f0bfaa3108f4840102/d1537d65f8014fbb9987260009b0dd74-ba2c58c25aaa36a1ebc9de674ca63985-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/25599daf21692702.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 40,
+    "title": "Episodio 40 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70420ba5cfee71f08c814077c0c30102/e37ac881dc7c4496ad86410ef5b1b604-fe3c58c68cba1f82d9e2edf5da44c3c9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c5ca5d4de8a656e7.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 41,
+    "title": "Episodio 41 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/806c4fa4cfee71f0bfaf87c7361c0102/a779587ad19945889ae01e26026a8302-18d9c81398da896d822bb1f9d2ac6610-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/21565797427c765a.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 42,
+    "title": "Episodio 42 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c03fafa4cfee71f0be6d3108f4850102/73097c5d74774cb6bf2de450106e7b8c-3cfe5ec206bce35f25daec19970e852b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/54e2a69e2e975952.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 43,
+    "title": "Episodio 43 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/802f68a5cfee71f0bfdb97c6360c0102/ac6954a6a4de415eb1beb35338ded22f-3889154f3543e37b1eb367eaf6c738ee-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/eaf43aceeb9a30a6.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 44,
+    "title": "Episodio 44 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/309490a4cfee71f0bfe15114c1ca0102/e4600b08d099474ebe6bb63cf57b4bbe-1ceb2989a468c57b0e72b9e421f8ffa7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/e782c016991c4293.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 45,
+    "title": "Episodio 45 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70fdd7a4cfee71f0bfcb36a5e8aa0102/08061f1842494211930a60a077e3a279-f81a9763abd629fc9386d68786c92ad8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4f72acc290a759fc.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 46,
+    "title": "Episodio 46 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/2012aea5cfee71f0bffa5014c1ca0102/dda85d080f1b445eafbbe8fefaa50c55-d5a3fb8730af849ee8fd4f2a4987b6a6-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/52d67f4b87a89903.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 47,
+    "title": "Episodio 47 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/309d3ea7cfee71f0ad3a5014c1da0102/7867ec3a52b14a2b85baf4d92dc37968-66a33331068c29265109e5ac30e401c3-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/851da72027e0531a.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 48,
+    "title": "Episodio 48 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/604ec4a4cfee71f08b155114c0db0102/1060793bf5114eeaba5a51b3a24b7f48-964dc730991287ba2b65ab0580f13977-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/14a769544feade01.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 49,
+    "title": "Episodio 49 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b0f76fa5cfee71f0a9274177d1c10102/f44f8ed4dc224f1884199a292a8db709-7f60abf22d9b3ea7241d42c31dad5e82-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7de0743043aa366a.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 50,
+    "title": "Episodio 50 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60c6b0a4cfee71f0ad3a5014c1da0102/1cb75bed73de4fb58001c319cacb8b42-1f3af7a6805963a6301077a46ef48e47-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2c77a8b25911ce38.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 51,
+    "title": "Episodio 51 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30c99ca4cfee71f0a9274177d1c10102/95f81f1cbdec48488c5106111de33791-2ee95e06b32b9669766a3068a689c83e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f14ce038c08c9fbe.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 52,
+    "title": "Episodio 52 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d06d99a4cfee71f092114177d0d10102/cf1df9f41c2645fdaecee59444f35b9a-d4724de8deed8bd2a7f285b2c0aacbc7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a702561050533c5c.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 53,
+    "title": "Episodio 53 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70711ea4cfee71f0a0114177d1c00102/8472b7782a954c8380c803a5fefab94e-6de4bdcdf9307fe9727593f8b96b9c1b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f2c6176ed0d31da7.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 54,
+    "title": "Episodio 54 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70dfdca4cfee71f0a0114177d1c00102/1a10e6e9f7734b389d76fad9d5b92fc8-ba2b11750f93227d897b1107033ff0c8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f46a551116035f53.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 55,
+    "title": "Episodio 55 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0e2d1a4cfee71f08b155114c0db0102/e433f17867e240f49a9d100d4f12f8d0-7adb609aa77324a4f0972f7ab0845277-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/89454ff77b58ec1e.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 56,
+    "title": "Episodio 56 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/109744a4cfee71f0bfe15114c1ca0102/cbd3cb368cb24062994294fd86a457fa-3b63c1cbeee9f41024e2f86822f41d00-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2550eb5c1ca88cf6.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 57,
+    "title": "Episodio 57 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/5010b3a4cfee71f0800487c7371d0102/36fe2948bcad45a28f3b9acad1490776-6aeaa94b05bb3456ff1d7fc9466cfade-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/413633cf24b664af.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 58,
+    "title": "Episodio 58 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e00942a5cfee71f08c814077c0c30102/c66946a7e66040d6a2e6504e865a292c-56cc1755cb1e0660adbacdc73b530bcc-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/83b8e4a8805e4e95.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 59,
+    "title": "Episodio 59 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/505cd0a4cfee71f0a9274177d1c10102/2372ba2462564870b3293d7cfb64ff1e-3e930bbf871ba44a3832cbe0905089c5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/035cef6737258957.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 60,
+    "title": "Episodio 60 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b0c7faa4cfee71f0800487c7371d0102/865e25068d094fa0a8714c7138b6e6e0-cf44c9b9f0948f095a62054d7a1447d0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f1dca65aca91efe1.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 61,
+    "title": "Episodio 61 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/308469a4cfee71f080084076d1d30102/7a3619b1823d4541ac9fb6ba63fc10af-3d06a8fffec83dc7959014eea662998c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f970559ea9a060c9.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 62,
+    "title": "Episodio 62 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30177ea7cfee71f0bfaa3108f4840102/2ba281478f354bf2b0e3a05e3e3e6e2c-5c55a1ad6f3d2c686671a3bd303fb94b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/54f63152e13e3042.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 63,
+    "title": "Episodio 63 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20961ba5cfee71f0bfaf87c7361c0102/94858daaab0e4169bbabc10b769f5fb5-4356ef00e3519d1fb11b37ed2ab9cf7e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b9bf6054098cc86a.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 64,
+    "title": "Episodio 64 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20276ca5cfee71f0a9274177d1c10102/737b8f93579b4a5789472e303e5c8b40-b551373e9344e2ed0c45546bed9ec79d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/31d98ba92d87a207.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 65,
+    "title": "Episodio 65 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40cbb7a4cfee71f092114177d0d10102/5a662098216a4d6aa1cde754fd166215-9602612f64c3676db7b5b48cb632fd65-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6fa6d9c3a42d5c2f.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 66,
+    "title": "Episodio 66 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/200a62a4cfee71f0800487c7371d0102/9177ca98c8ca4288b94a93cf4d72ef93-5760c1e5dd7d9125f3f3cc3cdcbb0421-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b16b824462c6fb68.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 67,
+    "title": "Episodio 67 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e0487ca4cfee71f08c814077c0c30102/39ef4e17cb894be88200d54d0cc69bc8-42873e5e4d6dad329f08a27ea3928486-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2Fe8684c70-d1c4-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c7a7f08c0b0a79d4.jpg",
+    "series": "Operación trampa de Navidad",
+    "ep": 68,
+    "title": "Episodio 68 - Operación trampa de Navidad",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50093aa7cfee71f08c814077c0c30102/09dde11508ff4d14b1342c2521242d8f-0099d2d480308d4491924912fb5e5532-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0cff98852708d722.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 1,
+    "title": "Episodio 1 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/800749efbaab71f0bfd05114c0db0102/afdb045451524dd7947b4d90219d4603-5f6fbcb398fcee3c2f64e66cab32ac29-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1fadf8e25986849f.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 2,
+    "title": "Episodio 2 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00017151c43071f0837936a5e8aa0102/7824bd6e6c894db2a5baea2a81f25b36-d3c4c996475d14d998c7dccffd85286d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b86dd64a75b80e36.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 3,
+    "title": "Episodio 3 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b056d451c43071f09e8e5114c0db0102/0466c74bb7db456dadd483e2eb97e1e9-e9a422f1420f77f3ed6ef28935d7bfba-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/219a08524be650ea.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 4,
+    "title": "Episodio 4 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/80dc3c52c43071f080013108f4840102/1b12b6dc2fcd462890b8469cc938ea92-28d6af21dac1a994021c0fdcf3e2f364-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4c0df0d5ce9bd1ff.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 5,
+    "title": "Episodio 5 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e014ae52c43071f0bffe97c6360c0102/e8d80c4887854d5898891dac0523980c-0563d5f80e9810ff1d4af8fa7ca9d7c0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ec46009ed6cfbb9f.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 6,
+    "title": "Episodio 6 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c08c0a53c43071f0bf9987c7361c0102/7ffbe5a586a7404ab92d1fe96b62c094-65f447ab082f9fb0871e805dab38abc2-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/01ac6861c61a1b2b.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 7,
+    "title": "Episodio 7 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10da7153c43071f0b9654076d1d30102/dad2364090b247219d392c67dd08cc33-aecbaa027ed853ed89b067f5a6da72bd-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/47ce0894433b933e.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 8,
+    "title": "Episodio 8 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60be50f1baab71f0ba463108f4940102/b41a75d65eaa4f8da706b19466b71222-c5deb2e991dae84ffb4f34d806a2ca69-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c7d60f63750f0231.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 9,
+    "title": "Episodio 9 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/8004d753c43071f09e8e5114c0db0102/cb0760df13bd4741a2ed4f66431511a6-098bc529d465d3f3f0be0ae7cb24c358-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/fdd633b8cdfc4eb0.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 10,
+    "title": "Episodio 10 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60403d54c43071f080074177d0d10102/da1dbd4f6b9944548e55a32ca4100f2f-d2055169a96d5500bbeba3806225c244-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/2a3348049414f1fe.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 11,
+    "title": "Episodio 11 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/506f27f2baab71f0bf995014c1da0102/b06c4aa77b294474ab25e709a38d387b-0413cbb4dfe6312b511e9e0410e246da-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f7dd8bfd584b2950.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 12,
+    "title": "Episodio 12 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70196cf2baab71f0ac534177d1c00102/9260a82fb22d4127826090eb3dff970b-852bdbebe7ccc3726c7a7aedefd172f9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6e846b7ce9e87ca8.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 13,
+    "title": "Episodio 13 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90c3b0f2baab71f0ac534177d1c00102/a51d0c9176524e1f8f1bd4535a8fc247-996f01a7f7d229711ac0a805fb906fea-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1ddb93bf0e4fd1ad.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 14,
+    "title": "Episodio 14 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/80bcfef2baab71f0b94787c7371d0102/1adcff3fb0aa40e494cab1855abb6225-3fb80b8ed879dc05d87dd13a412f09c6-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6c297b0736da049a.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 15,
+    "title": "Episodio 15 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/305542f3baab71f0800b5014c1ca0102/8cc7663f587b414f8e4a0ad5f7c590dc-8eacb605cca1a44d56599ec83b4ba4be-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/8fbdf5d8e19438b2.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 16,
+    "title": "Episodio 16 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20fb88f3baab71f0a9544077c0c30102/bf01b5b0e2d34f1580d9ffb2cbff03ec-d0a0fec0db04f3bfc0e2966fb19376f3-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f28ffc285ec3339e.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 17,
+    "title": "Episodio 17 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70c0dcf3baab71f0a9544077c0c30102/646f4b48236e483dbfd1e0b5d88730d0-e263e757cf57bb54e83d9c3a7a431ba8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/db5d63d9e6c542de.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 18,
+    "title": "Episodio 18 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20ca22f4baab71f0bff94076d1d30102/97173e0b43ca4df68ef0c936b8eb7684-2f1a1b336bbf722ee666a7693ff247a1-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6db1f5be4741c663.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 19,
+    "title": "Episodio 19 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50b962f4baab71f0800336a5e8aa0102/d153f3fa680a4eb799d00081d7d50d1f-ff3815947674bbdd5b4c68168dd38ea9-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/320a3a70a469cc64.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 20,
+    "title": "Episodio 20 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20bea1f4baab71f0bfd05114c0db0102/f01454b111b14a279ffb9c468f0a5d1b-b339bf0304249aeedfd137314a0a2008-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0779109d1bd89b6a.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 21,
+    "title": "Episodio 21 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00cce5f4baab71f0800b5014c1ca0102/cdc4f26489e240c9960182ce146fd02b-d1af04766421003b0e626fdd2a8c7407-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f40f0e70e30cf43f.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 22,
+    "title": "Episodio 22 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70392bf5baab71f0ba723108f4840102/db4ef2f1552e46fc8b24b873c7f66339-5c184804a62b9bf8a86bff80cde26d4c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b6ad58bfc5103a78.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 23,
+    "title": "Episodio 23 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e05369f5baab71f0bfd05114c0db0102/106a16879a244b2eb76a8d24ef30c7e0-79575fd5610e0ae5dbe70016aa475c65-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c6233b8ac5160c78.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 24,
+    "title": "Episodio 24 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00feadf5baab71f0bf853108f4850102/5e7e73e4d83e4c2f8c66191f9956e0ed-08ca7632a0a231fdd50f5a800aa49cb5-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0b4451208931fdd0.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 25,
+    "title": "Episodio 25 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/109fedf5baab71f0ba463108f4940102/a5acbf793de64cabb41cb971f49061f7-52fcd03e67c3e1849d3ee3c5635d5228-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/35c7d297bba22374.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 26,
+    "title": "Episodio 26 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0c62ef6baab71f0800336a5e8aa0102/2eb743e3cf034dbc9eff9eecd11249e5-e11b97cecd5f5b6f64fc914a4e82fd96-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/928f860858cd06d2.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 27,
+    "title": "Episodio 27 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/707d6df6baab71f0ac534177d1c00102/39075ce75d60492d8723fd055159668e-56c8121a3ae6848450c61d3150df4174-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a79bbff4f66b65d8.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 28,
+    "title": "Episodio 28 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/100dacf6baab71f0800336a5e8aa0102/07e84c5f0ab642d6821b9f1063202ae7-3822e4ac6a553269049fb01197092ddf-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/08fbfc3ebb1c4047.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 29,
+    "title": "Episodio 29 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30ecfcf6baab71f0bfb597c6360c0102/2d0418f2b6eb4a7f9cd6594b98fdb463-77aaf0df3a6e10a00f68a11e4c520e84-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7c8c90819814c4ee.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 30,
+    "title": "Episodio 30 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0543bf7baab71f0bf9687c7361c0102/c49474cef2e149dabe1221c51b0c639d-7ff38424d4d2667d9d03108495741087-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/23314c68b930d9b9.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 31,
+    "title": "Episodio 31 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c03f7df7baab71f0ac534177d1c00102/b243269681574845b8eec35f0fed6301-cdc68e77ec2da157be0854db25b3e575-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/1f0ce5df793933a8.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 32,
+    "title": "Episodio 32 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00c7bff7baab71f0800336a5e8aa0102/607ace57ea954bfba86acf145addf97e-a9c0055e734701f8a157de3a4bd31acd-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/8d642256c1e19ffd.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 33,
+    "title": "Episodio 33 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/508c13f8baab71f0bfd05114c0db0102/764bc5e46c854e14b397a56462b9f1ce-4541b599f1005ed73e712c38634fc801-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/5eacc0b7a7cec345.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 34,
+    "title": "Episodio 34 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c02e65f8baab71f0bfb597c6360c0102/5567aa9b32314c25ab5ed3b97a24dd25-5757a5e6ad786b8f1bd1e5a833fac83f-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/de07dfd388e52879.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 35,
+    "title": "Episodio 35 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e0d8a9f8baab71f0bf9687c7361c0102/c05b5752b7754ab1a4c1b3f0ec189263-5bf486151e4c9ba437b740415b59d4a8-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/718edec296f1ed7f.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 36,
+    "title": "Episodio 36 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/401feff8baab71f0bf853108f4850102/e9ceae110cf7427d88856ebbd0da12a4-068273107c1bcb45fd78d17c9f64d3de-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4ab7e9b4bb7e7261.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 37,
+    "title": "Episodio 37 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f02835f9baab71f0a9544077c0c30102/1da7ceac1cce49628ca491c51f1be193-d4fb9e3e1e78010c1bc6ea9b4cb76151-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/80c1ccb0406ad960.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 38,
+    "title": "Episodio 38 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/d0a77bf9baab71f0b94787c7371d0102/98eec6ae1db44cabbb70b3e44372f8a3-d3c6ca50a3a63c7a8c7fea62a745609d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f339e2399841df88.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 39,
+    "title": "Episodio 39 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e02ac0f9baab71f0b94787c7371d0102/ad22a1525be1490d85f60a9a29aa9091-a4c83f19eb8acaa4dda9b0da219b7cc7-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/7736e55f9ae26f30.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 40,
+    "title": "Episodio 40 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60830ffabaab71f0800336a5e8aa0102/0f755a691b094f978cac18f21bfea3c4-4b26109086166e6d0d1191351c587594-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/37eebc98c0ad7f30.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 41,
+    "title": "Episodio 41 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b08459fabaab71f0bff94076d1d30102/8588c0418d8c443385c56d4738d43b9f-2d05d350fdf81b4391162590e0611f14-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/fa82bbcac648e09e.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 42,
+    "title": "Episodio 42 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b0fe98fabaab71f0a9544077c0c30102/b8747d31c64e4650a322e63708dfc3b2-1e51b738f5647d95e40a6d1375fccaac-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/a955ca46583addd7.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 43,
+    "title": "Episodio 43 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/3022dcfabaab71f0aa444077c0c20102/1329deb6cf724d5e9a566c27cd517b64-e1ec4f5f2f8e06af676522908f91e60b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/581c1a68bfc7bc1f.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 44,
+    "title": "Episodio 44 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/906821fbbaab71f0bf853108f4850102/341e0d71a3d04413b042ddd2b861cd8d-b983e30d6ec05c6591076519bab4ba61-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/16e712c3a956851e.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 45,
+    "title": "Episodio 45 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e01664fbbaab71f0b94787c7371d0102/41f5e02779174d8a950d650651569266-88e302c51912d57e2530a800e5ef4430-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/705beb0f471b9e25.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 46,
+    "title": "Episodio 46 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f00aabfbbaab71f0bf9c4177d0d10102/280f0c0774aa4990bee3bd3ce228de06-b2baab04242313c35a8a631c8f803853-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/72da302e40b1e4de.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 47,
+    "title": "Episodio 47 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c0f1eefbbaab71f0a5344177d1c10102/5951d70febe44a2d83052d91999ab2b6-5689bd85962620ad262143d63692ba95-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/51e89c88a9189f33.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 48,
+    "title": "Episodio 48 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60f22ffcbaab71f0bff94076d1d30102/6a9cdc13f5254100a63f94da7dca6c16-cb3b559e5a85fb4a9b744949553d9e4e-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/c943fa2034745ac1.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 49,
+    "title": "Episodio 49 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90d27653baad71f0ba723108f4840102/5b45310c00274200948b31c6c8675e19-a737d1af768cd92288a38f6c76d907ad-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/475a298ef551154f.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 50,
+    "title": "Episodio 50 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/00e6ca53baad71f0ba463108f4940102/c0e4448f587b4afeaf2576f66b04c5ef-c580249ac3736ef3ae667ca2246e1204-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d196535bdf211a8e.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 51,
+    "title": "Episodio 51 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/10358268c4af71f0864d5114c0db0102/60de9f8c972a4a4cb281da9bbc206a25-83fa409bb1209ad9f14a8679c562d2a0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/11149dfd07d98b04.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 52,
+    "title": "Episodio 52 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/b04b5554baad71f0bfd05114c0db0102/9cdaa09f3e18490e9c3941c58266fb2d-3b0498bfca8b9497f3c29ed39780d6c0-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/aa362e26a2d5acb4.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 53,
+    "title": "Episodio 53 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/40969854baad71f0a5344177d1c10102/8a4cded92b474a45a7eec5b5c2bf3830-4ef77a133b70fb154a4bc39417a7a394-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/6dbeb54b48cb6c3a.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 54,
+    "title": "Episodio 54 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/c00ce354baad71f0bfb25114c1ca0102/1e2636f78fb74eab996c860b3349324a-11a45603e0e6a926829e5f9e43c70c90-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/ea6f81f243bdd9f1.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 55,
+    "title": "Episodio 55 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50c82855baad71f0bf995014c1da0102/885e8e0c2cb04ff0942248dc083d2ed1-a4bfc34ff6bf740984ef58432e4febb4-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/b45dbda2f34ee173.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 56,
+    "title": "Episodio 56 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/e0126c55baad71f0aa444077c0c20102/0efdf27478b945488f166c9dfe543a96-0042eb52cc67065840358568588dbc08-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/4f6fe9ffb19e00da.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 57,
+    "title": "Episodio 57 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/500faf55baad71f0a9544077c0c30102/09e36236bf894eb9875419dbc8e63623-02fbfe89121c21b445ee5aabe7f83f5d-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/f5c6e8ce44d278e8.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 58,
+    "title": "Episodio 58 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50dcf555baad71f0ba463108f4940102/9b89112eff704a3bb095f740e09c0456-04ba320c3f0326d685bcea0043584c92-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/fb73d1e022d70125.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 59,
+    "title": "Episodio 59 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/90f23556baad71f0a26b2680f9ea0102/79f82f8b71064bdabf96d9a8e49db7c9-a5d2a3de479d00ec68e82780108ff439-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/aa4cc8fb4bf442c6.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 60,
+    "title": "Episodio 60 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50f7ac56baad71f0a5344177d1c10102/41fc7c32a6514a5a8513718bf894985b-5e77b65b48a72dce447b0afc616e5484-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/98ca036da5951004.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 61,
+    "title": "Episodio 61 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/20def056baad71f0bff94076d1d30102/ab1462b97ef24375aaca1402046b188f-afd60e9f13ee5fd91324f70c10c820bd-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/757059f402e4008b.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 62,
+    "title": "Episodio 62 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/904b3657baad71f0bf9687c7361c0102/bd6b1942d01f436180dbb5211658fa27-dfc12bf59dc9965cf14317b9f2450bd6-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/93d6ecc6ba141d46.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 63,
+    "title": "Episodio 63 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/50297557baad71f0bfd05114c0db0102/f880e2bc5d2f40ff9a87a23e3fee5eb4-dae997f28a6e6a6c33d058eed69fcf7b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/794c5e53421a0aeb.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 64,
+    "title": "Episodio 64 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a0f5b257baad71f0bfb597c6360c0102/dd09c8dd93904ca582aeaea4e0593239-a21f8d034edcea5d47bc35dbbbd86663-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/868210641b179495.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 65,
+    "title": "Episodio 65 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/2019f657baad71f0bff94076d1d30102/f293fb743c64412e9160695b71fed73a-715e09c6617cb598852502cbb859fa70-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/fcfb5252f7c43b57.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 66,
+    "title": "Episodio 66 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/70383b58baad71f0bf9687c7361c0102/aa70fde0537f4650814dddedd6b97a25-e402e61fb9a37ba7b02f7635eba0cdfd-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/317b6914ca59ea08.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 67,
+    "title": "Episodio 67 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a0987d58baad71f0800336a5e8aa0102/536fc71f610f4564bfcc7783eb2d3fd0-13b01239f7647b0bc70a860d749202ff-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/29e5ec3c89b5fb20.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 68,
+    "title": "Episodio 68 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60e7be58baad71f0aa444077c0c20102/71e64d9663fe4ab7ba67edbd5249af8d-7dd951b1bc87842a5f245a0a514b4560-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/3857f1a3e75e2bb7.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 69,
+    "title": "Episodio 69 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/60b40559baad71f0ac534177d1c00102/255d8f17b6594665b210ec3ea50df469-338a0dee2ee9130d8c45f5177c4a5831-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/27563f3f411d8ca0.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 70,
+    "title": "Episodio 70 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a03b4859baad71f0ba463108f4940102/ccda5ee2eae849069a9273c133072aaf-486fdd8a97146d90bfa595edc8ea361b-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/52f4d9439bcc261b.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 71,
+    "title": "Episodio 71 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/f0e98a59baad71f0a9544077c0c30102/b66ef026c5434fed86741c7646db5cf6-225574f34f1273f783986b06ff747f0c-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/40be91fb46bfad70.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 72,
+    "title": "Episodio 72 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/30e2cf59baad71f0b94787c7371d0102/80f1ed41c170490da8c97772de525691-e21a11aecaf8822a2ea99313039d43ed-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/0db49461ea928a99.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 73,
+    "title": "Episodio 73 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/a06d105abaad71f0bf853108f4850102/ba4d609b416b490b844d69f57ac2efe2-f218a9da8ea0d40cfb629490a0fa96d1-sd.m3u8"
+  },
+  {
+    "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F40aa23c0-bae3-11f0-b4b4-bd031586a1b7.jpg&w=384&q=75",
+    "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/d421cf00416faf24.jpg",
+    "series": "Yo Soy El Que Manda",
+    "ep": 74,
+    "title": "Episodio 74 - Yo Soy El Que Manda",
+    "url": "https://v-mps.crazymaplestudios.com/vod-112094/5095515abaad71f0800b5014c1ca0102/4a1d2fc4155e4cd8a862a863440241d6-21914e8ae6edc7f138f6c64387ad2077-sd.m3u8"
+  },
+  {
     "logo serie": "https://www.reelshort.com/_next/image?url=https%3A%2F%2Fv-mps.crazymaplestudios.com%2Fimages%2F8d057d10-da63-11f0-84ad-6b5693b490dc.jpg&w=384&q=75",
     "logo ep": "https://v-mps.crazymaplestudios.com/Snapshots/3af3dd569eb30bc3.jpg",
     "series": "Alquilé un marido multimillonario para la Navidad",
